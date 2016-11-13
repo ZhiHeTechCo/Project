@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+
+  <!-- 控制台 -->
+	<appender name="console.CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] (%t):%m%n" />
+		</layout>
+	</appender>
+
+    <!-- 系统应用级别日志 -->
+	<appender name="file.text.SYS.APP.FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="threshold" value="error" />
+		<param name="file" value="../logs/itbksys.log" />
+		<param name="maxFileSize" value="1M" />
+		<param name="maxBackupIndex" value="5" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] (%t):%m%n" />
+		</layout>
+	</appender>
+  
+	<!-- 每天的日志 -->
+	<appender name="file.text.DATE.FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="threshold" value="debug" />
+		<param name="file" value="../logs/itbkdate.log" />
+		<param name="append" value="true" />
+		<param name="datePattern" value="'.'yyy-MM-dd" />
+		<!-- <param name="datePattern" value="'.'yyy-MM-dd-HH"/> -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c] (%t):%m%n" />
+		</layout>
+	</appender>
+  <category name="zh.co" additivity="true">
+    <priority value="debug" />
+    <appender-ref ref="console.CONSOLE" />
+    <appender-ref ref="file.text.DATE.FILE" />
+  </category>
+  <root>
+    <priority value="DEBUG"/>
+    
+  </root>
+
+</log4j:configuration>

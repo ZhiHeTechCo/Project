@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TbGrammar" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbGrammarBean" >
+    <id column="no" property="no" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="key" property="key" jdbcType="CHAR" />
+    <result column="japanese" property="japanese" jdbcType="VARCHAR" />
+    <result column="chinese" property="chinese" jdbcType="VARCHAR" />
+    <result column="cource" property="cource" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, level, key, japanese, chinese, cource
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbGrammarBeanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_grammar
+    where no = #{no,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbGrammarBeanKey" >
+    delete from tb_grammar
+    where no = #{no,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbGrammarBean" >
+    insert into tb_grammar (no, level, key, japanese, 
+      chinese, cource)
+    values (#{no,jdbcType=INTEGER}, #{level,jdbcType=CHAR}, #{key,jdbcType=CHAR}, #{japanese,jdbcType=VARCHAR}, 
+      #{chinese,jdbcType=VARCHAR}, #{cource,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbGrammarBean" >
+    insert into tb_grammar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="japanese != null" >
+        japanese,
+      </if>
+      <if test="chinese != null" >
+        chinese,
+      </if>
+      <if test="cource != null" >
+        cource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=CHAR},
+      </if>
+      <if test="japanese != null" >
+        #{japanese,jdbcType=VARCHAR},
+      </if>
+      <if test="chinese != null" >
+        #{chinese,jdbcType=VARCHAR},
+      </if>
+      <if test="cource != null" >
+        #{cource,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbGrammarBean" >
+    update tb_grammar
+    <set >
+      <if test="level != null" >
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="key != null" >
+        key = #{key,jdbcType=CHAR},
+      </if>
+      <if test="japanese != null" >
+        japanese = #{japanese,jdbcType=VARCHAR},
+      </if>
+      <if test="chinese != null" >
+        chinese = #{chinese,jdbcType=VARCHAR},
+      </if>
+      <if test="cource != null" >
+        cource = #{cource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbGrammarBean" >
+    update tb_grammar
+    set level = #{level,jdbcType=CHAR},
+      key = #{key,jdbcType=CHAR},
+      japanese = #{japanese,jdbcType=VARCHAR},
+      chinese = #{chinese,jdbcType=VARCHAR},
+      cource = #{cource,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>

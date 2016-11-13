@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CodeManage">
+
+	<select id="selectCode" parameterType="map" resultType="zh.co.item.bank.db.entity.TsCodeBean">
+		select * from ts_code c
+		where model_id = #{modelId}
+		<if test="name !=null">
+			and name = #{name}
+		</if>
+		order by c.key
+	</select>
+
+</mapper>

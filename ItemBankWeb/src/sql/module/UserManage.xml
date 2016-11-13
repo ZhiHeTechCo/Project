@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserManage">
+
+  <!-- 取得指定用户名个数 -->
+  <select id="countUserAccount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    select
+      count(id) 
+    from
+      tu_user 
+    where
+      name = #{ account, jdbcType = VARCHAR } 
+    <if test = "password != null" > 
+      and CONVERT( 
+        AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
+          USING UTF8
+      ) = #{ password, jdbcType = CHAR }
+
+    </if>
+  </select>
+  
+  <select id="getUserInfo" resultType="zh.co.item.bank.db.entity.TuUserBean" parameterType="zh.co.item.bank.db.entity.TuUserBean">
+    SELECT
+      id
+      , name
+      , role
+      , birthday
+      , telephone
+      , email
+      , jlpt_level
+      , jtest_level
+      , create_time
+      , update_time 
+    FROM
+      hesheng.tu_user 
+    where
+      name = #{name, jdbcType=VARCHAR } 
+      and CONVERT( 
+        AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
+          USING UTF8
+      ) = #{password, jdbcType = CHAR }
+
+  </select>
+  
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="zh.co.item.bank.db.entity.VuUserModelBean">
+        select * from
+        vu_user_model
+        where id = #{id}
+    </select>
+
+</mapper>

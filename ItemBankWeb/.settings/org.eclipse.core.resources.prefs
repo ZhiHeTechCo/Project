@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//WebContent/config/application.properties=UTF-8
+encoding//WebContent/config/jdbc.properties=UTF-8
+encoding//WebContent/config/message.properties=UTF-8
+encoding//WebContent/xhtml/common/home.xhtml=UTF-8
+encoding//WebContent/xhtml/common/index.xhtml=UTF-8
+encoding//WebContent/xhtml/user/changePassword.xhtml=UTF-8
+encoding//WebContent/xhtml/user/mistakeCollection.xhtml=UTF-8
+encoding//WebContent/xhtml/user/signIn.xhtml=UTF-8
+encoding//WebContent/xhtml/user/signUp.xhtml=UTF-8
+encoding//WebContent/xhtml/user/userInfo.xhtml=UTF-8

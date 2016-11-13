@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TsAuthority" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TsAuthorityBean" >
+    <id column="role" property="role" jdbcType="CHAR" />
+    <result column="UE" property="ue" jdbcType="BIT" />
+    <result column="ME" property="me" jdbcType="BIT" />
+    <result column="UU" property="uu" jdbcType="BIT" />
+    <result column="MU" property="mu" jdbcType="BIT" />
+    <result column="MS" property="ms" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role, UE, ME, UU, MU, MS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TsAuthorityBeanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_authority
+    where role = #{role,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TsAuthorityBeanKey" >
+    delete from ts_authority
+    where role = #{role,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TsAuthorityBean" >
+    insert into ts_authority (role, UE, ME, UU, 
+      MU, MS)
+    values (#{role,jdbcType=CHAR}, #{ue,jdbcType=BIT}, #{me,jdbcType=BIT}, #{uu,jdbcType=BIT}, 
+      #{mu,jdbcType=BIT}, #{ms,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TsAuthorityBean" >
+    insert into ts_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="ue != null" >
+        UE,
+      </if>
+      <if test="me != null" >
+        ME,
+      </if>
+      <if test="uu != null" >
+        UU,
+      </if>
+      <if test="mu != null" >
+        MU,
+      </if>
+      <if test="ms != null" >
+        MS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="role != null" >
+        #{role,jdbcType=CHAR},
+      </if>
+      <if test="ue != null" >
+        #{ue,jdbcType=BIT},
+      </if>
+      <if test="me != null" >
+        #{me,jdbcType=BIT},
+      </if>
+      <if test="uu != null" >
+        #{uu,jdbcType=BIT},
+      </if>
+      <if test="mu != null" >
+        #{mu,jdbcType=BIT},
+      </if>
+      <if test="ms != null" >
+        #{ms,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TsAuthorityBean" >
+    update ts_authority
+    <set >
+      <if test="ue != null" >
+        UE = #{ue,jdbcType=BIT},
+      </if>
+      <if test="me != null" >
+        ME = #{me,jdbcType=BIT},
+      </if>
+      <if test="uu != null" >
+        UU = #{uu,jdbcType=BIT},
+      </if>
+      <if test="mu != null" >
+        MU = #{mu,jdbcType=BIT},
+      </if>
+      <if test="ms != null" >
+        MS = #{ms,jdbcType=BIT},
+      </if>
+    </set>
+    where role = #{role,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TsAuthorityBean" >
+    update ts_authority
+    set UE = #{ue,jdbcType=BIT},
+      ME = #{me,jdbcType=BIT},
+      UU = #{uu,jdbcType=BIT},
+      MU = #{mu,jdbcType=BIT},
+      MS = #{ms,jdbcType=BIT}
+    where role = #{role,jdbcType=CHAR}
+  </update>
+</mapper>

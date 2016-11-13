@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="form" required="true"/>
+        <composite:attribute name="paginator" type="jp.co.tepco.kpfbpf.web.common.model.RepeatPaginator" required="true"/>
+    </composite:interface>
+	
+	<composite:implementation>
+	    <h:panelGroup id="paginator_zero" rendered="#{cc.attrs.paginator.recordsTotal eq 0}">
+	    <h:outputText value="0件 ＜前へ | 1 | 次へ＞" />
+	    </h:panelGroup>
+		<h:panelGroup id="paginator" rendered="#{cc.attrs.paginator.recordsTotal gt 0}">
+		<h:outputText value="#{cc.attrs.paginator.recordsTotal}" />
+		<h:outputText value="件中" />
+		<h:outputText value="#{cc.attrs.paginator.fromIndex + 1}" />
+		<h:outputText value="件目～" />
+		<h:outputText value="#{cc.attrs.paginator.toIndex}" />
+		<h:outputText value="件目 " />
+		
+        <h:commandLink value="＜前へ" rendered="#{cc.attrs.paginator.pageIndex gt 1}" onclick="return cancelToken(this)" >
+            <f:ajax onevent="callbackAjaxForPaginator"
+                    listener="#{cc.attrs.paginator.prev}" 
+                    execute="@this" 
+                    render="paginator :#{cc.attrs.form}:search_result_data" />
+        </h:commandLink>
+        <h:outputText value="＜前へ" rendered="#{cc.attrs.paginator.pageIndex eq 1}" />
+        
+        <h:outputText value=" | " />
+        
+        <h:commandLink value="#{cc.attrs.paginator.firstPage}" rendered="#{cc.attrs.paginator.pageIndex ne 1}" onclick="return cancelToken(this)" >
+            <f:param name="pageId" value="#{cc.attrs.paginator.firstPage}" />
+            <f:ajax onevent="callbackAjaxForPaginator" 
+                    listener="#{cc.attrs.paginator.goPage}" 
+                    execute="@this" 
+                    render="paginator :#{cc.attrs.form}:search_result_data" />
+        </h:commandLink>
+        <h:outputText value="#{cc.attrs.paginator.firstPage}" rendered="#{cc.attrs.paginator.pageIndex eq 1}" />
+        <h:outputText value=" " />
+        
+        <h:outputText value="…" rendered="#{cc.attrs.paginator.ellipsisNeededBefore}"/>
+        
+        <ui:repeat value="#{cc.attrs.paginator.pageLinks}" var="page">
+        <h:commandLink value="#{page}" rendered="#{page ne cc.attrs.paginator.pageIndex}" onclick="return cancelToken(this)" >
+            <f:param name="pageId" value="#{page}" />
+            <f:ajax onevent="callbackAjaxForPaginator"
+                    listener="#{cc.attrs.paginator.goPage}" 
+                    execute="@this" 
+                    render=":#{cc.attrs.form}:search_result_paginator :#{cc.attrs.form}:search_result_data" />
+        </h:commandLink>
+        <h:outputText value="#{page}" rendered="#{page eq cc.attrs.paginator.pageIndex}" />
+        <h:outputText value=" " />
+        </ui:repeat>
+        
+        <h:outputText value="…" rendered="#{cc.attrs.paginator.ellipsisNeededAfter}"/>
+
+        <h:commandLink value="#{cc.attrs.paginator.pagesTotal}" rendered="#{cc.attrs.paginator.pageIndex ne cc.attrs.paginator.pagesTotal and cc.attrs.paginator.pagesTotal ne 1}" onclick="return cancelToken(this)" >
+            <f:param name="pageId" value="#{cc.attrs.paginator.pagesTotal}" />
+            <f:ajax onevent="callbackAjaxForPaginator"
+                    listener="#{cc.attrs.paginator.goPage}" 
+                    execute="@this" 
+                    render="paginator :#{cc.attrs.form}:search_result_data" />
+        </h:commandLink>
+        <h:outputText value="#{cc.attrs.paginator.pagesTotal}" rendered="#{cc.attrs.paginator.pageIndex eq cc.attrs.paginator.pagesTotal and cc.attrs.paginator.pagesTotal ne 1}" />
+        <h:outputText value=" | " />
+        
+        <h:commandLink value="次へ＞" rendered="#{cc.attrs.paginator.pageIndex lt cc.attrs.paginator.pagesTotal}" onclick="return cancelToken(this)" >
+            <f:ajax onevent="callbackAjaxForPaginator"
+                    listener="#{cc.attrs.paginator.next}" 
+                    execute="@this" 
+                    render="paginator :#{cc.attrs.form}:search_result_data" />
+        </h:commandLink>
+        <h:outputText value="次へ＞" rendered="#{cc.attrs.paginator.pageIndex == cc.attrs.paginator.pagesTotal}" />
+		</h:panelGroup>
+		
+	</composite:implementation>
+	
+	
+</html>

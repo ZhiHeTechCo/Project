@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/template.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="sguform">
+        <!-- //requried-jsfiles-for owl -->
+        <div class="contact-section">
+          <div class="contact_grid">
+            <div class="container">
+              <div class="col-md-8 contact-top">
+                <h3>用户注册</h3>
+                <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                  layout="block">
+                  <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+                </h:panelGroup>
+                <h4>请输入您的信息：</h4>
+                <table class="toTable">
+                  <tr>
+                    <td><h:inputText id="name" value="#{signUpBean.userInfo.name}" class="text" maxlength="10"
+                        onfocus="if (this.value == '用户名') {this.value = '';}"
+                        onblur="if (this.value == '') {this.value = '用户名';}" /></td>
+                    <td><span class="msg" style="margin-left: 10px">用户名/手机号/邮箱</span></td>
+                  </tr>
+                  <tr>
+                    <td><h:inputSecret id="password" redisplay="true" value="#{signUpBean.userInfo.password}"
+                        class="text" maxlength="10" onfocus="this.value = '';"
+                        onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" /></td>
+                    <td><span class="msg" style="margin-left: 10px">字母数字或特殊符号组成</span></td>
+                  </tr>
+                  <!-- 
+                            <tr>
+                                <td colspan="2"><input type="radio" class="text" value="1"
+                                    name="Type"
+                                    onclick="document.getElementById('company').style.display='';">&nbsp;企业用户&nbsp;
+                                    <input type="radio" class="text" name="Type" value="2"
+                                    onclick="document.getElementById('company').style.display='none';">&nbsp;个人用户&nbsp;
+                                </td>
+                            </tr>
+                             -->
+                </table>
+                <!-- 
+                        <table class="toTable">
+                            <tr>
+                                <td><input type="text" class="text" value="手机"
+                                    onfocus="if (this.value == '手机') {this.value = '';}"
+                                    onblur="if (this.value == '') {this.value = '手机';}" /></td>
+                                <td><input type="text" class="text2" value="Email(非必需)"
+                                    onfocus="if (this.value == 'Email(非必需)') {this.value = '';}"
+                                    onblur="if (this.value == '') {this.value = 'Email(非必需)';}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id=company class="toTable" style="display: none">
+                            <tr>
+                                <td><input type="text" class="text" value="企业名称"
+                                    onfocus="if (this.value == '企业名称') {this.value = '';}"
+                                    onblur="if (this.value == '') {this.value = '企业名称';}" /></td>
+                                <td><input type="text" class="text2" value="固话(非必需)"
+                                    onfocus="if (this.value == '固话(非必需)') {this.value = '';}"
+                                    onblur="if (this.value == '') {this.value = '固话(非必需)';}" /></td>
+                            </tr>
+                        </table>
+                         -->
+                <table class="toTable">
+                  <tr>
+                    <td colspan="2"><h4>考试级别：</h4></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 60px;"><h5 style="font-family: 'FZYaoti';">JLPT</h5></td>
+                    <td><h:selectOneMenu value="#{signUpBean.userInfo.jlptLevel}">
+                        <f:selectItem itemValue="" itemLabel="" />
+                        <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
+                          itemLabel="#{entry.value}" />
+                      </h:selectOneMenu></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 60px;"><h5 style="font-family: 'FZYaoti';">J.TEST</h5></td>
+                    <td><h:selectOneMenu value="#{signUpBean.userInfo.jtestLevel}">
+                        <f:selectItem itemValue="" itemLabel="" />
+                        <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
+                          itemLabel="#{entry.value}" />
+                      </h:selectOneMenu></td>
+                  </tr>
+                </table>
+                <div class="form-submit1">
+                  <h:commandButton value="注册" class="button1" action="#{signUpBean.insertUserInfo}" id="insertBtn" />
+                  <br />
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-md-4 contact-top_right">
+                <h3>帮助</h3>
+                <p>登录/注册中遇到任何问题，您可以通过下面的方式联系我们。</p>
+                <p>您可以点击上方菜单【联系我们】给我们留言。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

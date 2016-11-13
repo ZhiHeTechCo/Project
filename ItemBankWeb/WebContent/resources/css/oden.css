@@ -1,0 +1,100 @@
+/**************************************************/
+/*    Oden HAO styles                             */
+/**************************************************/
+body {
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sys_title {
+    /*background-color: #A2A2A2;*/
+    text-align: center;
+    border-left: 1px solid #5B5B5B;
+    border-top: 1px solid #5B5B5B;
+    width: 40%;
+    
+    background-color: #FFC0CB;
+}
+
+#user_info {
+    padding-right: 10px;
+    border-right: 1px solid #5B5B5B;
+    border-top: 1px solid #5B5B5B;
+    width: 60%;
+}
+
+.style_span_normal {
+    font-family: "MS PGothic";
+    font-size: 20px;
+}
+
+.style_span_title {
+    font-weight: bold;
+    font-family: "MS PGothic";
+    font-size: 40px;
+}
+
+.style_span_remark {
+    font-family: "MS PGothic";
+    font-size: 14px;
+}
+
+.style_span_warn {
+    font-weight: bold;
+    color: #FF0000;
+}
+
+.style_span_info {
+    font-weight: bold;
+    color: #0080FF;
+}
+
+.style_btn_logout {
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    border:1px solid #A2A2A2;
+    font-size: 20px;
+}
+
+.style_btn_normal {
+    width: 80px;
+    height: 35px;
+    border-radius: 4px;
+    border:1px solid #A2A2A2;
+    margin:10px 10px 10px 10px;
+}
+
+.style_btn_large {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border:1px solid #A2A2A2;
+    margin:10px 10px 10px 10px;
+}
+
+#pankuzu_list {
+    padding: 10px 0 10px 0;
+    text-align: left;
+}
+
+#pankuzu_list a {
+    padding: 0 7px 0 30px;
+}
+
+#pankuzu_list span {
+    padding: 0 3px 0 3px;
+}
+
+#web_title {
+    margin: 0 0 0 30px;
+    text-align: left;
+}
+
+#sys_message {
+    padding: 10px 0 10px 0;
+    font-size: 24px;
+}
+
+

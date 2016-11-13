@@ -1,0 +1,12 @@
+
+.errorMessage {
+	color: #ff0000;
+	font-weight: 900;
+}
+.infoMessage {
+  color: #000000;
+}
+.warnMessage {
+	color: #ff0000;
+}
+

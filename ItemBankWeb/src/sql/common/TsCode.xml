@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TsCode" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TsCodeBean" >
+    <result column="model_id" property="modelId" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="key" property="key" jdbcType="CHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TsCodeBean" >
+    insert into ts_code (model_id, name, key, value
+      )
+    values (#{modelId,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{key,jdbcType=CHAR}, #{value,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TsCodeBean" >
+    insert into ts_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        model_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        #{modelId,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=CHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

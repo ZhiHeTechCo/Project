@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TbForumResponse" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbForumResponseBean" >
+    <result column="questionId" property="questionid" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="SMALLINT" />
+    <result column="userChose" property="userchose" jdbcType="CHAR" />
+    <result column="systemChose" property="systemchose" jdbcType="CHAR" />
+    <result column="responser1" property="responser1" jdbcType="INTEGER" />
+    <result column="response1" property="response1" jdbcType="VARCHAR" />
+    <result column="count1" property="count1" jdbcType="SMALLINT" />
+    <result column="responser2" property="responser2" jdbcType="INTEGER" />
+    <result column="response2" property="response2" jdbcType="VARCHAR" />
+    <result column="count2" property="count2" jdbcType="SMALLINT" />
+    <result column="responser3" property="responser3" jdbcType="INTEGER" />
+    <result column="response3" property="response3" jdbcType="VARCHAR" />
+    <result column="count3" property="count3" jdbcType="SMALLINT" />
+    <result column="responser4" property="responser4" jdbcType="INTEGER" />
+    <result column="response4" property="response4" jdbcType="VARCHAR" />
+    <result column="count4" property="count4" jdbcType="SMALLINT" />
+    <result column="responser5" property="responser5" jdbcType="INTEGER" />
+    <result column="response5" property="response5" jdbcType="VARCHAR" />
+    <result column="count5" property="count5" jdbcType="SMALLINT" />
+    <result column="responser6" property="responser6" jdbcType="INTEGER" />
+    <result column="response6" property="response6" jdbcType="VARCHAR" />
+    <result column="count6" property="count6" jdbcType="SMALLINT" />
+    <result column="responser7" property="responser7" jdbcType="INTEGER" />
+    <result column="response7" property="response7" jdbcType="VARCHAR" />
+    <result column="count7" property="count7" jdbcType="SMALLINT" />
+    <result column="responser8" property="responser8" jdbcType="INTEGER" />
+    <result column="response8" property="response8" jdbcType="VARCHAR" />
+    <result column="count8" property="count8" jdbcType="SMALLINT" />
+    <result column="responser9" property="responser9" jdbcType="INTEGER" />
+    <result column="response9" property="response9" jdbcType="VARCHAR" />
+    <result column="count9" property="count9" jdbcType="SMALLINT" />
+    <result column="responser10" property="responser10" jdbcType="INTEGER" />
+    <result column="response10" property="response10" jdbcType="VARCHAR" />
+    <result column="count10" property="count10" jdbcType="SMALLINT" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean" >
+    insert into tb_forum_response (questionId, count, userChose, 
+      systemChose, responser1, response1, 
+      count1, responser2, response2, 
+      count2, responser3, response3, 
+      count3, responser4, response4, 
+      count4, responser5, response5, 
+      count5, responser6, response6, 
+      count6, responser7, response7, 
+      count7, responser8, response8, 
+      count8, responser9, response9, 
+      count9, responser10, response10, 
+      count10, status, create_time
+      )
+    values (#{questionid,jdbcType=INTEGER}, #{count,jdbcType=SMALLINT}, #{userchose,jdbcType=CHAR}, 
+      #{systemchose,jdbcType=CHAR}, #{responser1,jdbcType=INTEGER}, #{response1,jdbcType=VARCHAR}, 
+      #{count1,jdbcType=SMALLINT}, #{responser2,jdbcType=INTEGER}, #{response2,jdbcType=VARCHAR}, 
+      #{count2,jdbcType=SMALLINT}, #{responser3,jdbcType=INTEGER}, #{response3,jdbcType=VARCHAR}, 
+      #{count3,jdbcType=SMALLINT}, #{responser4,jdbcType=INTEGER}, #{response4,jdbcType=VARCHAR}, 
+      #{count4,jdbcType=SMALLINT}, #{responser5,jdbcType=INTEGER}, #{response5,jdbcType=VARCHAR}, 
+      #{count5,jdbcType=SMALLINT}, #{responser6,jdbcType=INTEGER}, #{response6,jdbcType=VARCHAR}, 
+      #{count6,jdbcType=SMALLINT}, #{responser7,jdbcType=INTEGER}, #{response7,jdbcType=VARCHAR}, 
+      #{count7,jdbcType=SMALLINT}, #{responser8,jdbcType=INTEGER}, #{response8,jdbcType=VARCHAR}, 
+      #{count8,jdbcType=SMALLINT}, #{responser9,jdbcType=INTEGER}, #{response9,jdbcType=VARCHAR}, 
+      #{count9,jdbcType=SMALLINT}, #{responser10,jdbcType=INTEGER}, #{response10,jdbcType=VARCHAR}, 
+      #{count10,jdbcType=SMALLINT}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean" >
+    insert into tb_forum_response
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        questionId,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="userchose != null" >
+        userChose,
+      </if>
+      <if test="systemchose != null" >
+        systemChose,
+      </if>
+      <if test="responser1 != null" >
+        responser1,
+      </if>
+      <if test="response1 != null" >
+        response1,
+      </if>
+      <if test="count1 != null" >
+        count1,
+      </if>
+      <if test="responser2 != null" >
+        responser2,
+      </if>
+      <if test="response2 != null" >
+        response2,
+      </if>
+      <if test="count2 != null" >
+        count2,
+      </if>
+      <if test="responser3 != null" >
+        responser3,
+      </if>
+      <if test="response3 != null" >
+        response3,
+      </if>
+      <if test="count3 != null" >
+        count3,
+      </if>
+      <if test="responser4 != null" >
+        responser4,
+      </if>
+      <if test="response4 != null" >
+        response4,
+      </if>
+      <if test="count4 != null" >
+        count4,
+      </if>
+      <if test="responser5 != null" >
+        responser5,
+      </if>
+      <if test="response5 != null" >
+        response5,
+      </if>
+      <if test="count5 != null" >
+        count5,
+      </if>
+      <if test="responser6 != null" >
+        responser6,
+      </if>
+      <if test="response6 != null" >
+        response6,
+      </if>
+      <if test="count6 != null" >
+        count6,
+      </if>
+      <if test="responser7 != null" >
+        responser7,
+      </if>
+      <if test="response7 != null" >
+        response7,
+      </if>
+      <if test="count7 != null" >
+        count7,
+      </if>
+      <if test="responser8 != null" >
+        responser8,
+      </if>
+      <if test="response8 != null" >
+        response8,
+      </if>
+      <if test="count8 != null" >
+        count8,
+      </if>
+      <if test="responser9 != null" >
+        responser9,
+      </if>
+      <if test="response9 != null" >
+        response9,
+      </if>
+      <if test="count9 != null" >
+        count9,
+      </if>
+      <if test="responser10 != null" >
+        responser10,
+      </if>
+      <if test="response10 != null" >
+        response10,
+      </if>
+      <if test="count10 != null" >
+        count10,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        #{questionid,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=SMALLINT},
+      </if>
+      <if test="userchose != null" >
+        #{userchose,jdbcType=CHAR},
+      </if>
+      <if test="systemchose != null" >
+        #{systemchose,jdbcType=CHAR},
+      </if>
+      <if test="responser1 != null" >
+        #{responser1,jdbcType=INTEGER},
+      </if>
+      <if test="response1 != null" >
+        #{response1,jdbcType=VARCHAR},
+      </if>
+      <if test="count1 != null" >
+        #{count1,jdbcType=SMALLINT},
+      </if>
+      <if test="responser2 != null" >
+        #{responser2,jdbcType=INTEGER},
+      </if>
+      <if test="response2 != null" >
+        #{response2,jdbcType=VARCHAR},
+      </if>
+      <if test="count2 != null" >
+        #{count2,jdbcType=SMALLINT},
+      </if>
+      <if test="responser3 != null" >
+        #{responser3,jdbcType=INTEGER},
+      </if>
+      <if test="response3 != null" >
+        #{response3,jdbcType=VARCHAR},
+      </if>
+      <if test="count3 != null" >
+        #{count3,jdbcType=SMALLINT},
+      </if>
+      <if test="responser4 != null" >
+        #{responser4,jdbcType=INTEGER},
+      </if>
+      <if test="response4 != null" >
+        #{response4,jdbcType=VARCHAR},
+      </if>
+      <if test="count4 != null" >
+        #{count4,jdbcType=SMALLINT},
+      </if>
+      <if test="responser5 != null" >
+        #{responser5,jdbcType=INTEGER},
+      </if>
+      <if test="response5 != null" >
+        #{response5,jdbcType=VARCHAR},
+      </if>
+      <if test="count5 != null" >
+        #{count5,jdbcType=SMALLINT},
+      </if>
+      <if test="responser6 != null" >
+        #{responser6,jdbcType=INTEGER},
+      </if>
+      <if test="response6 != null" >
+        #{response6,jdbcType=VARCHAR},
+      </if>
+      <if test="count6 != null" >
+        #{count6,jdbcType=SMALLINT},
+      </if>
+      <if test="responser7 != null" >
+        #{responser7,jdbcType=INTEGER},
+      </if>
+      <if test="response7 != null" >
+        #{response7,jdbcType=VARCHAR},
+      </if>
+      <if test="count7 != null" >
+        #{count7,jdbcType=SMALLINT},
+      </if>
+      <if test="responser8 != null" >
+        #{responser8,jdbcType=INTEGER},
+      </if>
+      <if test="response8 != null" >
+        #{response8,jdbcType=VARCHAR},
+      </if>
+      <if test="count8 != null" >
+        #{count8,jdbcType=SMALLINT},
+      </if>
+      <if test="responser9 != null" >
+        #{responser9,jdbcType=INTEGER},
+      </if>
+      <if test="response9 != null" >
+        #{response9,jdbcType=VARCHAR},
+      </if>
+      <if test="count9 != null" >
+        #{count9,jdbcType=SMALLINT},
+      </if>
+      <if test="responser10 != null" >
+        #{responser10,jdbcType=INTEGER},
+      </if>
+      <if test="response10 != null" >
+        #{response10,jdbcType=VARCHAR},
+      </if>
+      <if test="count10 != null" >
+        #{count10,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

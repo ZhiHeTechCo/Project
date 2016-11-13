@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/template.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <div class="screen-shots">
+        <!--sreen-gallery-cursual-->
+        <div class="sreen-gallery-cursual">
+          <!-- start content_slider -->
+          <div id="owl-demo" class="owl-carousel">
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <h:graphicImage value="../../resources/images/sea.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">在线题库</h5>
+                    <h4 class="s-para">在线试题</h4>
+                    <h4 class="s-para">微信随时做</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <h:graphicImage value="../../resources/images/tower.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">错题库</h5>
+                    <h4 class="s-para">私人定制</h4>
+                    <h4 class="s-para">记忆曲线推送错题</h4>
+                    <h4 class="s-para">登录即可见</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <h:graphicImage value="../../resources/images/house.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">论坛</h5>
+                    <h4 class="s-para">提问、回答</h4>
+                    <h4 class="s-para">玩转积分</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <h:graphicImage value="../../resources/images/roma.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">留言板</h5>
+                    <h4 class="s-para">聆听你的声音</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <h:graphicImage value="../../resources/images/sky.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">信息咨询</h5>
+                    <h4 class="s-para">考研</h4>
+                    <h4 class="s-para">留学</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- //requried-jsfiles-for owl -->
+      <div class="welcome text-center">
+        <div class="container">
+          <h2>欢迎您</h2>
+          <p>您现在访问的是重庆志合教育信息咨询服务有限公司网站主页。无论您是企业用户还是个人用户，我们都致力于为您提供多个行业最新、最优质的咨询和服务。</p>
+        </div>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

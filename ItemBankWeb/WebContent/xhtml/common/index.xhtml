@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="keywords" content="日语 在线测试 题库" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- <ui:insert name="title"></ui:insert> -->
+  <title>
+  </title>
+    
+
+    
+    <h:outputStylesheet library="css" name="bootstrap.css" />
+    <h:outputStylesheet library="css" name="owl.carousel.css" />
+    <h:outputStylesheet library="css" name="style.css" />
+    <h:outputStylesheet library="css" name="lightbox.css" />
+<!--     <link
+    href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+    rel='stylesheet' type='text/css' /> -->
+    
+    <h:outputStylesheet library="css" name="common-style.css" />
+    <h:outputStylesheet library="css" name="jquery-ui.css" />
+
+    <h:outputScript library="js" name="jquery-1.11.3.min.js" />
+    <h:outputScript library="js" name="jquery-ui.min.js" />
+    <h:outputScript library="js" name="jquery-ui-i18n.min.js" />
+    <h:outputScript library="js" name="main.js" />
+    <h:outputScript library="js" name="common.js" />
+    
+    <h:outputScript library="js" name="modernizr.custom.js" />
+    <h:outputScript library="js" name="bootstrap.js" />
+    <h:outputScript library="js" name="responsiveslides.min.js" />
+    <h:outputScript library="js" name="lightbox.js" />
+    <h:outputScript library="js" name="owl.carousel.js" />
+
+</h:head>  
+  
+<h:body>  
+
+<script type="text/javascript">
+        var contextPath = "${request.contextPath}";
+        pageToken = "${session.getAttribute('session-page-token')}";
+        $(document).ready(function() {
+            var pageTitle = "${session.getAttribute('session-current-page-title')}";
+            if(pageTitle == "") {
+                pageTitle = "首页";
+            }
+            document.title = pageTitle;
+            
+            $("#owl-demo").owlCarousel({
+                items : 4,
+                lazyLoad : true,
+                autoPlay : true,
+                navigation : false,
+                navigationText : false,
+                pagination : true,
+            });
+        });
+
+        function topMenu() {
+            window.top.location.href= "${request.contextPath}/xhtml/common/home.xhtml";
+        }
+        
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+    </script>
+
+
+  
+<h:form id="menuform">
+    <div style="text-align: left; margin-top: 70px" id="pageHisNavi">
+      <div class="header" id="header">
+        <div class="header-top">
+          <div class="container">
+            <table style="width: 100%">
+              <tr>
+                <td class="location"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>重庆志合教育信息咨询服务有限公司</td>
+                <td class="phonenum"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+86</td>
+                <td class="topUrl">
+                  <div>
+
+                    <h:commandLink value="登录" action="#{pageTopController.pageNavigator}"
+                      onclick="return buttonDisable();">
+                      <f:param name='pageController' value="signInBean"></f:param>
+                    </h:commandLink>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                    <h:commandLink value="注册" action="#{pageTopController.pageNavigator}"
+                      onclick="return buttonDisable();">
+                      <f:param name='pageController' value="signUpBean"></f:param>
+                    </h:commandLink>
+
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="header-bottom">
+        <div class="logo text-center">
+          <h1>
+            <a href="index">Service platform</a>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- navigation -->
+    <div class="navigation">
+      <div class="container">
+        <nav class="navbar navbar-default"> <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><h:commandLink value="首頁" action="#{pageTopController.init}"
+                onclick="return buttonDisable();" /></li>
+            <li><h:commandLink value="关于我们" action="#{pageTopController.pageNavigator}"
+                        onclick="return buttonDisable();">
+                        <f:param name='pageController' value="aboutUsController"></f:param>
+                      </h:commandLink></li>
+            <li><a href="doExam">试题库</a></li>
+            <li><a href="toForum">交流区</a></li>
+            <li><a href="toContact">留言板</a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <!-- /.navbar-collapse --> </nav>
+      </div>
+    </div>
+    <!-- //navigation -->
+
+    <div class="clearfix"></div>
+
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <div class="screen-shots">
+        <!--sreen-gallery-cursual-->
+        <div class="sreen-gallery-cursual">
+          <!-- start content_slider -->
+          <div id="owl-demo" class="owl-carousel">
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <img src="${request.contextPath}/resources/images/sea.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">在线题库</h5>
+                    <h4 class="s-para">在线试题</h4>
+                    <h4 class="s-para">微信随时做</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <img src="${request.contextPath}/resources/images/tower.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">错题库</h5>
+                    <h4 class="s-para">私人定制</h4>
+                    <h4 class="s-para">记忆曲线推送错题</h4>
+                    <h4 class="s-para">登录即可见</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <img src="${request.contextPath}/resources/images/house.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">论坛</h5>
+                    <h4 class="s-para">提问、回答</h4>
+                    <h4 class="s-para">玩转积分</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <img src="${request.contextPath}/resources/images/roma.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">留言板</h5>
+                    <h4 class="s-para">聆听你的声音</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item-grid">
+                <div class="item-pic">
+                  <img src="resources/images/sky.jpg" alt="" />
+                  <div class="item-text text-center">
+                    <h5 class="s-heading">信息咨询</h5>
+                    <h4 class="s-para">考研</h4>
+                    <h4 class="s-para">留学</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- //requried-jsfiles-for owl -->
+      <div class="welcome text-center">
+        <div class="container">
+          <h2>欢迎您</h2>
+          <p>您现在访问的是重庆志合教育信息咨询服务有限公司网站主页。无论您是企业用户还是个人用户，我们都致力于为您提供多个行业最新、最优质的咨询和服务。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="col-md-4 footer-grid">
+            <h5>About Us</h5>
+            <p>这是一个试题共享平台，希望能成为您语言学习的助力。</p>
+            <p>您可以在志合论坛提出您的问题，或是回答别人的问题，希望您也和我们一样，认为语言学习是一种美丽的分享。</p>
+          </div>
+          <div class="col-md-4 footer-grid">
+            <h5>Follow Us</h5>
+            <p>WeChar: zhiheriyu</p>
+            <p>
+              E-mail: <a href="mailto:1017007581@qq.com" />1017007581@qq.com
+            </p>
+          </div>
+          <div class="col-md-4 footer-grid">
+            <img src="../../resources/images/wechar.jpg" alt="" />
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="copyrights col-md-10">
+            <p>Copyright &copy; 2016.Company name All rights reserved.</p>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </h:form>
+</h:body>  
+</html>  
+
