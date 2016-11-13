@@ -10,12 +10,12 @@
     from
       tu_user 
     where
-      name = #{ account, jdbcType = VARCHAR } 
+      name = #{account, jdbcType=VARCHAR } 
     <if test = "password != null" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
-      ) = #{ password, jdbcType = CHAR }
+      ) = #{password, jdbcType=CHAR }
 
     </if>
   </select>
@@ -39,7 +39,7 @@
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
-      ) = #{password, jdbcType = CHAR }
+      ) = #{password, jdbcType=CHAR }
 
   </select>
   
