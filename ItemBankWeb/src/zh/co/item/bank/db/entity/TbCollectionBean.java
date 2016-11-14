@@ -91,7 +91,7 @@ public class TbCollectionBean {
 
     private String finish;
 
-    private Date creatTime;
+    private Date createTime;
 
     private Date updateTime;
 
@@ -447,12 +447,12 @@ public class TbCollectionBean {
         this.finish = finish == null ? null : finish.trim();
     }
 
-    public Date getCreatTime() {
-        return creatTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getUpdateTime() {

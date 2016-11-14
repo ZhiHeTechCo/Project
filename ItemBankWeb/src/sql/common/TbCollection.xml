@@ -46,7 +46,7 @@
     <result column="result20" property="result20" jdbcType="CHAR" />
     <result column="time20" property="time20" jdbcType="DATE" />
     <result column="finish" property="finish" jdbcType="CHAR" />
-    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbCollectionBean" >
@@ -61,7 +61,7 @@
       time14, result15, time15, result16, 
       time16, result17, time17, result18, 
       time18, result19, time19, result20, 
-      time20, finish, creat_time, 
+      time20, finish, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{count,jdbcType=SMALLINT}, 
       #{result1,jdbcType=CHAR}, #{time1,jdbcType=DATE}, #{result2,jdbcType=CHAR}, #{time2,jdbcType=DATE}, 
@@ -74,7 +74,7 @@
       #{time14,jdbcType=DATE}, #{result15,jdbcType=CHAR}, #{time15,jdbcType=DATE}, #{result16,jdbcType=CHAR}, 
       #{time16,jdbcType=DATE}, #{result17,jdbcType=CHAR}, #{time17,jdbcType=DATE}, #{result18,jdbcType=CHAR}, 
       #{time18,jdbcType=DATE}, #{result19,jdbcType=CHAR}, #{time19,jdbcType=DATE}, #{result20,jdbcType=CHAR}, 
-      #{time20,jdbcType=DATE}, #{finish,jdbcType=CHAR}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{time20,jdbcType=DATE}, #{finish,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbCollectionBean" >
@@ -212,8 +212,8 @@
       <if test="finish != null" >
         finish,
       </if>
-      <if test="creatTime != null" >
-        creat_time,
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="updateTime != null" >
         update_time,
@@ -352,8 +352,8 @@
       <if test="finish != null" >
         #{finish,jdbcType=CHAR},
       </if>
-      <if test="creatTime != null" >
-        #{creatTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
