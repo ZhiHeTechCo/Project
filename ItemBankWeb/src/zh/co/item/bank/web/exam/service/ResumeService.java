@@ -9,7 +9,7 @@ import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.web.exam.dao.ResumeDao;
 
 /**
- * 试题选择画面
+ * 错题库
  * 
  * @author gaoya
  *
@@ -26,5 +26,9 @@ public class ResumeService {
 
     public List<ExamModel> selectQuestionForErrorAll(Integer userId) {
         return resumeDao.selectQuestionForErrorAll(userId);
+    }
+
+    public List<ExamModel> selectErrorByFatherId(Integer fatherId) {
+        return resumeDao.selectErrorByFatherId(fatherId);
     }
 }

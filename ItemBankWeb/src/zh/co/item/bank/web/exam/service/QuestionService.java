@@ -134,4 +134,5 @@ public class QuestionService {
     public List<TbQuestionStructureBean> getStructures() {
         return questionDao.selectStructureForAll();
     }
+
 }

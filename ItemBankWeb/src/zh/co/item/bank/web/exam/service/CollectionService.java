@@ -13,7 +13,6 @@ public class CollectionService {
 
     public TbCollectionBean selectCollectionForOne(ExamModel examModel) {
         TbCollectionBean collection = collectionDao.selectCollectionForOne(examModel);
-        collection = collection == null ? new TbCollectionBean() : collection;
         return collection;
     }
 

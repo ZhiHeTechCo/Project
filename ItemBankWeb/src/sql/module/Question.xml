@@ -26,6 +26,15 @@
 		subject=#{subject,jdbcType=VARCHAR} limit 1
 	</select>
 
+	<select id="selectErrorByFatherId" parameterType="INTEGER"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select c.*,d.finish from (select a.subject, b.* from
+		tb_first_level_directory a right join
+		vb_question_detail b on a.id = b.fatherId where
+		a.id=#{id,jdbcType=INTEGER}) c left join tb_collection d on c.no=d.question_id where d.id=8 and
+		d.finish !='1' and d.finish!='9'
+	</select>
+
 	<select id="selectSpecialForOne" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select z.subject, c.no, c.context, c.context_key as contextKey,
@@ -33,11 +42,14 @@
 		c.analysis, c.source, c.father_id as fatherId,
 		c.classify_id as
 		classifyId, c.structure_id as structureId from
-		(select a.id, a.subject, a.delete_flag as deleteFlag from
-		tb_first_level_directory a, (select q.father_id as fatherId
+		(select a.id, a.subject,
+		a.delete_flag as deleteFlag from
+		tb_first_level_directory a, (select
+		q.father_id as fatherId
 		from
 		tb_question_classify
-		d , (select * from tb_question
+		d , (select * from
+		tb_question
 		where no not in
 		(select question_id from
 		tb_collection where
@@ -176,7 +188,7 @@
 		where
 		DATEDIFF(CURDATE(),updateTime) >= 3
 		and userId = #{userId}
-		limit 5
+		limit 1
 	</select>
 
 	<select id="selectQuestionForErrorAll" parameterType="Integer"
@@ -185,7 +197,7 @@
 		where
 		DATEDIFF(CURDATE(),updateTime) >= 1
 		and userId = #{userId}
-		limit 5
+		limit 1
 	</select>
 
 	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">

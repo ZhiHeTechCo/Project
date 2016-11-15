@@ -10,9 +10,10 @@
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examForm">
+			<h:form id="resumeForm">
 				<div class="typrography">
-					<h2 style="text-align: center;padding-bottom: 20px;color:#3382C9;">开始做题</h2>
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -24,18 +25,48 @@
 							</h:panelGroup>
 							<c:if test="#{resumeBean.tableShow ne null}">
 								<h4>#{resumeBean.tableShow}</h4>
+								<c:if test="#{resumeBean.title != ''}">
+									<h4>
+										<b><h:outputText value="#{resumeBean.title}"></h:outputText></b>
+									</h4>
+								</c:if>
+								<c:if test="#{resumeBean.subject != ''}">
+									<table class="table table-bordered">
+										<tr>
+											<td align="center"><h4>问题</h4></td>
+										</tr>
+										<tr>
+											<td>
+												<h4>
+													<h:outputText value="#{resumeBean.subject}"></h:outputText>
+												</h4>
+											</td>
+										</tr>
+									</table>
+								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
 									rendered="true" value="#{resumeBean.questions}" var="item">
 									<h:column>
-										<h4>序号</h4>
+										<h4>
+											<h:outputText value="#{item.index}"></h:outputText>
+										</h4>
 										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 										</td>
 										<tr>
-											<td><h:inputHidden value="#{item.myAnswer}"></h:inputHidden></td>
-											<td><input type="radio" value="1" />${item.a}</td>
-											<td><input type="radio" value="2" />${item.b}</td>
-											<td><input type="radio" value="3" />${item.c}</td>
-											<td><input type="radio" value="4" />${item.d}</td>
+											<td><h:inputHidden id="myAnswer" name="#{item.myAnswer}"
+													value="#{item.myAnswer}"></h:inputHidden></td>
+											<td><input name="myAnswer#{item.index}" type="radio"
+												value="1"
+												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
+											<td><input name="myAnswer#{item.index}" type="radio"
+												value="2"
+												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
+											<td><input name="myAnswer#{item.index}" type="radio"
+												value="3"
+												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
+											<td><input name="myAnswer#{item.index}" type="radio"
+												value="4"
+												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
 										</tr>
 									</h:column>
 								</h:dataTable>

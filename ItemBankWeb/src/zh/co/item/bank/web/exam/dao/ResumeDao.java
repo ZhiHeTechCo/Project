@@ -31,4 +31,15 @@ public class ResumeDao extends BaseDao {
     public List<ExamModel> selectQuestionForErrorAll(Integer userId) {
         return getIbatisTemplate().selectList("Question.selectQuestionForErrorAll", userId);
     }
+
+    /**
+     * 根据FatherId检索错题全部信息
+     * 
+     * @param id
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<ExamModel> selectErrorByFatherId(Integer id) {
+        return (List<ExamModel>) getIbatisTemplate().selectList("Question.selectErrorByFatherId", id);
+    }
 }
