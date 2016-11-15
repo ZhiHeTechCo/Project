@@ -19,9 +19,49 @@
 		tb_question_structure order by id
 	</select>
 
-	<select id="selectFLDByName" parameterType="zh.co.item.bank.db.entity.TbQuestionStructureBean" resultType="INTEGER">
+	<select id="selectFLDByName" parameterType="zh.co.item.bank.db.entity.TbQuestionStructureBean"
+		resultType="INTEGER">
 		select id from
-		tb_first_level_directory where subject=#{subject,jdbcType=VARCHAR} limit 1
+		tb_first_level_directory where
+		subject=#{subject,jdbcType=VARCHAR} limit 1
+	</select>
+
+	<select id="selectSpecialForOne" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select z.subject, c.no, c.context, c.context_key as contextKey,
+		c.context_after as contextAfter, c.a, c.b, c.c, c.d, c.answer,
+		c.analysis, c.source, c.father_id as fatherId,
+		c.classify_id as
+		classifyId, c.structure_id as structureId from
+		(select a.id, a.subject, a.delete_flag as deleteFlag from
+		tb_first_level_directory a, (select q.father_id as fatherId
+		from
+		tb_question_classify
+		d , (select * from tb_question
+		where no not in
+		(select question_id from
+		tb_collection where
+		id=#{userId})
+		) q
+		where
+		q.classify_id=d.id
+		<if test="exam !=null &amp; exam !=''">
+			and exam = #{exam,jdbcType=CHAR}
+		</if>
+		<if test="jlptLevel !=null &amp; jlptLevel !=''">
+			and jlpt_level = #{jlptLevel,jdbcType=CHAR}
+		</if>
+		<if test="jtestLevel !=null &amp; jtestLevel !=''">
+			and jtest_level = #{jtestLevel,jdbcType=CHAR}
+		</if>
+		<if test="examType !=null &amp; examType !=''">
+			and exam_type = #{examType,jdbcType=CHAR}
+		</if>
+		order by q.no
+		limit 1) w
+		where id = w.fatherId and a.delete_flag=0) z
+		right
+		join tb_question c on z.id = c.father_id where c.father_id =z.id
 	</select>
 
 	<!-- 词汇·文法（智能荐题） -->

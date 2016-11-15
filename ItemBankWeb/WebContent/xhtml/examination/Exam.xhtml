@@ -26,6 +26,20 @@
 								<h4>
 									<b><h:outputText value="#{examBean.title}"></h:outputText></b>
 								</h4>
+								<c:if test="#{examBean.subject != ''}">
+									<table class="table table-bordered">
+										<tr>
+											<td align="center"><h4>问题</h4></td>
+										</tr>
+										<tr>
+											<td>
+												<h4>
+													<h:outputText value="#{examBean.subject}"></h:outputText>
+												</h4>
+											</td>
+										</tr>
+									</table>
+								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
 									rendered="true" value="#{examBean.questions}" var="item">
 									<h:column>

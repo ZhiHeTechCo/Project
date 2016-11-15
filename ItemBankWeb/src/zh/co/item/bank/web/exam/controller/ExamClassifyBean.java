@@ -210,6 +210,7 @@ public class ExamClassifyBean extends BaseController {
         examBean.setUserInfo(userInfo);
         examBean.setQuestions(questions);
         examBean.setClassifyBean(classifyBean);
+        
         return examBean.init();
     }
 
