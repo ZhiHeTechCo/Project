@@ -34,252 +34,251 @@ import zh.co.item.bank.web.exam.service.ExamService;
 @Scope("session")
 public class ExamBean extends BaseController {
 
-	private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
+    private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
 
-	@Inject
-	private ExamService examService;
+    @Inject
+    private ExamService examService;
 
-	@Inject
-	private CollectionService collectionService;
+    @Inject
+    private CollectionService collectionService;
 
-	private ExamModel question;
+    /** 试题 */
+    private List<ExamModel> questions;
 
-	private List<ExamModel> questions;
+    /** 题型种别 */
+    private TbQuestionClassifyBean classifyBean;
 
-	private TbQuestionClassifyBean classifyBean;
+    /** 题目 */
+    private String title;
 
-	private String title;
+    /** 大题干 */
+    private String subject;
 
-	private String subject;
+    /** 用户信息 */
+    private TuUserBean userInfo;
 
-	private TuUserBean userInfo;
+    public String getPageId() {
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
 
-	public String getPageId() {
-		return SystemConstants.PAGE_ITBK_EXAM_002;
-	}
+    /**
+     * initial
+     * 
+     * @return
+     */
+    public String init() {
+        try {
+            pushPathHistory("examBean");
+            title = examService.getTitle(questions.get(0).getStructureId());
+            // question = new ExamModel();
+            subject = "";
+            // 画面序号
+            for (int i = 0; i < questions.size(); i++) {
+                questions.get(i).setIndex(i + 1);
+            }
 
-	/**
-	 * initial
-	 * 
-	 * @return
-	 */
-	public String init() {
-		try {
-			pushPathHistory("examBean");
-			title = examService.getTitle(questions.get(0).getStructureId());
-			question = new ExamModel();
-			subject = "";
+            if (classifyBean != null) {
+                // 文字和阅读时
+                if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
+                    subject = questions.get(0).getSubject();
+                }
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
 
-			if (classifyBean != null) {
-				// 文字和阅读时
-				if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
-					subject = questions.get(0).getSubject();
-				}
-			}
-		} catch (Exception e) {
-			processForException(logger, e);
-		}
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
 
-		return SystemConstants.PAGE_ITBK_EXAM_002;
-	}
+    /**
+     * 后续画面返回[试题库]
+     * 
+     * @return
+     */
+    public String reInit() {
+        try {
+            if (!checkuser()) {
+                // 跳转至登录画面
+                return SystemConstants.PAGE_ITBK_USER_002;
+            }
 
-	/**
-	 * 后续画面返回[试题库]
-	 * 
-	 * @return
-	 */
-	public String reInit() {
-		try {
-			if (!checkuser()) {
-				// 跳转至登录画面
-				return SystemConstants.PAGE_ITBK_USER_002;
-			}
+            pushPathHistory("examBean");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("userId", userInfo.getId());
+            // 智能选题模式
+            if (classifyBean == null) {
+                if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
+                    map.put("jlptLevel", userInfo.getJlptLevel());
+                }
+                if (!StringUtils.isEmpty(userInfo.getJtestLevel())) {
+                    map.put("jtestLevel", userInfo.getJtestLevel());
+                }
+                if ((StringUtils.isEmpty(userInfo.getJlptLevel())) && (StringUtils.isEmpty(userInfo.getJtestLevel()))) {
+                    logger.log(MessageId.ITBK_I_0009);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0009);
+                    throw ex;
+                }
+                questions = examService.smartSearch(map);
 
-			pushPathHistory("examBean");
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("userId", userInfo.getId());
-			// 智能选题模式
-			if (classifyBean == null) {
-				if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
-					map.put("jlptLevel", userInfo.getJlptLevel());
-				}
-				if (!StringUtils.isEmpty(userInfo.getJtestLevel())) {
-					map.put("jtestLevel", userInfo.getJtestLevel());
-				}
-				if ((StringUtils.isEmpty(userInfo.getJlptLevel())) && (StringUtils.isEmpty(userInfo.getJtestLevel()))) {
-					logger.log(MessageId.ITBK_I_0009);
-					CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0009);
-					throw ex;
-				}
-				questions = examService.smartSearch(map);
+            } else {
+                boolean flag = true;
+                if (!classifyBean.getExam().isEmpty()) {
+                    map.put("exam", classifyBean.getExam());
+                    flag = false;
+                }
+                if (!classifyBean.getExamType().isEmpty()) {
+                    map.put("examType", classifyBean.getExamType());
+                    flag = false;
+                }
+                if (!classifyBean.getJlptLevel().isEmpty()) {
+                    map.put("jlptLevel", classifyBean.getJlptLevel());
+                    flag = false;
+                }
+                if (!classifyBean.getJtestLevel().isEmpty()) {
+                    map.put("jtestLevel", classifyBean.getJtestLevel());
+                    flag = false;
+                }
+                if (flag) {
+                    logger.log(MessageId.ITBK_E_0005);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
+                    throw ex;
+                }
 
-			} else {
-				boolean flag = true;
-				if (!classifyBean.getExam().isEmpty()) {
-					map.put("exam", classifyBean.getExam());
-					flag = false;
-				}
-				if (!classifyBean.getExamType().isEmpty()) {
-					map.put("examType", classifyBean.getExamType());
-					flag = false;
-				}
-				if (!classifyBean.getJlptLevel().isEmpty()) {
-					map.put("jlptLevel", classifyBean.getJlptLevel());
-					flag = false;
-				}
-				if (!classifyBean.getJtestLevel().isEmpty()) {
-					map.put("jtestLevel", classifyBean.getJtestLevel());
-					flag = false;
-				}
-				if (flag) {
-					logger.log(MessageId.ITBK_E_0005);
-					CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
-					throw ex;
-				}
+                questions = examService.classifySearch(classifyBean, map);
+            }
+            if (questions.size() == 0) {
+                title = "";
+                logger.log(MessageId.ITBK_I_0010);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
+                throw ex;
+            }
 
-				questions = examService.classifySearch(classifyBean, map);
-			}
-			if (questions.size() == 0) {
-				title = "";
-				logger.log(MessageId.ITBK_I_0010);
-				CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
-				throw ex;
-			}
+            // 文字和阅读时
+            if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
+                subject = questions.get(0).getSubject();
+            } else {
+                subject = "";
+            }
 
-			// 文字和阅读时
-			if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
-				subject = questions.get(0).getSubject();
-			} else {
-				subject = "";
-			}
+            // 重新获取大题题目
+            title = examService.getTitle(questions.get(0).getStructureId());
 
-			// 重新获取大题题目
-			title = examService.getTitle(questions.get(0).getStructureId());
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
 
-		} catch (Exception e) {
-			processForException(logger, e);
-		}
-		return SystemConstants.PAGE_ITBK_EXAM_002;
-	}
+    /**
+     * [确认]按钮点下
+     * 
+     * @return
+     */
+    public String doSubmit() {
+        try {
+            if (!checkuser()) {
+                return SystemConstants.PAGE_ITBK_USER_002;
+            }
+            for (int i = 0; i < questions.size(); i++) {
+                TbCollectionBean collection = new TbCollectionBean();
 
-	/**
-	 * [确认]按钮点下
-	 * 
-	 * @return
-	 */
-	public String doSubmit() {
-		try {
-			if (!checkuser()) {
-				return SystemConstants.PAGE_ITBK_USER_002;
-			}
-			for (int i = 0; i < questions.size(); i++) {
-				TbCollectionBean collection = new TbCollectionBean();
+                ExamModel examModel = (ExamModel) questions.get(i);
 
-				ExamModel examModel = (ExamModel) questions.get(i);
+                collection.setId(userInfo.getId());
 
-				collection.setId(userInfo.getId());
+                collection.setQuestionId(Integer.valueOf(examModel.getNo()));
 
-				collection.setQuestionId(Integer.valueOf(examModel.getNo()));
+                short count = collection.getCount() == null ? 0 : collection.getCount();
+                count = (short) (count + 1);
+                collection.setCount(count);
 
-				short count = collection.getCount();
-				count = (short) (count + 1);
-				collection.setCount(count);
+                String param = "setResult" + count;
 
-				String param = "setResult" + count;
+                Method method = collection.getClass().getMethod(param, new Class[] { String.class });
+                String choice = StringUtils.isEmpty(examModel.getMyAnswer()) ? "" : examModel.getMyAnswer();
+                method.invoke(collection, new Object[] { choice });
+                if (examModel.getAnswer().equals(choice)) {
+                    collection.setFinish("1");
+                }
+                collectionService.insertCollection(collection);
+            }
 
-				Method method = collection.getClass().getMethod(param, new Class[] { String.class });
-				String choice = StringUtils.isEmpty(examModel.getMyAnswer()) ? "" : examModel.getMyAnswer();
-				method.invoke(collection, new Object[] { choice });
-				if (examModel.getAnswer().equals(choice)) {
-					collection.setFinish("1");
-				}
-				collectionService.insertCollection(collection);
-			}
+            // 跳转至[结果一览]画面
+            ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+            examResultBean.setQuestions(questions);
+            examResultBean.setClassifyBean(classifyBean);
+            examResultBean.setTitle(title);
+            return examResultBean.init();
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
 
-			// 跳转至[结果一览]画面
-			ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-			examResultBean.setQuestions(questions);
-			examResultBean.setClassifyBean(classifyBean);
-			examResultBean.setTitle(title);
-			return examResultBean.init();
-		} catch (Exception e) {
-			processForException(logger, e);
-		}
-		return SystemConstants.PAGE_ITBK_EXAM_002;
-	}
+    private boolean checkuser() {
+        if (userInfo == null) {
+            logger.log(MessageId.COMMON_E_0009);
+            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
+            processForException(logger, ex);
+            return false;
+        }
+        return true;
+    }
 
-	private boolean checkuser() {
-		if (userInfo == null) {
-			logger.log(MessageId.COMMON_E_0009);
-			CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-			processForException(logger, ex);
-			return false;
-		}
-		return true;
-	}
+    public ExamService getExamService() {
+        return examService;
+    }
 
-	public ExamService getExamService() {
-		return examService;
-	}
+    public void setExamService(ExamService examService) {
+        this.examService = examService;
+    }
 
-	public void setExamService(ExamService examService) {
-		this.examService = examService;
-	}
+    public CollectionService getCollectionService() {
+        return collectionService;
+    }
 
-	public CollectionService getCollectionService() {
-		return collectionService;
-	}
+    public void setCollectionService(CollectionService collectionService) {
+        this.collectionService = collectionService;
+    }
 
-	public void setCollectionService(CollectionService collectionService) {
-		this.collectionService = collectionService;
-	}
+    public List<ExamModel> getQuestions() {
+        return questions;
+    }
 
-	public ExamModel getQuestion() {
-		return question;
-	}
+    public void setQuestions(List<ExamModel> questions) {
+        this.questions = questions;
+    }
 
-	public void setQuestion(ExamModel question) {
-		this.question = question;
-	}
+    public TbQuestionClassifyBean getClassifyBean() {
+        return classifyBean;
+    }
 
-	public List<ExamModel> getQuestions() {
-		return questions;
-	}
+    public void setClassifyBean(TbQuestionClassifyBean classifyBean) {
+        this.classifyBean = classifyBean;
+    }
 
-	public void setQuestions(List<ExamModel> questions) {
-		this.questions = questions;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public TbQuestionClassifyBean getClassifyBean() {
-		return classifyBean;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setClassifyBean(TbQuestionClassifyBean classifyBean) {
-		this.classifyBean = classifyBean;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public TuUserBean getUserInfo() {
+        return userInfo;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public TuUserBean getUserInfo() {
-		return userInfo;
-	}
-
-	public void setUserInfo(TuUserBean userInfo) {
-		this.userInfo = userInfo;
-	}
+    public void setUserInfo(TuUserBean userInfo) {
+        this.userInfo = userInfo;
+    }
 
 }
