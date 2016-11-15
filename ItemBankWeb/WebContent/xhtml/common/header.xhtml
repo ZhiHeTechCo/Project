@@ -26,8 +26,10 @@
                       </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
                           <li><a href="toUserInfo">个人信息</a></li>
-                          <li><a href="doExam">试题库</a></li>
-                          <li><a href="doReview">错题库</a></li>
+                          <li><h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="examClassifyBean"></f:param>
+                    </h:commandLink></li>
+                                            <li><h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="resumeBean"></f:param>
+                    </h:commandLink></li>
                           <li><a href="toMyQuestions">我的提问</a></li>
                           <li><a href="toAnswerQuestion">回答问题</a></li>
                           <li><a href="toLogin">切换用户</a></li>

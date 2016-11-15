@@ -46,10 +46,37 @@
    
    
    <navigation-case>
+      <from-outcome>ITBK_EXAM_001</from-outcome>
+      <to-view-id>/xhtml/examination/ExamClassify.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_EXAM_002</from-outcome>
+      <to-view-id>/xhtml/examination/Exam.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_EXAM_003</from-outcome>
+      <to-view-id>/xhtml/examination/ExamResult.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_EXAM_004</from-outcome>
+      <to-view-id>/xhtml/examination/ExamDetail.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_EXAM_005</from-outcome>
+      <to-view-id>/xhtml/examination/Resume.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_QUE_001</from-outcome>
+      <to-view-id>/xhtml/examination/QuestionInsert.xhtml</to-view-id>
+   </navigation-case>
+   
+   
+   <navigation-case>
       <from-outcome>page_forward_error</from-outcome>
       <to-view-id>/xhtml/common/page_forward_error.xhtml</to-view-id>
       <redirect/>
    </navigation-case>
 </navigation-rule>
+
 
 </faces-config>
