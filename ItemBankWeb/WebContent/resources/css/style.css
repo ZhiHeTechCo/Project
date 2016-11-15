@@ -135,7 +135,7 @@ span.glyphicon.glyphicon-earphone, span.glyphicon.glyphicon-map-marker {
 .social-icons i {
 	width: 18px;
 	height: 18px;
-	background: url('../images/img-sprite.png') no-repeat 0px 0px;
+	background: url("#{resource['images:img-sprite.png']}") no-repeat 0px 0px;
 	display: inline-block;
 	margin-right: 3px;
 }
@@ -743,7 +743,7 @@ a.callbacks_nav.callbacks1_nav.prev {
 ul.social-slide li i {
 	width: 70px;
 	height: 74px;
-	background: url(../images/img-resources.png) no-repeat;
+	background: url("#{resource['images:img-resources.png']}") no-repeat;
 	display: inline-block;
 	margin: 0px 15px;
 }
@@ -797,14 +797,14 @@ ul.social-slide li i.mac {
 }
 
 a.callbacks_nav.callbacks2_nav.prev {
-	background: transparent url("../images/icons-sprite.png") no-repeat left
+	background: transparent url("#{resource['images:icons-sprite.png']}") no-repeat left
 		top;
 	width: 41px;
 	height: 41px;
 }
 
 a.callbacks_nav.callbacks2_nav.next {
-	background: transparent url("../images/icons-sprite.png") no-repeat
+	background: transparent url("#{resource['images:icons-sprite.png']}") no-repeat
 		-41px 0px;
 	width: 41px;
 	height: 41px;
@@ -829,7 +829,7 @@ a.callbacks_nav.callbacks2_nav.next {
 .second-slider:before {
 	content: '';
 	position: absolute;
-	background: url(../images/cutter.png) no-repeat;
+	background: url("#{resource['images:cutter.png']}") no-repeat;
 	background-size: 100% 100%;
 	height: 79px;
 	z-index: 9;
@@ -845,7 +845,7 @@ a.callbacks_nav.callbacks2_nav.next {
 .second-slider:after {
 	content: '';
 	position: absolute;
-	background: url(../images/cutter.png) no-repeat;
+	background: url("#{resource['images:cutter.png']}") no-repeat;
 	background-size: 100% 100%;
 	height: 79px;
 	z-index: 9;
@@ -992,7 +992,7 @@ a.button img {
 /*-- news-ends --*/
 /*-- footer-starts --*/
 .footer-top {
-	background: url('../images/footer-top-bg.jpg') repeat;
+	background: url("#{resource['images:footer-top-bg.jpg']}") repeat;
 	padding: 5em 0 4em 0;
 }
 
@@ -1187,17 +1187,17 @@ a.button img {
 }
 
 .ch-img-1 {
-	background-image: url(../images/mem1.jpg);
+	background-image: url("#{resource['images:mem1.jpg']}");
 	background-size: 100% 100%;
 }
 
 .ch-img-2 {
-	background-image: url(../images/mem2.jpg);
+	background-image: url("#{resource['images:mem2.jpg']}");
 	background-size: 100% 100%;
 }
 
 .ch-img-3 {
-	background-image: url(../images/mem3.jpg);
+	background-image: url("#{resource['images:mem3.jpg']}");
 	background-size: 100% 100%;
 }
 
