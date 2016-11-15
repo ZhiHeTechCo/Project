@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/template.xhtml">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="examDetailForm">
+				<div class="typrography">
+					<h2 style="text-align: center;">试题详细</h2>
+					<div class="container">
+						<div class="bs-example">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<h4>
+								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
+							</h4>
+							<table class="table">
+								<tr>
+									<td>
+										<h4>题干：</h4>
+									</td>
+									<td colspan="4"><h:outputText
+											value="#{examResultBean.question.context}" /> <ins>
+											<h:outputText value="#{examResultBean.question.contextKey}" />
+										</ins> <h:outputText value="#{examResultBean.question.contextAfter}" />
+									</td>
+								</tr>
+								<tr>
+									<td><h4>选项：</h4></td>
+									<td>A：<h:outputText value="#{examResultBean.question.a}" /></td>
+									<td>B：<h:outputText value="#{examResultBean.question.b}" /></td>
+									<td>C：<h:outputText value="#{examResultBean.question.c}" /></td>
+									<td>D：<h:outputText value="#{examResultBean.question.d}" /></td>
+								</tr>
+								<tr>
+									<td><h4>正确答案：</h4></td>
+									<c:if test="#{examResultBean.question.answer eq '1'}">
+										<td colspan="4">A</td>
+									</c:if>
+									<c:if test="#{examResultBean.question.answer eq '2'}">
+										<td colspan="4">B</td>
+									</c:if>
+									<c:if test="#{examResultBean.question.answer eq '3'}">
+										<td colspan="4">C</td>
+									</c:if>
+									<c:if test="#{examResultBean.question.answer eq '4'}">
+										<td colspan="4">D</td>
+									</c:if>
+								</tr>
+								<tr>
+									<td><h4>解析：</h4></td>
+									<td colspan="4"><c:if
+											test="#{examResultBean.question.analysis eq ''}">暂无</c:if></td>
+									<h:outputText value="#{examResultBean.question.analysis}" />
+								</tr>
+								<tr>
+									<td><h4>考试类别：</h4></td>
+									<td colspan="4"><h:outputText
+											value="#{examResultBean.question.examType}" /></td>
+								</tr>
+								<tr>
+									<td><h4>考试级别：</h4></td>
+									<td colspan="4"><h:outputText
+											value="#{examResultBean.question.examType}" /></td>
+								</tr>
+								<tr>
+									<td><h4>试题出处：</h4></td>
+									<td colspan="4"><h:outputText
+											value="#{examResultBean.question.source}" /></td>
+								</tr>
+							</table>
+							<table class="toTable" style="width: 50%">
+								<tr>
+									<td>
+										<div class="form-submit1">
+											<h:commandButton value="返回前页" class="button1"
+												action="#{examResultBean.goBackToResult}"
+												id="goBackToResultBtn" />
+										</div>
+									</td>
+									<td>
+										<div class="form-submit1">
+											<h:commandButton value="继续做题" class="button1"
+												action="#{examResultBean.goBackToExam}" id="goBackToExamBtn" />
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

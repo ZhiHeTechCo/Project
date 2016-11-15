@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/template.xhtml">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="examForm">
+				<div class="typrography">
+					<h2 style="text-align: center;">开始做题</h2>
+					<div class="container">
+						<div class="bs-example">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<c:if test="#{examBean.title != ''}">
+								<h4>
+									<b><h:outputText value="#{examBean.title}"></h:outputText></b>
+								</h4>
+								<h:dataTable id="qt" class="table table-bordered"
+									rendered="true" value="#{examBean.questions}" var="item">
+									<h:column>
+										<h4>序号</h4>
+										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
+										</td>
+										<tr>
+											<td><h:inputHidden value="#{item.myAnswer}"></h:inputHidden></td>
+											<td><input type="radio" value="1" />${item.a}</td>
+											<td><input type="radio" value="2" />${item.b}</td>
+											<td><input type="radio" value="3" />${item.c}</td>
+											<td><input type="radio" value="4" />${item.d}</td>
+										</tr>
+									</h:column>
+								</h:dataTable>
+								<div class="form-submit1">
+									<h:commandButton value="确认" class="button1"
+										action="#{examBean.doSubmit}" id="doSubmitBtn" />
+								</div>
+							</c:if>
+							<c:if test="#{examBean.title == ''}">
+								<div class="form-submit1">
+									<h:commandButton value="我的错题" class="button1"
+										action="#{examBean.doResume}" id="doResumeBtn" />
+								</div>
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

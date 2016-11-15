@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Forum">
+
+	<select id="selectForumForAll" resultType="ForumModel">
+		select *
+		from
+		vb_forum
+	</select>
+
+	<select id="selectForumByAsker" parameterType="Integer"
+		resultType="ForumModel">
+		select * from vb_forum_my where asker = #{id}
+	</select>
+
+	<select id="selectForumByQuestionId" parameterType="Integer"
+		resultType="ForumModel">
+		select * from vb_forum where questionId =
+		#{questionId}
+	</select>
+
+	<select id="selectForumAskerForOne" parameterType="ForumModel"
+		resultType="Integer">
+		select count(no) from tb_forum_asker where asker = #{asker}
+		and questionId = #{questionId}
+	</select>
+
+	<select id="selectForumForOne" parameterType="Integer"
+		resultType="Integer">
+		select count(questionId) from tb_forum_response where questionId =
+		#{questionId}
+	</select>
+
+	<select id="selectAllAsker" parameterType="Integer" resultType="UserBean">
+		select u.name from tb_forum_asker a left join tu_user u on u.id =
+		a.asker where questionId = #{questionId}
+	</select>
+
+	<select id="selectQuestionByContext" parameterType="com.zh.hs.business.model.ForumModel"
+		resultType="com.zh.hs.business.model.ForumModel">
+		select
+		*
+		from tb_tmp_question
+		where
+		context = #{context}
+	</select>
+
+	<select id="selectTmpQuestionByQuestionId" parameterType="Integer"
+		resultType="com.zh.hs.business.model.ForumModel">
+		select
+		*
+		from vb_tmp_question_detail
+		where
+		deleteFlag != 4 and
+		no =
+		#{questionId}
+	</select>
+
+	<update id="updateForumResponse" parameterType="com.zh.hs.business.model.ForumModel">
+		update tb_forum_response
+		<set>
+			<if test="count !=null || count !=0">
+				count = #{count},
+			</if>
+			<if test="responser1 !=null">
+				responser1 = #{responser1},
+			</if>
+			<if test="responser2 !=null">
+				responser2 = #{responser2},
+			</if>
+			<if test="responser3 !=null">
+				responser3 = #{responser3},
+			</if>
+			<if test="responser4 !=null">
+				responser4 = #{responser4},
+			</if>
+			<if test="responser5 !=null">
+				responser5 = #{responser5},
+			</if>
+			<if test="responser6 !=null">
+				responser6 = #{responser6},
+			</if>
+			<if test="responser7 !=null">
+				responser7 = #{responser7},
+			</if>
+			<if test="responser8 !=null">
+				responser8 = #{responser8},
+			</if>
+			<if test="responser9 !=null">
+				responser9 = #{responser9},
+			</if>
+			<if test="responser10 !=null">
+				responser10 = #{responser10},
+			</if>
+			<if test="response1 !=null">
+				response1 = #{response1},
+			</if>
+			<if test="response2 !=null">
+				response2 = #{response2},
+			</if>
+			<if test="response3 !=null">
+				response3 = #{response3},
+			</if>
+			<if test="response4 !=null">
+				response4 = #{response4},
+			</if>
+			<if test="response5 !=null">
+				response5 = #{response5},
+			</if>
+			<if test="response6 !=null">
+				response6 = #{response6},
+			</if>
+			<if test="response7 !=null">
+				response7 = #{response7},
+			</if>
+			<if test="response8 !=null">
+				response8 = #{response8},
+			</if>
+			<if test="response9 !=null">
+				response9 = #{response9},
+			</if>
+			<if test="response10 !=null">
+				response10 = #{response10},
+			</if>
+			<if test="status !=null">
+				status = #{status},
+			</if>
+		</set>
+		where questionId = #{questionId,jdbcType=INTEGER}
+	</update>
+
+	<update id="doUp" parameterType="com.zh.hs.business.model.ForumResponseBean">
+		update tb_forum_response
+		<set>
+			<if test="count1 == -1">
+				count1 = count1 + 1,
+			</if>
+			<if test="count2 == -1">
+				count2 = count2 + 1,
+			</if>
+			<if test="count3 == -1">
+				count3 = count3 + 1,
+			</if>
+			<if test="count4 == -1">
+				count4 = count4 + 1,
+			</if>
+			<if test="count5 == -1">
+				count5 = count5 + 1,
+			</if>
+			<if test="count6 == -1">
+				count6 = count6 + 1,
+			</if>
+			<if test="count7 == -1">
+				count7 = count7 + 1,
+			</if>
+			<if test="count8 == -1">
+				count8 = count8 + 1,
+			</if>
+			<if test="count9 == -1">
+				count9 = count9 + 1,
+			</if>
+			<if test="count10 == -1">
+				count10 = count10 + 1,
+			</if>
+		</set>
+		where questionId = #{questionId,jdbcType=INTEGER}
+	</update>
+
+	<insert id="insertForumAsker" parameterType="com.zh.hs.business.model.ForumModel">
+		insert into tb_forum_asker
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no !=null">
+				no,
+			</if>
+			<if test="questionId !=null">
+				questionId,
+			</if>
+			<if test="asker !=null">
+				asker,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no !=null">
+				#{no,jdbcType=INTEGER},
+			</if>
+			<if test="questionId !=null">
+				#{questionId,jdbcType=INTEGER},
+			</if>
+			<if test="asker !=null">
+				#{asker,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertForumResponse" parameterType="INTEGER">
+		insert into
+		tb_forum_response (questionId) values (#{questionId})
+	</insert>
+
+</mapper>
