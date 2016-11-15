@@ -10,7 +10,7 @@ package zh.co.common.constant;
  */
 public class SystemConstants {
 
-	/**--------------------     系统常量----------------------------------
+	/**--------------------系统常量----------------------------------
     /** 改行*/
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
     /**文件编码*/
@@ -26,7 +26,7 @@ public class SystemConstants {
     /**加密串*/
     public static final String DB_ENCRYPTION_PASSWORD = "db_encryption_password";
     /**文件上传大小限制*/
-    public static final String FILEUPLOAD_SIZE_LIMIT = "	fileupload_size_limit";
+    public static final String FILEUPLOAD_SIZE_LIMIT = "fileupload_size_limit";
     
     
     /**---------------------画面ID------------------------------
@@ -44,6 +44,17 @@ public class SystemConstants {
     /**修改密码画面*/
     public static final String PAGE_ITBK_USER_004 = "ITBK_USER_004";
     /**错题库*/
-    public static final String PAGE_ITBK_USER_005 = "ITBK_USER_005";
+	/** 选择题型 */
+	public static final String PAGE_ITBK_EXAM_001 = "ITBK_EXAM_001";
+	/** 试题库 */
+	public static final String PAGE_ITBK_EXAM_002 = "ITBK_EXAM_002";
+	/** 结果一览 */
+	public static final String PAGE_ITBK_EXAM_003 = "ITBK_EXAM_003";
+	/** 试题详细 */
+	public static final String PAGE_ITBK_EXAM_004 = "ITBK_EXAM_004";
+	/** 错题库 */
+	public static final String PAGE_ITBK_EXAM_005 = "ITBK_EXAM_005";
+	/** 试题登录 */
+	public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     
 }

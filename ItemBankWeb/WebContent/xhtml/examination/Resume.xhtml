@@ -22,12 +22,10 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<c:if test="#{examBean.title != ''}">
-								<h4>
-									<b><h:outputText value="#{examBean.title}"></h:outputText></b>
-								</h4>
+							<c:if test="#{resumeBean.tableShow ne null}">
+								<h4>#{resumeBean.tableShow}</h4>
 								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{examBean.questions}" var="item">
+									rendered="true" value="#{resumeBean.questions}" var="item">
 									<h:column>
 										<h4>序号</h4>
 										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
@@ -43,13 +41,13 @@
 								</h:dataTable>
 								<div class="form-submit1">
 									<h:commandButton value="确认" class="button1"
-										action="#{examBean.doSubmit}" id="doSubmitBtn" />
+										action="#{resumeBean.doResumeSubmit}" id="doResumeSubmitBtn" />
 								</div>
 							</c:if>
-							<c:if test="#{examBean.title == ''}">
-								<div class="form-submit1">
-									<h:commandButton value="我的错题" class="button1"
-										action="#{examBean.doResume}" id="doResumeBtn" />
+							<c:if test="#{resumeBean.tableShow eq null}">
+								<div class="form-submit1" style="margin-top: 50px;">
+									<h:commandButton value="去做题" class="button1"
+										action="#{resumeBean.toClassify}" id="toClassifyBtn" />
 								</div>
 							</c:if>
 						</div>

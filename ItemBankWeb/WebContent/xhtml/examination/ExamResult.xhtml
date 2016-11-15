@@ -28,12 +28,12 @@
 							<h:dataTable class="table table-bordered" rendered="true"
 								value="#{examResultBean.questions}" var="item">
 								<h:column>
-									<c:if test="#{item.myAnswer} eq #{item.answer}">
+									<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
 										<h4 style="color: #33cc33;">正确</h4>
-									</c:if>
-									<c:otherwise>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
 										<h4 style="color: red;">错误</h4>
-									</c:otherwise>
+									</h:panelGroup>
 									<td colspan="4" class="list-group list-group-alternate"><h:commandLink
 											action="#{examResultBean.showDetail}"
 											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
@@ -53,33 +53,36 @@
 									</tr>
 									<tr>
 										<td><h4>您的选择：</h4></td>
-										<c:if test="#{item.myAnswer eq '1'}">
+										<h:panelGroup rendered="#{item.myAnswer eq '1'}">
 											<td colspan="4">A</td>
-										</c:if>
-										<c:if test="#{item.myAnswer eq '2'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.myAnswer eq '2'}">
 											<td colspan="4">B</td>
-										</c:if>
-										<c:if test="#{item.myAnswer eq '3'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.myAnswer eq '3'}">
 											<td colspan="4">C</td>
-										</c:if>
-										<c:if test="#{item.myAnswer eq '4'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.myAnswer eq '4'}">
 											<td colspan="4">D</td>
-										</c:if>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.myAnswer eq ''}">
+											<td colspan="4">未选择</td>
+										</h:panelGroup>
 									</tr>
 									<tr>
 										<td><h4>正确答案：</h4></td>
-										<c:if test="#{item.answer eq '1'}">
+										<h:panelGroup rendered="#{item.answer eq '1'}">
 											<td colspan="4">A</td>
-										</c:if>
-										<c:if test="#{item.answer eq '2'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.answer eq '2'}">
 											<td colspan="4">B</td>
-										</c:if>
-										<c:if test="#{item.answer eq '3'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.answer eq '3'}">
 											<td colspan="4">C</td>
-										</c:if>
-										<c:if test="#{item.answer eq '4'}">
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.answer eq '4'}">
 											<td colspan="4">D</td>
-										</c:if>
+										</h:panelGroup>
 									</tr>
 								</h:column>
 							</h:dataTable>

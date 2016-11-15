@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Collection">
+
+	<select id="selectCollectionForOne" parameterType="zh.co.item.bank.model.entity.ExamModel"
+		resultType="zh.co.item.bank.db.entity.TbCollectionBean">
+		select * from `tb_collection`
+		where id = #{userId} and
+		question_id = #{no}
+	</select>
+
+	<insert id="insertCollection" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		insert into tb_collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="questionId != null">
+				question_id,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="result1 != null">
+				result1,
+				time1,
+			</if>
+			<if test="result2 != null">
+				result2,
+				time2,
+			</if>
+			<if test="result3 != null">
+				result3,
+				time3
+			</if>
+			<if test="result4 != null">
+				result4,
+				time4,
+			</if>
+			<if test="result5 != null">
+				result5,
+				time5,
+			</if>
+			<if test="result6 != null">
+				result6,
+				time6,
+			</if>
+			<if test="result7 != null">
+				result7,
+				time7,
+			</if>
+			<if test="result8 != null">
+				result8,
+				time8,
+			</if>
+			<if test="result9 != null">
+				result9,
+				time9,
+			</if>
+			<if test="result10 != null">
+				result10,
+				time10,
+			</if>
+			<if test="result11 != null">
+				result11,
+				time11,
+			</if>
+			<if test="result12 != null">
+				result12,
+				time12,
+			</if>
+			<if test="result13 != null">
+				result13,
+				time13,
+			</if>
+			<if test="result14 != null">
+				result14,
+				time14,
+			</if>
+			<if test="result15 != null">
+				result15,
+				time15,
+			</if>
+			<if test="result16 != null">
+				result16,
+				time16,
+			</if>
+			<if test="result17 != null">
+				result17,
+				time17,
+			</if>
+			<if test="result18 != null">
+				result18,
+				time18,
+			</if>
+			<if test="result19 != null">
+				result19,
+				time19,
+			</if>
+			<if test="result20 != null">
+				result20,
+				time20,
+			</if>
+			<if test="finish != null">
+				finish,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=SMALLINT},
+			</if>
+			<if test="questionId != null">
+				#{questionId,jdbcType=SMALLINT},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=SMALLINT},
+			</if>
+			<if test="result1 != null">
+				#{result1,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result2 != null">
+				#{result2,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result3 != null">
+				#{result3,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result4 != null">
+				#{result4,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result5 != null">
+				#{result5,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result6 != null">
+				#{result6,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result7 != null">
+				#{result7,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result8 != null">
+				#{result8,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result9 != null">
+				#{result9,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result10 != null">
+				#{result10,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result11 != null">
+				#{result11,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result12 != null">
+				#{result12,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result13 != null">
+				#{result13,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result14 != null">
+				#{result14,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result15 != null">
+				#{result15,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result16 != null">
+				#{result16,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result17 != null">
+				#{result17,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result18 != null">
+				#{result18,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result19 != null">
+				#{result19,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="result20 != null">
+				#{result20,jdbcType=CHAR},
+				CURDATE(),
+			</if>
+			<if test="finish != null">
+				#{finish,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCollection" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		update tb_collection
+		<set>
+			<if test="count != null">
+				count = #{count,jdbcType=SMALLINT},
+			</if>
+			<if test="result1 != null">
+				result1 = #{result1,jdbcType=CHAR},
+				time1 = CURDATE(),
+			</if>
+			<if test="result2 != null">
+				result2 = #{result2,jdbcType=CHAR},
+				time2 = CURDATE(),
+			</if>
+			<if test="result3 != null">
+				result3 = #{result3,jdbcType=CHAR},
+				time3 = CURDATE(),
+			</if>
+			<if test="result4 != null">
+				result4 = #{result4,jdbcType=CHAR},
+				time4 = CURDATE(),
+			</if>
+			<if test="result5 != null">
+				result5 = #{result5,jdbcType=CHAR},
+				time5 = CURDATE(),
+			</if>
+			<if test="result6 != null">
+				result6 = #{result6,jdbcType=CHAR},
+				time6 = CURDATE(),
+			</if>
+			<if test="result7 != null">
+				result7 = #{result7,jdbcType=CHAR},
+				time7 = CURDATE(),
+			</if>
+			<if test="result8 != null">
+				result8 = #{result8,jdbcType=CHAR},
+				time8 = CURDATE(),
+			</if>
+			<if test="result9 != null">
+				result9 = #{result9,jdbcType=CHAR},
+				time9 = CURDATE(),
+			</if>
+			<if test="result10 != null">
+				result10 = #{result10,jdbcType=CHAR},
+				time10 = CURDATE(),
+			</if>
+			<if test="result11 != null">
+				result11 = #{result11,jdbcType=CHAR},
+				time11 = CURDATE(),
+			</if>
+			<if test="result12 != null">
+				result12 = #{result12,jdbcType=CHAR},
+				time12 = CURDATE(),
+			</if>
+			<if test="result13 != null">
+				result13 = #{result13,jdbcType=CHAR},
+				time13 = CURDATE(),
+			</if>
+			<if test="result14 != null">
+				result14 = #{result14,jdbcType=CHAR},
+				time14 = CURDATE(),
+			</if>
+			<if test="result15 != null">
+				result15 = #{result15,jdbcType=CHAR},
+				time15 = CURDATE(),
+			</if>
+			<if test="result16 != null">
+				result16 = #{result16,jdbcType=CHAR},
+				time16 = CURDATE(),
+			</if>
+			<if test="result17 != null">
+				result17 = #{result17,jdbcType=CHAR},
+				time17 = CURDATE(),
+			</if>
+			<if test="result18 != null">
+				result18 = #{result18,jdbcType=CHAR},
+				time18 = CURDATE(),
+			</if>
+			<if test="result19 != null">
+				result19 = #{result19,jdbcType=CHAR},
+				time19 = CURDATE(),
+			</if>
+			<if test="result20 != null">
+				result20 = #{result20,jdbcType=CHAR},
+				time20 = CURDATE(),
+			</if>
+			<if test="finish != null">
+				finish = #{finish,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=SMALLINT}
+		and question_id =
+		#{questionId,jdbcType=SMALLINT}
+	</update>
+
+</mapper>

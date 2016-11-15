@@ -44,6 +44,8 @@
                 
                 <value>classpath:sql/module/CodeManage.xml</value>
                 <value>classpath:sql/module/UserManage.xml</value>
+                <value>classpath:sql/module/Question.xml</value>
+                <value>classpath:sql/module/Collection.xml</value>
             </list>
         </property>
     </bean>

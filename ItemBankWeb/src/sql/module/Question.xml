@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Question">
+
+	<select id="selectLastInsertId" resultType="INTEGER">
+		select
+		last_insert_id()
+	</select>
+
+	<select id="selectQuestionDetailForAll" resultType="zh.co.item.bank.model.entity.QuestionModel">
+		select * from
+		vb_question_detail
+	</select>
+
+	<select id="selectStructureForAll" resultType="zh.co.item.bank.db.entity.TbQuestionStructureBean">
+		select * from
+		tb_question_structure order by id
+	</select>
+
+	<select id="selectFLDByName" parameterType="zh.co.item.bank.db.entity.TbQuestionStructureBean" resultType="INTEGER">
+		select id from
+		tb_first_level_directory where subject=#{subject,jdbcType=VARCHAR} limit 1
+	</select>
+
+	<!-- 词汇·文法（智能荐题） -->
+	<select id="selectCollectionByUserId" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select `q`.`no` AS `no`,`q`.`context` AS `context`,`q`.`context_key`
+		AS `contextKey`,`q`.`context_after` AS `contextAfter`, `q`.`a` AS
+		`a`,`q`.`b` AS `b`,`q`.`c` AS `c`,`q`.`d` AS `d`,`q`.`answer` AS
+		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
+		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
+		q.structure_id AS structureId,
+		`d`.`exam` AS `exam`,`d`.`exam_type` AS
+		`examType`,`d`.`jlpt_level` AS
+		`jlptLevel`,`d`.`jtest_level` AS
+		`jtestLevel`
+		from
+		tb_question_classify
+		d , (select * from tb_question
+		where no not in
+		(select question_id from
+		tb_collection where
+		id=#{userId})
+		)
+		q
+		where
+		q.classify_id=d.id
+		<if test="jtestLevel !=null || jlptLevel !=null">
+			and (d.jtest_level=#{jtestLevel,jdbcType=CHAR} or
+			d.jlpt_level=#{jlptLevel,jdbcType=CHAR})
+		</if>
+		limit 5
+	</select>
+
+	<!-- 词汇·文法 -->
+	<select id="selectQuestionBySelection" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select `q`.`no` AS `no`,`q`.`context` AS `context`,`q`.`context_key`
+		AS `contextKey`,`q`.`context_after` AS `contextAfter`,`q`.`a` AS
+		`a`,`q`.`b` AS `b`,`q`.`c` AS `c`,`q`.`d` AS `d`,`q`.`answer` AS
+		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
+		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
+		q.structure_id AS structureId,
+		`d`.`exam` AS `exam`,`d`.`exam_type` AS
+		`examType`,`d`.`jlpt_level` AS
+		`jlptLevel`,`d`.`jtest_level` AS
+		`jtestLevel`
+		from
+		tb_question_classify
+		d , (select * from tb_question
+		where no not in
+		(select question_id from
+		tb_collection where
+		id=#{userId})
+		)
+		q
+		where
+		q.classify_id=d.id
+		<if test="exam !=null &amp; exam !=''">
+			and exam = #{exam,jdbcType=CHAR}
+		</if>
+		<if test="jlptLevel !=null &amp; jlptLevel !=''">
+			and jlpt_level = #{jlptLevel,jdbcType=CHAR}
+		</if>
+		<if test="jtestLevel !=null &amp; jtestLevel !=''">
+			and jtest_level = #{jtestLevel,jdbcType=CHAR}
+		</if>
+		<if test="examType !=null &amp; examType !=''">
+			and exam_type = #{examType,jdbcType=CHAR}
+		</if>
+		limit 5
+	</select>
+
+	<select id="selectClassifyId" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
+		resultType="java.lang.Integer">
+		select id from tb_question_classify where delete_flag = 0
+		<if test="exam !=null &amp; exam !=''">
+			and exam = #{exam,jdbcType=CHAR}
+		</if>
+		<if test="jlptLevel !=null &amp; jlptLevel !=''">
+			and jlpt_level = #{jlptLevel,jdbcType=CHAR}
+		</if>
+		<if test="jtestLevel !=null &amp; jtestLevel !=''">
+			and jtest_level = #{jtestLevel,jdbcType=CHAR}
+		</if>
+		<if test="examType !=null &amp; examType !=''">
+			and exam_type = #{examType,jdbcType=CHAR}
+		</if>
+		order by id
+		limit 1
+	</select>
+
+	<select id="selectTitleById" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select title from tb_question_structure
+		where id = #{id}
+	</select>
+
+	<select id="selectQuestionByQuestionId" parameterType="Integer"
+		resultType="zh.co.item.bank.model.entity.QuestionModel">
+		select
+		*
+		from vb_question_detail
+		where
+		deleteFlag = 0 and
+		no =
+		#{questionId}
+	</select>
+
+	<select id="selectQuestionForError" parameterType="Integer"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select * from vb_question_error
+		where
+		DATEDIFF(CURDATE(),updateTime) >= 3
+		and userId = #{userId}
+		limit 5
+	</select>
+
+	<select id="selectQuestionForErrorAll" parameterType="Integer"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select * from vb_question_error
+		where
+		DATEDIFF(CURDATE(),updateTime) >= 1
+		and userId = #{userId}
+		limit 5
+	</select>
+
+	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+		update tb_question
+		<set>
+			<if test="context !=null">
+				context = #{context,jdbcType=VARCHAR},
+			</if>
+			<if test="contextKey !=null">
+				context_key = #{contextKey,jdbcType=VARCHAR},
+			</if>
+			<if test="contextAfter !=null">
+				context_after = #{contextAfter,jdbcType=VARCHAR},
+			</if>
+			<if test="a !=null">
+				a = #{a,jdbcType=VARCHAR},
+			</if>
+			<if test="b !=null">
+				b = #{b,jdbcType=VARCHAR},
+			</if>
+			<if test="c !=null">
+				c = #{c,jdbcType=VARCHAR},
+			</if>
+			<if test="d !=null">
+				d = #{d,jdbcType=VARCHAR},
+			</if>
+			<if test="answer !=null">
+				answer = #{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="analysis !=null">
+				analysis = #{analysis,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				source = #{source,jdbcType=VARCHAR},
+			</if>
+			<if test="classifyId != null">
+				classify_id = #{classifyId,jdbcType=VARCHAR},
+			</if>
+			<if test="fatherId != null">
+				father_id = #{fatherId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=INTEGER}
+	</update>
+
+	<insert id="insertQuestionClassify" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+		insert into tb_question_classify
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="exam != null">
+				exam,
+			</if>
+			<if test="examType != null">
+				exam_type,
+			</if>
+			<if test="jlptLevel != null">
+				jlpt_level,
+			</if>
+			<if test="jtestLevel != null">
+				jtest_level,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="exam != null">
+				#{exam,jdbcType=CHAR},
+			</if>
+			<if test="examType != null">
+				#{examType,jdbcType=CHAR},
+			</if>
+			<if test="jlptLevel != null">
+				#{jlptLevel,jdbcType=CHAR},
+			</if>
+			<if test="jtestLevel != null">
+				#{jtestLevel,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertSecondLevelDirectory" parameterType="java.lang.String">
+		insert into tb_first_level_directory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="subject != null">
+				subject,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="subject != null">
+				#{subject,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+		insert tb_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="context !=null">
+				context,
+			</if>
+			<if test="a !=null">
+				a,
+			</if>
+			<if test="b !=null">
+				b,
+			</if>
+			<if test="c !=null">
+				c,
+			</if>
+			<if test="d !=null">
+				d,
+			</if>
+			<if test="answer !=null">
+				answer,
+			</if>
+			<if test="analysis !=null">
+				analysis,
+			</if>
+			<if test="source !=null">
+				source,
+			</if>
+			<if test="classifyId !=null">
+				classify_id,
+			</if>
+			<if test="structureId !=null">
+				structure_id,
+			</if>
+			<if test="fatherId !=null">
+				father_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="context !=null">
+				#{context,jdbcType=VARCHAR},
+			</if>
+			<if test="a !=null">
+				#{a,jdbcType=VARCHAR},
+			</if>
+			<if test="b !=null">
+				#{b,jdbcType=VARCHAR},
+			</if>
+			<if test="c !=null">
+				#{c,jdbcType=VARCHAR},
+			</if>
+			<if test="d !=null">
+				#{d,jdbcType=VARCHAR},
+			</if>
+			<if test="answer !=null">
+				#{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="analysis !=null">
+				#{analysis,jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null">
+				#{source,jdbcType=VARCHAR},
+			</if>
+			<if test="classifyId !=null">
+				#{classifyId,jdbcType=VARCHAR},
+			</if>
+			<if test="structureId !=null">
+				#{structureId,jdbcType=VARCHAR},
+			</if>
+			<if test="fatherId !=null">
+				#{fatherId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 暂时未用 -->
+	<insert id="insertTmpQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+		insert tb_tmp_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="context !=null">
+				context,
+			</if>
+			<if test="a !=null">
+				a,
+			</if>
+			<if test="b !=null">
+				b,
+			</if>
+			<if test="c !=null">
+				c,
+			</if>
+			<if test="d !=null">
+				d,
+			</if>
+			<if test="answer !=null">
+				answer,
+			</if>
+			<if test="analysis !=null">
+				analysis,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="context !=null">
+				#{context,jdbcType=VARCHAR},
+			</if>
+			<if test="a !=null">
+				#{a,jdbcType=VARCHAR},
+			</if>
+			<if test="b !=null">
+				#{b,jdbcType=VARCHAR},
+			</if>
+			<if test="c !=null">
+				#{c,jdbcType=VARCHAR},
+			</if>
+			<if test="d !=null">
+				#{d,jdbcType=VARCHAR},
+			</if>
+			<if test="answer !=null">
+				#{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="analysis !=null">
+				#{analysis,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>
