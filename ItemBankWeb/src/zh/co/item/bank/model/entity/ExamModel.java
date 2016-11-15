@@ -16,6 +16,9 @@ public class ExamModel extends QuestionBean {
     // 一级目录中的大题目
     private String subject;
 
+    // 序号
+    private int index;
+
     public int getUserId() {
         return userId;
     }
@@ -46,6 +49,14 @@ public class ExamModel extends QuestionBean {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
 }
