@@ -9,6 +9,26 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+       <script type="text/javascript">
+       /**
+        * 考题种别变更CallBack
+        * 
+        * @param data
+        */
+       function changExamTypeChangeCallBack(data) {
+           var ajaxStatus = data.status;
+           // status
+           switch (ajaxStatus) {
+           case "begin":
+               break;
+           case "complete":
+               resetButtonDisabled();
+               break;
+           case "success":
+               break;
+           }
+       }
+       </script>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examClassifyForm">
 				<div class="typrography">
@@ -26,16 +46,20 @@
 							<table class="toTable" style="width: 100%">
 								<tr>
 									<td><h4>考题种别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.exam}">
+									<td colspan="4">
+                                        <h:selectOneRadio value="#{examClassifyBean.classifyBean.exam}" style="width: 60%" onchange="return cancelToken(this, 1)">
 											<f:selectItems value="#{examClassifyBean.exams}" var="entry"
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-										</h:selectOneRadio></td>
+                                            <f:ajax event="change" execute="@this" render="levelWrapper" 
+                                              listener="#{examClassifyBean.changExamType}" 
+                                              onevent="changExamTypeChangeCallBack"/>
+										</h:selectOneRadio>
+                                   </td>
 								</tr>
 								<tr>
 									<td><h4>考试类别：</h4></td>
 									<td colspan="4"><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.examType}">
+											value="#{examClassifyBean.classifyBean.examType}" style="width: 60%">
 											<f:selectItems value="#{examClassifyBean.examTypes}"
 												var="entry" itemValue="#{entry.key}"
 												itemLabel="#{entry.value}" />
@@ -43,17 +67,27 @@
 								</tr>
 								<tr>
 									<td><h4>考试级别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.jlptLevel}">
-											<f:selectItems value="#{examClassifyBean.jlptLevels}"
-												var="entry" itemValue="#{entry.key}"
-												itemLabel="#{entry.value}" />
-										</h:selectOneRadio> <h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.jtestLevel}">
-											<f:selectItems value="#{examClassifyBean.jtestLevels}"
-												var="entry" itemValue="#{entry.key}"
-												itemLabel="#{entry.value}" />
-										</h:selectOneRadio></td>
+									<td colspan="4">
+                                      <h:panelGroup id="levelWrapper">
+                                        <c:choose>
+                                          <c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
+                                            <h:selectOneMenu value="#{examClassifyBean.classifyBean.jlptLevel}" style="width: 10%">
+  											  <f:selectItems value="#{examClassifyBean.jlptLevels}"
+  												var="entry" itemValue="#{entry.key}"
+  												itemLabel="#{entry.value}" />
+      										</h:selectOneMenu> 
+                                        </c:when>
+                                        <c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
+                                          <h:selectOneMenu
+  											value="#{examClassifyBean.classifyBean.jtestLevel}" style="width: 10%">
+  											<f:selectItems value="#{examClassifyBean.jtestLevels}"
+  												var="entry" itemValue="#{entry.key}"
+  												itemLabel="#{entry.value}" />
+  										  </h:selectOneMenu>
+                                        </c:when>
+                                      </c:choose>
+                                    </h:panelGroup>
+                                  </td>
 								</tr>
 								<tr>
 									<td>

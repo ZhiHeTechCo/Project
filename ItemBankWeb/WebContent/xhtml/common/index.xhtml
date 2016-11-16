@@ -76,7 +76,7 @@
 
   
 <h:form id="menuform">
-    <div style="text-align: left; margin-top: 70px" id="pageHisNavi">
+    <div style="text-align: left;" id="pageHisNavi">
       <div class="header" id="header">
         <div class="header-top">
           <div class="container">
@@ -154,14 +154,14 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><h:commandLink value="首页" action="#{pageTopController.init}"
+          <ul class="nav navbar-nav" id="ul-link">
+            <li id="li-index" class="active"><h:commandLink value="首页" action="#{pageTopController.init}"
                 onclick="return buttonDisable();" /></li>
-            <li><h:commandLink value="关于我们" action="#{pageTopController.pageNavigator}"
+            <li id="li-about"><h:commandLink value="关于我们" action="#{pageTopController.pageNavigator}"
                         onclick="return buttonDisable();">
                         <f:param name='pageController' value="aboutUsController"></f:param>
                       </h:commandLink></li>
-            <li>
+            <li id="li-exam">
             <c:choose>
 	            <c:when test="#{session.getAttribute('session-user-id') != null}">
 	              <h:commandLink value="试题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
@@ -175,8 +175,8 @@
 	            </c:otherwise>
             </c:choose>
             </li>
-            <li><a href="toForum">交流区</a></li>
-            <li><a href="toContact">留言板</a></li>
+            <li id="li-comunication">交流区</li>
+            <li id="li-message">留言板</li>
           </ul>
           <div class="clearfix"></div>
         </div>

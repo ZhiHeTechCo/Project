@@ -1,18 +1,18 @@
 $(document).ready(function() {
-	// ナビバーのマウス動作
+	// navigator
 	$('.navigation li').hover(
-	// マウスイン
+	// 鼠标
 	function() {
-		// サブメニュー表示
+		// sub menu
 		$('ul', this).fadeIn(); // fadeIn will show the sub cat menu
 	},
-	// マウスアウト
+	// 鼠标
 	function() {
-		// サブメニュー非表示
+		// sub menu
 		$('ul', this).fadeOut(); // fadeOut will hide the sub cat menu
 	});
 
-	// フレームパス初期化
+	// frame初始化
 	// setIframePath(contextPath + '${request.getParameter("initPath")}');
 
 	$("#win1").load(function() {
@@ -51,21 +51,10 @@ function resetIframeHeight() {
 }
 
 
-function logOut() {
-    if (confirm("ログアウトします。よろしいですか？")) {
-    	//$("#navigatorForm\\:logoutBtn").click();
-    	document.getElementById('navigatorForm\:logoutBtn').click();
-        logout = true;
-        window.opener = null;
-        window.open("", "_self");
-        window.close(true);
-    }
-}
-
 function menu(url) {
 	$('.navigation li ul').fadeOut();     // fadeOut will hide the sub cat menu        
 
-    //フレームパス初期化
+    //frame初始化
     setIframePath('<%=request.getContextPath()%>/' + url);
 }
 

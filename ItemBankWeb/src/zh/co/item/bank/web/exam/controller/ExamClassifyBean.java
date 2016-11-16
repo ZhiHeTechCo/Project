@@ -85,6 +85,12 @@ public class ExamClassifyBean extends BaseController {
     }
 
     /**
+     * 考题种别变更，刷新考试级别
+     */
+    public void changExamType() {
+    	logger.debug("题种别变更，刷新考试级别");
+    }
+    /**
      * Classify选题
      * 
      * @return
