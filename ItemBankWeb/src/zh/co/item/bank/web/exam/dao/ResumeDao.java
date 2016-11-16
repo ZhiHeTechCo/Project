@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -35,11 +36,11 @@ public class ResumeDao extends BaseDao {
     /**
      * 根据FatherId检索错题全部信息
      * 
-     * @param id
+     * @param fatherId userId
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ExamModel> selectErrorByFatherId(Integer id) {
-        return (List<ExamModel>) getIbatisTemplate().selectList("Question.selectErrorByFatherId", id);
+    public List<ExamModel> selectErrorByFatherId(Map<String, Object> map) {
+        return (List<ExamModel>) getIbatisTemplate().selectList("Question.selectErrorByFatherId", map);
     }
 }

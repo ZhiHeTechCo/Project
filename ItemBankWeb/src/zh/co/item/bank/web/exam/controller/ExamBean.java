@@ -112,10 +112,11 @@ public class ExamBean extends BaseController {
                 questions = examService.classifySearch(classifyBean, map);
             }
 
-            if (questions.get(0).getFatherId() != null) {
+            Integer fatherId = questions.get(0).getFatherId();
+            if (fatherId != null) {
                 // 特殊试题检索
                 questions.clear();
-                questions = examService.selectSpecialForOne(map);
+                questions = examService.selectQuestionByFatherId(fatherId);
 
             } else if (questions.get(questions.size() - 1).getFatherId() != null) {
                 // 特殊试题不显示[下次显示]
@@ -140,6 +141,8 @@ public class ExamBean extends BaseController {
 
             // 取题目
             title = examService.getTitle(questions.get(0).getStructureId());
+            // 取大题
+            subject = questions.get(0).getSubject();
             // 画面序号
             for (int i = 0; i < questions.size(); i++) {
                 questions.get(i).setIndex(i + 1);

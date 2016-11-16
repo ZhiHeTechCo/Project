@@ -1,7 +1,9 @@
 package zh.co.item.bank.web.exam.controller;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -112,7 +114,10 @@ public class ResumeBean extends BaseController {
         // 判断是否为文字，阅读类试题
         Integer fatherId = question.getFatherId();
         if (fatherId != null) {
-            questions = resumeService.selectErrorByFatherId(fatherId);
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("fatherId", fatherId);
+            param.put("userId", userInfo.getId());
+            questions = resumeService.selectErrorByFatherId(param);
             question = questions.get(0);
         }
         // 画面序号

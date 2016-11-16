@@ -168,4 +168,14 @@ public class ExamService {
     public void askQuestion() {
         // TODO
     }
+
+    /**
+     * 检索特殊试题
+     * 
+     * @param map
+     * @return
+     */
+    public List<ExamModel> selectQuestionByFatherId(Integer fatherId) {
+        return examDao.selectQuestionByFatherId(fatherId);
+    }
 }

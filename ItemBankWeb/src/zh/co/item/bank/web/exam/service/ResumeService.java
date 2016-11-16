@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,7 +29,7 @@ public class ResumeService {
         return resumeDao.selectQuestionForErrorAll(userId);
     }
 
-    public List<ExamModel> selectErrorByFatherId(Integer fatherId) {
-        return resumeDao.selectErrorByFatherId(fatherId);
+    public List<ExamModel> selectErrorByFatherId(Map<String, Object> map) {
+        return resumeDao.selectErrorByFatherId(map);
     }
 }
