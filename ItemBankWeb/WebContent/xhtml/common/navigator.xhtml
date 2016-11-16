@@ -35,13 +35,21 @@
           <li class="active"><h:commandLink value="首页" action="#{pageTopController.init}"
               onclick="return buttonDisable();" /></li>
           <li><h:commandLink value="关于我们" action="#{pageTopController.pageNavigator}"
-                        onclick="return buttonDisable();">
-                        <f:param name='pageController' value="aboutUsController"></f:param>
-                      </h:commandLink></li>
-          <li><h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                <f:param name='pageController' value="examClassifyBean"></f:param>
-              </h:commandLink>
-         </li>
+              onclick="return buttonDisable();">
+              <f:param name='pageController' value="aboutUsController"></f:param>
+            </h:commandLink></li>
+          <li><c:choose>
+              <c:when test="#{session.getAttribute('session-user-id') != null}">
+                <h:commandLink value="试题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                  <f:param name='pageController' value="examClassifyBean"></f:param>
+                </h:commandLink>
+              </c:when>
+              <c:otherwise>
+                <h:commandLink value="试题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                  <f:param name='pageController' value="signInBean"></f:param>
+                </h:commandLink>
+              </c:otherwise>
+            </c:choose></li>
           <li><a href="toForum">交流区</a></li>
           <li><a href="toContact">留言板</a></li>
         </ul>
