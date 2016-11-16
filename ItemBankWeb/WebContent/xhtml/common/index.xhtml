@@ -94,7 +94,11 @@
 	                          class="caret"></span>
 	                      </a>
 	                        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-	                          <li><a href="toUserInfo">个人信息</a></li>
+                              <li>
+                                <h:commandLink value="个人信息" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                                  <f:param name='pageController' value="userInfoBean"></f:param>
+                                </h:commandLink>
+                             </li>
 	                          <li><h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="examClassifyBean"></f:param>
 	                    </h:commandLink></li>
 	                                            <li><h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="resumeBean"></f:param>

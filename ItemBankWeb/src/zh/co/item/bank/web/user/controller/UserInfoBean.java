@@ -1,16 +1,22 @@
 package zh.co.item.bank.web.user.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.VuUserModelBean;
 import zh.co.item.bank.web.user.service.UserService;
 
@@ -32,6 +38,10 @@ public class UserInfoBean extends BaseController {
     private UserService userService;
     
     private VuUserModelBean userInfo;
+    
+	private List<TsCodeBean> jlptLevels;
+
+    private List<TsCodeBean> jtestLevels;
 
     
     public String getPageId() {
@@ -46,6 +56,15 @@ public class UserInfoBean extends BaseController {
     	pushPathHistory("userInfoBean");
     	userInfo = new VuUserModelBean();
         try {
+        	Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("modelId", CmnContants.MODELID_BQD0003);
+	        map.put("name", "jlpt_level");
+	        jlptLevels = userService.getCodelist(map);
+	        
+	        map.put("modelId", CmnContants.MODELID_BQD0003);
+	        map.put("name", "jtest_level");
+	        jtestLevels = userService.getCodelist(map);
+	        
         	userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
 
         } catch (Exception e) {
@@ -76,6 +95,22 @@ public class UserInfoBean extends BaseController {
 
 	public VuUserModelBean getUserInfo() {
 		return userInfo;
+	}
+
+	public List<TsCodeBean> getJlptLevels() {
+		return jlptLevels;
+	}
+
+	public void setJlptLevels(List<TsCodeBean> jlptLevels) {
+		this.jlptLevels = jlptLevels;
+	}
+
+	public List<TsCodeBean> getJtestLevels() {
+		return jtestLevels;
+	}
+
+	public void setJtestLevels(List<TsCodeBean> jtestLevels) {
+		this.jtestLevels = jtestLevels;
 	}
 
 

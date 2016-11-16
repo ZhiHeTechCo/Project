@@ -24,11 +24,11 @@
                 </tr>
                 <tr>
                   <td><h4>做题数</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.questionNum}" /></td>
+                  <td><h:outputText value="#{userInfoBean.userInfo.questionnum}" /></td>
                 </tr>
                 <tr>
                   <td><h4>错题数</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.errorNum}" /></td>
+                  <td><h:outputText value="#{userInfoBean.userInfo.errornum}" /></td>
                 </tr>
                 <tr>
                   <td><h4>积分</h4></td>
@@ -41,7 +41,10 @@
                 </tr>
                 <tr>
                   <td><h4>注册日期</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.createTime}" /></td>
+                  <td><h:outputText value="#{userInfoBean.userInfo.createtime}" >
+                        <f:convertDateTime pattern="yyyy年MM月dd日" timeZone="GMT+8"/>
+                      </h:outputText>
+                  </td>
                 </tr>
                 <tr>
                   <td><h4>邮箱</h4></td>
@@ -51,26 +54,26 @@
                 <tr>
                   <td><h4>手机</h4></td>
                   <td><h:inputText value="#{userInfoBean.userInfo.telephone}"
-                      style="margin-top: 2px; width: 80%; line-height: 34px;" maxlength="30" /></td>
+                      style="margin-top: 2px; width: 80%; line-height: 34px;" maxlength="11" /></td>
                 </tr>
                 <tr>
                   <td><h4>生日</h4></td>
                   <td><h:inputText maxlength="10" value="#{userInfoBean.userInfo.birthday}" style="width: 100px; "
-                      class="calendarEx" /></td>
+                      class="calendar" /></td>
                 </tr>
                 <tr>
                   <td><h4>日语等级（JLTP）</h4></td>
-                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jlptLevel}">
+                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jlptlevel}">
                       <f:selectItem itemValue="" itemLabel="" />
-                      <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
+                      <f:selectItems value="#{userInfoBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
                         itemLabel="#{entry.value}" />
                     </h:selectOneMenu></td>
                 </tr>
                 <tr>
                   <td><h4>日语等级（J.TEST）</h4></td>
-                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jtestLevel}">
+                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jtestlevel}">
                       <f:selectItem itemValue="" itemLabel="" />
-                      <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
+                      <f:selectItems value="#{userInfoBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
                         itemLabel="#{entry.value}" />
                     </h:selectOneMenu></td>
                 </tr>
