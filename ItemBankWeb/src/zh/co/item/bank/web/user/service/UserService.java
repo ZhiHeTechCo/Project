@@ -13,7 +13,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
-import zh.co.item.bank.db.entity.VuUserModelBean;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.user.dao.UserDao;
 
 /**
@@ -92,8 +92,8 @@ public class UserService {
      * @return
      * @throws Exception
      */
-    public VuUserModelBean getUserInfo(Integer id) throws Exception {
-    	VuUserModelBean user = new VuUserModelBean();
+    public UserModel getUserInfo(Integer id) throws Exception {
+    	UserModel user = new UserModel();
     	user = userDao.selectUserById(id);
         return user;
     }
@@ -140,7 +140,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
-    public int updateUserInfo(VuUserModelBean userInfo) throws Exception {
+    public int updateUserInfo(UserModel userInfo) throws Exception {
     	int count = 0;
     	TuUserBean newUser = new TuUserBean();
     	newUser.setId(userInfo.getId());

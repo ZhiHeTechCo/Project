@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TuUserBean;
-import zh.co.item.bank.db.entity.VuUserModelBean;
+import zh.co.item.bank.model.entity.UserModel;
 
 /**
  * <p>[概要] UserDao.</p>
@@ -64,8 +64,8 @@ public class UserDao extends BaseDao {
      * @param userInfo
      * @return
      */
-    public VuUserModelBean selectUserById(Integer id) {
-    	return (VuUserModelBean)getIbatisTemplate().selectOne("UserManage.selectUserById", id);
+    public UserModel selectUserById(Integer id) {
+    	return (UserModel)getIbatisTemplate().selectOne("UserManage.selectUserById", id);
     }
     
     /**

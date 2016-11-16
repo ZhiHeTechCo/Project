@@ -43,7 +43,7 @@
 
   </select>
   
-    <select id="selectUserById" parameterType="java.lang.Integer" resultType="zh.co.item.bank.db.entity.VuUserModelBean">
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="zh.co.item.bank.model.entity.UserModel">
         select * from
         vu_user_model
         where id = #{id}

@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.user.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.CmnContants;
@@ -17,7 +19,7 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TsCodeBean;
-import zh.co.item.bank.db.entity.VuUserModelBean;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -37,7 +39,7 @@ public class UserInfoBean extends BaseController {
     @Inject
     private UserService userService;
     
-    private VuUserModelBean userInfo;
+    private UserModel userInfo;
     
 	private List<TsCodeBean> jlptLevels;
 
@@ -54,7 +56,7 @@ public class UserInfoBean extends BaseController {
      */
     public String init() {
     	pushPathHistory("userInfoBean");
-    	userInfo = new VuUserModelBean();
+    	userInfo = new UserModel();
         try {
         	Map<String, Object> map = new HashMap<String, Object>();
 	        map.put("modelId", CmnContants.MODELID_BQD0003);
@@ -65,8 +67,11 @@ public class UserInfoBean extends BaseController {
 	        map.put("name", "jtest_level");
 	        jtestLevels = userService.getCodelist(map);
 	        
-        	userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
-
+	        userInfo  = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
+	        if(userInfo.getBirthday() != null) {
+		        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd"); 
+	        	userInfo.setBirthdayEx(sdf.format(userInfo.getBirthday()));
+	        }
         } catch (Exception e) {
         	processForException(logger, e);
         }
@@ -80,8 +85,16 @@ public class UserInfoBean extends BaseController {
     public String updateUserInfo() {
 
         try {
+        	if(StringUtils.isNotEmpty(userInfo.getBirthdayEx())) {
+        		SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+        		userInfo.setBirthday(sdf.parse(userInfo.getBirthdayEx()));
+        	}
         	userService.updateUserInfo(userInfo);
         	userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
+        	if(userInfo.getBirthday() != null) {
+		        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd"); 
+	        	userInfo.setBirthdayEx(sdf.format(userInfo.getBirthday()));
+	        }
         	setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
         } catch (Exception e) {
         	processForException(logger, e);
@@ -89,11 +102,11 @@ public class UserInfoBean extends BaseController {
         return SystemConstants.PAGE_ITBK_USER_003;
     }
 
-	public void setUserInfo(VuUserModelBean userInfo) {
+	public void setUserInfo(UserModel userInfo) {
 		this.userInfo = userInfo;
 	}
 
-	public VuUserModelBean getUserInfo() {
+	public UserModel getUserInfo() {
 		return userInfo;
 	}
 

@@ -11,12 +11,12 @@
       <h:form id="userInfoform">
         <div class="typrography">
           <h2 style="text-align: center;">个人信息</h2>
-          <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-            layout="block">
-            <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
-          </h:panelGroup>
           <div class="container">
             <div class="bs-docs-example">
+	          <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+	            layout="block">
+	            <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+	          </h:panelGroup>
               <table class="table table-striped;">
                 <tr>
                   <td><h4>用户名</h4></td>
@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                   <td><h4>生日</h4></td>
-                  <td><h:inputText maxlength="10" value="#{userInfoBean.userInfo.birthday}" style="width: 100px; "
+                  <td><h:inputText maxlength="10" value="#{userInfoBean.userInfo.birthdayEx}" style="width: 100px; "
                       class="calendar" /></td>
                 </tr>
                 <tr>
