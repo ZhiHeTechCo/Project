@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -69,43 +70,11 @@ public class ExamBean extends BaseController {
     public String init() {
         try {
             pushPathHistory("examBean");
-            title = examService.getTitle(questions.get(0).getStructureId());
-            // question = new ExamModel();
+
             subject = "";
-            // 画面序号
-            for (int i = 0; i < questions.size(); i++) {
-                questions.get(i).setIndex(i + 1);
-            }
-
-            if (classifyBean != null) {
-                // 文字和阅读时
-                if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
-                    subject = questions.get(0).getSubject();
-                }
-            }
-        } catch (Exception e) {
-            processForException(logger, e);
-        }
-
-        return SystemConstants.PAGE_ITBK_EXAM_002;
-    }
-
-    /**
-     * 后续画面返回[试题库]
-     * 
-     * @return
-     */
-    public String reInit() {
-        try {
-            if (!checkuser()) {
-                // 跳转至登录画面
-                return SystemConstants.PAGE_ITBK_USER_002;
-            }
-
-            pushPathHistory("examBean");
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            // 智能选题模式
+            // 智能选题
             if (classifyBean == null) {
                 if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
                     map.put("jlptLevel", userInfo.getJlptLevel());
@@ -113,14 +82,10 @@ public class ExamBean extends BaseController {
                 if (!StringUtils.isEmpty(userInfo.getJtestLevel())) {
                     map.put("jtestLevel", userInfo.getJtestLevel());
                 }
-                if ((StringUtils.isEmpty(userInfo.getJlptLevel())) && (StringUtils.isEmpty(userInfo.getJtestLevel()))) {
-                    logger.log(MessageId.ITBK_I_0009);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0009);
-                    throw ex;
-                }
                 questions = examService.smartSearch(map);
 
             } else {
+                // 题型选题
                 boolean flag = true;
                 if (!classifyBean.getExam().isEmpty()) {
                     map.put("exam", classifyBean.getExam());
@@ -146,26 +111,44 @@ public class ExamBean extends BaseController {
 
                 questions = examService.classifySearch(classifyBean, map);
             }
-            if (questions.size() == 0) {
-                title = "";
+
+            if (questions.get(0).getFatherId() != null) {
+                // 特殊试题检索
+                questions.clear();
+                questions = examService.selectSpecialForOne(map);
+
+            } else if (questions.get(questions.size() - 1).getFatherId() != null) {
+                // 特殊试题不显示[下次显示]
+                List<ExamModel> list = new CopyOnWriteArrayList<ExamModel>();
+                list.addAll(questions);
+                for (ExamModel examModel : questions) {
+                    if (examModel.getFatherId() == null) {
+                        list.remove(examModel);
+                    }
+                }
+                questions.clear();
+                questions.addAll(list);
+                subject = questions.get(0).getSubject();
+            }
+
+            if (questions == null || questions.size() == 0) {
+                // 题库已空
                 logger.log(MessageId.ITBK_I_0010);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                 throw ex;
             }
 
-            // 文字和阅读时
-            if ("1".equals(classifyBean.getExamType()) || "5".equals(classifyBean.getExamType())) {
-                subject = questions.get(0).getSubject();
-            } else {
-                subject = "";
-            }
-
-            // 重新获取大题题目
+            // 取题目
             title = examService.getTitle(questions.get(0).getStructureId());
+            // 画面序号
+            for (int i = 0; i < questions.size(); i++) {
+                questions.get(i).setIndex(i + 1);
+            }
 
         } catch (Exception e) {
             processForException(logger, e);
         }
+
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 

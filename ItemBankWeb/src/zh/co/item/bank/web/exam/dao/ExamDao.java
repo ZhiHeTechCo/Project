@@ -8,7 +8,6 @@ import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.QuestionModel;
 
 /**
  * 考试模块
@@ -58,8 +57,8 @@ public class ExamDao extends BaseDao {
 	 * @param questionId
 	 * @return
 	 */
-	public QuestionModel selectQuestionByQuestionId(Integer questionId) {
-		return (QuestionModel) getIbatisTemplate().selectOne("Question.selectQuestionByQuestionId", questionId);
+	public ExamModel selectQuestionByQuestionId(Integer questionId) {
+		return (ExamModel) getIbatisTemplate().selectOne("Question.selectQuestionByQuestionId", questionId);
 	}
 
 	/**

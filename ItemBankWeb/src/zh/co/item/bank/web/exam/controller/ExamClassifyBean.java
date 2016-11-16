@@ -20,7 +20,6 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
-import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -51,8 +50,6 @@ public class ExamClassifyBean extends BaseController {
     private List<TsCodeBean> jtestLevels;
 
     private TbQuestionClassifyBean classifyBean;
-
-    private List<ExamModel> questions;
 
     private TuUserBean userInfo;
 
@@ -102,36 +99,14 @@ public class ExamClassifyBean extends BaseController {
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            boolean flag = true;
-            if (!classifyBean.getExam().isEmpty()) {
-                map.put("exam", classifyBean.getExam());
-                flag = false;
-            }
-            if (!classifyBean.getExamType().isEmpty()) {
-                map.put("examType", classifyBean.getExamType());
-                flag = false;
-            }
-            if (!classifyBean.getJlptLevel().isEmpty()) {
-                map.put("jlptLevel", classifyBean.getJlptLevel());
-                flag = false;
-            }
-            if (!classifyBean.getJtestLevel().isEmpty()) {
-                map.put("jtestLevel", classifyBean.getJtestLevel());
-                flag = false;
-            }
 
-            if (flag) {
+            if (classifyBean.getExam().isEmpty() && classifyBean.getExamType().isEmpty()
+                    && classifyBean.getJlptLevel().isEmpty() && classifyBean.getJtestLevel().isEmpty()) {
                 logger.log(MessageId.ITBK_E_0005);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
                 throw ex;
             }
 
-            questions = examService.classifySearch(classifyBean, map);
-            if (questions == null || questions.size() == 0) {
-                logger.log(MessageId.ITBK_E_0004);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0004);
-                throw ex;
-            }
             return toExam();
 
         } catch (CmnBizException ex) {
@@ -155,25 +130,10 @@ public class ExamClassifyBean extends BaseController {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
 
-            // 根据用户ID检索试题
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("userId", userInfo.getId());
-            if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
-                map.put("jlptLevel", userInfo.getJlptLevel());
-            }
-            if (!StringUtils.isEmpty(userInfo.getJtestLevel())) {
-                map.put("jtestLevel", userInfo.getJtestLevel());
-            }
+            // 用户信息中不包含日语等级
             if (StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())) {
                 logger.log(MessageId.ITBK_I_0009);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0009);
-                throw ex;
-            }
-            questions = examService.smartSearch(map);
-            if (questions == null || questions.size() == 0) {
-                // 题库已空
-                logger.log(MessageId.ITBK_I_0010);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                 throw ex;
             }
 
@@ -208,9 +168,8 @@ public class ExamClassifyBean extends BaseController {
     private String toExam() {
         ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
         examBean.setUserInfo(userInfo);
-        examBean.setQuestions(questions);
         examBean.setClassifyBean(classifyBean);
-        
+
         return examBean.init();
     }
 

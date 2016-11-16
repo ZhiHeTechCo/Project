@@ -19,7 +19,6 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.QuestionModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -41,7 +40,7 @@ public class ExamResultBean extends BaseController {
 
     private String title;
 
-    private QuestionModel question;
+    private ExamModel question;
 
     private Integer questionId;
 
@@ -79,7 +78,7 @@ public class ExamResultBean extends BaseController {
             ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
             examBean.setClassifyBean(classifyBean);
             examBean.setQuestions(null);
-            return examBean.reInit();
+            return examBean.init();
         }
     }
 
@@ -183,11 +182,11 @@ public class ExamResultBean extends BaseController {
         this.classifyBean = classifyBean;
     }
 
-    public QuestionModel getQuestion() {
+    public ExamModel getQuestion() {
         return question;
     }
 
-    public void setQuestion(QuestionModel question) {
+    public void setQuestion(ExamModel question) {
         this.question = question;
     }
 

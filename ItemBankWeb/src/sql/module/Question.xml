@@ -9,7 +9,7 @@
 		last_insert_id()
 	</select>
 
-	<select id="selectQuestionDetailForAll" resultType="zh.co.item.bank.model.entity.QuestionModel">
+	<select id="selectQuestionDetailForAll" resultType="zh.co.item.bank.model.entity.ExamModel">
 		select * from
 		vb_question_detail
 	</select>
@@ -84,7 +84,7 @@
 		`a`,`q`.`b` AS `b`,`q`.`c` AS `c`,`q`.`d` AS `d`,`q`.`answer` AS
 		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
 		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
-		q.structure_id AS structureId,
+		q.structure_id AS structureId, q.father_id as fatherId,
 		`d`.`exam` AS `exam`,`d`.`exam_type` AS
 		`examType`,`d`.`jlpt_level` AS
 		`jlptLevel`,`d`.`jtest_level` AS
@@ -107,7 +107,6 @@
 		limit 5
 	</select>
 
-	<!-- 词汇·文法 -->
 	<select id="selectQuestionBySelection" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select `q`.`no` AS `no`,`q`.`context` AS `context`,`q`.`context_key`
@@ -115,7 +114,7 @@
 		`a`,`q`.`b` AS `b`,`q`.`c` AS `c`,`q`.`d` AS `d`,`q`.`answer` AS
 		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
 		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
-		q.structure_id AS structureId,
+		q.structure_id AS structureId, q.father_id as fatherId,
 		`d`.`exam` AS `exam`,`d`.`exam_type` AS
 		`examType`,`d`.`jlpt_level` AS
 		`jlptLevel`,`d`.`jtest_level` AS
@@ -172,7 +171,7 @@
 	</select>
 
 	<select id="selectQuestionByQuestionId" parameterType="Integer"
-		resultType="zh.co.item.bank.model.entity.QuestionModel">
+		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select
 		*
 		from vb_question_detail
@@ -200,7 +199,7 @@
 		limit 1
 	</select>
 
-	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		update tb_question
 		<set>
 			<if test="context !=null">
@@ -243,7 +242,7 @@
 		where no = #{no,jdbcType=INTEGER}
 	</update>
 
-	<insert id="insertQuestionClassify" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+	<insert id="insertQuestionClassify" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert into tb_question_classify
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="exam != null">
@@ -289,7 +288,7 @@
 		</trim>
 	</insert>
 
-	<insert id="insertQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+	<insert id="insertQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert tb_question
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="context !=null">
@@ -364,7 +363,7 @@
 	</insert>
 
 	<!-- 暂时未用 -->
-	<insert id="insertTmpQuestion" parameterType="zh.co.item.bank.model.entity.QuestionModel">
+	<insert id="insertTmpQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert tb_tmp_question
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="context !=null">
