@@ -26,13 +26,22 @@
 		subject=#{subject,jdbcType=VARCHAR} limit 1
 	</select>
 
-	<select id="selectErrorByFatherId" parameterType="INTEGER"
+	<select id="selectErrorByFatherId" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select c.*,d.finish from (select a.subject, b.* from
 		tb_first_level_directory a right join
-		vb_question_detail b on a.id = b.fatherId where
-		a.id=#{id,jdbcType=INTEGER}) c left join tb_collection d on c.no=d.question_id where d.id=8 and
+		vb_question_detail b on a.id =
+		b.fatherId where
+		a.id=#{fatherId,jdbcType=INTEGER}) c left join
+		tb_collection d on c.no=d.question_id where d.id=#{userId} and
 		d.finish !='1' and d.finish!='9'
+	</select>
+
+
+	<select id="selectQuestionByFatherId" parameterType="INTEGER"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select d.*,f.subject from vb_question_detail d, tb_first_level_directory f
+		where d.fatherId = #{fatherId} and d.fatherId =f.id
 	</select>
 
 	<select id="selectSpecialForOne" parameterType="java.util.Map"
@@ -117,11 +126,8 @@
 		q.structure_id AS structureId, q.father_id as fatherId,
 		`d`.`exam` AS `exam`,`d`.`exam_type` AS
 		`examType`,`d`.`jlpt_level` AS
-		`jlptLevel`,`d`.`jtest_level` AS
-		`jtestLevel`
-		from
-		tb_question_classify
-		d , (select * from tb_question
+		`jlptLevel`,`d`.`jtest_level` AS `jtestLevel`
+		from tb_question_classify d, (select * from tb_question
 		where no not in
 		(select question_id from
 		tb_collection where

@@ -80,4 +80,9 @@ public class ExamDao extends BaseDao {
 	public String selectTitleById(Integer structureId) {
 		return (String) getIbatisTemplate().selectOne("Question.selectTitleById", structureId);
 	}
+
+    @SuppressWarnings("unchecked")
+    public List<ExamModel> selectQuestionByFatherId(Integer fatherId) {
+        return getIbatisTemplate().selectList("Question.selectQuestionByFatherId", fatherId);
+    }
 }
