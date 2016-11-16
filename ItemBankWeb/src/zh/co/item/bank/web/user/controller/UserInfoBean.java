@@ -15,9 +15,12 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.VuUserModelBean;
+import zh.co.item.bank.web.exam.controller.ExamClassifyBean;
+import zh.co.item.bank.web.exam.controller.ResumeBean;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -53,40 +56,71 @@ public class UserInfoBean extends BaseController {
      * @return
      */
     public String init() {
-    	pushPathHistory("userInfoBean");
-    	userInfo = new VuUserModelBean();
+        pushPathHistory("userInfoBean");
+        userInfo = new VuUserModelBean();
         try {
-        	Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("modelId", CmnContants.MODELID_BQD0003);
-	        map.put("name", "jlpt_level");
-	        jlptLevels = userService.getCodelist(map);
-	        
-	        map.put("modelId", CmnContants.MODELID_BQD0003);
-	        map.put("name", "jtest_level");
-	        jtestLevels = userService.getCodelist(map);
-	        
-        	userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("modelId", CmnContants.MODELID_BQD0003);
+            map.put("name", "jlpt_level");
+            jlptLevels = userService.getCodelist(map);
+            
+            map.put("modelId", CmnContants.MODELID_BQD0003);
+            map.put("name", "jtest_level");
+            jtestLevels = userService.getCodelist(map);
+            
+            userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
 
         } catch (Exception e) {
-        	processForException(logger, e);
+            processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_USER_003;
     }
-    
+
     /**
      * 更新用户信息
+     * 
      * @return
      */
     public String updateUserInfo() {
 
         try {
-        	userService.updateUserInfo(userInfo);
-        	userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
-        	setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
+            userService.updateUserInfo(userInfo);
+            userInfo = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
+            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
         } catch (Exception e) {
-        	processForException(logger, e);
+            processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_USER_003;
+    }
+
+    /**
+     * [更换密码]按下
+     * 
+     * @return
+     */
+    public String changePassword() {
+        ChangePasswordBean changePasswordBean = (ChangePasswordBean) SpringAppContextManager.getBean("changePasswordBean");
+        return changePasswordBean.init();
+    }
+
+    /**
+     * [去试题库]按下
+     * 
+     * @return
+     */
+    public String toExam() {
+        ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return classifyBean.init();
+    }
+
+    /**
+     * [去错题库]按下
+     * 
+     * @return
+     */
+    public String toResume() {
+        ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
+        return resumeBean.init();
     }
 
 	public void setUserInfo(VuUserModelBean userInfo) {

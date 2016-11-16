@@ -189,9 +189,13 @@ public class ExamBean extends BaseController {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
+    /**
+     * [我的错题]按下
+     * @return
+     */
     public String doResume() {
-        // TODO
-        return "";
+        ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
+        return resumeBean.init();
     }
 
     private boolean checkuser() {
