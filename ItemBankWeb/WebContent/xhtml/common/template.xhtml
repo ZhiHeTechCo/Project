@@ -54,7 +54,31 @@
 									pageTitle = "首页";
 								}
 								document.title = pageTitle;
-
+								var pageId = "${session.getAttribute('session-current-page-id')}";
+								$("#ul-link").find("li").each(function(){
+									$(this).removeClass("active");
+							    });
+								//首页
+								if(pageId=="ITBK_COM_001") {
+									$("#li-index").addClass("active");
+								}
+								//关于我们
+								if(pageId=="ITBK_COM_002") {
+									$("#li-about").addClass("active");
+                                }
+								//试题库
+                                if(pageId=="ITBK_EXAM_001" || pageId=="ITBK_EXAM_002") {
+                                	$("#li-exam").addClass("active");
+                                }
+                                //交流区
+                                if(pageId=="") {
+                                    
+                                }
+                                //留言板
+                                if(pageId=="") {
+                                    
+                                }
+								
 								$("#owl-demo").owlCarousel({
 									items : 4,
 									lazyLoad : true,
