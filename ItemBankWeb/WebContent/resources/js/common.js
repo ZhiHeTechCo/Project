@@ -1,20 +1,20 @@
-// 二重制御用フラグ,false:実施可；True：実施不可
+// 重复提交制御flag,false:可以提交；True：不可提交
 var buttonDisabled = true;
 var dateFormat = 'yyyy/mm/dd';
-// 二重制御用Token
+// Token
 var pageToken;
 /**
  * 画面初期化処理
  */
 $(document).ready(function() {
 	
-	// カレンダーの共通設定
+	// 日期控件设定
     if($.datepicker) {
-    	// カレンダーの言葉設定
-        $.datepicker.setDefaults($.datepicker.regional['ja']);
-        // カレンダーの表示内容設定
+    	// 日期控件语言
+        $.datepicker.setDefaults($.datepicker.regional['ch']);
+        // 日期控件表示
         $.datepicker.setDefaults({showButtonPanel: true, closeText: '清除', changeMonth : true,changeYear : true, dateFormat : 'yy/mm/dd'});
-        // カレンダーの表示様式設定とクリアボタンのエベント設定
+        // 日期控件表示样式
         $.datepicker.setDefaults({
         	beforeShow: function(input){
         		setTimeout(datepickerBeforeShow,1, input);
@@ -25,7 +25,7 @@ $(document).ready(function() {
         	},
         });
     }
-    // 全体 Enterキー制御
+    // 全体 Enter 制御
     setEnterKeyDisable();
 
     $(".calendar").each(function(){
@@ -45,9 +45,9 @@ $(document).ready(function() {
     });
     
     $("form").each(function(){
-    	// 全てのFormに二重制御用Tokenを追加する
+    	// Form Token 追加
     	$("<input type='hidden' id='pageToken' name='pageToken' value='"+pageToken+"'/>").appendTo($(this)).hide();
-    	// 全てのActionはTokenチェックをディフォルトで設定する
+    	// Token check 设定
         $("<input type='hidden' id='tokenValidator' name='tokenValidator' value='1'/>").appendTo($(this)).hide();
         
         $(this).submit(function(){
@@ -55,7 +55,7 @@ $(document).ready(function() {
         });
     });
     
-    // 共通で戻るボタンをすると、画面遷移エラー画面に遷移するように設定する。
+    // 返回按钮，迁移到error画面
     window.addEventListener("unload", function() {
     	history.pushState(null, null, contextPath + '/xhtml/common/page_forward_error.xhtml');
     });
@@ -64,8 +64,8 @@ $(document).ready(function() {
 });
 
 /**
- * ActionはTokenチェック不要の場合、該当処理する
- * ResponseはファイルStreamの場合は、noDisabledFlgは「1」で設定する
+ * ActionはToken check 不实施
+ * Response是fileStream的情况，noDisabledFlg设为「1」
  */
 function cancelToken(srcObj, noDisabledFlg){
 	$(srcObj).parents("form").find("#tokenValidator").remove();
@@ -83,7 +83,7 @@ function cancelToken(srcObj, noDisabledFlg){
 }
 
 /**
- * Actionは実施か判断する
+ * 判断Action是否实施
  */
 function buttonDisable() {
     if( buttonDisabled ) {
@@ -94,7 +94,7 @@ function buttonDisable() {
 }
 
 /**
- * 画面初期状態に戻る
+ * 返回画面初期状态
  */
 function resetButtonDisabled(){
 	buttonDisabled = false;
@@ -111,7 +111,7 @@ function resetButtonDisabled(){
 }
 
 /**
- * カレンダーの表示様式設定とクリアボタンのエベント設定
+ * 日期控件的样式
  */
 function datepickerBeforeShow(input){
 	if(input){
@@ -146,14 +146,14 @@ function datepickerCurrent(input) {
     
 }
 /**
- * 共通のカレンダーを設定
+ * 日期控件的设定
  */
 function resetCalendar(srcObj){
 	$(srcObj).attr("readonly",true).datepicker(); 
 }
 
 /**
- * 項目値は3桁ごとに、,を付与して表示する
+ * 数字加逗号
  */
 function resetInteger(srcObj){
 	$(srcObj).css("text-align","right").css("width",$(srcObj).width());
@@ -165,7 +165,7 @@ function resetInteger(srcObj){
 	});
 }
 /**
- * TextareaのMaxlength設定
+ * Textarea Maxlength设定
  */
 function resetTextarea(srcObj){
 	var maxLength = parseInt($(srcObj).attr("maxLength"));
@@ -189,7 +189,7 @@ function resetTextarea(srcObj){
 }
 
 /**
- * ボタンの二重制御チェックする
+ * 
  */
 function resetSubmitButton(srcObj){
 
@@ -252,7 +252,7 @@ function selectFile(obj, ofile_id) {
     }
 }
 /**
- * ページングのCallback設定
+ *  翻页Callback
  */
 function callbackAjaxForPaginator(data){
 	switch (data.status) {
@@ -263,7 +263,7 @@ function callbackAjaxForPaginator(data){
 }
 
 /**
- * 全体 Enterキー制御
+ * 全体 Enter 制御
  */
 function setEnterKeyDisable(){
     $("input[type=text]").keydown(function(event){
@@ -301,18 +301,18 @@ function setCommaToValue(obj, orgMaxLength) {
 	}
 
 	value = obj.value.replace(',', '');
-	// 整数部
+	// 整数
 	var integerValue = value;
-	// 負数部
+	// 负数
 	var decimalValue = '';
-	// 入力値が小数点を含む場合
+	// 有小数点的场合
 	if (value.indexOf('.') != -1) {
 		integerValue = value.substring(0, value.indexOf('.'));
 		decimalValue = value.substring(value.indexOf('.'));
 	}
 
-	// 整数の先頭部と小数の後部中に0が含む場合
-	// 0を削除する
+	// 删除头尾的0
+	// 
 	integerValue = integerValue.replace(/^0+/g, '');
 	decimalValue = decimalValue.replace(/0+$/g, '');
 	integerValue = integerValue == '' ? '0' : integerValue;
@@ -331,7 +331,7 @@ function setCommaToValue(obj, orgMaxLength) {
 	}
 	maxlength = orgMaxLength;
 
-	// 整数部で3個ごとに,を付ける
+	// 整数部分加逗号
 	resultValue = integerValue.replace(/\B(?=(?:\d{3})+\b)/g, ',');
 	if (resultValue.length > maxlength && resultValue.indexOf(',') != -1) {
 		maxlength = maxlength + resultValue.split(',').length - 1;
