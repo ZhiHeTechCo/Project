@@ -79,25 +79,20 @@
                 </tr>
               </table>
               <div class="form-submit1">
-                <h:commandButton value="更新信息" class="button1" action="#{userInfoBean.updateUserInfo}" />
+                  <h:commandButton id="updateInfoBtn" value="更新信息" class="button1"
+                      action="#{userInfoBean.updateUserInfo}" />
               </div>
-              <div class="form-button1">
-                <h:commandLink value="更换密码" action="#{pageTopController.pageNavigator}"
-                  onclick="return buttonDisable();">
-                  <f:param name='pageController' value="changePasswordBean"></f:param>
-                </h:commandLink>
+              <div class="form-submit1">
+                  <h:commandButton id="changePasswordBtn" value="更换密码" class="button1"
+                      action="#{userInfoBean.changePassword}" />
               </div>
-              <div class="form-button1">
-                <h:commandLink value="去试题库" action="#{pageTopController.pageNavigator}"
-                  onclick="return buttonDisable();">
-                  <f:param name='pageController' value="signInBean"></f:param>
-                </h:commandLink>
+              <div class="form-submit1">
+                  <h:commandButton id="toExamBtn" value="去试题库" class="button1"
+                      action="#{userInfoBean.toExam}" />
               </div>
-              <div class="form-button1">
-                <h:commandLink value="去错题库" action="#{pageTopController.pageNavigator}"
-                  onclick="return buttonDisable();">
-                  <f:param name='pageController' value="signInBean"></f:param>
-                </h:commandLink>
+              <div class="form-submit1">
+                  <h:commandButton id="toResumeBtn" value="去错题库" class="button1"
+                      action="#{userInfoBean.toResume}" />
               </div>
             </div>
           </div>

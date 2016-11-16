@@ -88,9 +88,8 @@ public class ExamClassifyBean extends BaseController {
      * 考题种别变更，刷新考试级别
      */
     public void changExamType() {
-        logger.debug("题种别变更，刷新考试级别");
+    	logger.debug("题种别变更，刷新考试级别");
     }
-
     /**
      * Classify选题
      * 
@@ -106,9 +105,9 @@ public class ExamClassifyBean extends BaseController {
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            if (StringUtils.isEmpty(classifyBean.getExam()) && StringUtils.isEmpty(classifyBean.getExamType())
-                    && StringUtils.isEmpty(classifyBean.getJlptLevel())
-                    && StringUtils.isEmpty(classifyBean.getJtestLevel())) {
+
+            if (classifyBean.getExam().isEmpty() && classifyBean.getExamType().isEmpty()
+                    && classifyBean.getJlptLevel().isEmpty() && classifyBean.getJtestLevel().isEmpty()) {
                 logger.log(MessageId.ITBK_E_0005);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
                 throw ex;

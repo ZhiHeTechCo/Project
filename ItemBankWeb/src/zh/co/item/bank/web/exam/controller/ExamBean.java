@@ -71,7 +71,6 @@ public class ExamBean extends BaseController {
         try {
             pushPathHistory("examBean");
 
-            title = "";
             subject = "";
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -87,27 +86,30 @@ public class ExamBean extends BaseController {
 
             } else {
                 // 题型选题
-                if (StringUtils.isNotEmpty(classifyBean.getExam())) {
+                boolean flag = true;
+                if (!classifyBean.getExam().isEmpty()) {
                     map.put("exam", classifyBean.getExam());
+                    flag = false;
                 }
-                if (StringUtils.isNotEmpty(classifyBean.getExamType())) {
+                if (!classifyBean.getExamType().isEmpty()) {
                     map.put("examType", classifyBean.getExamType());
+                    flag = false;
                 }
-                if (StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
+                if (!classifyBean.getJlptLevel().isEmpty()) {
                     map.put("jlptLevel", classifyBean.getJlptLevel());
+                    flag = false;
                 }
-                if (StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
+                if (!classifyBean.getJtestLevel().isEmpty()) {
                     map.put("jtestLevel", classifyBean.getJtestLevel());
+                    flag = false;
+                }
+                if (flag) {
+                    logger.log(MessageId.ITBK_E_0005);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
+                    throw ex;
                 }
 
                 questions = examService.classifySearch(classifyBean, map);
-            }
-
-            if (questions == null || questions.size() == 0) {
-                // 题库已空
-                logger.log(MessageId.ITBK_I_0010);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
-                throw ex;
             }
 
             if (questions.get(0).getFatherId() != null) {
@@ -127,6 +129,13 @@ public class ExamBean extends BaseController {
                 questions.clear();
                 questions.addAll(list);
                 subject = questions.get(0).getSubject();
+            }
+
+            if (questions == null || questions.size() == 0) {
+                // 题库已空
+                logger.log(MessageId.ITBK_I_0010);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
+                throw ex;
             }
 
             // 取题目
@@ -187,11 +196,6 @@ public class ExamBean extends BaseController {
             processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_EXAM_002;
-    }
-
-    public String doResume() {
-        // TODO
-        return "";
     }
 
     private boolean checkuser() {
