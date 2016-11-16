@@ -50,7 +50,7 @@
                                         <h:selectOneRadio value="#{examClassifyBean.classifyBean.exam}" style="width: 60%" onchange="return cancelToken(this, 1)">
 											<f:selectItems value="#{examClassifyBean.exams}" var="entry"
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                                            <f:ajax event="change" execute="@this" render="levelWrapper" 
+                                            <f:ajax event="change" execute="@this" render="levelLableWrapper levelWrapper" 
                                               listener="#{examClassifyBean.changExamType}" 
                                               onevent="changExamTypeChangeCallBack"/>
 										</h:selectOneRadio>
@@ -66,7 +66,12 @@
 										</h:selectOneRadio></td>
 								</tr>
 								<tr>
-									<td><h4>考试级别：</h4></td>
+									<td><h:panelGroup id="levelLableWrapper" >
+									     <c:if test="#{examClassifyBean.classifyBean.exam=='1' ||  examClassifyBean.classifyBean.exam =='2'}">
+									      <h4>考试级别：</h4>
+									      </c:if>
+									    </h:panelGroup>
+									</td>
 									<td colspan="4">
                                       <h:panelGroup id="levelWrapper">
                                         <c:choose>
