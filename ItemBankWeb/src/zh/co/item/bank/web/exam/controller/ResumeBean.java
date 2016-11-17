@@ -79,9 +79,10 @@ public class ResumeBean extends BaseController {
             Integer userId = userInfo.getId();
             questions = resumeService.selectQuestionForError(userId);
 
+            // 未检索到符合记忆曲线的题，则检索该用户所有错题，取第一件
             if (questions.size() == 0) {
-                // 检索该用户所有错题，取第一件
                 questions = resumeService.selectQuestionForErrorAll(userId);
+                // 当前用户没有错题，则报错
                 if (questions.size() == 0) {
                     tableShow = null;
                     logger.log(MessageId.ITBK_I_0006);

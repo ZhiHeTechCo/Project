@@ -49,11 +49,17 @@
 												value="#{messageBean.message.message}" /></td>
 									</tr>
 								</table>
-								<h5 style="color: #3382C9;">请确认您的任一联系方式可用，以便我们在必要时联系您。</h5>
-								<div class="form-submit1">
-									<h:commandButton value="发送消息" class="button1"
-										action="#{messageBean.sendMessage}" id="sendMsgBtn" />
-								</div>
+								<h5 style="color: #3382C9;">请确认任一联系方式可用，以便我们在必要时联系您。</h5>
+								<table class="to">
+									<tr>
+										<td>
+											<div class="form-submit1">
+												<h:commandButton value="发送消息" class="button1"
+													action="#{messageBean.sendMessage}" id="sendMsgBtn" />
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div class="col-md-4 contact-top_right">
 								<h3>其他方式</h3>
@@ -61,9 +67,9 @@
 									<span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;9 : 00 - 18 : 00
 								</p>
 								<ul class="contact_info">
-									<li><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;<span>+86-900-235-2456</span></li>
-									<li><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;<span
-										class="msg"><a href="mailto:zhihe.tec.co@outlook.com">zhihe.tec.co@outlook.com</a></span></li>
+									<li><p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;<span>+86-900-235-2456</span></p></li>
+									<li><p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;<span
+										class="msg"><a href="mailto:zhihe.tec.co@outlook.com">zhihe.tec.co@outlook.com</a></span></p></li>
 								</ul>
 							</div>
 						</div>

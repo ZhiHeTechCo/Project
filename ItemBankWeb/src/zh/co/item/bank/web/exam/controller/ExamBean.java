@@ -71,6 +71,7 @@ public class ExamBean extends BaseController {
         try {
             pushPathHistory("examBean");
 
+            title = "";
             subject = "";
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -86,30 +87,47 @@ public class ExamBean extends BaseController {
 
             } else {
                 // 题型选题
-                boolean flag = true;
-                if (!classifyBean.getExam().isEmpty()) {
+                if (StringUtils.isNotEmpty(classifyBean.getExam())) {
                     map.put("exam", classifyBean.getExam());
-                    flag = false;
                 }
-                if (!classifyBean.getExamType().isEmpty()) {
+                if (StringUtils.isNotEmpty(classifyBean.getExamType())) {
                     map.put("examType", classifyBean.getExamType());
-                    flag = false;
                 }
-                if (!classifyBean.getJlptLevel().isEmpty()) {
+                if (StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
                     map.put("jlptLevel", classifyBean.getJlptLevel());
-                    flag = false;
                 }
-                if (!classifyBean.getJtestLevel().isEmpty()) {
+                if (StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
                     map.put("jtestLevel", classifyBean.getJtestLevel());
-                    flag = false;
-                }
-                if (flag) {
-                    logger.log(MessageId.ITBK_E_0005);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
-                    throw ex;
                 }
 
-                questions = examService.classifySearch(classifyBean, map);
+                // ----日语特殊设置----
+                // 选择J.TEST时，examType选择词汇或者文法，都设为文法
+                if ("2".equals(classifyBean.getExam()) && "2".equals(classifyBean.getExamType())) {
+                    map.put("examType", "3");
+
+                    // 只选择了词汇
+                } else if (StringUtils.isEmpty(classifyBean.getExam()) && "2".equals(classifyBean.getExamType())) {
+                    // 先检索JLPT的词汇，若没有，则检索J.TEST的文法
+                    map.put("exam", "1");
+                    questions = examService.classifySearch(classifyBean, map);
+                    if (questions.size() == 0) {
+                        map.put("exam", "2");
+                        map.put("examType", "3");
+                        questions = examService.classifySearch(classifyBean, map);
+                    }
+
+                    // 正常条件检索
+                } else {
+                    questions = examService.classifySearch(classifyBean, map);
+                }
+
+            }
+
+            if (questions == null || questions.size() == 0) {
+                // 题库已空
+                logger.log(MessageId.ITBK_I_0010);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
+                throw ex;
             }
 
             Integer fatherId = questions.get(0).getFatherId();
@@ -117,6 +135,8 @@ public class ExamBean extends BaseController {
                 // 特殊试题检索
                 questions.clear();
                 questions = examService.selectQuestionByFatherId(fatherId);
+                // 取大题
+                subject = questions.get(0).getSubject();
 
             } else if (questions.get(questions.size() - 1).getFatherId() != null) {
                 // 特殊试题不显示[下次显示]
@@ -129,20 +149,10 @@ public class ExamBean extends BaseController {
                 }
                 questions.clear();
                 questions.addAll(list);
-                subject = questions.get(0).getSubject();
-            }
-
-            if (questions == null || questions.size() == 0) {
-                // 题库已空
-                logger.log(MessageId.ITBK_I_0010);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
-                throw ex;
             }
 
             // 取题目
             title = examService.getTitle(questions.get(0).getStructureId());
-            // 取大题
-            subject = questions.get(0).getSubject();
             // 画面序号
             for (int i = 0; i < questions.size(); i++) {
                 questions.get(i).setIndex(i + 1);
@@ -199,6 +209,16 @@ public class ExamBean extends BaseController {
             processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
+
+    /**
+     * [我的错题]按下
+     * 
+     * @return
+     */
+    public String doResume() {
+        ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
+        return resumeBean.init();
     }
 
     private boolean checkuser() {
