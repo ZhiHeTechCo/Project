@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,11 @@ public abstract class BaseController {
     /** 文件上传最大限制的message */
     private String sizeLimitMessage = MessageUtils.getMessage(MessageId.COMMON_E_0008,
             new Object[] { sizeLimit });
+    
+    public final static Map<String, String> pageAndControllerMap = new HashMap<String, String>();
+    static {
+    	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_EXAM_001, "examClassifyBean");
+    }
     
     /**
      * <p>[概要]</p>
@@ -393,6 +399,17 @@ public abstract class BaseController {
      * @return
      */
     protected BaseController getController(String controllerName){
+        BaseController controller = (BaseController) SpringAppContextManager.getBean(controllerName);
+        return controller;
+        
+    }
+    /**
+     * 
+     * @param pageId
+     * @return
+     */
+    protected BaseController getControllerByPageId(String pageId){
+    	String controllerName = pageAndControllerMap.get(pageId);
         BaseController controller = (BaseController) SpringAppContextManager.getBean(controllerName);
         return controller;
         
