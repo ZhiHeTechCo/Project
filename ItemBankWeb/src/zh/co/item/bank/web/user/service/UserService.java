@@ -111,7 +111,7 @@ public class UserService {
     	int count = 0;
     	userInfo.setPassword(oldPassword);
     	TuUserBean checkuser= new TuUserBean();
-    	checkuser.setId(userInfo.getId());
+    	checkuser.setName(userInfo.getName());
     	checkuser.setPassword(userInfo.getPassword());
     	if(userDao.isUserExist(checkuser)) {
     		//存在的场合，更新密码
