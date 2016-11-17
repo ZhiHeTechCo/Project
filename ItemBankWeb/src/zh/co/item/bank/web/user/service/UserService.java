@@ -71,8 +71,8 @@ public class UserService {
      * @return
      * @throws Exception
      */
-    public TuUserBean login(TuUserBean userInfo) throws Exception {
-    	TuUserBean user = new TuUserBean();
+    public UserModel login(TuUserBean userInfo) throws Exception {
+    	UserModel user = new UserModel();
     	//check当前用户是否已经存在
     	if(userDao.isUserExist(userInfo)) {
     		//存在的场合，将用户的信息全部检索出来,放在Session里
@@ -107,11 +107,13 @@ public class UserService {
      * @return
      * @throws Exception
      */
-    public int changePassword(TuUserBean userInfo, String oldPassword, String newPassword) throws Exception {
+    public int changePassword(UserModel userInfo, String oldPassword, String newPassword) throws Exception {
     	int count = 0;
     	userInfo.setPassword(oldPassword);
-    	
-    	if(userDao.isUserExist(userInfo)) {
+    	TuUserBean checkuser= new TuUserBean();
+    	checkuser.setId(userInfo.getId());
+    	checkuser.setPassword(userInfo.getPassword());
+    	if(userDao.isUserExist(checkuser)) {
     		//存在的场合，更新密码
     		TuUserBean newUser = new TuUserBean();
     		//ID

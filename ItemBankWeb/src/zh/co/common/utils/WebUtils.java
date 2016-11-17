@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,7 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.exception.CmnSysException;
 import zh.co.common.prop.PropertiesUtils;
-import zh.co.item.bank.db.entity.TuUserBean;
+import zh.co.item.bank.model.entity.UserModel;
 
 /**
  * <p>[概要] WebUtils类</p>
@@ -83,7 +84,7 @@ public class WebUtils {
         sessionUserId.remove();
     }
     
-    public static void setSessionUserInfoContext(TuUserBean userInfo){
+    public static void setSessionUserInfoContext(UserModel userInfo){
         sessionUserInfo.set(userInfo);
     }
     
@@ -171,12 +172,12 @@ public class WebUtils {
      * 
      * @return
      */
-    public static TuUserBean getLoginUserInfo() {
+    public static UserModel getLoginUserInfo() {
         HttpSession session = getSession();
         if(session == null){
-            return (TuUserBean)sessionUserInfo.get();
+            return (UserModel)sessionUserInfo.get();
         }
-        TuUserBean loginUserInfo = (TuUserBean) session.getAttribute(WebUtils.SESSION_USER_INFO);
+        UserModel loginUserInfo = (UserModel) session.getAttribute(WebUtils.SESSION_USER_INFO);
         return loginUserInfo;
     }
     

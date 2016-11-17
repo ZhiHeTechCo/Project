@@ -13,6 +13,7 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TuUserBean;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -58,9 +59,9 @@ public class SignInBean extends BaseController {
      */
     public String login() throws Exception {
         try {
-        	userInfo = userService.login(userInfo);
-        	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, userInfo);
-        	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(userInfo.getId()));
+        	UserModel loginUserInfo = userService.login(userInfo);
+        	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, loginUserInfo);
+        	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(loginUserInfo.getId()));
     		logger.log(MessageId.ITBK_I_0003);
             //登录成功，跳转到首页
             if(fromPageId == null) {

@@ -55,8 +55,8 @@ public class UserDao extends BaseDao {
      * @param userInfo
      * @return
      */
-    public TuUserBean getUserInfo(TuUserBean userInfo) {
-    	return (TuUserBean)getIbatisTemplate().selectOne("UserManage.getUserInfo", userInfo);
+    public UserModel getUserInfo(TuUserBean userInfo) {
+    	return (UserModel)getIbatisTemplate().selectOne("UserManage.getUserInfo", userInfo);
     }
     
     /**

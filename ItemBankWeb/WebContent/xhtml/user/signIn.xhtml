@@ -21,9 +21,10 @@
                 </h:panelGroup>
                 <table class="toTable">
                   <tr>
-                    <td><h:inputText id="name" value="#{signInBean.userInfo.name}" class="text" maxlength="10"
+                    <td><h:inputText id="name" value="#{signInBean.userInfo.name}" class="text" maxlength="30"
                         onfocus="if (this.value == '用户名') {this.value = '';}"
-                        onblur="if (this.value == '') {this.value = '用户名';}" /> <h:inputSecret redisplay="true"
+                        onblur="if (this.value == '') {this.value = '用户名';}" /> 
+                        <h:inputSecret redisplay="true"
                         id="password" value="#{signInBean.userInfo.password}" class="text" maxlength="10"
                         onfocus="this.value = '';"
                         onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
