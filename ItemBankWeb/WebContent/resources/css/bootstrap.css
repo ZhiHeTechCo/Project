@@ -336,9 +336,11 @@ th {
 }
 .glyphicon-ok:before {
   content: "\e013";
+  color: #00ff00;
 }
 .glyphicon-remove:before {
   content: "\e014";
+  color: #ff0000;
 }
 .glyphicon-zoom-in:before {
   content: "\e015";
