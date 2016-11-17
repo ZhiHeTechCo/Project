@@ -20,7 +20,7 @@
     </if>
   </select>
   
-  <select id="getUserInfo" resultType="zh.co.item.bank.db.entity.TuUserBean" parameterType="zh.co.item.bank.model.entity.UserModel">
+  <select id="getUserInfo" resultType="zh.co.item.bank.model.entity.UserModel" parameterType="zh.co.item.bank.db.entity.TuUserBean">
     SELECT
       * 
     FROM
