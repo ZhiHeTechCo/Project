@@ -36,6 +36,7 @@
                 <value>classpath:sql/common/TbQuestion.xml</value>
                 <value>classpath:sql/common/TbQuestionClassify.xml</value>
                 <value>classpath:sql/common/TbQuestionStructure.xml</value>
+                <value>classpath:sql/common/TcMessage.xml</value>
                 <value>classpath:sql/common/TsAuthority.xml</value>
                 <value>classpath:sql/common/TsCode.xml</value>
                 <value>classpath:sql/common/TuPoint.xml</value>

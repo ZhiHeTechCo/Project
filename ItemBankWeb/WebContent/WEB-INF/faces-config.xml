@@ -24,6 +24,10 @@
       <to-view-id>/xhtml/common/aboutUs.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
+      <from-outcome>ITBK_COM_003</from-outcome>
+      <to-view-id>/xhtml/contact/contact.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_USER_001</from-outcome>
       <to-view-id>/xhtml/user/signUp.xhtml</to-view-id>
    </navigation-case>

@@ -75,6 +75,18 @@ public class MessageId {
 
 	/** 太厉害啦！你已将题库掏空！去复习错题如何？ */
 	public static final String ITBK_I_0010 = "ITBK_I_0010";
+	
+	/** 您现在是游客身份 ，登陆后可自动获取联络信息。*/
+	public static final String ITBK_I_0011 = "ITBK_I_0011";
+	
+	/** 联系信息（电话，邮箱任意一项）不能为空。*/
+	public static final String ITBK_I_0012 = "ITBK_I_0012";
+
+	/** 留言不能为空。*/
+	public static final String ITBK_I_0013 = "ITBK_I_0013";
+	
+	/** 感谢您的反馈！*/
+	public static final String ITBK_I_0014 = "ITBK_I_0014";
 
 	// ------------------------Qestion------------------------
 	/** 您确定要立刻结束此次模拟考试么？ */
