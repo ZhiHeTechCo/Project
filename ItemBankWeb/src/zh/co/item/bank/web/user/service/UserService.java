@@ -120,7 +120,7 @@ public class UserService {
     		newUser.setPassword(newPassword);
     		//更新时间
     		newUser.setUpdateTime(new Date());
-    		count = userDao.updateUserInfo(userInfo);
+    		count = userDao.updateUserInfo(newUser);
     		
     	} else {
     		//不存在的场合，

@@ -74,7 +74,7 @@ public class UserDao extends BaseDao {
      * @return
      */
     public int updateUserInfo(TuUserBean userInfo) {
-        return getIbatisTemplate().insert("TuUser.updateByPrimaryKeySelective", userInfo);
+        return getIbatisTemplate().update("TuUser.updateByPrimaryKeySelective", userInfo);
     }
 
 }
