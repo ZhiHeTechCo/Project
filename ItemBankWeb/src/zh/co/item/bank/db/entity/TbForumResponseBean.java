@@ -3,13 +3,13 @@ package zh.co.item.bank.db.entity;
 import java.util.Date;
 
 public class TbForumResponseBean {
-    private Integer questionid;
+    private Integer questionId;
 
     private Short count;
 
-    private String userchose;
+    private String userChoose;
 
-    private String systemchose;
+    private String systemChoose;
 
     private Integer responser1;
 
@@ -75,12 +75,12 @@ public class TbForumResponseBean {
 
     private Date createTime;
 
-    public Integer getQuestionid() {
-        return questionid;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestionid(Integer questionid) {
-        this.questionid = questionid;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public Short getCount() {
@@ -91,20 +91,20 @@ public class TbForumResponseBean {
         this.count = count;
     }
 
-    public String getUserchose() {
-        return userchose;
+    public String getUserChoose() {
+        return userChoose;
     }
 
-    public void setUserchose(String userchose) {
-        this.userchose = userchose == null ? null : userchose.trim();
+    public void setUserChoose(String userChoose) {
+        this.userChoose = userChoose == null ? null : userChoose.trim();
     }
 
-    public String getSystemchose() {
-        return systemchose;
+    public String getSystemChoose() {
+        return systemChoose;
     }
 
-    public void setSystemchose(String systemchose) {
-        this.systemchose = systemchose == null ? null : systemchose.trim();
+    public void setSystemChoose(String systemChoose) {
+        this.systemChoose = systemChoose == null ? null : systemChoose.trim();
     }
 
     public Integer getResponser1() {

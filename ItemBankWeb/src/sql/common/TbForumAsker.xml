@@ -3,11 +3,11 @@
 <mapper namespace="TbForumAsker" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbForumAskerBean" >
     <id column="no" property="no" jdbcType="INTEGER" />
-    <result column="questionId" property="questionid" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="asker" property="asker" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    no, questionId, asker
+    no, question_id, asker
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbForumAskerBeanKey" >
     select 
@@ -20,9 +20,9 @@
     where no = #{no,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
-    insert into tb_forum_asker (no, questionId, asker
+    insert into tb_forum_asker (no, question_id, asker
       )
-    values (#{no,jdbcType=INTEGER}, #{questionid,jdbcType=INTEGER}, #{asker,jdbcType=INTEGER}
+    values (#{no,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{asker,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
@@ -31,8 +31,8 @@
       <if test="no != null" >
         no,
       </if>
-      <if test="questionid != null" >
-        questionId,
+      <if test="questionId != null" >
+        question_id,
       </if>
       <if test="asker != null" >
         asker,
@@ -42,8 +42,8 @@
       <if test="no != null" >
         #{no,jdbcType=INTEGER},
       </if>
-      <if test="questionid != null" >
-        #{questionid,jdbcType=INTEGER},
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
       </if>
       <if test="asker != null" >
         #{asker,jdbcType=INTEGER},
@@ -53,8 +53,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
     update tb_forum_asker
     <set >
-      <if test="questionid != null" >
-        questionId = #{questionid,jdbcType=INTEGER},
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=INTEGER},
       </if>
       <if test="asker != null" >
         asker = #{asker,jdbcType=INTEGER},
@@ -64,7 +64,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
     update tb_forum_asker
-    set questionId = #{questionid,jdbcType=INTEGER},
+    set question_id = #{questionId,jdbcType=INTEGER},
       asker = #{asker,jdbcType=INTEGER}
     where no = #{no,jdbcType=INTEGER}
   </update>

@@ -153,9 +153,9 @@ public class UserService {
     	//生日
     	newUser.setBirthday(userInfo.getBirthday());
     	//日语等级（JLTP）
-    	newUser.setJlptLevel(userInfo.getJlptlevel());
+    	newUser.setJlptLevel(userInfo.getJlptLevel());
     	//日语等级（J.TEST）
-    	newUser.setJtestLevel(userInfo.getJtestlevel());
+    	newUser.setJtestLevel(userInfo.getJtestLevel());
     	//更新时间
     	newUser.setUpdateTime(new Date());
     	count = userDao.updateUserInfo(newUser);

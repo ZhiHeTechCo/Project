@@ -19,7 +19,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
-import zh.co.item.bank.db.entity.TuUserBean;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -51,7 +51,7 @@ public class ExamClassifyBean extends BaseController {
 
     private TbQuestionClassifyBean classifyBean;
 
-    private TuUserBean userInfo;
+    private UserModel userInfo;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
@@ -75,7 +75,7 @@ public class ExamClassifyBean extends BaseController {
 
             classifyBean = new TbQuestionClassifyBean();
 
-            userInfo = (TuUserBean) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_INFO);
+            userInfo = WebUtils.getLoginUserInfo();
 
         } catch (Exception e) {
             processForException(logger, e);

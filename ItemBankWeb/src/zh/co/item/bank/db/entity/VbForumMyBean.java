@@ -3,17 +3,17 @@ package zh.co.item.bank.db.entity;
 public class VbForumMyBean {
     private Integer asker;
 
-    private Integer questionid;
+    private Integer questionId;
 
     private String context;
 
-    private String contextkey;
+    private String contextKey;
 
-    private String contextafter;
+    private String contextAfter;
 
     private String status;
 
-    private String statusname;
+    private String statusName;
 
     public Integer getAsker() {
         return asker;
@@ -23,12 +23,12 @@ public class VbForumMyBean {
         this.asker = asker;
     }
 
-    public Integer getQuestionid() {
-        return questionid;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestionid(Integer questionid) {
-        this.questionid = questionid;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public String getContext() {
@@ -39,20 +39,20 @@ public class VbForumMyBean {
         this.context = context == null ? null : context.trim();
     }
 
-    public String getContextkey() {
-        return contextkey;
+    public String getContextKey() {
+        return contextKey;
     }
 
-    public void setContextkey(String contextkey) {
-        this.contextkey = contextkey == null ? null : contextkey.trim();
+    public void setContextKey(String contextKey) {
+        this.contextKey = contextKey == null ? null : contextKey.trim();
     }
 
-    public String getContextafter() {
-        return contextafter;
+    public String getContextAfter() {
+        return contextAfter;
     }
 
-    public void setContextafter(String contextafter) {
-        this.contextafter = contextafter == null ? null : contextafter.trim();
+    public void setContextAfter(String contextAfter) {
+        this.contextAfter = contextAfter == null ? null : contextAfter.trim();
     }
 
     public String getStatus() {
@@ -63,11 +63,11 @@ public class VbForumMyBean {
         this.status = status == null ? null : status.trim();
     }
 
-    public String getStatusname() {
-        return statusname;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public void setStatusname(String statusname) {
-        this.statusname = statusname == null ? null : statusname.trim();
+    public void setStatusName(String statusName) {
+        this.statusName = statusName == null ? null : statusName.trim();
     }
 }

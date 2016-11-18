@@ -17,8 +17,8 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
-import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -44,7 +44,7 @@ public class ExamResultBean extends BaseController {
 
     private Integer questionId;
 
-    private TuUserBean userInfo;
+    private UserModel userInfo;
 
     private boolean isResume;
 
@@ -124,7 +124,7 @@ public class ExamResultBean extends BaseController {
     public String askQuestion() {
         try {
             if (questionId != null) {
-                userInfo = (TuUserBean) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_INFO);
+                userInfo = (UserModel) WebUtils.getLoginUserInfo();
                 if (!checkuser()) {
                     return SystemConstants.PAGE_ITBK_EXAM_004;
                 }

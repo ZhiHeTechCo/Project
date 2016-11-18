@@ -20,8 +20,8 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
-import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 
@@ -56,7 +56,7 @@ public class ExamBean extends BaseController {
     private String subject;
 
     /** 用户信息 */
-    private TuUserBean userInfo;
+    private UserModel userInfo;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
@@ -279,11 +279,11 @@ public class ExamBean extends BaseController {
         this.subject = subject;
     }
 
-    public TuUserBean getUserInfo() {
+    public UserModel getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(TuUserBean userInfo) {
+    public void setUserInfo(UserModel userInfo) {
         this.userInfo = userInfo;
     }
 

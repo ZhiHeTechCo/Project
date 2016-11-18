@@ -3,7 +3,6 @@ package zh.co.item.bank.db.entity;
 import java.util.Date;
 
 public class TcMessageBean extends TcMessageBeanKey {
-
     private Integer userId;
 
     private String message;
@@ -11,10 +10,6 @@ public class TcMessageBean extends TcMessageBeanKey {
     private String status;
 
     private Date createTime;
-
-    public String getMessage() {
-        return message;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -24,8 +19,12 @@ public class TcMessageBean extends TcMessageBeanKey {
         this.userId = userId;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public void setMessage(String message) {
-        this.message = message;
+        this.message = message == null ? null : message.trim();
     }
 
     public String getStatus() {
@@ -33,7 +32,7 @@ public class TcMessageBean extends TcMessageBeanKey {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = status == null ? null : status.trim();
     }
 
     public Date getCreateTime() {
@@ -43,5 +42,4 @@ public class TcMessageBean extends TcMessageBeanKey {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
 }

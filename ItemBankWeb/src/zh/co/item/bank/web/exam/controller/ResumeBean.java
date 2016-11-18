@@ -20,8 +20,8 @@ import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
-import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.exam.service.ResumeService;
@@ -49,7 +49,7 @@ public class ResumeBean extends BaseController {
 
     private List<ExamModel> questions;
 
-    private TuUserBean userInfo;
+    private UserModel userInfo;
 
     private String tableShow;
 
@@ -68,7 +68,7 @@ public class ResumeBean extends BaseController {
      */
     public String init() {
         try {
-            userInfo = (TuUserBean) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_INFO);
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
             if (!checkuser()) {
                 // 跳转至登录画面
                 return SystemConstants.PAGE_ITBK_USER_002;

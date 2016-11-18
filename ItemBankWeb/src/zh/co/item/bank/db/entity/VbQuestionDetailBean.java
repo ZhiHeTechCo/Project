@@ -5,9 +5,9 @@ public class VbQuestionDetailBean {
 
     private String context;
 
-    private String contextkey;
+    private String contextKey;
 
-    private String contextafter;
+    private String contextAfter;
 
     private String a;
 
@@ -23,19 +23,19 @@ public class VbQuestionDetailBean {
 
     private String source;
 
-    private Integer classifyid;
+    private Integer classifyId;
 
-    private Integer structureid;
+    private Integer structureId;
 
-    private String deleteflag;
+    private String deleteFlag;
 
     private String exam;
 
-    private String jlptlevel;
+    private String jlptLevel;
 
-    private String jtestlevel;
+    private String jtestLevel;
 
-    private String examtype;
+    private String examType;
 
     public Integer getNo() {
         return no;
@@ -53,20 +53,20 @@ public class VbQuestionDetailBean {
         this.context = context == null ? null : context.trim();
     }
 
-    public String getContextkey() {
-        return contextkey;
+    public String getContextKey() {
+        return contextKey;
     }
 
-    public void setContextkey(String contextkey) {
-        this.contextkey = contextkey == null ? null : contextkey.trim();
+    public void setContextKey(String contextKey) {
+        this.contextKey = contextKey == null ? null : contextKey.trim();
     }
 
-    public String getContextafter() {
-        return contextafter;
+    public String getContextAfter() {
+        return contextAfter;
     }
 
-    public void setContextafter(String contextafter) {
-        this.contextafter = contextafter == null ? null : contextafter.trim();
+    public void setContextAfter(String contextAfter) {
+        this.contextAfter = contextAfter == null ? null : contextAfter.trim();
     }
 
     public String getA() {
@@ -125,28 +125,28 @@ public class VbQuestionDetailBean {
         this.source = source == null ? null : source.trim();
     }
 
-    public Integer getClassifyid() {
-        return classifyid;
+    public Integer getClassifyId() {
+        return classifyId;
     }
 
-    public void setClassifyid(Integer classifyid) {
-        this.classifyid = classifyid;
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
     }
 
-    public Integer getStructureid() {
-        return structureid;
+    public Integer getStructureId() {
+        return structureId;
     }
 
-    public void setStructureid(Integer structureid) {
-        this.structureid = structureid;
+    public void setStructureId(Integer structureId) {
+        this.structureId = structureId;
     }
 
-    public String getDeleteflag() {
-        return deleteflag;
+    public String getDeleteFlag() {
+        return deleteFlag;
     }
 
-    public void setDeleteflag(String deleteflag) {
-        this.deleteflag = deleteflag == null ? null : deleteflag.trim();
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 
     public String getExam() {
@@ -157,27 +157,27 @@ public class VbQuestionDetailBean {
         this.exam = exam == null ? null : exam.trim();
     }
 
-    public String getJlptlevel() {
-        return jlptlevel;
+    public String getJlptLevel() {
+        return jlptLevel;
     }
 
-    public void setJlptlevel(String jlptlevel) {
-        this.jlptlevel = jlptlevel == null ? null : jlptlevel.trim();
+    public void setJlptLevel(String jlptLevel) {
+        this.jlptLevel = jlptLevel == null ? null : jlptLevel.trim();
     }
 
-    public String getJtestlevel() {
-        return jtestlevel;
+    public String getJtestLevel() {
+        return jtestLevel;
     }
 
-    public void setJtestlevel(String jtestlevel) {
-        this.jtestlevel = jtestlevel == null ? null : jtestlevel.trim();
+    public void setJtestLevel(String jtestLevel) {
+        this.jtestLevel = jtestLevel == null ? null : jtestLevel.trim();
     }
 
-    public String getExamtype() {
-        return examtype;
+    public String getExamType() {
+        return examType;
     }
 
-    public void setExamtype(String examtype) {
-        this.examtype = examtype == null ? null : examtype.trim();
+    public void setExamType(String examType) {
+        this.examType = examType == null ? null : examType.trim();
     }
 }

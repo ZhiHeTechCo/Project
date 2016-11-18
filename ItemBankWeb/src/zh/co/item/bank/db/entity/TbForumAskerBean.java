@@ -1,16 +1,16 @@
 package zh.co.item.bank.db.entity;
 
 public class TbForumAskerBean extends TbForumAskerBeanKey {
-    private Integer questionid;
+    private Integer questionId;
 
     private Integer asker;
 
-    public Integer getQuestionid() {
-        return questionid;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestionid(Integer questionid) {
-        this.questionid = questionid;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public Integer getAsker() {

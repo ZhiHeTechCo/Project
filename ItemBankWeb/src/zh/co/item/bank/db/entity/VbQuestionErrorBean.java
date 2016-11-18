@@ -9,9 +9,9 @@ public class VbQuestionErrorBean {
 
     private String context;
 
-    private String contextkey;
+    private String contextKey;
 
-    private String contextafter;
+    private String contextAfter;
 
     private String a;
 
@@ -27,7 +27,7 @@ public class VbQuestionErrorBean {
 
     private String finish;
 
-    private Date updatetime;
+    private Date updateTime;
 
     public Integer getNo() {
         return no;
@@ -53,20 +53,20 @@ public class VbQuestionErrorBean {
         this.context = context == null ? null : context.trim();
     }
 
-    public String getContextkey() {
-        return contextkey;
+    public String getContextKey() {
+        return contextKey;
     }
 
-    public void setContextkey(String contextkey) {
-        this.contextkey = contextkey == null ? null : contextkey.trim();
+    public void setContextKey(String contextKey) {
+        this.contextKey = contextKey == null ? null : contextKey.trim();
     }
 
-    public String getContextafter() {
-        return contextafter;
+    public String getContextAfter() {
+        return contextAfter;
     }
 
-    public void setContextafter(String contextafter) {
-        this.contextafter = contextafter == null ? null : contextafter.trim();
+    public void setContextAfter(String contextAfter) {
+        this.contextAfter = contextAfter == null ? null : contextAfter.trim();
     }
 
     public String getA() {
@@ -125,11 +125,11 @@ public class VbQuestionErrorBean {
         this.finish = finish == null ? null : finish.trim();
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

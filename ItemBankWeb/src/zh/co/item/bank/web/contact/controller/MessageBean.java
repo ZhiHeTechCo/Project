@@ -13,7 +13,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TcMessageBean;
-import zh.co.item.bank.db.entity.TuUserBean;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.contact.service.MessageService;
 
 /**
@@ -31,7 +31,7 @@ public class MessageBean extends BaseController {
     @Inject
     private MessageService messageService;
 
-    private TuUserBean userInfo;
+    private UserModel userInfo;
 
     private TcMessageBean message;
 
@@ -49,12 +49,12 @@ public class MessageBean extends BaseController {
             pushPathHistory("messageBean");
 
             // 取用户信息并显示，没有则是游客身份
-            userInfo = (TuUserBean) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_INFO);
+            userInfo = WebUtils.getLoginUserInfo();
             message = new TcMessageBean();
 
             if (userInfo == null) {
                 // 游客
-                userInfo = new TuUserBean();
+                userInfo = new UserModel();
                 message.setUserId(0);
 
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0011);
@@ -100,11 +100,11 @@ public class MessageBean extends BaseController {
         return SystemConstants.PAGE_ITBK_COM_003;
     }
 
-    public TuUserBean getUserInfo() {
+    public UserModel getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(TuUserBean userInfo) {
+    public void setUserInfo(UserModel userInfo) {
         this.userInfo = userInfo;
     }
 

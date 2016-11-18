@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
 <mapper namespace="TbForumResponse" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbForumResponseBean" >
-    <result column="questionId" property="questionid" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="count" property="count" jdbcType="SMALLINT" />
-    <result column="userChose" property="userchose" jdbcType="CHAR" />
-    <result column="systemChose" property="systemchose" jdbcType="CHAR" />
+    <result column="user_choose" property="userChoose" jdbcType="CHAR" />
+    <result column="system_choose" property="systemChoose" jdbcType="CHAR" />
     <result column="responser1" property="responser1" jdbcType="INTEGER" />
     <result column="response1" property="response1" jdbcType="VARCHAR" />
     <result column="count1" property="count1" jdbcType="SMALLINT" />
@@ -40,8 +40,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean" >
-    insert into tb_forum_response (questionId, count, userChose, 
-      systemChose, responser1, response1, 
+    insert into tb_forum_response (question_id, count, user_choose, 
+      system_choose, responser1, response1, 
       count1, responser2, response2, 
       count2, responser3, response3, 
       count3, responser4, response4, 
@@ -53,8 +53,8 @@
       count9, responser10, response10, 
       count10, status, create_time
       )
-    values (#{questionid,jdbcType=INTEGER}, #{count,jdbcType=SMALLINT}, #{userchose,jdbcType=CHAR}, 
-      #{systemchose,jdbcType=CHAR}, #{responser1,jdbcType=INTEGER}, #{response1,jdbcType=VARCHAR}, 
+    values (#{questionId,jdbcType=INTEGER}, #{count,jdbcType=SMALLINT}, #{userChoose,jdbcType=CHAR}, 
+      #{systemChoose,jdbcType=CHAR}, #{responser1,jdbcType=INTEGER}, #{response1,jdbcType=VARCHAR}, 
       #{count1,jdbcType=SMALLINT}, #{responser2,jdbcType=INTEGER}, #{response2,jdbcType=VARCHAR}, 
       #{count2,jdbcType=SMALLINT}, #{responser3,jdbcType=INTEGER}, #{response3,jdbcType=VARCHAR}, 
       #{count3,jdbcType=SMALLINT}, #{responser4,jdbcType=INTEGER}, #{response4,jdbcType=VARCHAR}, 
@@ -70,17 +70,17 @@
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean" >
     insert into tb_forum_response
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="questionid != null" >
-        questionId,
+      <if test="questionId != null" >
+        question_id,
       </if>
       <if test="count != null" >
         count,
       </if>
-      <if test="userchose != null" >
-        userChose,
+      <if test="userChoose != null" >
+        user_choose,
       </if>
-      <if test="systemchose != null" >
-        systemChose,
+      <if test="systemChoose != null" >
+        system_choose,
       </if>
       <if test="responser1 != null" >
         responser1,
@@ -180,17 +180,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="questionid != null" >
-        #{questionid,jdbcType=INTEGER},
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
       </if>
       <if test="count != null" >
         #{count,jdbcType=SMALLINT},
       </if>
-      <if test="userchose != null" >
-        #{userchose,jdbcType=CHAR},
+      <if test="userChoose != null" >
+        #{userChoose,jdbcType=CHAR},
       </if>
-      <if test="systemchose != null" >
-        #{systemchose,jdbcType=CHAR},
+      <if test="systemChoose != null" >
+        #{systemChoose,jdbcType=CHAR},
       </if>
       <if test="responser1 != null" >
         #{responser1,jdbcType=INTEGER},

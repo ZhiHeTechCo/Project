@@ -11,9 +11,9 @@ public class VuUserModelBean {
 
     private String role;
 
-    private Date createtime;
+    private Date createTime;
 
-    private Date updatetime;
+    private Date updateTime;
 
     private Date birthday;
 
@@ -21,19 +21,19 @@ public class VuUserModelBean {
 
     private String email;
 
-    private String jlptlevel;
+    private String jlptLevel;
 
-    private String jtestlevel;
+    private String jtestLevel;
 
     private Integer point;
 
     private Integer contribution;
 
-    private Date expiretime;
+    private Date expireTime;
 
-    private Long questionnum;
+    private Long questionNum;
 
-    private Long errornum;
+    private Long errorNum;
 
     public Integer getId() {
         return id;
@@ -67,20 +67,20 @@ public class VuUserModelBean {
         this.role = role == null ? null : role.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Date getBirthday() {
@@ -107,20 +107,20 @@ public class VuUserModelBean {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getJlptlevel() {
-        return jlptlevel;
+    public String getJlptLevel() {
+        return jlptLevel;
     }
 
-    public void setJlptlevel(String jlptlevel) {
-        this.jlptlevel = jlptlevel == null ? null : jlptlevel.trim();
+    public void setJlptLevel(String jlptLevel) {
+        this.jlptLevel = jlptLevel == null ? null : jlptLevel.trim();
     }
 
-    public String getJtestlevel() {
-        return jtestlevel;
+    public String getJtestLevel() {
+        return jtestLevel;
     }
 
-    public void setJtestlevel(String jtestlevel) {
-        this.jtestlevel = jtestlevel == null ? null : jtestlevel.trim();
+    public void setJtestLevel(String jtestLevel) {
+        this.jtestLevel = jtestLevel == null ? null : jtestLevel.trim();
     }
 
     public Integer getPoint() {
@@ -139,27 +139,27 @@ public class VuUserModelBean {
         this.contribution = contribution;
     }
 
-    public Date getExpiretime() {
-        return expiretime;
+    public Date getExpireTime() {
+        return expireTime;
     }
 
-    public void setExpiretime(Date expiretime) {
-        this.expiretime = expiretime;
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public Long getQuestionnum() {
-        return questionnum;
+    public Long getQuestionNum() {
+        return questionNum;
     }
 
-    public void setQuestionnum(Long questionnum) {
-        this.questionnum = questionnum;
+    public void setQuestionNum(Long questionNum) {
+        this.questionNum = questionNum;
     }
 
-    public Long getErrornum() {
-        return errornum;
+    public Long getErrorNum() {
+        return errorNum;
     }
 
-    public void setErrornum(Long errornum) {
-        this.errornum = errornum;
+    public void setErrorNum(Long errorNum) {
+        this.errorNum = errorNum;
     }
 }
