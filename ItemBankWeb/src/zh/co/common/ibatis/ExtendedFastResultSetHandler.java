@@ -24,7 +24,7 @@ public class ExtendedFastResultSetHandler extends FastResultSetHandler {
 	}
 
 	protected boolean applyAutomaticMappings(ResultSet rs,
-			List<String> unmappedColumnNames, MetaObject metaObject)
+			List<String> unmappedColumnNames, MetaObject metaObject,  String columnPrefix, ResultColumnCache resultColumnCache)
 			throws SQLException {
 		boolean foundValues = false;
 		for (String columnName : unmappedColumnNames) {

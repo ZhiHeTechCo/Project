@@ -24,11 +24,11 @@
                 </tr>
                 <tr>
                   <td><h4>做题数</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.questionnum}" /></td>
+                  <td><h:outputText value="#{userInfoBean.userInfo.questionNum}" /></td>
                 </tr>
                 <tr>
                   <td><h4>错题数</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.errornum}" /></td>
+                  <td><h:outputText value="#{userInfoBean.userInfo.errorNum}" /></td>
                 </tr>
                 <tr>
                   <td><h4>积分</h4></td>
@@ -41,7 +41,7 @@
                 </tr>
                 <tr>
                   <td><h4>注册日期</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.createtime}" >
+                  <td><h:outputText value="#{userInfoBean.userInfo.createTime}" >
                         <f:convertDateTime pattern="yyyy年MM月dd日" timeZone="GMT+8"/>
                       </h:outputText>
                   </td>
@@ -63,7 +63,7 @@
                 </tr>
                 <tr>
                   <td><h4>日语等级（JLTP）</h4></td>
-                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jlptlevel}">
+                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jlptLevel}">
                       <f:selectItem itemValue="" itemLabel="" />
                       <f:selectItems value="#{userInfoBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
                         itemLabel="#{entry.value}" />
@@ -71,7 +71,7 @@
                 </tr>
                 <tr>
                   <td><h4>日语等级（J.TEST）</h4></td>
-                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jtestlevel}">
+                  <td><h:selectOneMenu value="#{userInfoBean.userInfo.jtestLevel}">
                       <f:selectItem itemValue="" itemLabel="" />
                       <f:selectItems value="#{userInfoBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
                         itemLabel="#{entry.value}" />
