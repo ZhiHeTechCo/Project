@@ -60,6 +60,7 @@ public abstract class BaseController {
     public final static Map<String, String> pageAndControllerMap = new HashMap<String, String>();
     static {
     	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_EXAM_001, "examClassifyBean");
+    	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_COM_003, "messageBean");
     }
     
     /**
