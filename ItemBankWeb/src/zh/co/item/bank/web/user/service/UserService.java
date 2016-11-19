@@ -161,5 +161,33 @@ public class UserService {
     	count = userDao.updateUserInfo(newUser);
     	return count;
     }
+    
+    /**
+     * wechat用户自动注册登录
+     * @param userInfo
+     * @return
+     */
+    public UserModel loginForWechat(TuUserBean userInfo) {
+    	UserModel user = new UserModel();
+    	//check当前用户名是否已经存在
+    	TuUserBean newUser = new TuUserBean();
+    	newUser.setName(userInfo.getName());
+    	if(userDao.isUserExist(newUser)) {
+    		//存在的场合，自动登录
+    		newUser.setPassword(userInfo.getPassword());
+    		user = userDao.getUserInfo(newUser);
+    	} else {
+    		//不存在的场合，注册，自动登录
+    		int count = userDao.insertUserInfo(userInfo);
+    		if(count > 0) {
+	    		logger.log(MessageId.ITBK_I_0001, new Object[] {userInfo.getName()});
+	    		user = userDao.getUserInfo(userInfo);
+    		} else{
+    			return null;
+    		}
+    	}
+    	
+    	return user;
+    }
  
 }

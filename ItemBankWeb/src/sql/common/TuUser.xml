@@ -13,10 +13,11 @@
     <result column="jtest_level" property="jtestLevel" jdbcType="CHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="nick_name" property="nickName" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, CONVERT(AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) USING UTF8) AS password, 
-    role, birthday, telephone, email, jlpt_level, jtest_level, create_time, update_time
+    role, birthday, telephone, email, jlpt_level, jtest_level, create_time, update_time, nick_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TuUserBeanKey" >
     select 
@@ -32,11 +33,11 @@
     insert into tu_user (id, name, password, 
       role, birthday, telephone, email, 
       jlpt_level, jtest_level, create_time, 
-      update_time)
+      update_time, nick_name)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, AES_ENCRYPT(#{password,jdbcType=VARCHAR}, UNHEX(MD5('${DB_ENCODE_KEY}'))), 
       #{role,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, #{telephone,jdbcType=CHAR}, #{email,jdbcType=CHAR}, 
       #{jlptLevel,jdbcType=CHAR}, #{jtestLevel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{nickName,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TuUserBean" >
     insert into tu_user
@@ -74,6 +75,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="nickName != null" >
+        nickName,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -108,6 +112,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -144,6 +151,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=TIMESTAMP},,
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -158,7 +168,8 @@
       jlpt_level = #{jlptLevel,jdbcType=CHAR},
       jtest_level = #{jtestLevel,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      nick_name = #{nickName,jdbcType=CHAR},
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

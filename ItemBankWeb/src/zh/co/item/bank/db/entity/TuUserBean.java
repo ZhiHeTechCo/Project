@@ -22,6 +22,8 @@ public class TuUserBean extends TuUserBeanKey {
     private Date createTime;
 
     private Date updateTime;
+    
+    private String nickName;
 
     public String getName() {
         return name;
@@ -102,4 +104,13 @@ public class TuUserBean extends TuUserBeanKey {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+    
 }
