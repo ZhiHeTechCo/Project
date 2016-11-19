@@ -9,7 +9,7 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-       <script type="text/javascript">
+		<script type="text/javascript">
        /**
         * 考题种别变更CallBack
         * 
@@ -32,9 +32,10 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examClassifyForm">
 				<div class="typrography">
-					<h2 style="text-align: center;padding-bottom: 20px;color:#3382C9;">试题类别选择</h2>
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
 					<div class="container">
-						<div class="bs-example">
+						<div class="col-md-8 contact-top">
 							<h:panelGroup id="ngossfw_error_display"
 								class="#{request.getAttribute('request-message-level')}"
 								layout="block">
@@ -43,58 +44,61 @@
 									escape="false" />
 							</h:panelGroup>
 							<h5 style="color: #3382C9;">请选择您想做的试题类型。</h5>
-							<table class="toTable" style="width: 100%">
+							<table class="toTable" style="width: 70%">
 								<tr>
 									<td><h4>考题种别：</h4></td>
-									<td colspan="4">
-                                        <h:selectOneRadio value="#{examClassifyBean.classifyBean.exam}" style="width: 60%" onchange="return cancelToken(this, 1)">
+									<td><h:selectOneRadio
+											value="#{examClassifyBean.classifyBean.exam}"
+											style="width: 60%" onchange="return cancelToken(this, 1)">
 											<f:selectItems value="#{examClassifyBean.exams}" var="entry"
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                                            <f:ajax event="change" execute="@this" render="levelLableWrapper levelWrapper" 
-                                              listener="#{examClassifyBean.changExamType}" 
-                                              onevent="changExamTypeChangeCallBack"/>
-										</h:selectOneRadio>
-                                   </td>
+											<f:ajax event="change" execute="@this"
+												render="levelLableWrapper levelWrapper"
+												listener="#{examClassifyBean.changExamType}"
+												onevent="changExamTypeChangeCallBack" />
+										</h:selectOneRadio></td>
 								</tr>
 								<tr>
 									<td><h4>考试类别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.examType}" style="width: 60%">
+									<td><h:selectOneRadio
+											value="#{examClassifyBean.classifyBean.examType}"
+											style="width: 60%">
 											<f:selectItems value="#{examClassifyBean.examTypes}"
 												var="entry" itemValue="#{entry.key}"
 												itemLabel="#{entry.value}" />
 										</h:selectOneRadio></td>
 								</tr>
 								<tr>
-									<td><h:panelGroup id="levelLableWrapper" >
-									     <c:if test="#{examClassifyBean.classifyBean.exam=='1' ||  examClassifyBean.classifyBean.exam =='2'}">
-									      <h4>考试级别：</h4>
-									      </c:if>
-									    </h:panelGroup>
-									</td>
-									<td colspan="4">
-                                      <h:panelGroup id="levelWrapper">
-                                        <c:choose>
-                                          <c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
-                                            <h:selectOneMenu value="#{examClassifyBean.classifyBean.jlptLevel}" style="width: 10%">
-                                              <f:selectItem itemValue="" itemLabel="" />
-  											  <f:selectItems value="#{examClassifyBean.jlptLevels}"
-  												var="entry" itemValue="#{entry.key}"
-  												itemLabel="#{entry.value}" />
-      										</h:selectOneMenu> 
-                                        </c:when>
-                                        <c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
-                                          <h:selectOneMenu
-  											value="#{examClassifyBean.classifyBean.jtestLevel}" style="width: 10%">
-                                            <f:selectItem itemValue="" itemLabel="" />
-  											<f:selectItems value="#{examClassifyBean.jtestLevels}"
-  												var="entry" itemValue="#{entry.key}"
-  												itemLabel="#{entry.value}" />
-  										  </h:selectOneMenu>
-                                        </c:when>
-                                      </c:choose>
-                                    </h:panelGroup>
-                                  </td>
+									<td><h:panelGroup id="levelLableWrapper">
+											<c:if
+												test="#{examClassifyBean.classifyBean.exam=='1' ||  examClassifyBean.classifyBean.exam =='2'}">
+												<h4>考试级别：</h4>
+											</c:if>
+										</h:panelGroup></td>
+									<td><h:panelGroup id="levelWrapper">
+											<c:choose>
+												<c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
+													<h:selectOneMenu
+														value="#{examClassifyBean.classifyBean.jlptLevel}"
+														style="width: 10%">
+														<f:selectItem itemValue="" itemLabel="" />
+														<f:selectItems value="#{examClassifyBean.jlptLevels}"
+															var="entry" itemValue="#{entry.key}"
+															itemLabel="#{entry.value}" />
+													</h:selectOneMenu>
+												</c:when>
+												<c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
+													<h:selectOneMenu
+														value="#{examClassifyBean.classifyBean.jtestLevel}"
+														style="width: 10%">
+														<f:selectItem itemValue="" itemLabel="" />
+														<f:selectItems value="#{examClassifyBean.jtestLevels}"
+															var="entry" itemValue="#{entry.key}"
+															itemLabel="#{entry.value}" />
+													</h:selectOneMenu>
+												</c:when>
+											</c:choose>
+										</h:panelGroup></td>
 								</tr>
 								<tr>
 									<td>
@@ -104,6 +108,10 @@
 												id="classifySearchBtn" />
 										</div>
 									</td>
+									<td><div class="form-submit1">
+											<h:commandButton value="开始考试" class="button1"
+												action="#{examClassifyBean.examSearch}" id="examSearchBtn" />
+										</div></td>
 								</tr>
 							</table>
 
@@ -118,21 +126,13 @@
 										</div></td>
 								</tr>
 							</table>
-
-							<table class="to" style="margin-top: 50px;">
-								<tr>
-									<td><h5 style="color: #3382C9;">一键体验做题模式：</h5></td>
-								</tr>
-								<tr>
-									<td><h5 style="color: orange;">中途退出后考试结束，请尽量保证时间充裕。</h5></td>
-								</tr>
-								<tr>
-									<td><div class="form-submit1">
-											<h:commandButton value="考试模式" class="button1"
-												action="#{examClassifyBean.examSearch}" id="examSearchBtn" />
-										</div></td>
-								</tr>
-							</table>
+						</div>
+						<div class="col-md-4 contact-top_right">
+							<h3>说明</h3>
+							<p><b>点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。</p>
+							<p><b>点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。</p>
+							<p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
+							<p><b>点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。</p>
 						</div>
 					</div>
 				</div>
