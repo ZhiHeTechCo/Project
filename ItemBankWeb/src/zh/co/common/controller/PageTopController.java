@@ -117,6 +117,19 @@ public class PageTopController extends BaseController {
         WebUtils.invalidateSession();
         return SystemConstants.PAGE_ITBK_COM_001;
     }
+    
+    /**
+     * <p>[概要]</p>
+     * <p>[备考]</p>
+     * 
+     * @return
+     */
+    public String changeUser() {
+        logger.log(MessageId.ITBK_I_0002);
+        WebUtils.invalidateSession();
+        BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+        return pageController.init();
+    }
 
     public String getFirstFlg() {
         return firstFlg;

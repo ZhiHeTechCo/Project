@@ -73,10 +73,12 @@ public class UserInfoBean extends BaseController {
 	        jtestLevels = userService.getCodelist(map);
 	        
 	        userInfo  = userService.getUserInfo(Integer.valueOf(WebUtils.getLoginUserId()));
+
 	        if(userInfo.getBirthday() != null) {
 		        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd"); 
 	        	userInfo.setBirthdayEx(sdf.format(userInfo.getBirthday()));
 	        }
+
         } catch (Exception e) {
             processForException(logger, e);
         }
@@ -101,6 +103,7 @@ public class UserInfoBean extends BaseController {
 		        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd"); 
 	        	userInfo.setBirthdayEx(sdf.format(userInfo.getBirthday()));
 	        }
+        	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, userInfo);
         	setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
 
         } catch (Exception e) {

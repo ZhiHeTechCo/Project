@@ -49,7 +49,7 @@
 									<td><h4>考题种别：</h4></td>
 									<td><h:selectOneRadio
 											value="#{examClassifyBean.classifyBean.exam}"
-											style="width: 60%" onchange="return cancelToken(this, 1)">
+											style="width: 150px" onchange="return cancelToken(this, 1)">
 											<f:selectItems value="#{examClassifyBean.exams}" var="entry"
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 											<f:ajax event="change" execute="@this"
@@ -62,7 +62,7 @@
 									<td><h4>考试类别：</h4></td>
 									<td><h:selectOneRadio
 											value="#{examClassifyBean.classifyBean.examType}"
-											style="width: 60%">
+											style="width: 150px">
 											<f:selectItems value="#{examClassifyBean.examTypes}"
 												var="entry" itemValue="#{entry.key}"
 												itemLabel="#{entry.value}" />
@@ -80,7 +80,7 @@
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jlptLevel}"
-														style="width: 50px">
+														style="width: 60px">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jlptLevels}"
 															var="entry" itemValue="#{entry.key}"
@@ -90,7 +90,7 @@
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jtestLevel}"
-														style="width: 50px">
+														style="width: 60px">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jtestLevels}"
 															var="entry" itemValue="#{entry.key}"
