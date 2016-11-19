@@ -41,17 +41,34 @@
 											class="list-group-item">
 											<f:param name="questionId" value="#{item.no}"></f:param> #{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
-									<tr>
-										<td><h4>选项：</h4></td>
-										<td>A：<h:outputText value="#{item.a}" />
-										</td>
-										<td>B：<h:outputText value="#{item.b}" />
-										</td>
-										<td>C：<h:outputText value="#{item.c}" />
-										</td>
-										<td>D：<h:outputText value="#{item.d}" />
-										</td>
-									</tr>
+									<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
+										<tr>
+											<td><h4>选项：</h4></td>
+											<td>A：<h:outputText value="#{item.a}" />
+											</td>
+											<td>B：<h:outputText value="#{item.b}" />
+											</td>
+											<td>C：<h:outputText value="#{item.c}" />
+											</td>
+											<td>D：<h:outputText value="#{item.d}" />
+											</td>
+										</tr>
+									</c:if>
+									<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
+										<tr>
+											<td rowspan="4"><h4>选项：</h4></td>
+											<td colspan="4">A：<h:outputText value="#{item.a}" /></td>
+										</tr>
+										<tr>
+											<td colspan="4">B：<h:outputText value="#{item.b}" /></td>
+										</tr>
+										<tr>
+											<td colspan="4">C：<h:outputText value="#{item.c}" /></td>
+										</tr>
+										<tr>
+											<td colspan="4">D：<h:outputText value="#{item.d}" /></td>
+										</tr>
+									</c:if>
 									<tr>
 										<td><h4>您的选择：</h4></td>
 										<h:panelGroup rendered="#{item.myAnswer eq '1'}">

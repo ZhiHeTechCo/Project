@@ -66,6 +66,7 @@
 		) q
 		where
 		q.classify_id=d.id
+		and q.delete_flag = '0'
 		<if test="exam !=null &amp; exam !=''">
 			and exam = #{exam,jdbcType=CHAR}
 		</if>
@@ -109,6 +110,7 @@
 		q
 		where
 		q.classify_id=d.id
+		and q.delete_flag = '0'
 		<if test="jtestLevel !=null || jlptLevel !=null">
 			and (d.jtest_level=#{jtestLevel,jdbcType=CHAR} or
 			d.jlpt_level=#{jlptLevel,jdbcType=CHAR})
@@ -136,6 +138,7 @@
 		q
 		where
 		q.classify_id=d.id
+		and q.delete_flag = '0'
 		<if test="exam !=null &amp; exam !=''">
 			and exam = #{exam,jdbcType=CHAR}
 		</if>

@@ -12,7 +12,8 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examDetailForm">
 				<div class="typrography">
-					<h2 style="text-align: center;padding-bottom: 20px;color:#3382C9;">试题详细</h2>
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题详细</h2>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -25,7 +26,7 @@
 							<h4>
 								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
 							</h4>
-							<table class="table">
+							<table class="table table-bordered">
 								<tr>
 									<td>
 										<h4>题干：</h4>
@@ -36,13 +37,38 @@
 										</ins> <h:outputText value="#{examResultBean.question.contextAfter}" />
 									</td>
 								</tr>
-								<tr>
-									<td><h4>选项：</h4></td>
-									<td>A：<h:outputText value="#{examResultBean.question.a}" /></td>
-									<td>B：<h:outputText value="#{examResultBean.question.b}" /></td>
-									<td>C：<h:outputText value="#{examResultBean.question.c}" /></td>
-									<td>D：<h:outputText value="#{examResultBean.question.d}" /></td>
-								</tr>
+								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
+									<tr>
+										<td><h4>选项：</h4></td>
+										<td>A：<h:outputText value="#{examResultBean.question.a}" />
+										</td>
+										<td>B：<h:outputText value="#{examResultBean.question.b}" />
+										</td>
+										<td>C：<h:outputText value="#{examResultBean.question.c}" />
+										</td>
+										<td>D：<h:outputText value="#{examResultBean.question.d}" />
+										</td>
+									</tr>
+								</c:if>
+								<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
+									<tr>
+										<td rowspan="4"><h4>选项：</h4></td>
+										<td colspan="4">A：<h:outputText
+												value="#{examResultBean.question.a}" /></td>
+									</tr>
+									<tr>
+										<td colspan="4">B：<h:outputText
+												value="#{examResultBean.question.b}" /></td>
+									</tr>
+									<tr>
+										<td colspan="4">C：<h:outputText
+												value="#{examResultBean.question.c}" /></td>
+									</tr>
+									<tr>
+										<td colspan="4">D：<h:outputText
+												value="#{examResultBean.question.d}" /></td>
+									</tr>
+								</c:if>
 								<tr>
 									<td><h4>正确答案：</h4></td>
 									<c:if test="#{examResultBean.question.answer eq '1'}">

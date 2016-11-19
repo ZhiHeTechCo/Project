@@ -33,7 +33,7 @@
 											<td align="center"><h4>问题</h4></td>
 										</tr>
 										<tr>
-											<td><h:outputText value="#{examBean.subject}"></h:outputText>
+											<td><h:outputText value="#{examBean.subject}" />
 											</td>
 										</tr>
 									</table>
@@ -46,22 +46,48 @@
 										</h4>
 										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 										</td>
-										<tr>
-											<td><h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-													value="#{item.myAnswer}"></h:inputHidden></td>
-											<td><input name="myAnswer#{item.index}" type="radio"
-												value="1"
-												onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
-												value="2"
-												onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
-												value="3"
-												onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
-												value="4"
-												onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
-										</tr>
+										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
+											value="#{item.myAnswer}"></h:inputHidden>
+										<c:if test="#{examBean.classifyBean.examType ne '5'}">
+											<tr>
+												<td></td>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="1"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="2"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="3"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="4"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
+											</tr>
+										</c:if>
+										<c:if test="#{examBean.classifyBean.examType eq '5'}">
+											<tr>
+												<td rowspan="4"></td>
+												<td colspan="4"><input name="myAnswer#{item.index}"
+													type="radio" value="1"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
+											</tr>
+											<tr>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="2"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
+											</tr>
+											<tr>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="3"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
+											</tr>
+											<tr>
+												<td><input name="myAnswer#{item.index}" type="radio"
+													value="4"
+													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
+											</tr>
+										</c:if>
 									</h:column>
 								</h:dataTable>
 								<div class="form-submit1">
