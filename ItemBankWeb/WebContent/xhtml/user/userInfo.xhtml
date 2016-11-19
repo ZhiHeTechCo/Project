@@ -20,7 +20,16 @@
               <table class="table table-striped;">
                 <tr>
                   <td><h4>用户名</h4></td>
-                  <td><h:outputText value="#{userInfoBean.userInfo.name}" /></td>
+                  <td>
+                    <c:choose>
+                      <c:when test="#{userInfoBean.userInfo.wechat eq '1'}">
+                        <h:outputText value="微信用户_#{userInfoBean.userInfo.nickName}" />
+                      </c:when>
+                      <c:otherwise>
+                        <h:outputText value="#{userInfoBean.userInfo.name}" />
+                      </c:otherwise>
+                    </c:choose>
+                  </td>
                 </tr>
                 <tr>
                   <td><h4>做题数</h4></td>

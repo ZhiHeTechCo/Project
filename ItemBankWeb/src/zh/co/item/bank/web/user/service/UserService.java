@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import zh.co.common.constant.SystemConstants;
 import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
@@ -60,6 +61,7 @@ public class UserService {
             CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0001);
             throw ex;
     	} else {
+    		userInfo.setWechat(SystemConstants.PC_FLAG);
     		//不存在的场合，登录DB
     		count = userDao.insertUserInfo(userInfo);
     	}
@@ -170,12 +172,9 @@ public class UserService {
     public UserModel loginForWechat(TuUserBean userInfo) {
     	UserModel user = new UserModel();
     	//check当前用户名是否已经存在
-    	TuUserBean newUser = new TuUserBean();
-    	newUser.setName(userInfo.getName());
-    	if(userDao.isUserExist(newUser)) {
+    	if(userDao.isUserExist(userInfo)) {
     		//存在的场合，自动登录
-    		newUser.setPassword(userInfo.getPassword());
-    		user = userDao.getUserInfo(newUser);
+    		user = userDao.getUserInfo(userInfo);
     	} else {
     		//不存在的场合，注册，自动登录
     		int count = userDao.insertUserInfo(userInfo);

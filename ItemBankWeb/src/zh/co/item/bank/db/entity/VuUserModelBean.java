@@ -34,6 +34,10 @@ public class VuUserModelBean {
     private Long questionNum;
 
     private Long errorNum;
+    
+    private String nickName;
+    
+    private String wechat;
 
     public Integer getId() {
         return id;
@@ -162,4 +166,21 @@ public class VuUserModelBean {
     public void setErrorNum(Long errorNum) {
         this.errorNum = errorNum;
     }
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+    
 }

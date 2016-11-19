@@ -25,6 +25,8 @@ public class TuUserBean extends TuUserBeanKey {
     
     private String nickName;
 
+    private String wechat;
+    
     public String getName() {
         return name;
     }
@@ -112,5 +114,14 @@ public class TuUserBean extends TuUserBeanKey {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+	
     
 }

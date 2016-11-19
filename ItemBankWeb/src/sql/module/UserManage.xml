@@ -27,11 +27,18 @@
       vu_user_model
     where
       (name = #{name, jdbcType=VARCHAR } or email = #{name, jdbcType=VARCHAR })
+      <choose>
+      <when  test = "password != null &amp; password !=''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
       ) = #{password, jdbcType=CHAR }
-
+      and wechat = '0'
+     </when >
+     <otherwise>
+      and wechat = '1'
+     </otherwise>
+     </choose>
   </select>
   
     <select id="selectUserById" parameterType="java.lang.Integer" resultType="zh.co.item.bank.model.entity.UserModel">

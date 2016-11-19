@@ -17,6 +17,10 @@ public class SystemConstants {
     public static final String FILE_ENCODING = "UTF-8";
     /**页面内容换行*/
     public static final String LINE_SEPERATOR_BR = "<br/>";
+    /**微信注册flag*/
+    public static final String WECHAT_FLAG = "1";
+    /**PC注册flag*/
+    public static final String PC_FLAG = "0";
 
     /**---------------------properties文件key------------------------------
     /**检索最大件数*/

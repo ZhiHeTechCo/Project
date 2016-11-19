@@ -80,7 +80,7 @@
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jlptLevel}"
-														style="width: 10%">
+														style="width: 50px">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jlptLevels}"
 															var="entry" itemValue="#{entry.key}"
@@ -90,7 +90,7 @@
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jtestLevel}"
-														style="width: 10%">
+														style="width: 50px">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jtestLevels}"
 															var="entry" itemValue="#{entry.key}"
