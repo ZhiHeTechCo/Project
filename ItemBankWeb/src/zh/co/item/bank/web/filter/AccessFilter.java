@@ -1,8 +1,6 @@
 package zh.co.item.bank.web.filter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.UUID;
 
 import javax.servlet.Filter;
@@ -14,15 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.security.MessageDigest;
 
-import org.apache.commons.lang.StringUtils;
 
-import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
-import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import org.apache.commons.codec.binary.Hex;
 
 /**
  * <p>[概要] AccessFilter.</p>

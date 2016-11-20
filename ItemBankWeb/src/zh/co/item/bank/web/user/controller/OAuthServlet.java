@@ -2,7 +2,6 @@ package zh.co.item.bank.web.user.controller;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

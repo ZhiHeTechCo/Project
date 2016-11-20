@@ -1,30 +1,18 @@
 package zh.co.item.bank.web.user.controller;
 
-import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
-import zh.co.common.exception.MessageId;
-import zh.co.common.log.CmnLogger;
-import zh.co.common.utils.SpringAppContextManager;
-import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.db.entity.TuUserBean;
-import zh.co.item.bank.model.entity.UserModel;
-import zh.co.item.bank.web.user.service.UserService;
 
 /**
  * <p>[概要] 登录SignInBean.</p>
@@ -38,8 +26,6 @@ import zh.co.item.bank.web.user.service.UserService;
 @Scope("session")
 public class WechatSignInBean extends BaseController {
 
-	private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
-	
 	private String signature;
 	private String timestamp;
 	private String nonce;
