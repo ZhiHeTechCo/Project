@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -50,10 +49,9 @@
                         onclick="return buttonDisable();">
                         <f:param name='pageController' value="signInBean"></f:param>
                       </h:commandLink>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
 
                       <h:commandLink value="注册" action="#{pageTopController.pageNavigator}"
-                        onclick="return buttonDisable();">
+                        onclick="return buttonDisable();" style="margin-left:50px;">
                         <f:param name='pageController' value="signUpBean"></f:param>
                       </h:commandLink>
 
