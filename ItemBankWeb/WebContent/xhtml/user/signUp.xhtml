@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 
 <html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -22,15 +21,23 @@
                 <h4>请输入您的信息：</h4>
                 <table class="toTable">
                   <tr>
-                    <td><h:inputText id="name" value="#{signUpBean.userInfo.name}" class="text" maxlength="10"
-                        onfocus="if (this.value == '用户名') {this.value = '';}"
-                        onblur="if (this.value == '') {this.value = '用户名';}" /></td>
+                    <td>  <div class="col-md-6" style="width: 100%;">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <h:inputText id="name" value="#{signUpBean.userInfo.name}" class="form-control" maxlength="30" 
+                              onfocus="if (this.value == '用户名') {this.value = '';}"
+                              onblur="if (this.value == '') {this.value = '用户名';}" />  
+                        </div>
+                    </td>
                     <td><span class="msg" style="margin-left: 10px">用户名/手机号/邮箱</span></td>
                   </tr>
                   <tr>
-                    <td><h:inputSecret id="password" redisplay="true" value="#{signUpBean.userInfo.password}"
-                        class="text" maxlength="10" onfocus="this.value = '';"
-                        onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" /></td>
+                    <td><div class="col-md-6" style="width: 100%;">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            <h:inputSecret redisplay="true" id="password" value="#{signUpBean.userInfo.password}" class="form-control" maxlength="10" placeholder="密碼" 
+                              onfocus="this.value = '';"
+                        onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
+                        </div>
+                    </td>
                     <td><span class="msg" style="margin-left: 10px">字母数字或特殊符号组成</span></td>
                   </tr>
                   <!-- 
