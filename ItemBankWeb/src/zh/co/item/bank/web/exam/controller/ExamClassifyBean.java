@@ -147,8 +147,6 @@ public class ExamClassifyBean extends BaseController {
             classifyBean = null;
             return toExam();
 
-        } catch (CmnBizException ex) {
-            processForException(logger, ex);
         } catch (Exception e) {
             processForException(logger, e);
         }
@@ -162,9 +160,20 @@ public class ExamClassifyBean extends BaseController {
      * @return
      */
     public String examSearch() {
-
-        // TODO
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        try {
+            if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils
+                    .isEmpty(classifyBean.getJlptLevel()) && StringUtils.isEmpty(classifyBean.getJtestLevel()))) {
+                logger.log(MessageId.ITBK_E_0006);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
+                throw ex;
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+            return SystemConstants.PAGE_ITBK_EXAM_001;
+        }
+        ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+        examBean.setClassifyBean(classifyBean);
+        return examBean.examSearch();
     }
 
     /**
@@ -174,7 +183,6 @@ public class ExamClassifyBean extends BaseController {
      */
     private String toExam() {
         ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
-        examBean.setUserInfo(userInfo);
         examBean.setClassifyBean(classifyBean);
 
         return examBean.init();

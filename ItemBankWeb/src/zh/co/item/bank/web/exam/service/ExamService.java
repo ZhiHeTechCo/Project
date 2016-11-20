@@ -178,4 +178,32 @@ public class ExamService {
     public List<ExamModel> selectQuestionByFatherId(Integer fatherId) {
         return examDao.selectQuestionByFatherId(fatherId);
     }
+
+    /**
+     * 获取试题结构
+     * 
+     * @param map[exam, examType]
+     * @return
+     */
+    public List<ExamModel> getTestQuestions(TbQuestionClassifyBean classifyBean) {
+        return examDao.getTestQuestions(classifyBean);
+    }
+
+    /**
+     * 获取对应试题
+     * 
+     * @param map[structure_id,year]
+     * @return
+     */
+    public List<ExamModel> getTestQuestion(Map<String, Object> map) {
+        return examDao.getTestQuestion(map);
+    }
+
+    public List<String> name() {
+        return examDao.getExamType();
+    }
+
+    public List<ExamModel> getExamReport() {
+        return examDao.getExamReport();
+    }
 }

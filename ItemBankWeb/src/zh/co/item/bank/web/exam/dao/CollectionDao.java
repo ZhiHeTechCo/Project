@@ -34,4 +34,13 @@ public class CollectionDao extends BaseDao {
     public void updateCollection(TbCollectionBean collection) {
         getIbatisTemplate().update("Collection.updateCollection", collection);
     }
+
+    /**
+     * 登录考试记录表
+     * 
+     * @param examModel
+     */
+    public void insertExamCollection(ExamModel examModel) {
+        getIbatisTemplate().insert("Collection.insertExamCollection", examModel);
+    }
 }

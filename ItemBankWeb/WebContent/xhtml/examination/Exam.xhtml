@@ -42,7 +42,7 @@
 									rendered="true" value="#{examBean.questions}" var="item">
 									<h:column>
 										<h4>
-											<h:outputText value="#{item.index}"></h:outputText>
+											<h:outputText value="#{item.rowNo}"></h:outputText>
 										</h4>
 										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 										</td>
@@ -51,49 +51,61 @@
 										<c:if test="#{examBean.classifyBean.examType ne '5'}">
 											<tr>
 												<td></td>
-												<td><input name="myAnswer#{item.index}" type="radio"
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="1"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
-												<td><input name="myAnswer#{item.index}" type="radio"
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="2"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
-												<td><input name="myAnswer#{item.index}" type="radio"
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="3"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
-												<td><input name="myAnswer#{item.index}" type="radio"
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="4"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
 											</tr>
 										</c:if>
 										<c:if test="#{examBean.classifyBean.examType eq '5'}">
 											<tr>
 												<td rowspan="4"></td>
-												<td colspan="4"><input name="myAnswer#{item.index}"
+												<td colspan="4"><input name="myAnswer#{item.rowNo}"
 													type="radio" value="1"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
 											</tr>
 											<tr>
-												<td><input name="myAnswer#{item.index}" type="radio"
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="2"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
 											</tr>
 											<tr>
-												<td><input name="myAnswer#{item.index}" type="radio"
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="3"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
 											</tr>
 											<tr>
-												<td><input name="myAnswer#{item.index}" type="radio"
+												<td><input name="myAnswer#{item.rowNo}" type="radio"
 													value="4"
-													onclick="document.getElementById('examForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
+													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
 											</tr>
 										</c:if>
 									</h:column>
 								</h:dataTable>
-								<div class="form-submit1">
-									<h:commandButton value="确认" class="button1"
-										action="#{examBean.doSubmit}" id="doSubmitBtn" />
-								</div>
+								<c:if test="#{examBean.status == null}">
+									<div class="form-submit1">
+										<h:commandButton value="确认" class="button1"
+											action="#{examBean.doSubmit}" id="doSubmitBtn" />
+									</div>
+								</c:if>
+								<c:if test="#{examBean.status != null}">
+									<div class="form-submit1">
+										<h:commandButton value="下一题" class="button1"
+											action="#{examBean.doNext}" id="doNextBtn" />
+									</div>
+									<div class="form-submit1">
+										<h:commandButton value="退出考试" class="button1"
+											action="#{examBean.doExist}" id="doExistBtn" />
+									</div>
+								</c:if>
 							</c:if>
 							<c:if test="#{examBean.title == ''}">
 								<div class="form-submit1">

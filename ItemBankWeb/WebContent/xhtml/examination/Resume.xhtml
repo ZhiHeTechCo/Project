@@ -45,25 +45,25 @@
 									rendered="true" value="#{resumeBean.questions}" var="item">
 									<h:column>
 										<h4>
-											<h:outputText value="#{item.index}"></h:outputText>
+											<h:outputText value="#{item.rowNo}"></h:outputText>
 										</h4>
 										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 										</td>
 										<tr>
 											<td><h:inputHidden id="myAnswer" name="#{item.myAnswer}"
 													value="#{item.myAnswer}"></h:inputHidden></td>
-											<td><input name="myAnswer#{item.index}" type="radio"
+											<td><input name="myAnswer#{item.rowNo}" type="radio"
 												value="1"
-												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='1';" />${item.a}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
+												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
+											<td><input name="myAnswer#{item.rowNo}" type="radio"
 												value="2"
-												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='2';" />${item.b}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
+												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
+											<td><input name="myAnswer#{item.rowNo}" type="radio"
 												value="3"
-												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='3';" />${item.c}</td>
-											<td><input name="myAnswer#{item.index}" type="radio"
+												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
+											<td><input name="myAnswer#{item.rowNo}" type="radio"
 												value="4"
-												onclick="document.getElementById('resumeForm:qt:#{item.index-1}:myAnswer').value='4';" />${item.d}</td>
+												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
 										</tr>
 									</h:column>
 								</h:dataTable>

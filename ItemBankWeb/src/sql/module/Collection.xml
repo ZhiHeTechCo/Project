@@ -11,6 +11,22 @@
 		question_id = #{no}
 	</select>
 
+	<select id="getExamType" resultType="java.lang.String">
+		select exam_type as examType
+		from tb_exam_collection group by exam_type
+	</select>
+
+	<select id="getExamReport" resultType="zh.co.item.bank.model.entity.ExamModel">
+		select (@rowNO := @rowNO+1)
+		as rowNo, z.id,z.user_id as userId,z.question_id as no,z.answer,z.my_answer as
+		myAnswer,z.structure_id as structureId,z.source, z.exam_type as examType,
+		SUBSTRING(y.title,1,4) as title from
+		(select a.*,c.value from tb_exam_collection a ,ts_code c where a.exam_type =
+		c.key and c.name='exam_type') z,tb_question_structure y,(select @rowNO :=0) x where
+		z.structure_id = y.id
+		order by id
+	</select>
+
 	<insert id="insertCollection" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
 		insert into tb_collection
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -211,6 +227,151 @@
 			</if>
 			<if test="updateTime != null">
 				#{updateTime,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCollection" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		update tb_collection
+		<set>
+			<if test="count != null">
+				count = #{count,jdbcType=SMALLINT},
+			</if>
+			<if test="result1 != null">
+				result1 = #{result1,jdbcType=CHAR},
+				time1 = CURDATE(),
+			</if>
+			<if test="result2 != null">
+				result2 = #{result2,jdbcType=CHAR},
+				time2 = CURDATE(),
+			</if>
+			<if test="result3 != null">
+				result3 = #{result3,jdbcType=CHAR},
+				time3 = CURDATE(),
+			</if>
+			<if test="result4 != null">
+				result4 = #{result4,jdbcType=CHAR},
+				time4 = CURDATE(),
+			</if>
+			<if test="result5 != null">
+				result5 = #{result5,jdbcType=CHAR},
+				time5 = CURDATE(),
+			</if>
+			<if test="result6 != null">
+				result6 = #{result6,jdbcType=CHAR},
+				time6 = CURDATE(),
+			</if>
+			<if test="result7 != null">
+				result7 = #{result7,jdbcType=CHAR},
+				time7 = CURDATE(),
+			</if>
+			<if test="result8 != null">
+				result8 = #{result8,jdbcType=CHAR},
+				time8 = CURDATE(),
+			</if>
+			<if test="result9 != null">
+				result9 = #{result9,jdbcType=CHAR},
+				time9 = CURDATE(),
+			</if>
+			<if test="result10 != null">
+				result10 = #{result10,jdbcType=CHAR},
+				time10 = CURDATE(),
+			</if>
+			<if test="result11 != null">
+				result11 = #{result11,jdbcType=CHAR},
+				time11 = CURDATE(),
+			</if>
+			<if test="result12 != null">
+				result12 = #{result12,jdbcType=CHAR},
+				time12 = CURDATE(),
+			</if>
+			<if test="result13 != null">
+				result13 = #{result13,jdbcType=CHAR},
+				time13 = CURDATE(),
+			</if>
+			<if test="result14 != null">
+				result14 = #{result14,jdbcType=CHAR},
+				time14 = CURDATE(),
+			</if>
+			<if test="result15 != null">
+				result15 = #{result15,jdbcType=CHAR},
+				time15 = CURDATE(),
+			</if>
+			<if test="result16 != null">
+				result16 = #{result16,jdbcType=CHAR},
+				time16 = CURDATE(),
+			</if>
+			<if test="result17 != null">
+				result17 = #{result17,jdbcType=CHAR},
+				time17 = CURDATE(),
+			</if>
+			<if test="result18 != null">
+				result18 = #{result18,jdbcType=CHAR},
+				time18 = CURDATE(),
+			</if>
+			<if test="result19 != null">
+				result19 = #{result19,jdbcType=CHAR},
+				time19 = CURDATE(),
+			</if>
+			<if test="result20 != null">
+				result20 = #{result20,jdbcType=CHAR},
+				time20 = CURDATE(),
+			</if>
+			<if test="finish != null">
+				finish = #{finish,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=SMALLINT}
+		and question_id =
+		#{questionId,jdbcType=SMALLINT}
+	</update>
+
+	<insert id="insertExamCollection" parameterType="zh.co.item.bank.model.entity.ExamModel">
+		insert into tb_exam_collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="no != null">
+				question_id,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+			<if test="myAnswer != null">
+				my_answer,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="structureId != null">
+				structure_id,
+			</if>
+			<if test="examType != null">
+				exam_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="no != null">
+				#{no,jdbcType=INTEGER},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=SMALLINT},
+			</if>
+			<if test="myAnswer != null">
+				#{myAnswer,jdbcType=CHAR},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=CHAR},
+			</if>
+			<if test="structureId != null">
+				#{structureId,jdbcType=INTEGER},
+			</if>
+			<if test="examType != null">
+				#{examType,jdbcType=CHAR},
 			</if>
 		</trim>
 	</insert>

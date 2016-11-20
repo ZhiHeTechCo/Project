@@ -49,17 +49,19 @@ public class SystemConstants {
     public static final String PAGE_ITBK_USER_003 = "ITBK_USER_003";
     /**修改密码画面*/
     public static final String PAGE_ITBK_USER_004 = "ITBK_USER_004";
-    /**错题库*/
+
 	/** 选择题型 */
 	public static final String PAGE_ITBK_EXAM_001 = "ITBK_EXAM_001";
 	/** 试题库 */
 	public static final String PAGE_ITBK_EXAM_002 = "ITBK_EXAM_002";
-	/** 结果一览 */
+	/** 做题结果一览 */
 	public static final String PAGE_ITBK_EXAM_003 = "ITBK_EXAM_003";
 	/** 试题详细 */
 	public static final String PAGE_ITBK_EXAM_004 = "ITBK_EXAM_004";
 	/** 错题库 */
 	public static final String PAGE_ITBK_EXAM_005 = "ITBK_EXAM_005";
+	/** 考试结果一览 */
+	public static final String PAGE_ITBK_EXAM_006 = "ITBK_EXAM_006";
 	/** 试题登录 */
 	public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     

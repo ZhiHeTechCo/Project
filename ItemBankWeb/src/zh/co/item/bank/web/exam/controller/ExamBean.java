@@ -18,6 +18,7 @@ import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
+import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -55,6 +56,8 @@ public class ExamBean extends BaseController {
     /** 大题干 */
     private String subject;
 
+    private String status;
+
     /** 用户信息 */
     private UserModel userInfo;
 
@@ -70,6 +73,7 @@ public class ExamBean extends BaseController {
     public String init() {
         try {
             pushPathHistory("examBean");
+            userInfo = WebUtils.getLoginUserInfo();
 
             title = "";
             subject = "";
@@ -155,13 +159,87 @@ public class ExamBean extends BaseController {
             title = examService.getTitle(questions.get(0).getStructureId());
             // 画面序号
             for (int i = 0; i < questions.size(); i++) {
-                questions.get(i).setIndex(i + 1);
+                questions.get(i).setRowNo(i + 1);
             }
 
         } catch (Exception e) {
             processForException(logger, e);
         }
 
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
+
+    /**
+     * 考试模式
+     * 
+     * @return
+     */
+    public String examSearch() {
+        try {
+            title = "";
+            subject = "";
+            if (!"ing".equals(status)) {
+                status = "";
+            }
+            userInfo = WebUtils.getLoginUserInfo();
+
+            // 获得试题结构
+            List<ExamModel> examStructure = examService.getTestQuestions(classifyBean);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("userId", userInfo.getId());
+            for (ExamModel model : examStructure) {
+                map.put("structureId", model.getStructureId());
+                // map.put("year", "%2000%");//TODO
+
+                // 获取试题
+                questions = examService.getTestQuestion(map);
+
+                if (questions == null || questions.size() == 0) {
+                    continue;
+                }
+
+                // TODO 添加年限选择后废弃
+                String source = questions.get(0).getSource();
+                String[] strings = source.split(" ");
+                String year = source.contains("JLPT") ? strings[1] : strings[1] + " " + strings[2] + " ";
+                year = "%" + year + "%";
+                map.put("year", year);
+                questions = examService.getTestQuestion(map);
+                // TODO 添加年限选择后废弃
+
+                Integer fatherId = questions.get(0).getFatherId();
+                if (fatherId != null) {
+                    // 特殊试题检索
+                    questions.clear();
+                    questions = examService.selectQuestionByFatherId(fatherId);
+                    subject = questions.get(0).getSubject();
+                }
+                // 画面序号
+                for (int i = 0; i < questions.size(); i++) {
+                    questions.get(i).setRowNo(i + 1);
+                }
+                title = model.getTitle();
+                return SystemConstants.PAGE_ITBK_EXAM_002;
+            }
+            if ("ing".equals(status)) {
+                status = "end";
+                // 考试完成，显示成绩
+                ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+                return examResultBean.examReport();
+            } else {
+                logger.log(MessageId.ITBK_I_0015);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
+                throw ex;
+            }
+
+        } catch (CmnBizException ex) {
+            processForException(logger, ex);
+            ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+            return classifyBean.init();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
@@ -176,9 +254,10 @@ public class ExamBean extends BaseController {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
             for (int i = 0; i < questions.size(); i++) {
-                TbCollectionBean collection = new TbCollectionBean();
 
                 ExamModel examModel = (ExamModel) questions.get(i);
+                examModel.setUserId(userInfo.getId());
+                TbCollectionBean collection = collectionService.selectCollectionForOne(examModel);
 
                 collection.setId(userInfo.getId());
 
@@ -196,9 +275,22 @@ public class ExamBean extends BaseController {
                 if (examModel.getAnswer().equals(choice)) {
                     collection.setFinish("1");
                 }
-                collectionService.insertCollection(collection);
+                // 错题表登录·更新
+                if (count == 1) {
+                    collectionService.insertCollection(collection);
+                } else {
+                    collectionService.updateCollection(collection);
+                }
+                // 考试记录表登录
+                if ("ing".equals(status)) {
+                    collectionService.insertExamCollection(examModel);
+                }
             }
 
+            if ("ing".equals(status)) {
+                // 考试继续
+                return null;
+            }
             // 跳转至[结果一览]画面
             ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
             examResultBean.setQuestions(questions);
@@ -219,6 +311,31 @@ public class ExamBean extends BaseController {
     public String doResume() {
         ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
         return resumeBean.init();
+    }
+
+    /**
+     * [下一题]按下
+     * 
+     * @return
+     */
+    public String doNext() {
+        try {
+            // 考试进行中
+            status = "ing";
+            doSubmit();
+            // 登录考试记录表
+
+            // 继续下一道题
+            return examSearch();
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
+
+    public String doExist() {
+        // TODO
+        return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
     private boolean checkuser() {
@@ -279,12 +396,12 @@ public class ExamBean extends BaseController {
         this.subject = subject;
     }
 
-    public UserModel getUserInfo() {
-        return userInfo;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserInfo(UserModel userInfo) {
-        this.userInfo = userInfo;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

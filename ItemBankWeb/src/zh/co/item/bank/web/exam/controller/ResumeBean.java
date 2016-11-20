@@ -123,7 +123,7 @@ public class ResumeBean extends BaseController {
         }
         // 画面序号
         for (int i = 0; i < questions.size(); i++) {
-            questions.get(i).setIndex(i + 1);
+            questions.get(i).setRowNo(i + 1);
         }
         // 题目
         title = examService.getTitle(question.getStructureId());

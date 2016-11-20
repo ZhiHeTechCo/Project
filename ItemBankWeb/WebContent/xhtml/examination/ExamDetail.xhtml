@@ -84,6 +84,26 @@
 										<td colspan="4">D</td>
 									</c:if>
 								</tr>
+								<c:if test="#{examResultBean.examFlag eq 'true'}">
+									<tr>
+										<td><h4>您的选择：</h4></td>
+										<c:if test="#{examResultBean.question.myAnswer eq '1'}">
+											<td colspan="4">A</td>
+										</c:if>
+										<c:if test="#{examResultBean.question.myAnswer eq '2'}">
+											<td colspan="4">B</td>
+										</c:if>
+										<c:if test="#{examResultBean.question.myAnswer eq '3'}">
+											<td colspan="4">C</td>
+										</c:if>
+										<c:if test="#{examResultBean.question.myAnswer eq '4'}">
+											<td colspan="4">D</td>
+										</c:if>
+										<c:if test="#{examResultBean.question.myAnswer eq null}">
+											<td colspan="4">未选择</td>
+										</c:if>
+									</tr>
+								</c:if>
 								<tr>
 									<td><h4>解析：</h4></td>
 									<td colspan="4"><c:if
@@ -120,12 +140,15 @@
 												id="goBackToResultBtn" />
 										</div>
 									</td>
-									<td>
-										<div class="form-submit1">
-											<h:commandButton value="继续做题" class="button1"
-												action="#{examResultBean.goBackToExam}" id="goBackToExamBtn" />
-										</div>
-									</td>
+									<c:if test="#{examResultBean.examFlag ne 'true'}">
+										<td>
+											<div class="form-submit1">
+												<h:commandButton value="继续做题" class="button1"
+													action="#{examResultBean.goBackToExam}"
+													id="goBackToExamBtn" />
+											</div>
+										</td>
+									</c:if>
 								</tr>
 							</table>
 						</div>

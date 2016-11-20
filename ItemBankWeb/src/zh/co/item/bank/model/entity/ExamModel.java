@@ -4,124 +4,136 @@ import java.util.Date;
 
 public class ExamModel extends QuestionBean {
 
-	// 用户ID
-	private int userId;
+    // 用户ID
+    private int userId;
 
-	// 最后更新时间
-	private Date updateTime;
+    // 最后更新时间
+    private Date updateTime;
 
-	// 用户选择答案
-	private String myAnswer;
+    // 用户选择答案
+    private String myAnswer;
 
-	// 一级目录中的大题目
-	private String subject;
+    // 题干
+    private String title;
 
-	// 考试类别[详细画面]
-	private String examName;
+    // 一级目录中的大题目
+    private String subject;
 
-	// 考题种别[详细画面]
-	private String examTypeName;
+    // 考试类别[详细画面]
+    private String examName;
 
-	// 考试级别[详细画面]
-	private String levelName;
+    // 考题种别[详细画面]
+    private String examTypeName;
 
-	// 序号[试题库，错题库]
-	private int index;
+    // 考试级别[详细画面]
+    private String levelName;
 
-	// 问题添加人
-	private int asker;
+    // 序号[试题库，错题库]
+    private int rowNo;
 
-	// 问题回答人
-	private int responser;
+    // 问题添加人
+    private int asker;
 
-	// 问题描述
-	private String description;
+    // 问题回答人
+    private int responser;
 
-	public int getUserId() {
-		return userId;
-	}
+    // 问题描述
+    private String description;
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	public Date getUpdateTime() {
-		return updateTime;
-	}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-	public String getMyAnswer() {
-		return myAnswer;
-	}
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	public void setMyAnswer(String myAnswer) {
-		this.myAnswer = myAnswer;
-	}
+    public String getMyAnswer() {
+        return myAnswer;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public void setMyAnswer(String myAnswer) {
+        this.myAnswer = myAnswer;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getExamName() {
-		return examName;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setExamName(String examName) {
-		this.examName = examName;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getExamTypeName() {
-		return examTypeName;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public void setExamTypeName(String examTypeName) {
-		this.examTypeName = examTypeName;
-	}
+    public String getExamName() {
+        return examName;
+    }
 
-	public String getLevelName() {
-		return levelName;
-	}
+    public void setExamName(String examName) {
+        this.examName = examName;
+    }
 
-	public void setLevelName(String levelName) {
-		this.levelName = levelName;
-	}
+    public String getExamTypeName() {
+        return examTypeName;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public void setExamTypeName(String examTypeName) {
+        this.examTypeName = examTypeName;
+    }
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
+    public String getLevelName() {
+        return levelName;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public int getRowNo() {
+        return rowNo;
+    }
 
-	public int getAsker() {
-		return asker;
-	}
+    public void setRowNo(int rowNo) {
+        this.rowNo = rowNo;
+    }
 
-	public void setAsker(int asker) {
-		this.asker = asker;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public int getResponser() {
-		return responser;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setResponser(int responser) {
-		this.responser = responser;
-	}
+    public int getAsker() {
+        return asker;
+    }
+
+    public void setAsker(int asker) {
+        this.asker = asker;
+    }
+
+    public int getResponser() {
+        return responser;
+    }
+
+    public void setResponser(int responser) {
+        this.responser = responser;
+    }
+
 }

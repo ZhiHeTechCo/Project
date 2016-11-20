@@ -70,6 +70,10 @@
       <to-view-id>/xhtml/examination/Resume.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
+      <from-outcome>ITBK_EXAM_006</from-outcome>
+      <to-view-id>/xhtml/examination/ExamReport.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_QUE_001</from-outcome>
       <to-view-id>/xhtml/examination/QuestionInsert.xhtml</to-view-id>
    </navigation-case>

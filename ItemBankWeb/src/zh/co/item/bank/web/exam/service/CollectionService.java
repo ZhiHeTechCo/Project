@@ -13,6 +13,7 @@ public class CollectionService {
 
     public TbCollectionBean selectCollectionForOne(ExamModel examModel) {
         TbCollectionBean collection = collectionDao.selectCollectionForOne(examModel);
+        collection = collection == null ? new TbCollectionBean() : collection;
         return collection;
     }
 
@@ -22,5 +23,14 @@ public class CollectionService {
 
     public void updateCollection(TbCollectionBean collection) {
         collectionDao.updateCollection(collection);
+    }
+
+    /**
+     * 登录考试记录表
+     * 
+     * @param examModel
+     */
+    public void insertExamCollection(ExamModel examModel) {
+        collectionDao.insertExamCollection(examModel);
     }
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
@@ -48,6 +49,8 @@ public class ExamResultBean extends BaseController {
 
     private boolean isResume;
 
+    private String examFlag;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
     }
@@ -65,7 +68,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 返回考试/错题画面
+     * 返回[试题库]/[错题库]画面
      * 
      * @return
      */
@@ -88,6 +91,11 @@ public class ExamResultBean extends BaseController {
      * @return
      */
     public String goBackToResult() {
+        // 前画面为考试结果一览
+        if (StringUtils.isNotEmpty(examFlag)) {
+            return examReport();
+        }
+        // 做题结果一览
         return init();
     }
 
@@ -102,6 +110,7 @@ public class ExamResultBean extends BaseController {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
             questionId = Integer.valueOf(request.getParameter("questionId"));
+            examFlag = request.getParameter("examFlag");
             if (questionId == null) {
                 logger.log(MessageId.COMMON_E_0001);
                 processForException(this.logger, new Exception(MessageId.COMMON_E_0001));
@@ -117,7 +126,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 询问解析
+     * 询问解析（暂时不用）
      * 
      * @return
      */
@@ -134,6 +143,22 @@ public class ExamResultBean extends BaseController {
             processForException(this.logger, e);
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
+    }
+
+    /**
+     * [考试结果一览]画面初始化
+     * 
+     * @return
+     */
+    public String examReport() {
+        try {
+            questions = examService.getExamReport();
+
+        } catch (Exception e) {
+            processForException(this.logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_006;
+
     }
 
     private boolean checkuser() {
@@ -196,6 +221,14 @@ public class ExamResultBean extends BaseController {
 
     public void setResume(boolean isResume) {
         this.isResume = isResume;
+    }
+
+    public String getExamFlag() {
+        return examFlag;
+    }
+
+    public void setExamFlag(String examFlag) {
+        this.examFlag = examFlag;
     }
 
 }
