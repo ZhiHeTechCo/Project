@@ -22,6 +22,7 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.UserModel;
+import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -36,6 +37,9 @@ public class ExamResultBean extends BaseController {
     private final CmnLogger logger = CmnLogger.getLogger(getClass());
     @Inject
     private ExamService examService;
+
+    @Inject
+    private ExamCollectionService examCollectionService;
 
     private List<ExamModel> questions;
 
@@ -156,20 +160,24 @@ public class ExamResultBean extends BaseController {
      */
     public String examReport() {
         try {
-            reportModels = new ArrayList<ExamReportModel>();
-            // 本次考试出现的试题种别
-            List<String> examTypes = examService.getReportTypes();
-            // 对应种别正确率
-            for (String type : examTypes) {
-                ExamReportModel record = examService.getPercentage(type);
-                reportModels.add(record);
-            }
-
             // 显示本次考试结果
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
             String source = request.getParameter("source");
-            questions = examService.getExamReport(source);
+
+            reportModels = new ArrayList<ExamReportModel>();
+            // 本次考试出现的试题种别
+            List<String> examTypes = examCollectionService.getReportTypes(source);
+            // 对应种别正确率
+            ExamReportModel param = new ExamReportModel();
+            param.setSource(source);
+            for (String type : examTypes) {
+                param.setExamType(type);
+                ExamReportModel record = examCollectionService.getPercentage(param);
+                reportModels.add(record);
+            }
+
+            questions = examCollectionService.getExamReport(source);
             // 没有查询到当前考题的成绩
             if (questions == null || questions.size() == 0) {
                 // 去试题选择

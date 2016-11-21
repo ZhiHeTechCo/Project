@@ -24,6 +24,7 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
+import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
@@ -43,6 +44,9 @@ public class ExamBean extends BaseController {
 
     @Inject
     private CollectionService collectionService;
+
+    @Inject
+    private ExamCollectionService examCollectionService;
 
     /** 试题 */
     private List<ExamModel> questions;
@@ -281,7 +285,7 @@ public class ExamBean extends BaseController {
                 }
                 // 考试记录表登录
                 if ("ing".equals(status) || "exist".equals(status)) {
-                    collectionService.insertExamCollection(examModel);
+                    examCollectionService.insertExamCollection(examModel);
                 }
             }
 

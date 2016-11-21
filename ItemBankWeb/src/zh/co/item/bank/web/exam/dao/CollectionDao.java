@@ -41,6 +41,7 @@ public class CollectionDao extends BaseDao {
      * @param examModel
      */
     public void insertExamCollection(ExamModel examModel) {
-        getIbatisTemplate().insert("Collection.insertExamCollection", examModel);
+        getIbatisTemplate().insert("ExamCollection.insertExamCollection", examModel);
     }
+
 }

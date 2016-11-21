@@ -8,7 +8,6 @@ import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ExamReportModel;
 
 /**
  * 考试模块
@@ -107,22 +106,4 @@ public class ExamDao extends BaseDao {
         return getIbatisTemplate().selectList("Question.getTestQuestion", map);
     }
 
-    /**
-     * 取考试种别
-     * 
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public List<String> getExamType() {
-        return getIbatisTemplate().selectList("Collection.getExamType");
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<ExamModel> getExamReport(String source) {
-        return getIbatisTemplate().selectList("Collection.getExamReport", source);
-    }
-
-    public ExamReportModel getPercentage(String type) {
-        return (ExamReportModel) getIbatisTemplate().selectOne("Collection.getPercentage", type);
-    }
 }

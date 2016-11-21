@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ExamCollection">
+
+	<select id="getExamType" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select exam_type as examType
+		from tb_exam_collection where
+		source = #{source} group by exam_type
+	</select>
+
+	<select id="getPercentage" parameterType="zh.co.item.bank.model.entity.ExamReportModel"
+		resultType="zh.co.item.bank.model.entity.ExamReportModel">
+		select b.exam_type as examType, concat ( left (a.rit / b.total *100,5),'%') as percentage,
+		b.source from
+		(select count(*) as rit
+		from tb_exam_collection where answer=my_answer and
+		exam_type=#{examType})
+		a,(select count(*) as total,exam_type,source from
+		tb_exam_collection
+		where exam_type=#{examType}) b
+		where source = #{source}
+	</select>
+
+	<select id="getExamReport" parameterType="java.lang.String"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select (@rowNO := @rowNO+1)
+		as rowNo, z.id,z.user_id as
+		userId,z.question_id as no,z.answer,z.my_answer as
+		myAnswer,z.structure_id as structureId,z.source, z.exam_type as
+		examType,
+		SUBSTRING(y.title,1,4) as title from
+		(select a.*,c.value from
+		tb_exam_collection a ,ts_code c where a.exam_type =
+		c.key and
+		c.name='exam_type') z,tb_question_structure y,(select @rowNO :=0) x
+		where
+		z.structure_id = y.id and z.source = #{source}
+		order by id
+	</select>
+
+	<insert id="insertExamCollection" parameterType="zh.co.item.bank.model.entity.ExamModel">
+		insert into tb_exam_collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="no != null">
+				question_id,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+			<if test="myAnswer != null">
+				my_answer,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="structureId != null">
+				structure_id,
+			</if>
+			<if test="examType != null">
+				exam_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="no != null">
+				#{no,jdbcType=INTEGER},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=SMALLINT},
+			</if>
+			<if test="myAnswer != null">
+				#{myAnswer,jdbcType=CHAR},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=CHAR},
+			</if>
+			<if test="structureId != null">
+				#{structureId,jdbcType=INTEGER},
+			</if>
+			<if test="examType != null">
+				#{examType,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+</mapper>

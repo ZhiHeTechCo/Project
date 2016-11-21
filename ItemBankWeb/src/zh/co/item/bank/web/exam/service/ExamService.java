@@ -14,7 +14,6 @@ import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.web.exam.dao.ExamDao;
 
 /**
@@ -200,25 +199,4 @@ public class ExamService {
         return examDao.getTestQuestion(map);
     }
 
-    /**
-     * 获取试题的考试种别
-     * 
-     * @return
-     */
-    public List<String> getReportTypes() {
-        return examDao.getExamType();
-    }
-
-    public List<ExamModel> getExamReport(String source) {
-        return examDao.getExamReport(source);
-    }
-
-    /**
-     * 获取百分比
-     * 
-     * @return
-     */
-    public ExamReportModel getPercentage(String type) {
-        return examDao.getPercentage(type);
-    }
 }
