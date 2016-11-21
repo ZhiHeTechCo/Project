@@ -137,7 +137,10 @@
 										<div class="form-submit1">
 											<h:commandButton value="返回前页" class="button1"
 												action="#{examResultBean.goBackToResult}"
-												id="goBackToResultBtn" />
+												id="goBackToResultBtn">
+												<f:param name="source"
+													value="#{examResultBean.question.source}"></f:param>
+											</h:commandButton>
 										</div>
 									</td>
 									<c:if test="#{examResultBean.examFlag ne 'true'}">

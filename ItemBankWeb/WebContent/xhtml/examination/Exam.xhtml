@@ -33,8 +33,7 @@
 											<td align="center"><h4>问题</h4></td>
 										</tr>
 										<tr>
-											<td><h:outputText value="#{examBean.subject}" />
-											</td>
+											<td><h:outputText value="#{examBean.subject}" /></td>
 										</tr>
 									</table>
 								</c:if>
@@ -102,8 +101,18 @@
 											action="#{examBean.doNext}" id="doNextBtn" />
 									</div>
 									<div class="form-submit1">
-										<h:commandButton value="退出考试" class="button1"
-											action="#{examBean.doExist}" id="doExistBtn" />
+										<h:commandButton value="直接退出" class="button1"
+											action="#{examBean.doExist}" id="doExistBtn">
+											<f:param name="source"
+												value="#{examBean.questions.get(0).source}" />
+										</h:commandButton>
+									</div>
+									<div class="form-submit1">
+										<h:commandButton value="保存退出" class="button1"
+											action="#{examBean.doSaveAndExist}" id="doSaveAndExistBtn">
+											<f:param name="source"
+												value="#{examBean.questions.get(0).source}" />
+										</h:commandButton>
 									</div>
 								</c:if>
 							</c:if>

@@ -152,11 +152,21 @@ public class ExamResultBean extends BaseController {
      */
     public String examReport() {
         try {
-            questions = examService.getExamReport();
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequest();
+            String source = request.getParameter("source");
+            questions = examService.getExamReport(source);
+            // 没有查询到当前考题的成绩
+            if (questions == null || questions.size() == 0) {
+                // 去试题选择
+                ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+                return classifyBean.init();
+            }
 
         } catch (Exception e) {
             processForException(this.logger, e);
         }
+        // 去[考试结果一览]画面
         return SystemConstants.PAGE_ITBK_EXAM_006;
 
     }

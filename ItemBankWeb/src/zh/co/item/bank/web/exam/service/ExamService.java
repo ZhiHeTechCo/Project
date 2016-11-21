@@ -203,7 +203,7 @@ public class ExamService {
         return examDao.getExamType();
     }
 
-    public List<ExamModel> getExamReport() {
-        return examDao.getExamReport();
+    public List<ExamModel> getExamReport(String source) {
+        return examDao.getExamReport(source);
     }
 }

@@ -77,6 +77,7 @@ public class ExamBean extends BaseController {
 
             title = "";
             subject = "";
+            status = "";
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
             // 智能选题
@@ -200,10 +201,7 @@ public class ExamBean extends BaseController {
 
                 // TODO 添加年限选择后废弃
                 String source = questions.get(0).getSource();
-                String[] strings = source.split(" ");
-                String year = source.contains("JLPT") ? strings[1] : strings[1] + " " + strings[2] + " ";
-                year = "%" + year + "%";
-                map.put("year", year);
+                map.put("year", source);
                 questions = examService.getTestQuestion(map);
                 // TODO 添加年限选择后废弃
 
@@ -282,12 +280,12 @@ public class ExamBean extends BaseController {
                     collectionService.updateCollection(collection);
                 }
                 // 考试记录表登录
-                if ("ing".equals(status)) {
+                if ("ing".equals(status) || "exist".equals(status)) {
                     collectionService.insertExamCollection(examModel);
                 }
             }
 
-            if ("ing".equals(status)) {
+            if ("ing".equals(status) || "exist".equals(status)) {
                 // 考试继续
                 return null;
             }
@@ -333,9 +331,26 @@ public class ExamBean extends BaseController {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
+    /**
+     * [直接退出]按下
+     * 
+     * @return
+     */
     public String doExist() {
-        // TODO
-        return SystemConstants.PAGE_ITBK_EXAM_002;
+        // 跳转至成绩一览画面
+        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        return examResultBean.examReport();
+    }
+
+    /**
+     * [保存退出]按下
+     * 
+     * @return
+     */
+    public String doSaveAndExist() {
+        status = "exist";
+        doSubmit();
+        return doExist();
     }
 
     private boolean checkuser() {

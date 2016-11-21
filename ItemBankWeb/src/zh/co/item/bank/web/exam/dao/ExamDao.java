@@ -117,7 +117,7 @@ public class ExamDao extends BaseDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<ExamModel> getExamReport() {
-        return getIbatisTemplate().selectList("Collection.getExamReport");
+    public List<ExamModel> getExamReport(String source) {
+        return getIbatisTemplate().selectList("Collection.getExamReport", source);
     }
 }
