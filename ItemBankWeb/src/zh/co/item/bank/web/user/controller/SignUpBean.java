@@ -7,11 +7,14 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.exception.CmnBizException;
+import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
@@ -73,6 +76,12 @@ public class SignUpBean extends BaseController {
      */
     public String insertUserInfo() throws Exception {
         try {
+        	if(StringUtils.isEmpty(userInfo.getName())) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"用户名"});
+        	}
+        	if(StringUtils.isEmpty(userInfo.getPassword())) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
+        	}
             int count = userService.InsertUserInfo(userInfo);
             //注册成功，跳转到登录界面
             if(count > 0) {

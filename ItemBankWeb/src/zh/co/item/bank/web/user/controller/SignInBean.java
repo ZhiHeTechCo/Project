@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
@@ -59,6 +60,12 @@ public class SignInBean extends BaseController {
      */
     public String login() throws Exception {
         try {
+        	if(StringUtils.isEmpty(userInfo.getName())) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"用户名"});
+        	}
+        	if(StringUtils.isEmpty(userInfo.getPassword())) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
+        	}
         	UserModel loginUserInfo = userService.login(userInfo);
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, loginUserInfo);
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(loginUserInfo.getId()));

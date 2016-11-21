@@ -117,4 +117,7 @@ public class MessageId {
 
     /** 使用考试模式，需要选择考题种别，然后再在弹出的考试级别中选择对应等级 */
     public static final String ITBK_E_0006 = "ITBK_E_0006";
+    
+    /** 请输入{0}！ */
+    public static final String ITBK_E_0007 = "ITBK_E_0007";
 }
