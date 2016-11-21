@@ -77,7 +77,7 @@ public class ExamBean extends BaseController {
 
             title = "";
             subject = "";
-            status = "";
+            status = null;
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
             // 智能选题

@@ -104,12 +104,14 @@
 									<td>
 										<div class="form-submit1">
 											<h:commandButton value="开始做题" class="button1"
+												style="margin-right: 5px;margin-top: 5px;"
 												action="#{examClassifyBean.classifySearch}"
 												id="classifySearchBtn" />
 										</div>
 									</td>
 									<td><div class="form-submit1">
 											<h:commandButton value="开始考试" class="button1"
+                                                style="margin-top: 5px;"
 												action="#{examClassifyBean.examSearch}" id="examSearchBtn" />
 										</div></td>
 								</tr>
@@ -129,10 +131,16 @@
 						</div>
 						<div class="col-md-4 contact-top_right">
 							<h3>说明</h3>
-							<p><b>点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。</p>
-							<p><b>点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。</p>
+							<p>
+								<b>点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
+							</p>
+							<p>
+								<b>点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
+							</p>
 							<p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
-							<p><b>点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。</p>
+							<p>
+								<b>点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
+							</p>
 						</div>
 					</div>
 				</div>
