@@ -11,7 +11,7 @@
       tu_user 
     where
       (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
-    <if test = "password != null" > 
+    <if test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
@@ -28,7 +28,7 @@
     where
       (name = #{name, jdbcType=VARCHAR } or email = #{name, jdbcType=VARCHAR })
       <choose>
-      <when  test = "password != null &amp; password !=''" > 
+      <when  test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
