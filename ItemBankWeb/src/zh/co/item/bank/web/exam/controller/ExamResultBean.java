@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.exam.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -19,6 +20,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
@@ -51,11 +53,7 @@ public class ExamResultBean extends BaseController {
 
     private String examFlag;
 
-    // [考试结果一览画面]当前试题-试题种别
-    private List<String> examTypes;
-
-    // [考试结果一览画面]当前试题-试题种别
-    private List<String> records;
+    private List<ExamReportModel> reportModels;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -158,9 +156,15 @@ public class ExamResultBean extends BaseController {
      */
     public String examReport() {
         try {
-            //本次考试出现的试题种别
-            examTypes = examService.getReportTypes();
-            //对应种别正确率
+            reportModels = new ArrayList<ExamReportModel>();
+            // 本次考试出现的试题种别
+            List<String> examTypes = examService.getReportTypes();
+            // 对应种别正确率
+            for (String type : examTypes) {
+                ExamReportModel record = examService.getPercentage(type);
+                reportModels.add(record);
+            }
+
             // 显示本次考试结果
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
@@ -251,20 +255,12 @@ public class ExamResultBean extends BaseController {
         this.examFlag = examFlag;
     }
 
-    public List<String> getExamTypes() {
-        return examTypes;
+    public List<ExamReportModel> getReportModels() {
+        return reportModels;
     }
 
-    public void setExamTypes(List<String> examTypes) {
-        this.examTypes = examTypes;
-    }
-
-    public List<String> getRecords() {
-        return records;
-    }
-
-    public void setRecords(List<String> records) {
-        this.records = records;
+    public void setReportModels(List<ExamReportModel> reportModels) {
+        this.reportModels = reportModels;
     }
 
 }
