@@ -51,6 +51,12 @@ public class ExamResultBean extends BaseController {
 
     private String examFlag;
 
+    // [考试结果一览画面]当前试题-试题种别
+    private List<String> examTypes;
+
+    // [考试结果一览画面]当前试题-试题种别
+    private List<String> records;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
     }
@@ -152,6 +158,10 @@ public class ExamResultBean extends BaseController {
      */
     public String examReport() {
         try {
+            //本次考试出现的试题种别
+            examTypes = examService.getReportTypes();
+            //对应种别正确率
+            // 显示本次考试结果
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
             String source = request.getParameter("source");
@@ -239,6 +249,22 @@ public class ExamResultBean extends BaseController {
 
     public void setExamFlag(String examFlag) {
         this.examFlag = examFlag;
+    }
+
+    public List<String> getExamTypes() {
+        return examTypes;
+    }
+
+    public void setExamTypes(List<String> examTypes) {
+        this.examTypes = examTypes;
+    }
+
+    public List<String> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<String> records) {
+        this.records = records;
     }
 
 }

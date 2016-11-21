@@ -199,7 +199,11 @@ public class ExamService {
         return examDao.getTestQuestion(map);
     }
 
-    public List<String> name() {
+    /**
+     * 获取试题的考试种别
+     * @return
+     */
+    public List<String> getReportTypes() {
         return examDao.getExamType();
     }
 

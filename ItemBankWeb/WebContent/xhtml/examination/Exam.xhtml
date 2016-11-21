@@ -97,18 +97,24 @@
 								</c:if>
 								<c:if test="#{examBean.status != null}">
 									<div class="form-submit1">
-										<h:commandButton value="下一题" class="button1" style="margin-right: 5px;"
-											action="#{examBean.doNext}" id="doNextBtn" />
-									</div>
-									<div class="form-submit1">
-										<h:commandButton value="直接退出" class="button1" style="margin-right: 5px;"
-											action="#{examBean.doExist}" id="doExistBtn">
+										<h:commandButton value="下一题" class="button1"
+											style="margin-right: 5px;" action="#{examBean.doNext}"
+											id="doNextBtn">
 											<f:param name="source"
 												value="#{examBean.questions.get(0).source}" />
 										</h:commandButton>
 									</div>
 									<div class="form-submit1">
-										<h:commandButton value="保存退出" class="button1" style="margin-right: 5px;"
+										<h:commandButton value="直接退出" class="button1"
+											style="margin-right: 5px;" action="#{examBean.doExist}"
+											id="doExistBtn">
+											<f:param name="source"
+												value="#{examBean.questions.get(0).source}" />
+										</h:commandButton>
+									</div>
+									<div class="form-submit1">
+										<h:commandButton value="保存退出" class="button1"
+											style="margin-right: 5px;"
 											action="#{examBean.doSaveAndExist}" id="doSaveAndExistBtn">
 											<f:param name="source"
 												value="#{examBean.questions.get(0).source}" />
