@@ -148,6 +148,8 @@ public class UserService {
     	int count = 0;
     	TuUserBean newUser = new TuUserBean();
     	newUser.setId(userInfo.getId());
+    	//昵称
+    	newUser.setNickName(userInfo.getNickName());
     	//邮箱
     	newUser.setEmail(userInfo.getEmail());
     	//手机
@@ -177,6 +179,7 @@ public class UserService {
     		user = userDao.getUserInfo(userInfo);
     	} else {
     		//不存在的场合，注册，自动登录
+    		userInfo.setPassword("123456");
     		int count = userDao.insertUserInfo(userInfo);
     		if(count > 0) {
 	    		logger.log(MessageId.ITBK_I_0001, new Object[] {userInfo.getName()});
