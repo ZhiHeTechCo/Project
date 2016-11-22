@@ -5,9 +5,7 @@
 <mapper namespace="Forum">
 
 	<select id="selectForumForAll" resultType="ForumModel">
-		select *
-		from
-		vb_forum
+		select * from vb_forum
 	</select>
 
 	<select id="selectForumByAsker" parameterType="Integer"
@@ -17,45 +15,30 @@
 
 	<select id="selectForumByQuestionId" parameterType="Integer"
 		resultType="ForumModel">
-		select * from vb_forum where questionId =
-		#{questionId}
+		select * from vb_forum where question_id = #{questionId}
 	</select>
 
 	<select id="selectForumAskerForOne" parameterType="ForumModel"
 		resultType="Integer">
 		select count(no) from tb_forum_asker where asker = #{asker}
-		and questionId = #{questionId}
+		and question_id = #{questionId}
 	</select>
 
 	<select id="selectForumForOne" parameterType="Integer"
 		resultType="Integer">
-		select count(questionId) from tb_forum_response where questionId =
+		select count(question_id) from tb_forum_response where question_id =
 		#{questionId}
 	</select>
 
 	<select id="selectAllAsker" parameterType="Integer" resultType="UserBean">
 		select u.name from tb_forum_asker a left join tu_user u on u.id =
-		a.asker where questionId = #{questionId}
+		a.asker where question_id = #{questionId}
 	</select>
 
 	<select id="selectQuestionByContext" parameterType="com.zh.hs.business.model.ForumModel"
 		resultType="com.zh.hs.business.model.ForumModel">
-		select
-		*
-		from tb_tmp_question
-		where
-		context = #{context}
-	</select>
-
-	<select id="selectTmpQuestionByQuestionId" parameterType="Integer"
-		resultType="com.zh.hs.business.model.ForumModel">
-		select
-		*
-		from vb_tmp_question_detail
-		where
-		deleteFlag != 4 and
-		no =
-		#{questionId}
+		select * from tb_tmp_question
+		where context = #{context}
 	</select>
 
 	<update id="updateForumResponse" parameterType="com.zh.hs.business.model.ForumModel">
@@ -128,7 +111,7 @@
 				status = #{status},
 			</if>
 		</set>
-		where questionId = #{questionId,jdbcType=INTEGER}
+		where question_id = #{questionId,jdbcType=INTEGER}
 	</update>
 
 	<update id="doUp" parameterType="com.zh.hs.business.model.ForumResponseBean">
@@ -165,7 +148,7 @@
 				count10 = count10 + 1,
 			</if>
 		</set>
-		where questionId = #{questionId,jdbcType=INTEGER}
+		where question_id = #{questionId,jdbcType=INTEGER}
 	</update>
 
 	<insert id="insertForumAsker" parameterType="com.zh.hs.business.model.ForumModel">
@@ -175,7 +158,7 @@
 				no,
 			</if>
 			<if test="questionId !=null">
-				questionId,
+				question_id,
 			</if>
 			<if test="asker !=null">
 				asker,
@@ -196,7 +179,7 @@
 
 	<insert id="insertForumResponse" parameterType="INTEGER">
 		insert into
-		tb_forum_response (questionId) values (#{questionId})
+		tb_forum_response (question_id) values (#{questionId})
 	</insert>
 
 </mapper>

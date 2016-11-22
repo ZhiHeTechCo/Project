@@ -10,8 +10,7 @@
 	</select>
 
 	<select id="selectQuestionDetailForAll" resultType="zh.co.item.bank.model.entity.ExamModel">
-		select * from
-		vb_question_detail
+		select * from vb_question_detail
 	</select>
 
 	<select id="selectStructureForAll" resultType="zh.co.item.bank.db.entity.TbQuestionStructureBean">
@@ -30,8 +29,7 @@
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select c.*,d.finish from (select a.subject, b.* from
 		tb_first_level_directory a right join
-		vb_question_detail b on a.id =
-		b.fatherId where
+		vb_question_detail b on a.id = b.father_id where
 		a.id=#{fatherId,jdbcType=INTEGER}) c left join
 		tb_collection d on c.no=d.question_id where d.id=#{userId} and
 		d.finish !='1' and d.finish!='9'
@@ -57,7 +55,7 @@
 		resultType="zh.co.item.bank.model.entity.ExamModel">
         select * from vb_question_detail where no not in(select question_id from tb_exam_collection
         where user_id = #{userId}
-        ) and structureId = #{structureId} and deleteFlag='0'
+        ) and structure_id = #{structureId} and delete_flag='0'
 		<if test="year !=null">
 		and source like #{year} 
 		</if>
@@ -84,7 +82,7 @@
 	<select id="selectQuestionByFatherId" parameterType="INTEGER"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select d.*,f.subject from vb_question_detail d, tb_first_level_directory f
-		where d.fatherId = #{fatherId} and d.fatherId =f.id
+		where d.father_id = #{fatherId} and d.father_id =f.id
 	</select>
 
 	<select id="selectSpecialForOne" parameterType="java.util.Map"
@@ -227,17 +225,16 @@
 		*
 		from vb_question_detail
 		where
-		deleteFlag = 0 and
-		no =
-		#{questionId}
+		delete_flag = '0' and
+		no =#{questionId}
 	</select>
 
 	<select id="selectQuestionForError" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select * from vb_question_error
 		where
-		DATEDIFF(CURDATE(),updateTime) >= 3
-		and userId = #{userId}
+		DATEDIFF(CURDATE(),update_time) >= 3
+		and user_id = #{userId}
 		limit 1
 	</select>
 
@@ -245,8 +242,8 @@
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select * from vb_question_error
 		where
-		DATEDIFF(CURDATE(),updateTime) >= 1
-		and userId = #{userId}
+		DATEDIFF(CURDATE(),update_time) >= 1
+		and user_id = #{userId}
 		limit 1
 	</select>
 
