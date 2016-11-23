@@ -17,6 +17,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
@@ -145,7 +146,7 @@ public class ExamBean extends BaseController {
                 questions.clear();
                 questions = examService.selectQuestionByFatherId(fatherId);
                 // 取大题
-                subject = questions.get(0).getSubject();
+                subject = CmnStringUtils.escapeStringHtml(questions.get(0).getSubject());
 
             } else if (questions.get(questions.size() - 1).getFatherId() != null) {
                 // 特殊试题不显示[下次显示]

@@ -9,6 +9,21 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+     <style type="text/css">
+     .radioTable1 {
+        width: 100%;
+      }
+     .radioTable1  > tbody > tr > td {
+        width: 25%;
+      }
+     .radioTable2 {
+        width: 100%;
+      }
+     .radioTable2  > tbody > tr > td {
+        width: 100%;
+        padding-bottom: 10px;
+      }
+     </style>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examForm">
 				<div class="typrography">
@@ -33,60 +48,41 @@
 											<td align="center"><h4>问题</h4></td>
 										</tr>
 										<tr>
-											<td><h:outputText value="#{examBean.subject}" /></td>
+											<td>
+                                                <h:panelGroup layout="block">
+                                                 <h:outputText value="#{examBean.subject}" escape="false" />
+                                                </h:panelGroup>
+                                            </td>
 										</tr>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{examBean.questions}" var="item">
+									rendered="true" value="#{examBean.questions}" var="item" width="100%">
+                                    <h:column>
+                                          <h4>
+                                              <h:outputText value="#{item.rowNo}"></h:outputText>
+                                          </h4>
+                                    </h:column>
 									<h:column>
-										<h4>
-											<h:outputText value="#{item.rowNo}"></h:outputText>
-										</h4>
-										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
-										</td>
-										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-											value="#{item.myAnswer}"></h:inputHidden>
-										<c:if test="#{examBean.classifyBean.examType ne '5'}">
-											<tr>
-												<td></td>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="1"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="2"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="3"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="4"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
-											</tr>
-										</c:if>
-										<c:if test="#{examBean.classifyBean.examType eq '5'}">
-											<tr>
-												<td rowspan="4"></td>
-												<td colspan="4"><input name="myAnswer#{item.rowNo}"
-													type="radio" value="1"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
-											</tr>
-											<tr>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="2"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
-											</tr>
-											<tr>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="3"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
-											</tr>
-											<tr>
-												<td><input name="myAnswer#{item.rowNo}" type="radio"
-													value="4"
-													onclick="document.getElementById('examForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
-											</tr>
-										</c:if>
+                                          #{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
+                                          <hr />
+                                          <h:inputHidden id="myAnswer" name="#{item.myAnswer}" value="#{item.myAnswer}" />
+                                        <c:if test="#{examBean.classifyBean.examType ne '5'}">
+                                          <h:selectOneRadio  value="#{item.myAnswer}" layout="lineDirection" class="radioTable1">
+                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                                              <f:selectItem itemValue="4" itemLabel="#{item.c}" />
+                                              <f:selectItem itemValue="5" itemLabel="#{item.d}"/>
+                                           </h:selectOneRadio>
+                                        </c:if>
+                                        <c:if test="#{examBean.classifyBean.examType eq '5'}">
+                                          <h:selectOneRadio value="#{item.myAnswer}" layout="pageDirection" class="radioTable2">
+                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                                              <f:selectItem itemValue="4" itemLabel="#{item.c}" />
+                                              <f:selectItem itemValue="5" itemLabel="#{item.d}" />
+                                           </h:selectOneRadio>
+                                        </c:if>
 									</h:column>
 								</h:dataTable>
 								<c:if test="#{examBean.status == null}">

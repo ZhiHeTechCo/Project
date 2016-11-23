@@ -81,8 +81,10 @@
 
 	<select id="selectQuestionByFatherId" parameterType="INTEGER"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select d.*,f.subject from vb_question_detail d, tb_first_level_directory f
+      <![CDATA[
+		select d.*,REPLACE(f.subject,'\r\n','<br/>') as subject from vb_question_detail d, tb_first_level_directory f
 		where d.father_id = #{fatherId} and d.father_id =f.id
+      ]]>
 	</select>
 
 	<select id="selectSpecialForOne" parameterType="java.util.Map"
