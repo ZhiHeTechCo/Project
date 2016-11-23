@@ -1,6 +1,7 @@
 package zh.co.common.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -619,5 +620,20 @@ public final class CmnStringUtils {
 
         return new String[]{month, day};
     }
+    
+    /**
+     * 阅读折行显示
+     * @param subject
+     * @return
+     */
+	public static List<String> getSubjectList(String subject) {
+		List<String> list = new ArrayList<String>();
+		if(!StringUtils.isEmpty(subject)) {
+			String[] array = subject.split("<br/>");
+			list = Arrays.asList(array);
+		}
+		
+		return list;
+	}
 
 }

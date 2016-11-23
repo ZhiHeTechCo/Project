@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.controller;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +58,12 @@ public class ExamBean extends BaseController {
 
     /** 题目 */
     private String title;
-
+    
     /** 大题干 */
     private String subject;
+    
+    /** 大题干List */
+    private List<String> subjectList;
 
     private String status;
 
@@ -81,6 +85,7 @@ public class ExamBean extends BaseController {
             userInfo = WebUtils.getLoginUserInfo();
 
             title = "";
+            subjectList =  new ArrayList<String>();
             subject = "";
             status = null;
             Map<String, Object> map = new HashMap<String, Object>();
@@ -146,7 +151,7 @@ public class ExamBean extends BaseController {
                 questions.clear();
                 questions = examService.selectQuestionByFatherId(fatherId);
                 // 取大题
-                subject = CmnStringUtils.escapeStringHtml(questions.get(0).getSubject());
+                subject = questions.get(0).getSubject();
 
             } else if (questions.get(questions.size() - 1).getFatherId() != null) {
                 // 特殊试题不显示[下次显示]
@@ -164,29 +169,7 @@ public class ExamBean extends BaseController {
             // 取题目
             title = examService.getTitle(questions.get(0).getStructureId());
             // 画面序号
-            for (int i = 0; i < questions.size(); i++) {
-                questions.get(i).setRowNo(i + 1);
-                if(WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
-                		&& SystemConstants.AGENT_FLAG.equals((String)WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-                	questions.get(i).setLayoutStyle("pageDirection");
-                } else if(StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
-                	questions.get(i).setLayoutStyle("pageDirection");
-                } else if(StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
-                	questions.get(i).setLayoutStyle("pageDirection");
-                } else if(StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
-                	questions.get(i).setLayoutStyle("pageDirection");
-                } else if(StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
-                	questions.get(i).setLayoutStyle("pageDirection");
-                } else {
-                	questions.get(i).setLayoutStyle("lineDirection");
-                }
-                
-                if("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-                	questions.get(i).setRadioClass("radioTable1");
-                } else {
-                	questions.get(i).setRadioClass("radioTable2");
-                }
-            }
+            prepareData(subject);
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -203,6 +186,7 @@ public class ExamBean extends BaseController {
     public String examSearch() {
         try {
             title = "";
+            subjectList =  new ArrayList<String>();
             subject = "";
             if (!"ing".equals(status)) {
                 status = "";
@@ -237,11 +221,10 @@ public class ExamBean extends BaseController {
                     questions = examService.selectQuestionByFatherId(fatherId);
                     subject = questions.get(0).getSubject();
                 }
-                // 画面序号
-                for (int i = 0; i < questions.size(); i++) {
-                    questions.get(i).setRowNo(i + 1);
-                }
+                // 画面序号 折行
+                prepareData(subject);
                 title = model.getTitle();
+                
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
@@ -266,6 +249,38 @@ public class ExamBean extends BaseController {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
+    /**
+     * 画面序号 折行
+     * @param subject 题干
+     */
+    private void prepareData(String subject) {
+        // 画面序号
+        for (int i = 0; i < questions.size(); i++) {
+            questions.get(i).setRowNo(i + 1);
+            if(WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
+            		&& SystemConstants.AGENT_FLAG.equals((String)WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+            	questions.get(i).setLayoutStyle("pageDirection");
+            } else if(StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
+            	questions.get(i).setLayoutStyle("pageDirection");
+            } else if(StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
+            	questions.get(i).setLayoutStyle("pageDirection");
+            } else if(StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
+            	questions.get(i).setLayoutStyle("pageDirection");
+            } else if(StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
+            	questions.get(i).setLayoutStyle("pageDirection");
+            } else {
+            	questions.get(i).setLayoutStyle("lineDirection");
+            }
+            
+            if("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+            	questions.get(i).setRadioClass("radioTable1");
+            } else {
+            	questions.get(i).setRadioClass("radioTable2");
+            }
+        }
+       //折行
+        subjectList = CmnStringUtils.getSubjectList(subject);
+    }
     /**
      * [确认]按钮点下
      * 
@@ -429,14 +444,22 @@ public class ExamBean extends BaseController {
     }
 
     public String getSubject() {
-        return subject;
-    }
+		return subject;
+	}
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
-    public String getStatus() {
+	public List<String> getSubjectList() {
+		return subjectList;
+	}
+
+	public void setSubjectList(List<String> subjectList) {
+		this.subjectList = subjectList;
+	}
+
+	public String getStatus() {
         return status;
     }
 

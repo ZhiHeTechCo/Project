@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -49,9 +48,9 @@
 										</tr>
 										<tr>
 											<td>
-                                                <h:panelGroup layout="block">
-                                                 <h:outputText value="#{examBean.subject}" escape="false" />
-                                                </h:panelGroup>
+                                                 <ui:repeat value="#{examBean.subjectList}" var="stringItem">
+									                    <h:outputText value="#{stringItem}"/><br/>
+									             </ui:repeat>
                                             </td>
 										</tr>
 									</table>
