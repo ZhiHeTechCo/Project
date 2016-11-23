@@ -51,6 +51,9 @@ public class SignInBean extends BaseController {
     	fromPageId = WebUtils.getSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
     	pushPathHistory("signInBean");
     	userInfo = new TuUserBean();
+    	if(WebUtils.judgeIsMoblie()) {
+    		WebUtils.setSessionAttribute(WebUtils.SESSION_USER_AGENT, SystemConstants.AGENT_FLAG);
+    	}
     	return SystemConstants.PAGE_ITBK_USER_002;
     	
     }

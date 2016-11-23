@@ -166,6 +166,26 @@ public class ExamBean extends BaseController {
             // 画面序号
             for (int i = 0; i < questions.size(); i++) {
                 questions.get(i).setRowNo(i + 1);
+                if(WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
+                		&& SystemConstants.AGENT_FLAG.equals((String)WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+                	questions.get(i).setLayoutStyle("pageDirection");
+                } else if(StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
+                	questions.get(i).setLayoutStyle("pageDirection");
+                } else if(StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
+                	questions.get(i).setLayoutStyle("pageDirection");
+                } else if(StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
+                	questions.get(i).setLayoutStyle("pageDirection");
+                } else if(StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
+                	questions.get(i).setLayoutStyle("pageDirection");
+                } else {
+                	questions.get(i).setLayoutStyle("lineDirection");
+                }
+                
+                if("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+                	questions.get(i).setRadioClass("radioTable1");
+                } else {
+                	questions.get(i).setRadioClass("radioTable2");
+                }
             }
 
         } catch (Exception e) {

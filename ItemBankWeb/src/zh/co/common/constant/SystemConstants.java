@@ -21,6 +21,10 @@ public class SystemConstants {
     public static final String WECHAT_FLAG = "1";
     /**PC注册flag*/
     public static final String PC_FLAG = "0";
+    
+    /**USER_AGENT Flag mobile*/
+    public static final String AGENT_FLAG = "1";
+    
 
     /**---------------------properties文件key------------------------------
     /**检索最大件数*/

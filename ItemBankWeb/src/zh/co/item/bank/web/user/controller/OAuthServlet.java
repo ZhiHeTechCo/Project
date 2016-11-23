@@ -72,6 +72,7 @@ public class OAuthServlet extends HttpServlet {
             	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, model);
             	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(model.getId()));
             }
+            WebUtils.setSessionAttribute(WebUtils.SESSION_USER_AGENT, SystemConstants.AGENT_FLAG);
 
             // 设置要传递的参数
             request.setAttribute("snsUserInfo", snsUserInfo);

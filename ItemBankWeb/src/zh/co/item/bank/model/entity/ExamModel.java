@@ -39,6 +39,12 @@ public class ExamModel extends QuestionBean {
 
     // 问题描述
     private String description;
+    
+    /** radio显示格式*/
+    private String layoutStyle;
+    
+    /** radio样式*/
+    private String radioClass;
 
     public int getUserId() {
         return userId;
@@ -135,5 +141,21 @@ public class ExamModel extends QuestionBean {
     public void setResponser(int responser) {
         this.responser = responser;
     }
+
+	public String getLayoutStyle() {
+		return layoutStyle;
+	}
+
+	public void setLayoutStyle(String layoutStyle) {
+		this.layoutStyle = layoutStyle;
+	}
+
+	public String getRadioClass() {
+		return radioClass;
+	}
+
+	public void setRadioClass(String radioClass) {
+		this.radioClass = radioClass;
+	}
 
 }

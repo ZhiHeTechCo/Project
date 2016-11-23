@@ -129,9 +129,6 @@ public class AccessFilter implements Filter {
         logger.debug("URL:" + URL);
         logger.debug("ContextPath:" + path);
         
-        // IE
-        response.setHeader("X-UA-Compatible", "IE=Edge");
-        
         if (URI.contains(".css.") || URI.contains(".js.") || URI.contains("javax.faces.resource")) {
             chain.doFilter(arg0, arg1);
             return;

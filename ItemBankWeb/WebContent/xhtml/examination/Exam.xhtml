@@ -68,7 +68,8 @@
                                           <hr />
                                           <h:inputHidden id="myAnswer" name="#{item.myAnswer}" value="#{item.myAnswer}" />
                                         <c:if test="#{examBean.classifyBean.examType ne '5'}">
-                                          <h:selectOneRadio  value="#{item.myAnswer}" layout="lineDirection" class="radioTable1">
+                                          
+                                          <h:selectOneRadio  value="#{item.myAnswer}" layout="#{item.layoutStyle}" class="#{item.radioClass}">
                                               <f:selectItem itemValue="1" itemLabel="#{item.a}" />
                                               <f:selectItem itemValue="2" itemLabel="#{item.b}" />
                                               <f:selectItem itemValue="4" itemLabel="#{item.c}" />
