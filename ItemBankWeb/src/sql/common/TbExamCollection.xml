@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TbExamCollection" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="CHAR" />
+    <result column="my_answer" property="myAnswer" jdbcType="CHAR" />
+    <result column="source" property="source" jdbcType="CHAR" />
+    <result column="structure_id" property="structureId" jdbcType="INTEGER" />
+    <result column="exam_type" property="examType" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, question_id, answer, my_answer, source, structure_id, exam_type, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBeanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_exam_collection
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBeanKey" >
+    delete from tb_exam_collection
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+    insert into tb_exam_collection (id, user_id, question_id, 
+      answer, my_answer, source, structure_id, 
+      exam_type, create_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, 
+      #{answer,jdbcType=CHAR}, #{myAnswer,jdbcType=CHAR}, #{source,jdbcType=CHAR}, #{structureId,jdbcType=INTEGER}, 
+      #{examType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+    insert into tb_exam_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="myAnswer != null" >
+        my_answer,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="structureId != null" >
+        structure_id,
+      </if>
+      <if test="examType != null" >
+        exam_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=CHAR},
+      </if>
+      <if test="myAnswer != null" >
+        #{myAnswer,jdbcType=CHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="structureId != null" >
+        #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null" >
+        #{examType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+    update tb_exam_collection
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=CHAR},
+      </if>
+      <if test="myAnswer != null" >
+        my_answer = #{myAnswer,jdbcType=CHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=CHAR},
+      </if>
+      <if test="structureId != null" >
+        structure_id = #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null" >
+        exam_type = #{examType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+    update tb_exam_collection
+    set user_id = #{userId,jdbcType=INTEGER},
+      question_id = #{questionId,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=CHAR},
+      my_answer = #{myAnswer,jdbcType=CHAR},
+      source = #{source,jdbcType=CHAR},
+      structure_id = #{structureId,jdbcType=INTEGER},
+      exam_type = #{examType,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
