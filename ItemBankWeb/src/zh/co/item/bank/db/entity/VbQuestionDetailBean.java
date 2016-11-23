@@ -27,6 +27,8 @@ public class VbQuestionDetailBean {
 
     private Integer structureId;
 
+    private Integer fatherId;
+
     private String deleteFlag;
 
     private String exam;
@@ -36,6 +38,12 @@ public class VbQuestionDetailBean {
     private String jtestLevel;
 
     private String examType;
+
+    private String examName;
+
+    private String examTypeName;
+
+    private String levelName;
 
     public Integer getNo() {
         return no;
@@ -141,6 +149,14 @@ public class VbQuestionDetailBean {
         this.structureId = structureId;
     }
 
+    public Integer getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Integer fatherId) {
+        this.fatherId = fatherId;
+    }
+
     public String getDeleteFlag() {
         return deleteFlag;
     }
@@ -179,5 +195,29 @@ public class VbQuestionDetailBean {
 
     public void setExamType(String examType) {
         this.examType = examType == null ? null : examType.trim();
+    }
+
+    public String getExamName() {
+        return examName;
+    }
+
+    public void setExamName(String examName) {
+        this.examName = examName == null ? null : examName.trim();
+    }
+
+    public String getExamTypeName() {
+        return examTypeName;
+    }
+
+    public void setExamTypeName(String examTypeName) {
+        this.examTypeName = examTypeName == null ? null : examTypeName.trim();
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName == null ? null : levelName.trim();
     }
 }

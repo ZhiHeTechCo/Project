@@ -5,7 +5,7 @@ import java.util.Date;
 public class VbQuestionErrorBean {
     private Integer no;
 
-    private Integer id;
+    private Integer userId;
 
     private String context;
 
@@ -25,6 +25,10 @@ public class VbQuestionErrorBean {
 
     private String analysis;
 
+    private Integer structureId;
+
+    private Integer fatherId;
+
     private String finish;
 
     private Date updateTime;
@@ -37,12 +41,12 @@ public class VbQuestionErrorBean {
         this.no = no;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getContext() {
@@ -115,6 +119,22 @@ public class VbQuestionErrorBean {
 
     public void setAnalysis(String analysis) {
         this.analysis = analysis == null ? null : analysis.trim();
+    }
+
+    public Integer getStructureId() {
+        return structureId;
+    }
+
+    public void setStructureId(Integer structureId) {
+        this.structureId = structureId;
+    }
+
+    public Integer getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Integer fatherId) {
+        this.fatherId = fatherId;
     }
 
     public String getFinish() {

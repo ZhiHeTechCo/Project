@@ -5,6 +5,10 @@ import java.util.Date;
 public class TuUserBean extends TuUserBeanKey {
     private String name;
 
+    private String nickName;
+
+    private String wechat;
+
     private String password;
 
     private String role;
@@ -22,17 +26,29 @@ public class TuUserBean extends TuUserBeanKey {
     private Date createTime;
 
     private Date updateTime;
-    
-    private String nickName;
 
-    private String wechat;
-    
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat == null ? null : wechat.trim();
     }
 
     public String getPassword() {
@@ -106,22 +122,4 @@ public class TuUserBean extends TuUserBeanKey {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getWechat() {
-		return wechat;
-	}
-
-	public void setWechat(String wechat) {
-		this.wechat = wechat;
-	}
-	
-    
 }
