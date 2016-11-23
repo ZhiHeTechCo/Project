@@ -17,11 +17,10 @@
 		b.source from
 		(select count(*) as rit
 		from tb_exam_collection where answer=my_answer and
-		exam_type=#{examType})
+		exam_type=#{examType} and source = #{source})
 		a,(select count(*) as total,exam_type,source from
 		tb_exam_collection
-		where exam_type=#{examType}) b
-		where source = #{source}
+		where exam_type=#{examType} and source = #{source}) b
 	</select>
 
 	<select id="getExamReport" parameterType="java.lang.String"

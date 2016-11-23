@@ -25,7 +25,10 @@
 							</h:panelGroup>
 							<h5 style="color: #3382C9;">说明：背景色为红色表示做错。</h5>
 							<h5>点击题号可查看试题详细。</h5>
-							<h4>#{examResultBean.questions.get(0).source}</h4>
+							<h4 style="text-align: center;">
+								<span class="glyphicon glyphicon-screenshot" />#{examResultBean.questions.get(0).source}
+								<span class="glyphicon glyphicon-screenshot" />
+							</h4>
 							<c:forEach var="type" items="#{examResultBean.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '1'}">
 									<h4>文字：（正确率#{type.percentage}）</h4>
