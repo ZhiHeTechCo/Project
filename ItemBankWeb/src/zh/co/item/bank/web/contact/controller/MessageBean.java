@@ -87,6 +87,12 @@ public class MessageBean extends BaseController {
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0013);
                 throw ex;
             }
+            if (message.getUserId() == 0) {
+                // 游客
+                message.setName(userInfo.getNickName());
+                message.setEmail(userInfo.getEmail());
+                message.setTelephone(userInfo.getTelephone());
+            }
             messageService.sendMessage(message);
 
             // 成功提醒
