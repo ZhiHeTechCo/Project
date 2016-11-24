@@ -42,6 +42,9 @@ public class MessageId {
 
     /** Session过期，请重新登录 */
     public static final String COMMON_E_0009 = "COMMON_E_0009";
+    
+    /** 文件已经被删除！ */
+    public static final String COMMON_E_0010 = "COMMON_E_0010";
 
     // ------------------------业务 Message------------------------
 

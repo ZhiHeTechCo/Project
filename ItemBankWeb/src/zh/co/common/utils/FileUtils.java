@@ -557,4 +557,36 @@ public class FileUtils {
             }
         }
     }
+    
+    /**
+     * UNIXとWindows
+     * @return
+     */
+    public static String getCurrentFileName(String pathName){
+        if (StringUtils.isEmpty(pathName)) {
+            return null;
+        }
+
+        String separator = File.separator;
+        if (!pathName.contains(separator)) {
+            String winSeparator = "\\";
+            String unixSeparator = "/";
+            if (pathName.contains(winSeparator) && !winSeparator.equals(separator)) {
+                pathName = pathName.replace(winSeparator, separator);
+            } else if (pathName.contains(unixSeparator) && !unixSeparator.equals(separator)) {
+                pathName = pathName.replace(unixSeparator, separator);
+            }
+        }
+        File file = new File(pathName);
+        return file.getName();
+    }
+    
+    public static boolean checkExistFile(String filePath) {
+        boolean isExist = false;
+        File file = new File(filePath);
+        if (file.exists() && file.isFile()) {
+            isExist = true;
+        }
+        return isExist;
+    }
 }

@@ -35,6 +35,8 @@ public class SystemConstants {
     public static final String DB_ENCRYPTION_PASSWORD = "db_encryption_password";
     /**文件上传大小限制*/
     public static final String FILEUPLOAD_SIZE_LIMIT = "fileupload_size_limit";
+    /**文件上传保存路径*/
+    public static final String FILEUPLOAD_PATH = "fileupload_path";
 
 
     /**---------------------画面ID------------------------------
@@ -53,6 +55,10 @@ public class SystemConstants {
     public static final String PAGE_ITBK_USER_003 = "ITBK_USER_003";
     /**修改密码画面*/
     public static final String PAGE_ITBK_USER_004 = "ITBK_USER_004";
+    /**设置密码画面wechat*/
+    public static final String PAGE_ITBK_USER_005 = "ITBK_USER_005";
+    /**文件上传画面*/
+    public static final String PAGE_ITBK_USER_006 = "ITBK_USER_006";
 
 	/** 选择题型 */
 	public static final String PAGE_ITBK_EXAM_001 = "ITBK_EXAM_001";
