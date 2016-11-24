@@ -7,6 +7,12 @@ public class TcMessageBean extends TcMessageBeanKey {
 
     private String message;
 
+    private String name;
+
+    private String email;
+
+    private String telephone;
+
     private String status;
 
     private Date createTime;
@@ -25,6 +31,30 @@ public class TcMessageBean extends TcMessageBeanKey {
 
     public void setMessage(String message) {
         this.message = message == null ? null : message.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone == null ? null : telephone.trim();
     }
 
     public String getStatus() {

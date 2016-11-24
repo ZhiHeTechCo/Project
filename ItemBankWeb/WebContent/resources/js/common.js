@@ -56,9 +56,9 @@ $(document).ready(function() {
     });
     
     // 返回按钮，迁移到error画面
-    window.addEventListener("unload", function() {
+/*    window.addEventListener("unload", function() {
     	history.pushState(null, null, contextPath + '/xhtml/common/page_forward_error.xhtml');
-    });
+    });*/
     
     buttonDisabled = false;
 });
