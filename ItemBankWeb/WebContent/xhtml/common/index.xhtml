@@ -99,10 +99,21 @@
                                   <f:param name='pageController' value="userInfoBean"></f:param>
                                 </h:commandLink>
                              </li>
-	                          <li><h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="examClassifyBean"></f:param>
-	                    </h:commandLink></li>
-	                                            <li><h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();"><f:param name='pageController' value="resumeBean"></f:param>
-	                    </h:commandLink></li>
+                              <li>
+                                <h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                                  <f:param name='pageController' value="examClassifyBean"></f:param>
+                                </h:commandLink>
+                              </li>
+                              <li>
+                                <h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                                  <f:param name='pageController' value="resumeBean"></f:param>
+                                </h:commandLink>
+                              </li>
+                              <li>
+                                <h:commandLink value="考题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                                  <f:param name='pageController' value="fileManageBean"></f:param>
+                                </h:commandLink>
+                              </li>
 <!-- 	                          <li><a href="toMyQuestions">我的提问</a></li>
 	                          <li><a href="toAnswerQuestion">回答问题</a></li> -->
 	                          <li><h:commandLink value="切换用户" action="#{pageTopController.changeUser}"
