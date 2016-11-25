@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;
 
 import zh.co.common.constant.SystemConstants;
+import zh.co.common.prop.PropertiesUtils;
 
 /**
  * <p>[概 要]string process utilities</p>
@@ -636,4 +637,14 @@ public final class CmnStringUtils {
 		return list;
 	}
 
+	public static String getFileSizeByteFromM() {
+		String size = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_SIZE_LIMIT);
+		if(StringUtils.isEmpty(size)) {
+			size = "10";
+		}
+		
+		long limit = Integer.valueOf(size) * 1024 * 1024;
+		
+		return String.valueOf(limit);
+	}
 }

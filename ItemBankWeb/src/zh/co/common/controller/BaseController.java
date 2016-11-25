@@ -52,7 +52,7 @@ public abstract class BaseController {
     public static final String PAGE_FORWARD_ERROR = "page_forward_error";
 
     /** 文件上传最大限制 */
-    private String sizeLimit = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_SIZE_LIMIT);
+    private String sizeLimit = CmnStringUtils.getFileSizeByteFromM();
     /** 文件上传最大限制的message */
     private String sizeLimitMessage = MessageUtils.getMessage(MessageId.COMMON_E_0008,
             new Object[] { sizeLimit });
