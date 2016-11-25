@@ -27,6 +27,8 @@ public class SystemConstants {
     
 
     /**---------------------properties文件key------------------------------
+    /**一页表示件数*/
+    public static final String PAGE_CONTROL_RECORDS_PER_PAGE = "page-control.1page.count";
     /**检索最大件数*/
     public static final String PAGE_CONTROL_MAX_SEARCH_COUNT = "page_control_max_search_count";
     /**最大显示件数*/

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/template.xhtml"
+                xmlns:component="http://java.sun.com/jsf/composite/component">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="userInfoform">
+        <div class="typrography">
+          <h2 style="text-align: center;">文件一览</h2>
+          <div class="container">
+            <div class="bs-docs-example">
+	          <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+	            layout="block">
+	            <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+	          </h:panelGroup>
+              <h:panelGroup id="search-result" style="text-align: center; margin-top: 15px">
+                <div style="text-align: center; float: left;">
+                  <h:panelGroup id="search_result_paginator" layout="block">
+                    <component:paginator form="wfform" paginator="#{campaigncataloguecontroller.paginator}" />
+                  </h:panelGroup>
+                  <span class="tcdPageCode"></span>
+                </div>
+                <div style="clear: both"></div>
+                <div style="margin-top: 20px">
+                  <h:panelGroup id="search_result_data" layout="block">
+                    <c:if test="${!empty campaigncataloguecontroller.campaignMangInfoList}">
+                      <div>
+                        <h:dataTable id="books" headerClass="dataTableHeaderCenter" rowClasses="list-row" border="1"
+                          width="100%" value="#{campaigncataloguecontroller.paginator.model}" 
+                          columnClasses="campaignidTD,campaignStatusTD,campaignNameTD,campaignTimeTD,campaignExecutionMethodTD,campaignObjectListTD,campaignButtonTD" var="campaignMangInfo">
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="キャンペーンID" />
+                            </f:facet>
+                            <!-- form id="link" -->
+                            <h:commandLink value="#{campaignMangInfo.campaignId}" action="#{campaignDetailController.init}"
+                              actionListener="#{campaigncataloguecontroller.gotoPageAdm0005}" onclick="return buttonDisable();">
+                              <f:param name="campaignId" value="#{campaignMangInfo.campaignId}"></f:param>
+                            </h:commandLink>
+                          </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="実施ステータス" />
+                            </f:facet>
+                            <h:outputText
+                              value="#{campaignMangInfo.deleteFlag==1?'開始前削除':campaignMangInfo.deleteFlag==2?'終了後削除':campaignMangInfo.executionStatusName=='444'?'開始前(仮登録)':campaignMangInfo.executionStatusName=='111'?'開始前(登録済)':campaignMangInfo.executionStatusName=='222'?'実施中':campaignMangInfo.executionStatusName=='333'?'終了 ':'-'}" />
+                          </h:column>
+        
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="キャンペーン名称" />
+                            </f:facet>
+                            <h:outputText value="#{campaignMangInfo.campaignName}" />
+                          </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="実施期間" />
+                            </f:facet>
+                            <h:outputText value="#{campaignMangInfo.campaignDateFrom}" /> -  <h:outputText
+                              value="#{campaignMangInfo.campaignDateTo}" />
+                          </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="媒体" />
+                            </f:facet>
+                            <h:outputText
+                              value="#{campaignMangInfo.executionMethod=='1'?'メール':campaignMangInfo.executionMethod=='2'?'お知らせ':campaignMangInfo.executionMethod=='3'?'アラート':campaignMangInfo.executionMethod=='4'?'コンテンツBOX':campaignMangInfo.executionMethod=='5'?'バナー':'-'}" />
+                            <br />
+                            <h:outputText value="#{campaignMangInfo.showEnquete==1?'アンケート':''}" />
+                          </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="対象者リスト" />
+                            </f:facet>
+                            <h:dataTable id="xx" value="#{campaignMangInfo.objectListName}" var="obj">
+                              <h:column>
+                                <h:outputText value="#{obj}" />
+                              </h:column>
+                            </h:dataTable>
+                          </h:column>
+                          <h:column>
+                            <f:facet name="header">
+                              <h:outputText value="" />
+                            </f:facet>
+                            <h:inputHidden value="#{campaignMangInfo.campaignId}" id="delCampaignId" />
+                            <h:commandButton id="doDelete1" value="削除" 
+                              action="#{campaigncataloguecontroller.doDelete(campaignMangInfo)}"
+                              disabled="#{campaignMangInfo.delFlagEnable == 1 ?'false':'true' }" onclick="return cancelToken(this)">
+                              <f:ajax execute="@form" render=":wfform:search-result :ngossfw_error_display" onevent="ADMexecutionMethodChangeCallBack" />
+                            </h:commandButton>
+        
+                          </h:column>
+                        </h:dataTable>
+                      </div>
+                    </c:if>
+                    <c:if test="${campaigncataloguecontroller.campaignMangInfoList.size() lt 1}">
+                      <div>
+                        <table width="100%" id="wfform:books" border="1">
+                          <thead>
+                            <tr>
+                              <th class="dataTableHeaderCenter campaignidTD" scope="col">キャンペーンID</th>
+                              <th class="dataTableHeaderCenter campaignStatusTD" scope="col">実施ステータス</th>
+                              <th class="dataTableHeaderCenter campaignNameTD" scope="col">キャンペーン名称</th>
+                              <th class="dataTableHeaderCenter campaignTimeTD" scope="col">実施期間</th>
+                              <th class="dataTableHeaderCenter campaignExecutionMethodTD" scope="col">媒体</th>
+                              <th class="dataTableHeaderCenter campaignObjectListTD" scope="col">対象者リスト</th>
+                              <th class="dataTableHeaderCenter campaignButtonTD" scope="col"></th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </c:if>
+                  </h:panelGroup>
+                </div>
+              </h:panelGroup>
+              <div class="form-submit1">
+                  <h:commandButton id="updateInfoBtn" value="更新信息" 
+                      action="#{userInfoBean.updateUserInfo}" />
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="changePasswordBtn" value="更换密码" 
+                      action="#{userInfoBean.changePassword}" />
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="toExamBtn" value="去试题库" 
+                      action="#{userInfoBean.toExam}" />
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="toResumeBtn" value="去错题库" 
+                      action="#{userInfoBean.toResume}" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

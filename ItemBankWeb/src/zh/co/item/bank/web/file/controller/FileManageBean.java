@@ -17,6 +17,8 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.common.utils.FileUtils;
 import zh.co.common.utils.MessageUtils;
+import zh.co.item.bank.model.entity.PaginatorLogger;
+import zh.co.item.bank.model.entity.RepeatPaginator;
 
 /**
  * <p>[概要] 文件管理Bean.</p>
@@ -37,16 +39,10 @@ public class FileManageBean extends BaseController {
     
     private String fileName;
     
-    private Part file;
+    private RepeatPaginator paginator; 
 
-    
-    public Part getFile() {
-		return file;
-	}
+    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_006, "向前翻页","向后翻页", "指定页"); 
 
-	public void setFile(Part file) {
-		this.file = file;
-	}
 
 	public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_006;
@@ -62,6 +58,25 @@ public class FileManageBean extends BaseController {
         return SystemConstants.PAGE_ITBK_USER_006;
     }
 
+	/**
+	 * 检索
+	 * @return
+	 */
+	public String doSearch() {
+		//检索
+        try {
+
+/*            CampaignMangInfoList = null;
+            paginator = null;
+        	CampaignMangInfoList = campaignCatalogueService.getCampaignMangList(campaignMangInfo);
+    		campaignMangInfo.setIsInit(1);
+    		paginator = new RepeatPaginator(CampaignMangInfoList, paginatorLogger);*/
+        } catch (Throwable e) {
+            processForException(logger, e);
+        }
+
+        return SystemConstants.PAGE_ITBK_USER_006;
+	}
     
     /**
      * 文件上传
@@ -130,6 +145,14 @@ public class FileManageBean extends BaseController {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public RepeatPaginator getPaginator() {
+		return paginator;
+	}
+
+	public void setPaginator(RepeatPaginator paginator) {
+		this.paginator = paginator;
 	}
 
 
