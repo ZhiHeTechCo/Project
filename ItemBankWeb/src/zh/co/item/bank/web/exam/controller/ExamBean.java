@@ -394,9 +394,9 @@ public class ExamBean extends BaseController {
                 .getRequest();
         String source = request.getParameter("source");
         examService.deleteExamCollectionBySource(source);
-        // 跳转至成绩一览画面
-        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-        return examResultBean.examReport();
+        // 跳转至试题选择
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean)SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
     }
 
     /**
@@ -407,7 +407,9 @@ public class ExamBean extends BaseController {
     public String doSaveAndExist() {
         status = "exist";
         doSubmit();
-        return doExist();
+        // 跳转至成绩一览画面
+        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        return examResultBean.examReport();
     }
 
     private boolean checkuser() {
