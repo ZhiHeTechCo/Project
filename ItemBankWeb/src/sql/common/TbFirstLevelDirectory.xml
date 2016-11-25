@@ -4,10 +4,11 @@
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="LONGVARBINARY" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, subject, delete_flag
+    id, subject, img, delete_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbFirstLevelDirectoryBeanKey" >
     select 
@@ -20,10 +21,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean" >
-    insert into tb_first_level_directory (id, subject, delete_flag
-      )
-    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}
-      )
+    insert into tb_first_level_directory (id, subject, img, 
+      delete_flag)
+    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{img,jdbcType=LONGVARBINARY}, 
+      #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean" >
     insert into tb_first_level_directory
@@ -33,6 +34,9 @@
       </if>
       <if test="subject != null" >
         subject,
+      </if>
+      <if test="img != null" >
+        img,
       </if>
       <if test="deleteFlag != null" >
         delete_flag,
@@ -45,6 +49,9 @@
       <if test="subject != null" >
         #{subject,jdbcType=VARCHAR},
       </if>
+      <if test="img != null" >
+        #{img,jdbcType=LONGVARBINARY},
+      </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=CHAR},
       </if>
@@ -56,6 +63,9 @@
       <if test="subject != null" >
         subject = #{subject,jdbcType=VARCHAR},
       </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=LONGVARBINARY},
+      </if>
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=CHAR},
       </if>
@@ -65,6 +75,7 @@
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean" >
     update tb_first_level_directory
     set subject = #{subject,jdbcType=VARCHAR},
+      img = #{img,jdbcType=LONGVARBINARY},
       delete_flag = #{deleteFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
