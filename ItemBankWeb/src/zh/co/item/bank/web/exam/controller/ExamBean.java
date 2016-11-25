@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -58,10 +60,10 @@ public class ExamBean extends BaseController {
 
     /** 题目 */
     private String title;
-    
+
     /** 大题干 */
     private String subject;
-    
+
     /** 大题干List */
     private List<String> subjectList;
 
@@ -69,6 +71,11 @@ public class ExamBean extends BaseController {
 
     /** 用户信息 */
     private UserModel userInfo;
+
+    // 试题结构
+    List<ExamModel> examStructure = null;
+
+    String year = null;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
@@ -85,7 +92,7 @@ public class ExamBean extends BaseController {
             userInfo = WebUtils.getLoginUserInfo();
 
             title = "";
-            subjectList =  new ArrayList<String>();
+            subjectList = new ArrayList<String>();
             subject = "";
             status = null;
             Map<String, Object> map = new HashMap<String, Object>();
@@ -186,33 +193,36 @@ public class ExamBean extends BaseController {
     public String examSearch() {
         try {
             title = "";
-            subjectList =  new ArrayList<String>();
+            subjectList = new ArrayList<String>();
             subject = "";
             if (!"ing".equals(status)) {
                 status = "";
             }
             userInfo = WebUtils.getLoginUserInfo();
 
-            // 获得试题结构
-            List<ExamModel> examStructure = examService.getTestQuestions(classifyBean);
+            // 获得试题结构(一次考试之获取一次)
+            examStructure = examStructure == null ? examService.getTestQuestions(classifyBean) : examStructure;
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
             for (ExamModel model : examStructure) {
                 map.put("structureId", model.getStructureId());
                 // map.put("year", "%2000%");//TODO
 
-                // 获取试题
+                if (year == null) {
+                    // 获取试题
+                    questions = examService.getTestQuestion(map);
+                    // TODO 添加年限选择后废弃
+                    year = questions.get(0).getYear();
+                    map.put("year", year);
+                    // TODO 添加年限选择后废弃
+                } else {
+                    map.put("year", year);
+                }
                 questions = examService.getTestQuestion(map);
 
                 if (questions == null || questions.size() == 0) {
                     continue;
                 }
-
-                // TODO 添加年限选择后废弃
-                String source = questions.get(0).getSource();
-                map.put("year", source);
-                questions = examService.getTestQuestion(map);
-                // TODO 添加年限选择后废弃
 
                 Integer fatherId = questions.get(0).getFatherId();
                 if (fatherId != null) {
@@ -224,7 +234,7 @@ public class ExamBean extends BaseController {
                 // 画面序号 折行
                 prepareData(subject);
                 title = model.getTitle();
-                
+
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
@@ -250,37 +260,39 @@ public class ExamBean extends BaseController {
     }
 
     /**
-     * 画面序号 折行
+     * 画面序号,折行
+     * 
      * @param subject 题干
      */
     private void prepareData(String subject) {
         // 画面序号
         for (int i = 0; i < questions.size(); i++) {
             questions.get(i).setRowNo(i + 1);
-            if(WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
-            		&& SystemConstants.AGENT_FLAG.equals((String)WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-            	questions.get(i).setLayoutStyle("pageDirection");
-            } else if(StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
-            	questions.get(i).setLayoutStyle("pageDirection");
-            } else if(StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
-            	questions.get(i).setLayoutStyle("pageDirection");
-            } else if(StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
-            	questions.get(i).setLayoutStyle("pageDirection");
-            } else if(StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
-            	questions.get(i).setLayoutStyle("pageDirection");
+            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+                questions.get(i).setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
+                questions.get(i).setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
+                questions.get(i).setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
+                questions.get(i).setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
+                questions.get(i).setLayoutStyle("pageDirection");
             } else {
-            	questions.get(i).setLayoutStyle("lineDirection");
+                questions.get(i).setLayoutStyle("lineDirection");
             }
-            
-            if("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-            	questions.get(i).setRadioClass("radioTable1");
+
+            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+                questions.get(i).setRadioClass("radioTable1");
             } else {
-            	questions.get(i).setRadioClass("radioTable2");
+                questions.get(i).setRadioClass("radioTable2");
             }
         }
-       //折行
+        // 折行
         subjectList = CmnStringUtils.getSubjectList(subject);
     }
+
     /**
      * [确认]按钮点下
      * 
@@ -377,6 +389,11 @@ public class ExamBean extends BaseController {
      * @return
      */
     public String doExist() {
+        // 清空本次做题记录
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                .getRequest();
+        String source = request.getParameter("source");
+        examService.deleteExamCollectionBySource(source);
         // 跳转至成绩一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
         return examResultBean.examReport();
@@ -444,22 +461,22 @@ public class ExamBean extends BaseController {
     }
 
     public String getSubject() {
-		return subject;
-	}
+        return subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public List<String> getSubjectList() {
-		return subjectList;
-	}
+    public List<String> getSubjectList() {
+        return subjectList;
+    }
 
-	public void setSubjectList(List<String> subjectList) {
-		this.subjectList = subjectList;
-	}
+    public void setSubjectList(List<String> subjectList) {
+        this.subjectList = subjectList;
+    }
 
-	public String getStatus() {
+    public String getStatus() {
         return status;
     }
 

@@ -31,6 +31,8 @@ public class QuestionBean extends TbQuestionClassifyBean {
     private String deleteFlag;
     // 出处
     private String source;
+    // 年限
+    private String year;
     // 分类ID
     private Integer classifyId;
     // 试题结构ID
@@ -124,6 +126,14 @@ public class QuestionBean extends TbQuestionClassifyBean {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public Integer getClassifyId() {

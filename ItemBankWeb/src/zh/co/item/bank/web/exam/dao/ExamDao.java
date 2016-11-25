@@ -106,4 +106,13 @@ public class ExamDao extends BaseDao {
         return getIbatisTemplate().selectList("Question.getTestQuestion", map);
     }
 
+    /**
+     * 删除本次做题记录
+     * @param source
+     * @return
+     */
+    public void deleteExamCollectionBySource(String source) {
+        getIbatisTemplate().delete("ExamCollection.deleteBySource", source);
+    }
+
 }

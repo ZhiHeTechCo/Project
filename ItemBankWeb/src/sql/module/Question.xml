@@ -57,27 +57,32 @@
         where user_id = #{userId}
         ) and structure_id = #{structureId} and delete_flag='0'
 		<if test="year !=null">
-		and source like #{year} 
+		and year = #{year} 
 		</if>
-		order by no
+		order by year desc, no
 	</select>
-
-<!-- 
-	<select id="getTestQuestion" parameterType="java.util.Map"
-		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select * from tb_question where no not in(
-		select no from tb_question a, tb_exam_collection b where a.source=b.source
-		and a.structure_id=b.structure_id
-		) and structure_id = #{structureId}
-		<if test="year !=null">
-		and source like #{year} 
-		</if>
-		<if test="source !=null">
-		and source = #{source} 
-		</if>
-		order by no
-	</select>
- -->
+<!-- 2009年以前的试题，使用旧结构 -->
+    <select id="getTestQuestionsOld" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
+        resultType="zh.co.item.bank.model.entity.ExamModel">
+        select b.id as structureId,b.title,a.id as classifyId,a.exam as
+        exam,a.jlpt_level as jlptLevel,a.jtest_level as jtestLevel from
+        tb_question_classify a right join tb_question_structure_old b on
+        a.id=b.classify_id
+        where a.exam = #{exam}
+        <if test="jlptLevel !=null">
+            and a.jlpt_level=#{jlptLevel}
+        </if>
+        <if test="jtestLevel !=null">
+            and a.jtest_level=#{jtestLevel}
+        </if>
+        order by structureId
+    </select>
+<!-- 2009年以前的试题，使用旧结构 -->
+    <select id="selectTitleByIdOld" parameterType="java.lang.Integer"
+        resultType="java.lang.String">
+        select title from tb_question_structure_old
+        where id = #{id}
+    </select>
 
 	<select id="selectQuestionByFatherId" parameterType="INTEGER"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
@@ -292,6 +297,7 @@
 		where no = #{no,jdbcType=INTEGER}
 	</update>
 
+<!-- 未用 -->
 	<insert id="insertQuestionClassify" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert into tb_question_classify
 		<trim prefix="(" suffix=")" suffixOverrides=",">

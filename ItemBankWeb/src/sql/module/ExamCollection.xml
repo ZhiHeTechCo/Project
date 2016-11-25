@@ -13,14 +13,18 @@
 
 	<select id="getPercentage" parameterType="zh.co.item.bank.model.entity.ExamReportModel"
 		resultType="zh.co.item.bank.model.entity.ExamReportModel">
-		select b.exam_type as examType, concat ( left (a.rit / b.total *100,5),'%') as percentage,
+		select b.exam_type as examType, concat ( left (a.rit /
+		b.total *100,5),'%') as percentage,
 		b.source from
-		(select count(*) as rit
+		(select count(*) as
+		rit
 		from tb_exam_collection where answer=my_answer and
 		exam_type=#{examType} and source = #{source})
-		a,(select count(*) as total,exam_type,source from
+		a,(select count(*) as
+		total,exam_type,source from
 		tb_exam_collection
-		where exam_type=#{examType} and source = #{source}) b
+		where
+		exam_type=#{examType} and source = #{source}) b
 	</select>
 
 	<select id="getExamReport" parameterType="java.lang.String"
@@ -39,6 +43,11 @@
 		z.structure_id = y.id and z.source = #{source}
 		order by id
 	</select>
+
+	<delete id="deleteBySource" parameterType="java.lang.String">
+		delete from tb_exam_collection
+		where source = #{source,jdbcType=INTEGER}
+	</delete>
 
 	<insert id="insertExamCollection" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert into tb_exam_collection

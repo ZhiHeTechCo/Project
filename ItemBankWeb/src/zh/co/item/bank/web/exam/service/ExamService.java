@@ -199,4 +199,12 @@ public class ExamService {
         return examDao.getTestQuestion(map);
     }
 
+    /**
+     * 删除本次做题记录
+     * @param source
+     */
+    public void deleteExamCollectionBySource(String source) {
+        examDao.deleteExamCollectionBySource(source);
+    }
+
 }

@@ -21,6 +21,8 @@ public class TbQuestionBean extends TbQuestionBeanKey {
 
     private String source;
 
+    private String year;
+
     private Integer fatherId;
 
     private Integer classifyId;
@@ -105,6 +107,14 @@ public class TbQuestionBean extends TbQuestionBeanKey {
 
     public void setSource(String source) {
         this.source = source == null ? null : source.trim();
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public Integer getFatherId() {
