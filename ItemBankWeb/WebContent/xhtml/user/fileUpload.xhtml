@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
-  xmlns:p="http://primefaces.org/ui" >
-<ui:composition template="../../xhtml/common/template.xhtml">
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core" 
+  xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../../xhtml/common/template_upload.xhtml">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
     <script type="text/javascript">
@@ -14,17 +15,48 @@
       }
     </script>
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
-      <h:form id="flform" style="width:100%; align:center;" enctype="multipart/form-data;charset=UTF-8">
         <div class="typrography">
-        <h2 style="text-align: center;">文件上传</h2>
-        <div class="container">
+          <h2 style="text-align: center;">试题上传</h2>
+          <div class="container">
             <div class="bs-docs-example">
-                      <label class="control-label">Select File</label>
-                      <input id="input-1a" type="file" data-show-preview="false" class="file file-loading" data-allowed-file-extensions='["rar", "zip"]' />
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h:form id="flform" enctype="multipart/form-data;charset=UTF-8">
+              <div style="display: none;">
+                <p:fileUpload value="#{fileManageBean.uploadFile}" mode="advanced" multiple="true" auto="true"
+                    sizeLimit="#{fileManageBean.sizeLimit}" invalidSizeMessage="#{fileManageBean.sizeLimitMessage}"
+                    fileUploadListener="#{fileManageBean.doUpload}" skinSimple="true" label="選択" cancelLabel="cancelA"
+                    id="upbtn" rendered="true" update=":ngossfw_error_display fileName" oncomplete="resetButtonDisabled();" >
+                </p:fileUpload>
+              </div>
+              <table class="table table-striped;">
+                <tr>
+                  <td><h4>文件:</h4></td>
+                  <td><h:panelGroup id="fileName"><h:outputText value="#{fileManageBean.fileName}" /></h:panelGroup></td>
+                </tr>         
+              </table>
+              <div class="form-submit1">
+                  <h:commandButton id="selectFile" value="上传文件" 
+                      onclick="cancelToken(this);selectFile(this,'flform:upbtn_input');"/>
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="downloadFile" value="下载文件" 
+                      action="#{fileManageBean.doDownLoad}" onclick="clickDownloadFile(this)"/>
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="toExamBtn" value="去试题库" 
+                      action="#{userInfoBean.toExam}" />
+              </div>
+              <div class="form-submit1">
+                  <h:commandButton id="toResumeBtn" value="去错题库" 
+                      action="#{userInfoBean.toResume}" />
+              </div>
+              </h:form>
             </div>
+          </div>
         </div>
-    </div>
-      </h:form>
     </div>
   </ui:define>
 </ui:composition>

@@ -6,6 +6,8 @@ public class MessageId {
     // ------------------------Info------------------------
     /** eventlog */
     public static final String COMMON_I_0001 = "COMMON_I_0001";
+    /** 文件上传成功! */
+    public static final String COMMON_I_0002 = "COMMON_I_0002";
 
     // ------------------------Qestion------------------------
     /** 备用 */

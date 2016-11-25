@@ -16,6 +16,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.common.utils.FileUtils;
+import zh.co.common.utils.MessageUtils;
 
 /**
  * <p>[概要] 文件管理Bean.</p>
@@ -72,14 +73,15 @@ public class FileManageBean extends BaseController {
 
           
             uploadFile = event.getFile();
-            String fileName = FileUtils.getCurrentFileName(uploadFile.getFileName());
+            fileName = FileUtils.getCurrentFileName(uploadFile.getFileName());
             
             String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH);
             
             //文件上传
             FileUtils.uploadFile(uploadFile.getInputstream(), filePath, fileName);
 
-
+            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
+            
         } catch (Throwable e) {
         	
             processForException(logger, e);
@@ -91,7 +93,7 @@ public class FileManageBean extends BaseController {
      * 文件下载
      * @return
      */
-    public void doDownLoad(String fileName) {
+    public void doDownLoad() {
         try {
 
             // 文件路径
