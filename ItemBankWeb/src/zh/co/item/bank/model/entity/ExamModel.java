@@ -19,6 +19,9 @@ public class ExamModel extends QuestionBean {
     // 一级目录中的大题目
     private String subject;
 
+    // 一级目录中的图片
+    private byte[] img;
+
     // 考试类别[详细画面]
     private String examName;
 
@@ -39,11 +42,11 @@ public class ExamModel extends QuestionBean {
 
     // 问题描述
     private String description;
-    
-    /** radio显示格式*/
+
+    /** radio显示格式 */
     private String layoutStyle;
-    
-    /** radio样式*/
+
+    /** radio样式 */
     private String radioClass;
 
     public int getUserId() {
@@ -84,6 +87,14 @@ public class ExamModel extends QuestionBean {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     public String getExamName() {
@@ -142,20 +153,20 @@ public class ExamModel extends QuestionBean {
         this.responser = responser;
     }
 
-	public String getLayoutStyle() {
-		return layoutStyle;
-	}
+    public String getLayoutStyle() {
+        return layoutStyle;
+    }
 
-	public void setLayoutStyle(String layoutStyle) {
-		this.layoutStyle = layoutStyle;
-	}
+    public void setLayoutStyle(String layoutStyle) {
+        this.layoutStyle = layoutStyle;
+    }
 
-	public String getRadioClass() {
-		return radioClass;
-	}
+    public String getRadioClass() {
+        return radioClass;
+    }
 
-	public void setRadioClass(String radioClass) {
-		this.radioClass = radioClass;
-	}
+    public void setRadioClass(String radioClass) {
+        this.radioClass = radioClass;
+    }
 
 }

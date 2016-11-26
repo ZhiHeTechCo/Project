@@ -51,6 +51,8 @@ public class ExamResultBean extends BaseController {
 
     private Integer questionId;
 
+    private String subject;
+
     private UserModel userInfo;
 
     private boolean isResume;
@@ -229,6 +231,14 @@ public class ExamResultBean extends BaseController {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public TbQuestionClassifyBean getClassifyBean() {

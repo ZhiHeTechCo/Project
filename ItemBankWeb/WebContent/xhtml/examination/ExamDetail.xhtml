@@ -26,6 +26,16 @@
 							<h4>
 								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
 							</h4>
+							<c:if test="#{examResultBean.subject !=''}">
+								<table class="table table-bordered">
+									<tr>
+										<td align="center"><h4>问题</h4></td>
+									</tr>
+									<tr>
+										<td><h:outputText value="#{examResultBean.subject}" /></td>
+									</tr>
+								</table>
+							</c:if>
 							<table class="table table-bordered">
 								<tr>
 									<td>
@@ -108,7 +118,7 @@
 									<td><h4>解析：</h4></td>
 									<td colspan="4"><c:if
 											test="#{examResultBean.question.analysis eq null}">暂无</c:if>
-									<h:outputText value="#{examResultBean.question.analysis}" /></td>
+										<h:outputText value="#{examResultBean.question.analysis}" /></td>
 								</tr>
 								<tr>
 									<td><h4>考试类别：</h4></td>

@@ -230,7 +230,6 @@ public class ExamBean extends BaseController {
             }
             for (ExamModel model : safeList) {
                 map.put("structureId", model.getStructureId());
-                // map.put("year", "%2000%");//TODO
 
                 // TODO 添加年限选择后废弃
                 if (year == null) {
@@ -374,7 +373,7 @@ public class ExamBean extends BaseController {
             examResultBean.setQuestions(questions);
             examResultBean.setClassifyBean(classifyBean);
             examResultBean.setTitle(title);
-            doclear();
+            examResultBean.setSubject(subject);
             return examResultBean.init();
         } catch (Exception e) {
             processForException(logger, e);
