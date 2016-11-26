@@ -8,21 +8,24 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-     <style type="text/css">
-     .radioTable1 {
-        width: 100%;
-      }
-     .radioTable1  > tbody > tr > td {
-        width: 25%;
-      }
-     .radioTable2 {
-        width: 100%;
-      }
-     .radioTable2  > tbody > tr > td {
-        width: 100%;
-        padding-bottom: 10px;
-      }
-     </style>
+		<style type="text/css">
+.radioTable1 {
+	width: 100%;
+}
+
+.radioTable1>tbody>tr>td {
+	width: 25%;
+}
+
+.radioTable2 {
+	width: 100%;
+}
+
+.radioTable2>tbody>tr>td {
+	width: 100%;
+	padding-bottom: 10px;
+}
+</style>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examForm">
 				<div class="typrography">
@@ -47,42 +50,46 @@
 											<td align="center"><h4>问题</h4></td>
 										</tr>
 										<tr>
-											<td>
-                                                 <ui:repeat value="#{examBean.subjectList}" var="stringItem">
-									                    <h:outputText value="#{stringItem}"/><br/>
-									             </ui:repeat>
-                                            </td>
+											<td><ui:repeat value="#{examBean.subjectList}"
+													var="stringItem">
+													<h:outputText value="#{stringItem}" />
+													<br />
+												</ui:repeat></td>
 										</tr>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{examBean.questions}" var="item" width="100%">
-                                    <h:column>
-                                          <h4>
-                                              <h:outputText value="#{item.rowNo}"></h:outputText>
-                                          </h4>
-                                    </h:column>
+									rendered="true" value="#{examBean.questions}" var="item"
+									width="100%">
+									<h:column>
+										<h4>
+											<h:outputText value="#{item.rowNo}"></h:outputText>
+										</h4>
+									</h:column>
 									<h:column>
                                           #{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
                                           <hr />
-                                          <h:inputHidden id="myAnswer" name="#{item.myAnswer}" value="#{item.myAnswer}" />
-                                        <c:if test="#{examBean.classifyBean.examType ne '5'}">
-                                          
-                                          <h:selectOneRadio  value="#{item.myAnswer}" layout="#{item.layoutStyle}" class="#{item.radioClass}">
-                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
-                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
-                                              <f:selectItem itemValue="4" itemLabel="#{item.c}" />
-                                              <f:selectItem itemValue="5" itemLabel="#{item.d}"/>
-                                           </h:selectOneRadio>
-                                        </c:if>
-                                        <c:if test="#{examBean.classifyBean.examType eq '5'}">
-                                          <h:selectOneRadio value="#{item.myAnswer}" layout="pageDirection" class="radioTable2">
-                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
-                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
-                                              <f:selectItem itemValue="4" itemLabel="#{item.c}" />
-                                              <f:selectItem itemValue="5" itemLabel="#{item.d}" />
-                                           </h:selectOneRadio>
-                                        </c:if>
+										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
+											value="#{item.myAnswer}" />
+										<c:if test="#{examBean.classifyBean.examType ne '5'}">
+
+											<h:selectOneRadio value="#{item.myAnswer}"
+												layout="#{item.layoutStyle}" class="#{item.radioClass}">
+												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+												<f:selectItem itemValue="4" itemLabel="#{item.c}" />
+												<f:selectItem itemValue="5" itemLabel="#{item.d}" />
+											</h:selectOneRadio>
+										</c:if>
+										<c:if test="#{examBean.classifyBean.examType eq '5'}">
+											<h:selectOneRadio value="#{item.myAnswer}"
+												layout="pageDirection" class="radioTable2">
+												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+												<f:selectItem itemValue="4" itemLabel="#{item.c}" />
+												<f:selectItem itemValue="5" itemLabel="#{item.d}" />
+											</h:selectOneRadio>
+										</c:if>
 									</h:column>
 								</h:dataTable>
 								<c:if test="#{examBean.status == null}">
@@ -101,14 +108,6 @@
 										</h:commandButton>
 									</div>
 									<div class="form-submit1">
-										<h:commandButton value="直接退出" class="button1"
-											style="margin-right: 5px;" action="#{examBean.doExist}"
-											id="doExistBtn">
-											<f:param name="source"
-												value="#{examBean.questions.get(0).source}" />
-										</h:commandButton>
-									</div>
-									<div class="form-submit1">
 										<h:commandButton value="保存退出" class="button1"
 											style="margin-right: 5px;"
 											action="#{examBean.doSaveAndExist}" id="doSaveAndExistBtn">
@@ -116,6 +115,16 @@
 												value="#{examBean.questions.get(0).source}" />
 										</h:commandButton>
 									</div>
+									<div class="form-submit1">
+										<h:commandButton value="直接退出" class="button1"
+											style="margin-right: 5px;" action="#{examBean.doExist}"
+											id="doExistBtn">
+											<f:param name="source"
+												value="#{examBean.questions.get(0).source}" />
+										</h:commandButton>
+									</div>
+									<div class="clearfix"></div>
+									<h5><span class="glyphicon glyphicon-exclamation-sign"></span>  注意："直接退出"将清空本次的做题记录。</h5>
 								</c:if>
 							</c:if>
 							<c:if test="#{examBean.title == ''}">

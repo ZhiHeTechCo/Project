@@ -73,8 +73,6 @@ public class ExamBean extends BaseController {
     /** 大题干List */
     private List<String> subjectList;
 
-    private String status;
-
     /** --共通变量-- */
     // 用户信息
     private UserModel userInfo;
@@ -82,10 +80,10 @@ public class ExamBean extends BaseController {
     /** --考试模式用变量-- */
     // 试题结构
     CopyOnWriteArrayList<ExamModel> safeList = new CopyOnWriteArrayList<ExamModel>();
-
+    // 考试进行状态
+    private String status;
     // 考卷年
     String year = null;
-
     // 开始做题时间
     Date startTime = null;
 
@@ -214,7 +212,9 @@ public class ExamBean extends BaseController {
             if (startTime == null) {
                 startTime = new Date();
             }
-            userInfo = WebUtils.getLoginUserInfo();
+            if (userInfo == null) {
+                userInfo = WebUtils.getLoginUserInfo();
+            }
             // 检索用Map
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -245,6 +245,7 @@ public class ExamBean extends BaseController {
 
                 // 当前大题已做完
                 if (questions == null || questions.size() == 0) {
+                    safeList.remove(model);
                     continue;
                 }
 
@@ -258,7 +259,6 @@ public class ExamBean extends BaseController {
                 // 画面序号 折行
                 prepareData(subject);
                 title = model.getTitle();
-                safeList.remove(model);
 
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
@@ -451,6 +451,7 @@ public class ExamBean extends BaseController {
      * 数据清除
      */
     private void doclear() {
+        status = null;
         year = null;
         safeList.clear();
         startTime = null;

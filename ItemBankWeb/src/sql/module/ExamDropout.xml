@@ -6,50 +6,53 @@
 
 	<select id="getDropoutForYear" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean"
 		resultType="java.lang.String">
-        select year from tb_exam_dropout where user_id = #{userId} and exam = #{exam} and (jlpt_level = #{jlptLevel} or jtest_level = #{jtestLevel}) order by year desc
+		select distinct year from tb_exam_dropout where user_id = #{userId} and exam
+		= #{exam} and (jlpt_level = #{jlptLevel} or jtest_level = #{jtestLevel})
+		order by year desc limit 1
 	</select>
 
-  <delete id="deleteExamDropout" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean" >
-    delete from tb_exam_dropout where
-    user_id = #{userId} and exam = #{exam} and (jlpt_level = #{jlptLevel} or jtest_level = #{jtestLevel}) and year = #{year}
-  </delete>
-  
-<insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean" >
-    insert into tb_exam_dropout
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="year != null" >
-        year,
-      </if>
-      <if test="exam != null" >
-        exam,
-      </if>
-      <if test="jlptLevel != null" >
-        jlpt_level,
-      </if>
-      <if test="jtestLevel != null" >
-        jtest_level,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="year != null" >
-        #{year,jdbcType=INTEGER},
-      </if>
-      <if test="exam != null" >
-        #{exam,jdbcType=INTEGER},
-      </if>
-      <if test="jlptLevel != null" >
-        #{jlptLevel,jdbcType=INTEGER},
-      </if>
-      <if test="jtestLevel != null" >
-        #{jtestLevel,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+	<delete id="deleteExamDropout" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean">
+		delete from tb_exam_dropout where
+		user_id = #{userId} and exam = #{exam} and (jlpt_level = #{jlptLevel} or
+		jtest_level = #{jtestLevel}) and year = #{year}
+	</delete>
+
+	<insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean">
+		insert into tb_exam_dropout
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="year != null">
+				year,
+			</if>
+			<if test="exam != null">
+				exam,
+			</if>
+			<if test="jlptLevel != null">
+				jlpt_level,
+			</if>
+			<if test="jtestLevel != null">
+				jtest_level,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="year != null">
+				#{year,jdbcType=INTEGER},
+			</if>
+			<if test="exam != null">
+				#{exam,jdbcType=INTEGER},
+			</if>
+			<if test="jlptLevel != null">
+				#{jlptLevel,jdbcType=INTEGER},
+			</if>
+			<if test="jtestLevel != null">
+				#{jtestLevel,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
 
 </mapper>
