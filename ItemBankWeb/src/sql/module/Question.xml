@@ -35,7 +35,7 @@
 		d.finish !='1' and d.finish!='9'
 	</select>
 
-	<select id="getTestQuestions" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
+	<select id="getStructure" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select b.id as structureId,b.title,a.id as classifyId,a.exam as
 		exam,a.jlpt_level as jlptLevel,a.jtest_level as jtestLevel from

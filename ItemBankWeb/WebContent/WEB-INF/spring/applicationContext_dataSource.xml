@@ -48,6 +48,7 @@
                 <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
                 <value>classpath:sql/module/ExamCollection.xml</value>
+                <value>classpath:sql/module/ExamDropout.xml</value>
             </list>
         </property>
     </bean>

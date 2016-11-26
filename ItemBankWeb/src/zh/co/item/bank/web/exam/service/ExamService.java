@@ -185,8 +185,8 @@ public class ExamService {
      * @param map[exam, examType]
      * @return
      */
-    public List<ExamModel> getTestQuestions(TbQuestionClassifyBean classifyBean) {
-        return examDao.getTestQuestions(classifyBean);
+    public List<ExamModel> getStructure(TbQuestionClassifyBean classifyBean) {
+        return examDao.getStructure(classifyBean);
     }
 
     /**
@@ -201,10 +201,10 @@ public class ExamService {
 
     /**
      * 删除本次做题记录
-     * @param source
+     * @param map
      */
-    public void deleteExamCollectionBySource(String source) {
-        examDao.deleteExamCollectionBySource(source);
+    public void deleteExamCollectionBySource(Map<String, Object> map) {
+        examDao.deleteExamCollectionBySource(map);
     }
 
 }

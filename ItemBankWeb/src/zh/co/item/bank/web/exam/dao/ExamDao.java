@@ -92,8 +92,8 @@ public class ExamDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ExamModel> getTestQuestions(TbQuestionClassifyBean classifyBean) {
-        return getIbatisTemplate().selectList("Question.getTestQuestions", classifyBean);
+    public List<ExamModel> getStructure(TbQuestionClassifyBean classifyBean) {
+        return getIbatisTemplate().selectList("Question.getStructure", classifyBean);
     }
 
     /**
@@ -108,11 +108,11 @@ public class ExamDao extends BaseDao {
 
     /**
      * 删除本次做题记录
-     * @param source
+     * @param map
      * @return
      */
-    public void deleteExamCollectionBySource(String source) {
-        getIbatisTemplate().delete("ExamCollection.deleteBySource", source);
+    public void deleteExamCollectionBySource(Map<String, Object> map) {
+        getIbatisTemplate().delete("ExamCollection.deleteBySource", map);
     }
 
 }

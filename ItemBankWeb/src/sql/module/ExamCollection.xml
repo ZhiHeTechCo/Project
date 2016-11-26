@@ -44,9 +44,9 @@
 		order by id
 	</select>
 
-	<delete id="deleteBySource" parameterType="java.lang.String">
+	<delete id="deleteBySource" parameterType="java.util.Map">
 		delete from tb_exam_collection
-		where source = #{source,jdbcType=INTEGER}
+		where source = #{source,jdbcType=INTEGER} and create_time > #{startTime}
 	</delete>
 
 	<insert id="insertExamCollection" parameterType="zh.co.item.bank.model.entity.ExamModel">

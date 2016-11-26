@@ -2,6 +2,7 @@ package zh.co.item.bank.web.exam.controller;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,15 +25,17 @@ import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
+import zh.co.item.bank.db.entity.TbExamDropoutBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
+import zh.co.item.bank.web.exam.service.ExamDropoutService;
 import zh.co.item.bank.web.exam.service.ExamService;
 
 /**
- * 试题类型选择画面
+ * 考试画面
  * 
  * @author gaoya
  *
@@ -52,6 +55,9 @@ public class ExamBean extends BaseController {
     @Inject
     private ExamCollectionService examCollectionService;
 
+    @Inject
+    private ExamDropoutService examDropoutService;
+
     /** 试题 */
     private List<ExamModel> questions;
 
@@ -69,13 +75,19 @@ public class ExamBean extends BaseController {
 
     private String status;
 
-    /** 用户信息 */
+    /** --共通变量-- */
+    // 用户信息
     private UserModel userInfo;
 
+    /** --考试模式用变量-- */
     // 试题结构
-    List<ExamModel> examStructure = null;
+    CopyOnWriteArrayList<ExamModel> safeList = new CopyOnWriteArrayList<ExamModel>();
 
+    // 考卷年
     String year = null;
+
+    // 开始做题时间
+    Date startTime = null;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
@@ -192,34 +204,46 @@ public class ExamBean extends BaseController {
      */
     public String examSearch() {
         try {
+            // 初始化变量
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
             if (!"ing".equals(status)) {
                 status = "";
             }
+            if (startTime == null) {
+                startTime = new Date();
+            }
             userInfo = WebUtils.getLoginUserInfo();
-
-            // 获得试题结构(一次考试之获取一次)
-            examStructure = examStructure == null ? examService.getTestQuestions(classifyBean) : examStructure;
+            // 检索用Map
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            for (ExamModel model : examStructure) {
+
+            // 检测是否有中途退出的试题存在
+            if (year == null) {
+                year = examDropoutService.getYear(getExamDropoutBean());
+            }
+            // 获得试题结构(一次考试只获取一次)
+            if (safeList.size() == 0) {
+                List<ExamModel> examStructure = examService.getStructure(classifyBean);
+                safeList.addAll(examStructure);
+            }
+            for (ExamModel model : safeList) {
                 map.put("structureId", model.getStructureId());
                 // map.put("year", "%2000%");//TODO
 
+                // TODO 添加年限选择后废弃
                 if (year == null) {
                     // 获取试题
-                    questions = examService.getTestQuestion(map);
-                    // TODO 添加年限选择后废弃
-                    year = questions.get(0).getYear();
-                    map.put("year", year);
-                    // TODO 添加年限选择后废弃
-                } else {
+                    List<ExamModel> temps = examService.getTestQuestion(map);
+                    year = temps.get(0).getYear();
                     map.put("year", year);
                 }
+                // TODO 添加年限选择后废弃
+                map.put("year", year);
                 questions = examService.getTestQuestion(map);
 
+                // 当前大题已做完
                 if (questions == null || questions.size() == 0) {
                     continue;
                 }
@@ -234,11 +258,15 @@ public class ExamBean extends BaseController {
                 // 画面序号 折行
                 prepareData(subject);
                 title = model.getTitle();
+                safeList.remove(model);
 
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
                 status = "end";
+                // 删除中途退出表 TODO
+                examDropoutService.deleteExamDropout(getExamDropoutBean());
+                doclear();
                 // 考试完成，显示成绩
                 ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
                 return examResultBean.examReport();
@@ -346,6 +374,7 @@ public class ExamBean extends BaseController {
             examResultBean.setQuestions(questions);
             examResultBean.setClassifyBean(classifyBean);
             examResultBean.setTitle(title);
+            doclear();
             return examResultBean.init();
         } catch (Exception e) {
             processForException(logger, e);
@@ -373,7 +402,6 @@ public class ExamBean extends BaseController {
             // 考试进行中
             status = "ing";
             doSubmit();
-            // 登录考试记录表
 
             // 继续下一道题
             return examSearch();
@@ -393,9 +421,14 @@ public class ExamBean extends BaseController {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                 .getRequest();
         String source = request.getParameter("source");
-        examService.deleteExamCollectionBySource(source);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("source", source);
+        map.put("startTime", startTime);
+        examService.deleteExamCollectionBySource(map);
+        saveDropoutInfo();
+        doclear();
         // 跳转至试题选择
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean)SpringAppContextManager.getBean("examClassifyBean");
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
         return examClassifyBean.init();
     }
 
@@ -407,9 +440,43 @@ public class ExamBean extends BaseController {
     public String doSaveAndExist() {
         status = "exist";
         doSubmit();
+        saveDropoutInfo();
+        doclear();
         // 跳转至成绩一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
         return examResultBean.examReport();
+    }
+
+    /**
+     * 数据清除
+     */
+    private void doclear() {
+        year = null;
+        safeList.clear();
+        startTime = null;
+        questions.clear();
+    }
+
+    /**
+     * 中途退出信息保存（添加year选择后废弃）TODO
+     */
+    private void saveDropoutInfo() {
+        examDropoutService.insertExamDropout(getExamDropoutBean());
+    }
+
+    /**
+     * ExamDropOutBean
+     * 
+     * @return
+     */
+    private TbExamDropoutBean getExamDropoutBean() {
+        TbExamDropoutBean bean = new TbExamDropoutBean();
+        bean.setUserId(userInfo.getId());
+        bean.setYear(year);
+        bean.setExam(classifyBean.getExam());
+        bean.setJlptLevel(classifyBean.getJlptLevel());
+        bean.setJtestLevel(classifyBean.getJtestLevel());
+        return bean;
     }
 
     private boolean checkuser() {
