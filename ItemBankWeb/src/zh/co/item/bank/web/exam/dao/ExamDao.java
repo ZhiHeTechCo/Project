@@ -58,7 +58,7 @@ public class ExamDao extends BaseDao {
      * @return
      */
     public ExamModel selectQuestionByQuestionId(Integer questionId) {
-        return (ExamModel) getIbatisTemplate().selectOne("Question.selectQuestionByQuestionId", questionId);
+        return (ExamModel) getIbatisTemplate().selectOne("Question.selectReportDetailByQuestionId", questionId);
     }
 
     /**

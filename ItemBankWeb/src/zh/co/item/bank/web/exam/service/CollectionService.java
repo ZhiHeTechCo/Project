@@ -1,5 +1,7 @@
 package zh.co.item.bank.web.exam.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import zh.co.item.bank.db.entity.TbCollectionBean;
@@ -17,12 +19,16 @@ public class CollectionService {
         return collection;
     }
 
-    public void insertCollection(TbCollectionBean collection) {
-        collectionDao.insertCollection(collection);
-    }
-
     public void updateCollection(TbCollectionBean collection) {
         collectionDao.updateCollection(collection);
+    }
+
+    /**
+     * 批量登录做题记录
+     * @param insertList
+     */
+    public void insertCollections(List<TbCollectionBean> insertList) {
+        collectionDao.insertCollections(insertList);
     }
 
 }

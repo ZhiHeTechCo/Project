@@ -1,5 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
+import java.util.List;
+
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbCollectionBean;
@@ -17,13 +19,14 @@ public class CollectionDao extends BaseDao {
         return (TbCollectionBean) getIbatisTemplate().selectOne("Collection.selectCollectionForOne", examModel);
     }
 
+    
     /**
-     * 登录做题记录
+     * 批量登录做题记录
      * 
-     * @param collection
+     * @param collections
      */
-    public void insertCollection(TbCollectionBean collection) {
-        getIbatisTemplate().insert("Collection.insertCollection", collection);
+    public void insertCollections(List<TbCollectionBean> collections) {
+        getIbatisTemplate().insert("Collection.insertCollections", collections);
     }
 
     /**

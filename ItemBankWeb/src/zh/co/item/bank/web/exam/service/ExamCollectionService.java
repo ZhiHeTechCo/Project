@@ -10,17 +10,9 @@ import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 
 @Named
 public class ExamCollectionService {
+
     @Inject
     private ExamCollectionDao examCollectionDao;
-
-    /**
-     * 登录考试记录表
-     * 
-     * @param examModel
-     */
-    public void insertExamCollection(ExamModel examModel) {
-        examCollectionDao.insertExamCollection(examModel);
-    }
 
     /**
      * 获取试题的考试种别
@@ -45,5 +37,14 @@ public class ExamCollectionService {
      */
     public ExamReportModel getPercentage(ExamReportModel model) {
         return examCollectionDao.getPercentage(model);
+    }
+
+    /**
+     * 批量登录考试记录表
+     * 
+     * @param examCollections
+     */
+    public void insertExamCollection(List<ExamModel> examCollections) {
+        examCollectionDao.insertExamCollections(examCollections);
     }
 }

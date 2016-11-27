@@ -59,7 +59,14 @@
 		<if test="year !=null">
 		and year = #{year} 
 		</if>
-		order by year desc, no
+		order by 
+		<if test="exam =='1'">
+		year desc,
+		</if>
+		<if test="exam =='2'">
+		year+0 desc,
+		</if>
+		 no
 	</select>
 <!-- 2009年以前的试题，使用旧结构 -->
     <select id="getTestQuestionsOld" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
@@ -226,10 +233,11 @@
 		where id = #{id}
 	</select>
 
-	<select id="selectQuestionByQuestionId" parameterType="Integer"
+	<select id="selectReportDetailByQuestionId" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select * from vb_question_detail
+		select a.my_answer, b.* from tb_exam_collection a ,vb_question_detail b
 		where
+		a.question_id=b.`no` and
 		delete_flag = '0' and
 		no =#{questionId}
 	</select>

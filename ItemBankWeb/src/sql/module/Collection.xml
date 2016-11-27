@@ -112,107 +112,125 @@
 			<if test="createTime != null">
 				update_time,
 			</if>
-		</trim>
+	   </trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=SMALLINT},
+			<if test="time.id != null">
+				#{id,jdbcType=INTEGER},
 			</if>
-			<if test="questionId != null">
-				#{questionId,jdbcType=SMALLINT},
+			<if test="item.questionId != null">
+				#{questionId,jdbcType=INTEGER},
 			</if>
-			<if test="count != null">
+			<if test="item.count != null">
 				#{count,jdbcType=SMALLINT},
 			</if>
-			<if test="result1 != null">
+			<if test="item.result1 != null">
 				#{result1,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result2 != null">
+			<if test="item.result2 != null">
 				#{result2,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result3 != null">
+			<if test="item.result3 != null">
 				#{result3,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result4 != null">
+			<if test="item.result4 != null">
 				#{result4,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result5 != null">
+			<if test="item.result5 != null">
 				#{result5,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result6 != null">
+			<if test="item.result6 != null">
 				#{result6,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result7 != null">
+			<if test="item.result7 != null">
 				#{result7,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result8 != null">
+			<if test="item.result8 != null">
 				#{result8,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result9 != null">
+			<if test="item.result9 != null">
 				#{result9,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result10 != null">
+			<if test="item.result10 != null">
 				#{result10,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result11 != null">
+			<if test="item.result11 != null">
 				#{result11,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result12 != null">
+			<if test="item.result12 != null">
 				#{result12,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result13 != null">
+			<if test="item.result13 != null">
 				#{result13,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result14 != null">
+			<if test="item.result14 != null">
 				#{result14,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result15 != null">
+			<if test="item.result15 != null">
 				#{result15,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result16 != null">
+			<if test="item.result16 != null">
 				#{result16,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result17 != null">
+			<if test="item.result17 != null">
 				#{result17,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result18 != null">
+			<if test="item.result18 != null">
 				#{result18,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result19 != null">
+			<if test="item.result19 != null">
 				#{result19,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="result20 != null">
+			<if test="item.result20 != null">
 				#{result20,jdbcType=CHAR},
 				CURDATE(),
 			</if>
-			<if test="finish != null">
+			<if test="item.finish != null">
 				#{finish,jdbcType=CHAR},
 			</if>
-			<if test="createTime != null">
+			<if test="item.createTime != null">
 				#{createTime,jdbcType=DATE},
 			</if>
-			<if test="updateTime != null">
+			<if test="item.updateTime != null">
 				#{updateTime,jdbcType=DATE},
 			</if>
 		</trim>
+	</insert>
+
+<!-- 批量插入做题记录 -->
+	<insert id="insertCollections" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		insert into tb_collection (
+		        id,
+				question_id,
+				count,
+				result1,
+				time1)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+					(#{item.id,jdbcType=INTEGER},
+					#{item.questionId,jdbcType=INTEGER},
+					#{item.count,jdbcType=SMALLINT},
+					#{item.result1,jdbcType=CHAR},
+					CURDATE())
+		</foreach>
 	</insert>
 
 	<update id="updateCollection" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">

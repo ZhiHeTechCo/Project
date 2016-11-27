@@ -115,7 +115,7 @@
 										<c:if test="#{examResultBean.question.myAnswer eq '4'}">
 											<td colspan="4">D</td>
 										</c:if>
-										<c:if test="#{examResultBean.question.myAnswer eq null}">
+										<c:if test="#{examResultBean.question.myAnswer eq null || examResultBean.question.myAnswer eq ''}">
 											<td colspan="4">未选择</td>
 										</c:if>
 									</tr>

@@ -99,4 +99,25 @@
 		</trim>
 	</insert>
 
+	<insert id="insertExamCollections" parameterType="zh.co.item.bank.model.entity.ExamModel">
+		insert into tb_exam_collection (
+				user_id,
+				question_id,
+				answer,
+				my_answer,
+				source,
+				structure_id,
+				exam_type)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+               (#{item.userId,jdbcType=INTEGER},
+                #{item.no,jdbcType=INTEGER},
+                #{item.answer,jdbcType=SMALLINT},
+                #{item.myAnswer,jdbcType=CHAR},
+                #{item.source,jdbcType=CHAR},
+                #{item.structureId,jdbcType=INTEGER},
+                #{item.examType,jdbcType=CHAR})
+        </foreach>
+	</insert>
+
 </mapper>

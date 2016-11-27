@@ -218,6 +218,8 @@ public class ExamBean extends BaseController {
             // 检索用Map
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
+            // J.TEST，JLPT区分，order By控制
+            map.put("exam", classifyBean.getExam());
 
             // 检测是否有中途退出的试题存在
             if (year == null) {
@@ -330,6 +332,9 @@ public class ExamBean extends BaseController {
             if (!checkuser()) {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
+            // 批量登录数据用
+            List<TbCollectionBean> collections = new ArrayList<TbCollectionBean>();
+            List<ExamModel> examCollections = new ArrayList<ExamModel>();
             for (int i = 0; i < questions.size(); i++) {
 
                 ExamModel examModel = (ExamModel) questions.get(i);
@@ -354,14 +359,22 @@ public class ExamBean extends BaseController {
                 }
                 // 错题表登录·更新
                 if (count == 1) {
-                    collectionService.insertCollection(collection);
+                    collections.add(collection);
                 } else {
                     collectionService.updateCollection(collection);
                 }
                 // 考试记录表登录
                 if ("ing".equals(status) || "exist".equals(status)) {
-                    examCollectionService.insertExamCollection(examModel);
+                    examCollections.add(examModel);
                 }
+            }
+            // 批量登录做题记录表
+            if (collections.size() != 0) {
+                collectionService.insertCollections(collections);
+            }
+            // 批量登录考试做题记录表
+            if (examCollections.size() != 0) {
+                examCollectionService.insertExamCollection(examCollections);
             }
 
             if ("ing".equals(status) || "exist".equals(status)) {

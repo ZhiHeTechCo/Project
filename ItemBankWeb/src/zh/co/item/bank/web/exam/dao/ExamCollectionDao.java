@@ -11,12 +11,12 @@ import zh.co.item.bank.model.entity.ExamReportModel;
 public class ExamCollectionDao extends BaseDao {
 
     /**
-     * 登录考试记录表
+     * 批量登录考试记录表
      * 
-     * @param examModel
+     * @param examCollections
      */
-    public void insertExamCollection(ExamModel examModel) {
-        getIbatisTemplate().insert("ExamCollection.insertExamCollection", examModel);
+    public void insertExamCollections(List<ExamModel> examCollections) {
+        getIbatisTemplate().insert("ExamCollection.insertExamCollections", examCollections);
     }
 
     /**
@@ -51,4 +51,5 @@ public class ExamCollectionDao extends BaseDao {
     public ExamReportModel getPercentage(ExamReportModel model) {
         return (ExamReportModel) getIbatisTemplate().selectOne("ExamCollection.getPercentage", model);
     }
+
 }
