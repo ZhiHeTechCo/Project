@@ -49,13 +49,19 @@
 								</tr>
 								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 									<tr>
-										<td><h4>选项：</h4></td>
+										<td rowspan="4"><h4>选项：</h4></td>
 										<td>A：<h:outputText value="#{examResultBean.question.a}" />
 										</td>
+									</tr>
+									<tr>
 										<td>B：<h:outputText value="#{examResultBean.question.b}" />
 										</td>
+									</tr>
+									<tr>
 										<td>C：<h:outputText value="#{examResultBean.question.c}" />
 										</td>
+									</tr>
+									<tr>
 										<td>D：<h:outputText value="#{examResultBean.question.d}" />
 										</td>
 									</tr>

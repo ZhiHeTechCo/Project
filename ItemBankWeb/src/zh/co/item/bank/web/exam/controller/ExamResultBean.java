@@ -119,6 +119,9 @@ public class ExamResultBean extends BaseController {
             pushPathHistory("examResultBean");
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
+            if (StringUtils.isEmpty(subject)) {
+                subject = "";
+            }
             questionId = Integer.valueOf(request.getParameter("questionId"));
             examFlag = request.getParameter("examFlag");
             if (questionId == null) {

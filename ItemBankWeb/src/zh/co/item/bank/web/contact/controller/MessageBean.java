@@ -17,7 +17,7 @@ import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.contact.service.MessageService;
 
 /**
- * [留言板]画面
+ * [联系我们]画面
  * 
  * @author gyang
  *
