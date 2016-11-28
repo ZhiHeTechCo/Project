@@ -44,8 +44,8 @@
       <to-view-id>/xhtml/user/changePassword.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
-      <from-outcome>ITBK_USER_005</from-outcome>
-      <to-view-id>/xhtml/user/mistakeCollection.xhtml</to-view-id>
+      <from-outcome>ITBK_USER_007</from-outcome>
+      <to-view-id>/xhtml/user/fileSearch.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
       <from-outcome>ITBK_USER_006</from-outcome>

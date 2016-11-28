@@ -61,6 +61,7 @@ public abstract class BaseController {
     static {
     	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_EXAM_001, "examClassifyBean");
     	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_COM_003, "messageBean");
+    	pageAndControllerMap.put(SystemConstants.PAGE_ITBK_USER_003, "userInfoBean");
     }
     
     /**

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core" 
+  xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../../xhtml/common/template_upload.xhtml"
+  xmlns:component="http://java.sun.com/jsf/composite/component">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <script type="text/javascript">
+      function clickDownloadFile(obj){
+          document.getElementById('ngossfw_error_display').innerHTML = '';
+          cancelToken(obj, 1);
+      }
+      
+      function updateCallBack(data) {
+          
+          var ajaxStatus = data.status;
+          switch (ajaxStatus) {
+          case "begin":
+              break;
+          case "complete":
+              resetButtonDisabled();
+              break;
+          case "success":
+              break;
+          }
+          
+      }
+    </script>
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+        <div class="typrography">
+          <h2 style="text-align: center;">试题审核</h2>
+          <div class="container">
+            <div class="bs-docs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h:form id="flform" enctype="multipart/form-data;charset=UTF-8">
+              
+              <table class="table table-striped;">
+                <tr>
+                  <td><h4>审核状态:</h4></td>
+                  <td><h:selectOneMenu value="#{fileSearchBean.fileBean.reviewFlag}">
+                      <f:selectItem itemValue="" itemLabel="" />
+                      <f:selectItems value="#{fileSearchBean.reviewFlagList}" var="entry" itemValue="#{entry.key}"
+                        itemLabel="#{entry.value}" />
+                      </h:selectOneMenu>
+                  </td>
+                </tr>         
+              </table>
+              <div style="text-align: center; float: left;">
+                <h:panelGroup id="search_result_paginator" layout="block">
+                  <component:paginator form="wfform" paginator="#{fileSearchBean.paginator}" />
+                </h:panelGroup>
+                <span class="tcdPageCode"></span>
+              </div>
+              <div style="clear: both"></div>
+              <div>
+                <h:dataTable id="books" headerClass="dataTableHeaderCenter" rowClasses="list-row" border="1"
+                  width="100%" value="#{fileSearchBean.paginator.model}"  var="content">
+                  <h:column>
+                    <f:facet name="header">
+                      <h:outputText value="文件名" />
+                    </f:facet>
+                    <h:commandLink value="#{content.fileName}" action="#{fileSearchBean.doDownLoad(content.fileName)}" onclick="return buttonDisable();" />
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">
+                      <h:outputText value="审核状态" />
+                    </f:facet>
+                    <h:selectOneMenu value="#{content.reviewFlag}">
+                      <f:selectItem itemValue="" itemLabel="" />
+                      <f:selectItems value="#{fileSearchBean.reviewFlagList}" var="entry" itemValue="#{entry.key}"
+                        itemLabel="#{entry.value}" />
+                    </h:selectOneMenu>
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">
+                      <h:outputText value="备注" />
+                    </f:facet>
+                    <h:inputText value="#{content.comment}"  maxlenth="80"/>
+                  </h:column>
+                  <h:column>
+                    <f:facet name="header">
+                      <h:outputText value="" />
+                    </f:facet>
+                    <div class="form-submit1">
+                      <h:commandButton id="doDelete1" value="更新" 
+                        action="#{fileSearchBean.doReview(content)}" onclick="return cancelToken(this)">
+                        <f:ajax execute="@form" render=":ngossfw_error_display" onevent="updateCallBack" />
+                      </h:commandButton>
+                    </div>
+
+                  </h:column>
+                </h:dataTable>
+              </div>
+              </h:form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

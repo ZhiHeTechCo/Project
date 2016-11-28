@@ -34,6 +34,12 @@ public class SystemConstants {
     /**文件 review flag 2:审核未通过*/
     public static final String REVIEW_FLAG_2 = "2";
     
+    /**Flag 0:YES*/
+    public static final String FLAG_YES = "0";
+    
+    /**Flag 1:NO*/
+    public static final String FLAG_NO = "1";
+    
 
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/
@@ -67,7 +73,7 @@ public class SystemConstants {
     /**修改密码画面*/
     public static final String PAGE_ITBK_USER_004 = "ITBK_USER_004";
     /**设置密码画面wechat*/
-    public static final String PAGE_ITBK_USER_005 = "ITBK_USER_005";
+/*    public static final String PAGE_ITBK_USER_005 = "ITBK_USER_005";*/
     /**文件上传画面*/
     public static final String PAGE_ITBK_USER_006 = "ITBK_USER_006";
     /**文件检索画面*/

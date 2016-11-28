@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.util.StringUtils;
+
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
@@ -180,7 +182,6 @@ public class UserService {
     		user = userDao.getUserInfo(userInfo);
     	} else {
     		//不存在的场合，注册，自动登录
-    		userInfo.setPassword("123456");
     		int count = userDao.insertUserInfo(userInfo);
     		if(count > 0) {
 	    		logger.log(MessageId.ITBK_I_0001, new Object[] {userInfo.getName()});
@@ -246,6 +247,23 @@ public class UserService {
      */
     public TbFileInfoBean getFileInfoById(TbFileInfoBean bean) throws Exception {
     	return userDao.getFileInfoById(bean);
+    }
+    
+    /**
+     * 判断用户是否设置密码
+     * 
+     * @param userInfo 用户信息
+     * @return true:密码已设置 false:密码未设置
+     * @throws Exception
+     */
+    public boolean isPasswordExist(Integer userId) throws Exception {
+    	UserModel user = new UserModel();
+    	user = userDao.selectUserById(userId);
+    	if(StringUtils.isEmpty(user.getPassword())) {
+    		return false;
+    	} else {
+    		return true;
+    	}
     }
  
 }

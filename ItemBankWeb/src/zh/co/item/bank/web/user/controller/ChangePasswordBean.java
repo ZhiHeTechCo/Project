@@ -4,12 +4,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StringUtils;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.web.user.service.UserService;
 
@@ -36,6 +38,10 @@ public class ChangePasswordBean extends BaseController {
     /**新密码*/
     private String newPassword;
 
+    /**是否设置密码flag*/
+    private String setFlag;
+    
+    private Object fromPageId;
     
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_004;
@@ -46,8 +52,14 @@ public class ChangePasswordBean extends BaseController {
      * @return
      */
     public String init() {
+    	fromPageId = WebUtils.getSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
+    	
     	pushPathHistory("changePasswordBean");
-
+    	if(StringUtils.isEmpty(WebUtils.getLoginUserInfo().getPassword())) {
+    		this.setFlag = SystemConstants.FLAG_NO;
+    	} else {
+    		this.setFlag = SystemConstants.FLAG_YES;
+    	}
         return SystemConstants.PAGE_ITBK_USER_004;
     }
     
@@ -65,6 +77,29 @@ public class ChangePasswordBean extends BaseController {
 
         return SystemConstants.PAGE_ITBK_USER_004;
     }
+    
+    /**
+     * 返回
+     * @return
+     */
+    public String goBack() {
+        try {
+        	if(fromPageId != null) {
+        		String pageId = (String)fromPageId;
+        		String controllerName = pageAndControllerMap.get(pageId);
+        		if(!StringUtils.isEmpty(controllerName)) {
+        			BaseController pageController = (BaseController) SpringAppContextManager.getBean(controllerName);
+                    return pageController.init();
+        		} else {
+        			return SystemConstants.PAGE_ITBK_COM_001;
+        		}
+        	}
+        } catch (Exception e) {
+        	processForException(logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_COM_001;
+    }
+
 
 	public String getOldPassword() {
 		return oldPassword;
@@ -81,5 +116,14 @@ public class ChangePasswordBean extends BaseController {
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
+
+	public String getSetFlag() {
+		return setFlag;
+	}
+
+	public void setSetFlag(String setFlag) {
+		this.setFlag = setFlag;
+	}
+	
 
 }

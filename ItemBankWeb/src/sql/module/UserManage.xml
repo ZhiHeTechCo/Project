@@ -11,13 +11,17 @@
       tu_user 
     where
       (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
-    <if test = "password != null and password != ''" > 
+      <choose>
+      <when  test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
       ) = #{password, jdbcType=CHAR }
-
-    </if>
+     </when >
+     <otherwise>
+      and wechat = '1'
+     </otherwise>
+     </choose>
   </select>
   
   <select id="getUserInfo" resultType="zh.co.item.bank.model.entity.UserModel" parameterType="zh.co.item.bank.db.entity.TuUserBean">
@@ -33,7 +37,6 @@
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
       ) = #{password, jdbcType=CHAR }
-      and wechat = '0'
      </when >
      <otherwise>
       and wechat = '1'
