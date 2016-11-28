@@ -46,5 +46,20 @@
         vu_user_model
         where id = #{id}
     </select>
+    
+    <select id="getFileInfoList" parameterType="zh.co.item.bank.db.entity.TbFileInfoBean" resultType="zh.co.item.bank.db.entity.TbFileInfoBean">
+        select * from
+        tb_file_info
+        where fileType = '0'
+          <if test="userId != null" >
+           and user_id =  #{userId,jdbcType=INTEGER}
+          </if>
+          <if test="fileName != null" >
+            and file_name = #{fileName,jdbcType=VARCHAR}
+          </if>
+          <if test="reviewFlag != null" >
+            and review_flag = #{reviewFlag,jdbcType=CHAR}
+          </if>
+    </select>
 
 </mapper>

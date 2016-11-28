@@ -25,6 +25,15 @@ public class SystemConstants {
     /**USER_AGENT Flag mobile*/
     public static final String AGENT_FLAG = "1";
     
+    /**文件 review flag 0:未审核*/
+    public static final String REVIEW_FLAG_0 = "0";
+    
+    /**文件 review flag 1:审核通过*/
+    public static final String REVIEW_FLAG_1 = "1";
+    
+    /**文件 review flag 2:审核未通过*/
+    public static final String REVIEW_FLAG_2 = "2";
+    
 
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/
@@ -61,6 +70,8 @@ public class SystemConstants {
     public static final String PAGE_ITBK_USER_005 = "ITBK_USER_005";
     /**文件上传画面*/
     public static final String PAGE_ITBK_USER_006 = "ITBK_USER_006";
+    /**文件检索画面*/
+    public static final String PAGE_ITBK_USER_007 = "ITBK_USER_007";
 
 	/** 选择题型 */
 	public static final String PAGE_ITBK_EXAM_001 = "ITBK_EXAM_001";

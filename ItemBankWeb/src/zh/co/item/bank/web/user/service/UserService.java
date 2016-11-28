@@ -12,6 +12,7 @@ import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
@@ -190,6 +191,61 @@ public class UserService {
     	}
     	
     	return user;
+    }
+    
+    /**
+     * 更新用户上传试题
+     * 
+     * @param bean 文件信息
+     * @return
+     * @throws Exception
+     */
+    public int updateFileInfo(TbFileInfoBean bean) throws Exception {
+    	int count = 0;
+    	//更新时间
+    	bean.setUpdateTime(new Date());
+    	count = userDao.updateFileInfo(bean);
+    	return count;
+    }
+    
+    /**
+     * 插入用户上传试题
+     * 
+     * @param bean 文件信息
+     * @return
+     * @throws Exception
+     */
+    public int insertFileInfo(TbFileInfoBean bean) throws Exception {
+    	int count = 0;
+    	Date now = new Date();
+    	//创建时间
+    	bean.setCreateTime(now);
+    	//更新时间
+    	bean.setUpdateTime(now);
+    	count = userDao.insertFileInfo(bean);
+    	return count;
+    }
+    
+    /**
+     * 用户上传试题信息
+     * 
+     * @param bean 文件信息
+     * @return List<TbFileInfoBean>
+     * @throws Exception
+     */
+    public List<TbFileInfoBean> getFileInfoList(TbFileInfoBean bean) throws Exception {
+    	return userDao.getFileInfoList(bean);
+    }
+    
+    /**
+     * 用户上传试题信息
+     * 
+     * @param bean 文件信息
+     * @return TbFileInfoBean
+     * @throws Exception
+     */
+    public TbFileInfoBean getFileInfoById(TbFileInfoBean bean) throws Exception {
+    	return userDao.getFileInfoById(bean);
     }
  
 }

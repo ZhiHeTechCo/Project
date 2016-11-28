@@ -27,6 +27,9 @@ public class CmnContants {
 
     /** 题型 */
     public static final String MODELID_BQD0004 = "BQD0004";
+    
+    /** 文件审批状态 */
+    public static final String MODELID_BQD0005 = "BQD0005";
 
     /** 角色 */
     public static final String MODELID_SU0001 = "SU0001";

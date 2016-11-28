@@ -8,6 +8,9 @@ public class MessageId {
     public static final String COMMON_I_0001 = "COMMON_I_0001";
     /** 文件上传成功! */
     public static final String COMMON_I_0002 = "COMMON_I_0002";
+    
+    /** {0}处理执行成功! */
+    public static final String COMMON_I_0003 = "COMMON_I_0003";
 
     // ------------------------Qestion------------------------
     /** 备用 */
@@ -47,6 +50,9 @@ public class MessageId {
     
     /** 文件已经被删除！ */
     public static final String COMMON_E_0010 = "COMMON_E_0010";
+    
+    /** {0}处理执行失败! */
+    public static final String COMMON_E_0011 = "COMMON_E_0011";
 
     // ------------------------业务 Message------------------------
 

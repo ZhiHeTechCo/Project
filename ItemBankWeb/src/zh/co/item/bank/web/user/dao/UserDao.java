@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.user.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
@@ -8,6 +9,7 @@ import javax.inject.Named;
 import org.springframework.util.StringUtils;
 
 import zh.co.common.dao.BaseDao;
+import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 
@@ -75,6 +77,42 @@ public class UserDao extends BaseDao {
      */
     public int updateUserInfo(TuUserBean userInfo) {
         return getIbatisTemplate().update("TuUser.updateByPrimaryKeySelective", userInfo);
+    }
+    
+    /**
+     * 更新用户上传试题
+     * @param userInfo
+     * @return
+     */
+    public int updateFileInfo(TbFileInfoBean bean) {
+        return getIbatisTemplate().update("TbFileInfo.updateByPrimaryKeySelective", bean);
+    }
+    
+    /**
+     * 插入用户上传试题
+     * @param userInfo
+     * @return
+     */
+    public int insertFileInfo(TbFileInfoBean bean) {
+        return getIbatisTemplate().insert("TbFileInfo.insertSelective", bean);
+    }
+    
+    /**
+     * 查询用户上传试题
+     * @param userInfo
+     * @return
+     */
+    public List<TbFileInfoBean> getFileInfoList(TbFileInfoBean bean) {
+        return (List<TbFileInfoBean>)getIbatisTemplate().selectList("UserManage.getFileInfoList", bean);
+    }
+    
+    /**
+     * 查询用户上传试题
+     * @param userInfo
+     * @return
+     */
+    public TbFileInfoBean getFileInfoById(TbFileInfoBean bean) {
+        return (TbFileInfoBean)getIbatisTemplate().selectOne("TbFileInfo.selectByPrimaryKey", bean);
     }
 
 }

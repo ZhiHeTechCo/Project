@@ -1,9 +1,10 @@
 package zh.co.item.bank.web.file.controller;
 
 import java.io.File;
+import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -17,8 +18,9 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.common.utils.FileUtils;
 import zh.co.common.utils.MessageUtils;
-import zh.co.item.bank.model.entity.PaginatorLogger;
-import zh.co.item.bank.model.entity.RepeatPaginator;
+import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.TbFileInfoBean;
+import zh.co.item.bank.web.user.service.UserService;
 
 /**
  * <p>[概要] 文件管理Bean.</p>
@@ -34,15 +36,12 @@ public class FileManageBean extends BaseController {
 
 	private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
     
-    
+	@Inject
+    private UserService userService;
+	
     private UploadedFile uploadFile;
     
     private String fileName;
-    
-    private RepeatPaginator paginator; 
-
-    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_006, "向前翻页","向后翻页", "指定页"); 
-
 
 	public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_006;
@@ -57,26 +56,6 @@ public class FileManageBean extends BaseController {
 
         return SystemConstants.PAGE_ITBK_USER_006;
     }
-
-	/**
-	 * 检索
-	 * @return
-	 */
-	public String doSearch() {
-		//检索
-        try {
-
-/*            CampaignMangInfoList = null;
-            paginator = null;
-        	CampaignMangInfoList = campaignCatalogueService.getCampaignMangList(campaignMangInfo);
-    		campaignMangInfo.setIsInit(1);
-    		paginator = new RepeatPaginator(CampaignMangInfoList, paginatorLogger);*/
-        } catch (Throwable e) {
-            processForException(logger, e);
-        }
-
-        return SystemConstants.PAGE_ITBK_USER_006;
-	}
     
     /**
      * 文件上传
@@ -89,12 +68,27 @@ public class FileManageBean extends BaseController {
           
             uploadFile = event.getFile();
             fileName = FileUtils.getCurrentFileName(uploadFile.getFileName());
-            
-            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH);
+            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
+            		+ SystemConstants.LINE_SEPARATOR + WebUtils.getLoginUserId();
             
             //文件上传
             FileUtils.uploadFile(uploadFile.getInputstream(), filePath, fileName);
 
+            //文件检查，是否存在
+            TbFileInfoBean bean = new TbFileInfoBean();
+            bean.setUserId(Integer.valueOf(WebUtils.getLoginUserId()));
+            bean.setFileName(fileName);
+            List<TbFileInfoBean> list = userService.getFileInfoList(bean);
+            //未审核
+        	bean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
+        	//备考清除
+        	bean.setComment("");
+            if(list != null && list.size() > 0) {
+            	bean.setId(list.get(0).getId());
+            	userService.updateFileInfo(bean);
+            } else {
+            	userService.insertFileInfo(bean);
+            }
             setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
             
         } catch (Throwable e) {
@@ -146,14 +140,5 @@ public class FileManageBean extends BaseController {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
-	public RepeatPaginator getPaginator() {
-		return paginator;
-	}
-
-	public void setPaginator(RepeatPaginator paginator) {
-		this.paginator = paginator;
-	}
-
 
 }
