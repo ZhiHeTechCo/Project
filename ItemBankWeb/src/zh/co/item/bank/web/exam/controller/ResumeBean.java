@@ -192,6 +192,7 @@ public class ResumeBean extends BaseController {
 
             ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
             examResultBean.setQuestions(questions);
+            examResultBean.setSubject(subject);
             examResultBean.setResume(true);
             return examResultBean.init();
 

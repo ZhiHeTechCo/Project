@@ -130,7 +130,13 @@ public class ExamResultBean extends BaseController {
                 // 留在当前画面
                 return SystemConstants.PAGE_ITBK_EXAM_003;
             }
-            question = examService.selectQuestionById(questionId);
+            if (StringUtils.isEmpty(examFlag)) {
+                // 做题模式
+                question = examService.selectQuestionById(questionId);
+            } else {
+                // 考试模式
+                question = examService.selectReportDetailByQuestionId(questionId);
+            }
 
         } catch (Exception e) {
             processForException(this.logger, e);
