@@ -56,7 +56,7 @@ public class OAuthServlet extends HttpServlet {
         if (!"authdeny".equals(code)) {
         	if(StringUtils.isEmpty(WebUtils.getLoginUserId())) {
 	            // 获取网页授权access_token
-	            WeixinOauth2Token weixinOauth2Token = WebUtils.getOauth2AccessToken("wx83bc8453af909375", "d55015caf4f35e3433c8256371a468a8", code);
+	            WeixinOauth2Token weixinOauth2Token = WebUtils.getOauth2AccessToken("wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525", code);
 	            if(weixinOauth2Token != null) {
 		            // 网页授权接口访问凭证
 		            String accessToken = weixinOauth2Token.getAccessToken();
