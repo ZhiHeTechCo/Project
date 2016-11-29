@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
@@ -69,6 +70,13 @@ public class ChangePasswordBean extends BaseController {
      */
     public String changePassword() {
         try {
+        	if(StringUtils.isEmpty(newPassword)) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
+        	}
+        	if(newPassword.length() < 6 ||(!newPassword.matches("[A-Za-z0-9_]+"))) {
+        		
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"6位以上字母、数字或下划线组成的密码"});
+        	}
         	userService.changePassword(WebUtils.getLoginUserInfo(), oldPassword, newPassword);
         	setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0004), "I");
         } catch (Exception e) {

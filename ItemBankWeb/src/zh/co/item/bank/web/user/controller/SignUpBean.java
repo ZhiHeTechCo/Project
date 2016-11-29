@@ -82,6 +82,10 @@ public class SignUpBean extends BaseController {
         	if(StringUtils.isEmpty(userInfo.getPassword())) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
         	}
+        	if(userInfo.getPassword().length() < 6 ||(!userInfo.getPassword().matches("[A-Za-z0-9_]+"))) {
+        		
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"6位以上字母、数字或下划线组成的密码"});
+        	}
             int count = userService.InsertUserInfo(userInfo);
             //注册成功，跳转到登录界面
             if(count > 0) {
