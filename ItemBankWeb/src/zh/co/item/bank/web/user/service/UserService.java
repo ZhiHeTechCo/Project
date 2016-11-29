@@ -178,7 +178,7 @@ public class UserService {
     public UserModel loginForWechat(TuUserBean userInfo) {
     	UserModel user = new UserModel();
     	//check当前用户名是否已经存在
-    	if(userDao.isUserExist(userInfo)) {
+    	if(userDao.isUserExistForWechat(userInfo)) {
     		//存在的场合，自动登录
     		user = userDao.getUserInfo(userInfo);
     	} else {

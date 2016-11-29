@@ -44,6 +44,22 @@ public class UserDao extends BaseDao {
     }
     
     /**
+     * 判断用户名是否已经被使用
+     * @param userAccount
+     * @return true:已经被占用 false:没有被占用
+     */
+    public boolean isUserExistForWechat(TuUserBean userInfo) {
+    	Map<String, String> map = new HashMap<String, String>();
+    	map.put("account", userInfo.getName());
+    	int count = (Integer)getIbatisTemplate().selectOne("UserManage.countUserAccountForWechat", map);
+    	if(count == 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+    
+    /**
      * 登录用户信息
      * @param userInfo
      * @return

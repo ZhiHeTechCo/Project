@@ -11,19 +11,27 @@
       tu_user 
     where
       (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
-      <choose>
-      <when  test = "password != null and password != ''" > 
+      <if  test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
       ) = #{password, jdbcType=CHAR }
-     </when >
-     <otherwise>
-      and wechat = '1'
-     </otherwise>
-     </choose>
+     </if >
+
+  </select>
+
+  <!-- 取得指定用户名个数(wechat) -->
+  <select id="countUserAccountForWechat" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    select
+      count(id) 
+    from
+      tu_user 
+    where
+      (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
+       and wechat = '1'
   </select>
   
+  <!-- 登录后取得用户信息 -->
   <select id="getUserInfo" resultType="zh.co.item.bank.model.entity.UserModel" parameterType="zh.co.item.bank.db.entity.TuUserBean">
     SELECT
       * 
