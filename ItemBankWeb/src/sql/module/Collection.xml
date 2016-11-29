@@ -239,83 +239,83 @@
 			<if test="count != null">
 				count = #{count,jdbcType=SMALLINT},
 			</if>
-			<if test="result1 != null">
+			<if test="count != null &amp; count ==1">
 				result1 = #{result1,jdbcType=CHAR},
 				time1 = CURDATE(),
 			</if>
-			<if test="result2 != null">
+			<if test="count != null &amp; count ==2">
 				result2 = #{result2,jdbcType=CHAR},
 				time2 = CURDATE(),
 			</if>
-			<if test="result3 != null">
+			<if test="count != null &amp; count ==3">
 				result3 = #{result3,jdbcType=CHAR},
 				time3 = CURDATE(),
 			</if>
-			<if test="result4 != null">
+			<if test="count != null &amp; count ==4">
 				result4 = #{result4,jdbcType=CHAR},
 				time4 = CURDATE(),
 			</if>
-			<if test="result5 != null">
+			<if test="count != null &amp; count ==5">
 				result5 = #{result5,jdbcType=CHAR},
 				time5 = CURDATE(),
 			</if>
-			<if test="result6 != null">
+			<if test="count != null &amp; count ==6">
 				result6 = #{result6,jdbcType=CHAR},
 				time6 = CURDATE(),
 			</if>
-			<if test="result7 != null">
+			<if test="count != null &amp; count ==7">
 				result7 = #{result7,jdbcType=CHAR},
 				time7 = CURDATE(),
 			</if>
-			<if test="result8 != null">
+			<if test="count != null &amp; count ==8">
 				result8 = #{result8,jdbcType=CHAR},
 				time8 = CURDATE(),
 			</if>
-			<if test="result9 != null">
+			<if test="count != null &amp; count ==9">
 				result9 = #{result9,jdbcType=CHAR},
 				time9 = CURDATE(),
 			</if>
-			<if test="result10 != null">
+			<if test="count != null &amp; count ==10">
 				result10 = #{result10,jdbcType=CHAR},
 				time10 = CURDATE(),
 			</if>
-			<if test="result11 != null">
+			<if test="count != null &amp; count ==11">
 				result11 = #{result11,jdbcType=CHAR},
 				time11 = CURDATE(),
 			</if>
-			<if test="result12 != null">
+			<if test="count != null &amp; count ==12">
 				result12 = #{result12,jdbcType=CHAR},
 				time12 = CURDATE(),
 			</if>
-			<if test="result13 != null">
+			<if test="count != null &amp; count ==13">
 				result13 = #{result13,jdbcType=CHAR},
 				time13 = CURDATE(),
 			</if>
-			<if test="result14 != null">
+			<if test="count != null &amp; count ==14">
 				result14 = #{result14,jdbcType=CHAR},
 				time14 = CURDATE(),
 			</if>
-			<if test="result15 != null">
+			<if test="count != null &amp; count ==15">
 				result15 = #{result15,jdbcType=CHAR},
 				time15 = CURDATE(),
 			</if>
-			<if test="result16 != null">
+			<if test="count != null &amp; count ==16">
 				result16 = #{result16,jdbcType=CHAR},
 				time16 = CURDATE(),
 			</if>
-			<if test="result17 != null">
+			<if test="count != null &amp; count ==17">
 				result17 = #{result17,jdbcType=CHAR},
 				time17 = CURDATE(),
 			</if>
-			<if test="result18 != null">
+			<if test="count != null &amp; count ==18">
 				result18 = #{result18,jdbcType=CHAR},
 				time18 = CURDATE(),
 			</if>
-			<if test="result19 != null">
+			<if test="count != null &amp; count ==19">
 				result19 = #{result19,jdbcType=CHAR},
 				time19 = CURDATE(),
 			</if>
-			<if test="result20 != null">
+			<if test="count != null &amp; count ==20">
 				result20 = #{result20,jdbcType=CHAR},
 				time20 = CURDATE(),
 			</if>
