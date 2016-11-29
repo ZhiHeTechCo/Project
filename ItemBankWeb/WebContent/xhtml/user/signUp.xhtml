@@ -21,6 +21,7 @@
                 <h4>请输入您的信息：</h4>
                 <table class="toTable">
                   <tr>
+                  <td style="color: red;">*</td>
                     <td>  <div class="col-md-6" style="width: 100%;">
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             <h:inputText id="name" value="#{signUpBean.userInfo.name}" class="form-control" maxlength="30" 
@@ -31,6 +32,7 @@
                     <td><span class="msg" style="margin-left: 10px">用户名/手机号/邮箱</span></td>
                   </tr>
                   <tr>
+                  <td style="color: red;">*</td>
                     <td><div class="col-md-6" style="width: 100%;">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             <h:inputSecret redisplay="true" id="password" value="#{signUpBean.userInfo.password}" class="form-control" maxlength="10" placeholder="密碼" 
