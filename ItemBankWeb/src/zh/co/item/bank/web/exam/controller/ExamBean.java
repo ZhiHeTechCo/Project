@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
+import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -300,13 +301,13 @@ public class ExamBean extends BaseController {
             if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                     .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > 20) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > 20) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > 20) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > 20) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
             } else {
                 questions.get(i).setLayoutStyle("lineDirection");
