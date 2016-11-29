@@ -65,6 +65,7 @@ public class UserService {
             throw ex;
     	} else {
     		userInfo.setWechat(SystemConstants.PC_FLAG);
+    		userInfo.setNickName(userInfo.getName());
     		//不存在的场合，登录DB
     		count = userDao.insertUserInfo(userInfo);
     	}
