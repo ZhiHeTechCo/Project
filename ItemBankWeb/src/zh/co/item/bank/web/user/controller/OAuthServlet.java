@@ -51,10 +51,11 @@ public class OAuthServlet extends HttpServlet {
         String state = request.getParameter("state");
         //请求页面
         String controller = request.getParameter("controller");
-        
+        //"wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525" 志和
+        //"wx83bc8453af909375", "d55015caf4f35e3433c8256371a468a8" 测试号
         // 用户同意授权
         if (!"authdeny".equals(code)) {
-        	if(StringUtils.isEmpty(WebUtils.getLoginUserId())) {
+        	if(StringUtils.isEmpty(WebUtils.getLoginUserId()) || WebUtils.getLoginUserId().equals("null") || WebUtils.getLoginUserInfo() == null) {
 	            // 获取网页授权access_token
 	            WeixinOauth2Token weixinOauth2Token = WebUtils.getOauth2AccessToken("wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525", code);
 	            if(weixinOauth2Token != null) {
