@@ -134,6 +134,7 @@ public abstract class BaseController {
             out.flush();
             ctx.responseComplete();
         } catch (Exception e) {
+        	logger.debug(e.getMessage(), e);
             throw e;
         }
     }
@@ -189,10 +190,10 @@ public abstract class BaseController {
         } else if(t instanceof CmnSysException){
             setMessage(((CmnSysException)t).getMessage(), MESSAGE_LEVEL_ERROR);
         } else {
-            logger.debug("error", t);
             logger.log(MessageId.COMMON_E_0001, null, t);
             setMessage(MessageUtils.getMessage(MessageId.COMMON_E_0001), MESSAGE_LEVEL_ERROR);
         }
+        logger.debug(t.getMessage(), t);
     }
     
     /**
