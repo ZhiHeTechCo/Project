@@ -161,6 +161,16 @@ public class ExamService {
     public ExamModel selectQuestionById(Integer questionId) {
         return examDao.selectQuestionByQuestionId(questionId);
     }
+    
+    /**
+     * 根据试题ID检索试题（考试模式）
+     * 
+     * @param questionId
+     * @return
+     */
+    public ExamModel selectReportDetailByQuestionId(Integer questionId) {
+        return examDao.selectReportDetailByQuestionId(questionId);
+    }
 
     /**
      * 用户提问

@@ -14,6 +14,8 @@ public class CmnContants {
 
     public static final int MEMORY_CURVE_DAY = 7;
 
+    public static final int FOLDING_LINE = 16;
+
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
 
     /** 考试类别 */

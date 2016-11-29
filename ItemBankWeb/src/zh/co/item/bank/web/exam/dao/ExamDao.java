@@ -58,6 +58,16 @@ public class ExamDao extends BaseDao {
      * @return
      */
     public ExamModel selectQuestionByQuestionId(Integer questionId) {
+        return (ExamModel) getIbatisTemplate().selectOne("Question.selectQuestionByQuestionId", questionId);
+    }
+
+    /**
+     * 检索指定试题（试题模式）
+     * 
+     * @param questionId
+     * @return
+     */
+    public ExamModel selectReportDetailByQuestionId(Integer questionId) {
         return (ExamModel) getIbatisTemplate().selectOne("Question.selectReportDetailByQuestionId", questionId);
     }
 
