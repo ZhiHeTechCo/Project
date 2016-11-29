@@ -70,12 +70,9 @@ public class QuestionInsertController extends BaseController {
         try {
             pushPathHistory("questionInsertController");
             exams = examService.getExams();
-            exams.remove(exams.size() - 1);
             examTypes = examService.getExamTypes();
             jlptLevels = examService.getJlptLevels();
-            jlptLevels.remove(jlptLevels.size() - 1);
             jtestLevels = examService.getJtestLevels();
-            jtestLevels.remove(jtestLevels.size() - 1);
 
             structures = questionService.getStructures();
 

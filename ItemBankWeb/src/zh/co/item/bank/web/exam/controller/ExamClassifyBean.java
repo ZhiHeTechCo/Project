@@ -66,12 +66,9 @@ public class ExamClassifyBean extends BaseController {
         try {
             pushPathHistory("examClassifyBean");
             exams = examService.getExams();
-            exams.remove(exams.size() - 1);
             examTypes = examService.getExamTypes();
             jlptLevels = examService.getJlptLevels();
-            jlptLevels.remove(jlptLevels.size() - 1);
             jtestLevels = examService.getJtestLevels();
-            jtestLevels.remove(jtestLevels.size() - 1);
 
             classifyBean = new TbQuestionClassifyBean();
 
