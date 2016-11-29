@@ -72,7 +72,7 @@ public class MessageId {
     /** 信息更新成功！ */
     public static final String ITBK_I_0005 = "ITBK_I_0005";
 
-    /** 错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。（注：当天的错题不会被推荐。） */
+    /** 错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。*/
     public static final String ITBK_I_0006 = "ITBK_I_0006";
 
     /** 为您查询到以下错题（非记忆曲线推荐，建议先去题库做题）： */
