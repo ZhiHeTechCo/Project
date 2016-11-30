@@ -2,5 +2,5 @@
 <!DOCTYPE jboss-web>  
 <jboss-web>  
    <context-root>/</context-root>  
-   <virtual-host>localhost</virtual-host>  
+   <virtual-host>itembank.cn</virtual-host>  
 </jboss-web>
