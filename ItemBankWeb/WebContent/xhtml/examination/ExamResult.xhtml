@@ -54,30 +54,28 @@
 									<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 										<tr>
 											<td><h4>选项：</h4></td>
-											<td>A：<h:outputText value="#{item.a}" />
-											</td>
-											<td>B：<h:outputText value="#{item.b}" />
-											</td>
-											<td>C：<h:outputText value="#{item.c}" />
-											</td>
-											<td>D：<h:outputText value="#{item.d}" />
+											<td><h:selectOneRadio value="#{item.myAnswer}"
+                                                layout="#{item.layoutStyle}" class="#{item.radioClass}" readonly="true" disabled="true">
+                                                <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+                                                <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+                                                <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+                                                <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+                                            </h:selectOneRadio>
 											</td>
 										</tr>
 									</c:if>
 									<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
 										<tr>
-											<td rowspan="4"><h4>选项：</h4></td>
-											<td colspan="4">A：<h:outputText value="#{item.a}" /></td>
-										</tr>
-										<tr>
-											<td colspan="4">B：<h:outputText value="#{item.b}" /></td>
-										</tr>
-										<tr>
-											<td colspan="4">C：<h:outputText value="#{item.c}" /></td>
-										</tr>
-										<tr>
-											<td colspan="4">D：<h:outputText value="#{item.d}" /></td>
-										</tr>
+                                            <td><h4>选项：</h4></td>
+                                            <td><h:selectOneRadio value="#{item.myAnswer}"
+                                                layout="pageDirection" class="radioTable2" readonly="true" disabled="true">
+                                                <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+                                                <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+                                                <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+                                                <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+                                            </h:selectOneRadio>
+                                            </td>
+                                        </tr>
 									</c:if>
 									<tr>
 										<td><h4>您的选择：</h4></td>
