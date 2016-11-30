@@ -38,8 +38,8 @@
 							</c:if>
 							<table class="table table-bordered">
 								<tr>
-									<td>
-										<h4>题干：</h4>
+									<td >
+										<h4>题干</h4>
 									</td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.context}" /> <ins>
@@ -49,44 +49,32 @@
 								</tr>
 								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 									<tr>
-										<td rowspan="4"><h4>选项：</h4></td>
-										<td>A：<h:outputText value="#{examResultBean.question.a}" />
-										</td>
-									</tr>
-									<tr>
-										<td>B：<h:outputText value="#{examResultBean.question.b}" />
-										</td>
-									</tr>
-									<tr>
-										<td>C：<h:outputText value="#{examResultBean.question.c}" />
-										</td>
-									</tr>
-									<tr>
-										<td>D：<h:outputText value="#{examResultBean.question.d}" />
+										<td  rowspan="4"><h4>选项</h4></td>
+										<td colspan="4"><h:selectOneRadio value="#{examResultBean.question.myAnswer}"
+                                                layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}" readonly="true" disabled="true">
+                                                <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
+                                                <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
+                                                <f:selectItem itemValue="3" itemLabel="  C：#{examResultBean.question.c}" />
+                                                <f:selectItem itemValue="4" itemLabel="  D：#{examResultBean.question.d}" />
+                                            </h:selectOneRadio>
 										</td>
 									</tr>
 								</c:if>
 								<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
 									<tr>
-										<td rowspan="4"><h4>选项：</h4></td>
-										<td colspan="4">A：<h:outputText
-												value="#{examResultBean.question.a}" /></td>
-									</tr>
-									<tr>
-										<td colspan="4">B：<h:outputText
-												value="#{examResultBean.question.b}" /></td>
-									</tr>
-									<tr>
-										<td colspan="4">C：<h:outputText
-												value="#{examResultBean.question.c}" /></td>
-									</tr>
-									<tr>
-										<td colspan="4">D：<h:outputText
-												value="#{examResultBean.question.d}" /></td>
+										<td  rowspan="4"><h4>选项</h4></td>
+										<td ><h:selectOneRadio value="#{examResultBean.question.myAnswer}"
+                                                layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}"  readonly="true" disabled="true">
+                                                <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
+                                                <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
+                                                <f:selectItem itemValue="3" itemLabel="  C：#{examResultBean.question.c}" />
+                                                <f:selectItem itemValue="4" itemLabel="  D：#{examResultBean.question.d}" />
+                                            </h:selectOneRadio>
+                                        </td>
 									</tr>
 								</c:if>
 								<tr>
-									<td><h4>正确答案：</h4></td>
+									<td width="20%" ><h4>正确答案</h4></td>
 									<c:if test="#{examResultBean.question.answer eq '1'}">
 										<td colspan="4">A</td>
 									</c:if>
@@ -102,7 +90,7 @@
 								</tr>
 								<c:if test="#{examResultBean.examFlag eq 'true'}">
 									<tr>
-										<td><h4>您的选择：</h4></td>
+										<td  width="20%"><h4>您的选择</h4></td>
 										<c:if test="#{examResultBean.question.myAnswer eq '1'}">
 											<td colspan="4">A</td>
 										</c:if>
@@ -121,28 +109,28 @@
 									</tr>
 								</c:if>
 								<tr>
-									<td><h4>解析：</h4></td>
+									<td width="20%" ><h4>解析</h4></td>
 									<td colspan="4"><c:if
 											test="#{examResultBean.question.analysis eq null}">暂无</c:if>
 										<h:outputText value="#{examResultBean.question.analysis}" /></td>
 								</tr>
 								<tr>
-									<td><h4>考试类别：</h4></td>
+									<td width="20%" ><h4>考试类别</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.examName}" /></td>
 								</tr>
 								<tr>
-									<td><h4>考试级别：</h4></td>
+									<td ><h4>考试级别</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.levelName}" /></td>
 								</tr>
 								<tr>
-									<td><h4>试题种别：</h4></td>
+									<td ><h4>试题种别</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.examTypeName}" /></td>
 								</tr>
 								<tr>
-									<td><h4>试题出处：</h4></td>
+									<td ><h4>试题出处</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.source}" /></td>
 								</tr>

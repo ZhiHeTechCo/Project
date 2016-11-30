@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
+import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -137,11 +138,43 @@ public class ExamResultBean extends BaseController {
                 // 考试模式
                 question = examService.selectReportDetailByQuestionId(questionId);
             }
+            if(question != null) {
+            	prepareData();
+            }
 
         } catch (Exception e) {
             processForException(this.logger, e);
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
+    }
+    
+    /**
+     * 画面序号,折行
+     * 
+     * @param subject 题干
+     */
+    private void prepareData() {
+
+            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+            	question.setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(question.getA()) && question.getA().length() > CmnContants.FOLDING_LINE) {
+            	question.setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(question.getB()) && question.getB().length() > CmnContants.FOLDING_LINE) {
+            	question.setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(question.getC()) && question.getC().length() > CmnContants.FOLDING_LINE) {
+            	question.setLayoutStyle("pageDirection");
+            } else if (StringUtils.isNotEmpty(question.getD()) && question.getD().length() > CmnContants.FOLDING_LINE) {
+            	question.setLayoutStyle("pageDirection");
+            } else {
+            	question.setLayoutStyle("lineDirection");
+            }
+
+            if ("lineDirection".equals(question.getLayoutStyle())) {
+            	question.setRadioClass("radioTable1");
+            } else {
+            	question.setRadioClass("radioTable2");
+            }
     }
 
     /**
@@ -289,5 +322,4 @@ public class ExamResultBean extends BaseController {
     public void setReportModels(List<ExamReportModel> reportModels) {
         this.reportModels = reportModels;
     }
-
 }

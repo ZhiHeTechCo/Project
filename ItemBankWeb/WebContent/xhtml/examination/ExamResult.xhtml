@@ -53,7 +53,7 @@
 									</h:commandLink></td>
 									<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 										<tr>
-											<td><h4>选项：</h4></td>
+											<td><h4>选项</h4></td>
 											<td><h:selectOneRadio value="#{item.myAnswer}"
                                                 layout="#{item.layoutStyle}" class="#{item.radioClass}" readonly="true" disabled="true">
                                                 <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
@@ -66,7 +66,7 @@
 									</c:if>
 									<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
 										<tr>
-                                            <td><h4>选项：</h4></td>
+                                            <td><h4>选项</h4></td>
                                             <td><h:selectOneRadio value="#{item.myAnswer}"
                                                 layout="pageDirection" class="radioTable2" readonly="true" disabled="true">
                                                 <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
@@ -78,7 +78,7 @@
                                         </tr>
 									</c:if>
 									<tr>
-										<td><h4>您的选择：</h4></td>
+										<td><h4>您的选择</h4></td>
 										<h:panelGroup rendered="#{item.myAnswer eq '1'}">
 											<td colspan="4">A</td>
 										</h:panelGroup>
@@ -96,7 +96,7 @@
 										</h:panelGroup>
 									</tr>
 									<tr>
-										<td><h4>正确答案：</h4></td>
+										<td><h4>正确答案</h4></td>
 										<h:panelGroup rendered="#{item.answer eq '1'}">
 											<td colspan="4">A</td>
 										</h:panelGroup>
@@ -111,7 +111,7 @@
 										</h:panelGroup>
 									</tr>
 									<tr>
-										<td><h4>解析：</h4></td>
+										<td><h4>解析</h4></td>
 										<td colspan="4"><h:panelGroup
 												rendered="#{item.analysis eq null}">暂无</h:panelGroup> <h:outputText
 												value="#{item.analysis}"></h:outputText></td>
