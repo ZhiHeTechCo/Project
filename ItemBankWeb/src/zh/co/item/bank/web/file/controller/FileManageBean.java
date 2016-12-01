@@ -98,7 +98,7 @@ public class FileManageBean extends BaseController {
 		                
 		            } else {
 			            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
-			            		+ SystemConstants.LINE_SEPARATOR + WebUtils.getLoginUserId();
+			            		+ File.separator + WebUtils.getLoginUserId();
 			            
 			            //文件上传
 			            FileUtils.uploadFile(uploadFile.getInputstream(), filePath, fileName);
@@ -122,7 +122,7 @@ public class FileManageBean extends BaseController {
 		            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
             }
         } catch (Throwable e) {
-        	
+        	fileName = "";
             processForException(logger, e);
         }
        
@@ -137,7 +137,8 @@ public class FileManageBean extends BaseController {
         try {
 
             // 文件路径
-            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH);
+            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
+            		+ File.separator + WebUtils.getLoginUserId();
 
             String downloadPath = filePath + File.separator;
             if (!FileUtils.checkExistFile(downloadPath + fileName)) {

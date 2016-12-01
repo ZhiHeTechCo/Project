@@ -531,6 +531,17 @@ public class FileUtils {
     public static void uploadFile(InputStream in, String path, String fileName) throws IOException {
         OutputStream out = null;
         try {
+/*        	String separator = File.separator;
+            if (!path.contains(separator)) {
+                String winSeparator = "\\";
+                String unixSeparator = "/";
+                if (path.contains(winSeparator) && !winSeparator.equals(separator)) {
+                	path = path.replace(winSeparator, separator);
+                } else if (path.contains(unixSeparator) && !unixSeparator.equals(separator)) {
+                	path = path.replace(unixSeparator, separator);
+                }
+            }*/
+            
             File fileDir = new File(path.toString());
             if (!fileDir.exists()) {
                 fileDir.mkdirs();

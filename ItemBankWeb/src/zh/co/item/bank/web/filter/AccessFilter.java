@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.WebUtils;
@@ -135,12 +136,12 @@ public class AccessFilter implements Filter {
         } else if (URI.endsWith("/xhtml/common/page_forward_error.xhtml")) {
             chain.doFilter(arg0, arg1);
             return;
-        } else if (URI.endsWith(path + "/") || URI.endsWith("/xhtml/user/wechatSignIn.xhtml")) {
+        } else if (URI.endsWith(path + "/")) {
             session.invalidate();
             chain.doFilter(arg0, arg1);
             return;
         }
-/*        if ("GET".equals(method)) {
+        if ("GET".equals(method)) {
         	if (URI.endsWith("/index.xhtml")) {
                 
                 session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
@@ -174,7 +175,7 @@ public class AccessFilter implements Filter {
                     session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
                 }
             }
-        }*/
+        }
 
         chain.doFilter(arg0, arg1);
         WebUtils.removeSessionContext();

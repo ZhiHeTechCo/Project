@@ -63,7 +63,7 @@
     <select id="getFileInfoList" parameterType="zh.co.item.bank.db.entity.TbFileInfoBean" resultType="zh.co.item.bank.db.entity.TbFileInfoBean">
         select * from
         tb_file_info
-        where fileType = '0'
+        where file_type = '0'
           <if test="userId != null" >
            and user_id =  #{userId,jdbcType=INTEGER}
           </if>
