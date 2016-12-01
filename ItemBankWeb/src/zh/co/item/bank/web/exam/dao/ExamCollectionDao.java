@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
@@ -34,12 +35,12 @@ public class ExamCollectionDao extends BaseDao {
     /**
      * 取本次成绩表
      * 
-     * @param source
+     * @param map[questionId,userId]
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ExamModel> getExamReport(String source) {
-        return getIbatisTemplate().selectList("ExamCollection.getExamReport", source);
+    public List<ExamModel> getExamReport(Map<String, Object> map) {
+        return getIbatisTemplate().selectList("ExamCollection.getExamReport", map);
     }
 
     /**

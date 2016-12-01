@@ -19,15 +19,15 @@
 		(select count(*) as
 		rit
 		from tb_exam_collection where answer=my_answer and
-		exam_type=#{examType} and source = #{source})
+		exam_type=#{examType} and source = #{source} and user_id = #{userId})
 		a,(select count(*) as
 		total,exam_type,source from
 		tb_exam_collection
 		where
-		exam_type=#{examType} and source = #{source}) b
+		exam_type=#{examType} and source = #{source} and user_id = #{userId}) b
 	</select>
 
-	<select id="getExamReport" parameterType="java.lang.String"
+	<select id="getExamReport" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select (@rowNO := @rowNO+1)
 		as rowNo, z.id,z.user_id as
@@ -40,7 +40,7 @@
 		c.key and
 		c.name='exam_type') z,tb_question_structure y,(select @rowNO :=0) x
 		where
-		z.structure_id = y.id and z.source = #{source}
+		z.structure_id = y.id and z.source = #{source} and z.user_id =#{userId}
 		order by id
 	</select>
 

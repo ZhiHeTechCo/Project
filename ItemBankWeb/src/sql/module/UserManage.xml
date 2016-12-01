@@ -10,7 +10,7 @@
     from
       tu_user 
     where
-      (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
+      (name = #{account, jdbcType=VARCHAR } or (email = #{account, jdbcType=VARCHAR } and #{account, jdbcType=VARCHAR } like '%@%'))
       <if  test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
@@ -43,9 +43,9 @@
         open_id = #{openId, jdbcType=VARCHAR }
         and wechat = '1'
      </if >
-     <!-- 用户民密码登录 -->
+     <!-- 用户名密码登录 -->
      <if  test = "openId == null or openId == ''" > 
-      (name = #{name, jdbcType=VARCHAR } or email = #{name, jdbcType=VARCHAR })
+      (name = #{name, jdbcType=VARCHAR } or (email = #{name, jdbcType=VARCHAR } and #{name, jdbcType=VARCHAR } like '%@%'))
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8

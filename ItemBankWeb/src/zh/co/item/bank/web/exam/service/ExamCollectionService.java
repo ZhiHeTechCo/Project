@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,8 +26,13 @@ public class ExamCollectionService {
         return examCollectionDao.getExamType(source);
     }
 
-    public List<ExamModel> getExamReport(String source) {
-        return examCollectionDao.getExamReport(source);
+    /**
+     * 考试成绩一览取得
+     * @param map[questionId,userId]
+     * @return
+     */
+    public List<ExamModel> getExamReport(Map<String, Object> map) {
+        return examCollectionDao.getExamReport(map);
     }
 
     /**

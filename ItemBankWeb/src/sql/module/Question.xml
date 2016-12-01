@@ -233,13 +233,13 @@
 		where id = #{id}
 	</select>
 
-	<select id="selectReportDetailByQuestionId" parameterType="Integer"
+	<select id="selectReportDetailByQuestionId" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select a.my_answer, b.* from tb_exam_collection a ,vb_question_detail b
 		where
 		a.question_id=b.`no` and
 		delete_flag = '0' and
-		no =#{questionId}
+		no =#{questionId} and user_id =#{userId}
 	</select>
 
 	<select id="selectQuestionByQuestionId" parameterType="Integer"
