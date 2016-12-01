@@ -136,13 +136,9 @@ public class AccessFilter implements Filter {
         } else if (URI.endsWith("/xhtml/common/page_forward_error.xhtml")) {
             chain.doFilter(arg0, arg1);
             return;
-        } else if (URI.endsWith(path + "/")) {
-            session.invalidate();
-            chain.doFilter(arg0, arg1);
-            return;
-        }
+        } 
         if ("GET".equals(method)) {
-        	if (URI.endsWith("/index.xhtml")) {
+        	if (URI.endsWith(path + "/xhtml/common/index.xhtml") || URI.endsWith(path + "/")) {
                 
                 session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
                 session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
@@ -152,7 +148,7 @@ public class AccessFilter implements Filter {
                 logger.debug("index reset Token as :" + newToken);
                 session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
             } else {
-            	response.sendRedirect(request.getContextPath() + "/xhtml/common/index.xhtml");
+            	response.sendRedirect(path + "/xhtml/common/index.xhtml");
                 return;
             }
         } else {
