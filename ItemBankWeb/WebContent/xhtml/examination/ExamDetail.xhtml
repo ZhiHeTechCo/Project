@@ -49,8 +49,8 @@
 								</tr>
 								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 									<tr>
-										<td width="20%"  rowspan="4"><h4>选项</h4></td>
-										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.myAnswer}"
+										<td width="20%"><h4>选项</h4></td>
+										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.answer}"
                                                 layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}" readonly="true" disabled="true">
                                                 <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
                                                 <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
@@ -63,7 +63,7 @@
 								<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
 									<tr>
 										<td width="20%"  rowspan="4"><h4>选项</h4></td>
-										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.myAnswer}"
+										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.answer}"
                                                 layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}"  readonly="true" disabled="true">
                                                 <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
                                                 <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
