@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.util.StringUtils;
 
+import sun.misc.BASE64Encoder;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
 
@@ -646,5 +647,19 @@ public final class CmnStringUtils {
 		long limit = Integer.valueOf(size) * 1024 * 1024;
 		
 		return String.valueOf(limit);
+	}
+	
+	/**
+	 * 将数据库二进制图片转换为base64编码
+	 * @param img
+	 * @return
+	 */
+	public static String getGraphicImage(byte[] img) {
+		if(img != null && img.length > 0) {
+			BASE64Encoder encoder = new BASE64Encoder();  
+	        return "data:image/jpg;base64," + encoder.encode(img);
+		} else {
+			return "";
+		}
 	}
 }

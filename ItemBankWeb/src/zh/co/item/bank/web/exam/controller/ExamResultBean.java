@@ -53,6 +53,11 @@ public class ExamResultBean extends BaseController {
     private Integer questionId;
 
     private String subject;
+    
+    /** 大题干List */
+    private List<String> subjectList;
+    
+    private String graphicImage;
 
     private UserModel userInfo;
 
@@ -322,4 +327,21 @@ public class ExamResultBean extends BaseController {
     public void setReportModels(List<ExamReportModel> reportModels) {
         this.reportModels = reportModels;
     }
+
+	public List<String> getSubjectList() {
+		return subjectList;
+	}
+
+	public void setSubjectList(List<String> subjectList) {
+		this.subjectList = subjectList;
+	}
+
+	public String getGraphicImage() {
+		return graphicImage;
+	}
+
+	public void setGraphicImage(String graphicImage) {
+		this.graphicImage = graphicImage;
+	}
+    
 }

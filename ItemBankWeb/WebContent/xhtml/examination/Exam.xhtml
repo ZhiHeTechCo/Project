@@ -9,22 +9,7 @@
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<style type="text/css">
-.radioTable1 {
-	width: 100%;
-}
 
-.radioTable1>tbody>tr>td {
-	width: 25%;
-}
-
-.radioTable2 {
-	width: 100%;
-}
-
-.radioTable2>tbody>tr>td {
-	width: 100%;
-	padding-bottom: 10px;
-}
 </style>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examForm">
@@ -56,6 +41,9 @@
 													<br />
 												</ui:repeat></td>
 										</tr>
+                                        <tr>
+                                            <td><img src="#{examBean.graphicImage}" /></td>
+                                        </tr>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"

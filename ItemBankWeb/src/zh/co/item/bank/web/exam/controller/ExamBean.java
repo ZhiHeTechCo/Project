@@ -70,9 +70,12 @@ public class ExamBean extends BaseController {
 
     /** 大题干 */
     private String subject;
-
+    
     /** 大题干List */
     private List<String> subjectList;
+    
+    /** 图片 */
+    private String graphicImage;
 
     /** --共通变量-- */
     // 用户信息
@@ -105,6 +108,7 @@ public class ExamBean extends BaseController {
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
+            graphicImage="";
             status = null;
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -170,6 +174,7 @@ public class ExamBean extends BaseController {
                 questions = examService.selectQuestionByFatherId(fatherId);
                 // 取大题
                 subject = questions.get(0).getSubject();
+                graphicImage = CmnStringUtils.getGraphicImage(questions.get(0).getImg());
 
             } else if (questions.get(questions.size() - 1).getFatherId() != null) {
                 // 特殊试题不显示[下次显示]
@@ -207,6 +212,7 @@ public class ExamBean extends BaseController {
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
+            graphicImage = "";
             if (!"ing".equals(status)) {
                 status = "";
             }
@@ -257,6 +263,7 @@ public class ExamBean extends BaseController {
                     questions.clear();
                     questions = examService.selectQuestionByFatherId(fatherId);
                     subject = questions.get(0).getSubject();
+                    graphicImage = CmnStringUtils.getGraphicImage(questions.get(0).getImg());
                 }
                 // 画面序号 折行
                 prepareData(subject);
@@ -388,6 +395,8 @@ public class ExamBean extends BaseController {
             examResultBean.setClassifyBean(classifyBean);
             examResultBean.setTitle(title);
             examResultBean.setSubject(subject);
+            examResultBean.setSubjectList(subjectList);
+            examResultBean.setGraphicImage(graphicImage);
             return examResultBean.init();
         } catch (Exception e) {
             processForException(logger, e);
@@ -566,5 +575,13 @@ public class ExamBean extends BaseController {
     public void setStatus(String status) {
         this.status = status;
     }
+
+	public String getGraphicImage() {
+		return graphicImage;
+	}
+
+	public void setGraphicImage(String graphicImage) {
+		this.graphicImage = graphicImage;
+	}
 
 }
