@@ -29,7 +29,7 @@
                               onblur="if (this.value == '') {this.value = '用户名';}" />  
                         </div>
                     </td>
-                    <td><span class="msg" style="margin-left: 10px">用户名/手机号/邮箱</span></td>
+                    <td><span class="msg" style="margin-left: 10px">用户名/邮箱</span></td>
                   </tr>
                   <tr>
                   <td style="color: red;">*</td>
@@ -42,16 +42,6 @@
                     </td>
                     <td><span class="msg" style="margin-left: 10px">6位以上字母、数字或下划线组成</span></td>
                   </tr>
-                  <!-- 
-                            <tr>
-                                <td colspan="2"><input type="radio" class="text" value="1"
-                                    name="Type"
-                                    onclick="document.getElementById('company').style.display='';">&nbsp;企业用户&nbsp;
-                                    <input type="radio" class="text" name="Type" value="2"
-                                    onclick="document.getElementById('company').style.display='none';">&nbsp;个人用户&nbsp;
-                                </td>
-                            </tr>
-                             -->
                 </table>
                 <!-- 
                         <table class="toTable">
@@ -81,7 +71,7 @@
                     <td colspan="2"><h4>考试级别：</h4></td>
                   </tr>
                   <tr>
-                    <td style="width: 60px;"><h5 style="font-family: 'FZYaoti';">JLPT</h5></td>
+                    <td style="width: 60px;"><h5>JLPT</h5></td>
                     <td><h:selectOneMenu value="#{signUpBean.userInfo.jlptLevel}">
                         <f:selectItem itemValue="" itemLabel="" />
                         <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
@@ -89,7 +79,7 @@
                       </h:selectOneMenu></td>
                   </tr>
                   <tr>
-                    <td style="width: 60px;"><h5 style="font-family: 'FZYaoti';">J.TEST</h5></td>
+                    <td style="width: 60px;"><h5>J.TEST</h5></td>
                     <td><h:selectOneMenu value="#{signUpBean.userInfo.jtestLevel}">
                         <f:selectItem itemValue="" itemLabel="" />
                         <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
