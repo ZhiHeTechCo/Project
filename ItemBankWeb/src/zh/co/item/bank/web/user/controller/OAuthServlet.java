@@ -67,7 +67,7 @@ public class OAuthServlet extends HttpServlet {
 		            SNSUserInfo snsUserInfo = WebUtils.getSNSUserInfo(accessToken, openId);
 		            
 		            TuUserBean userInfo = new TuUserBean();
-		            userInfo.setName(snsUserInfo.getOpenId());
+		            userInfo.setOpenId(snsUserInfo.getOpenId());
 		            userInfo.setNickName(snsUserInfo.getNickname());
 		            userInfo.setWechat(SystemConstants.WECHAT_FLAG);
 		            ServletContext servletContext = this.getServletContext();  
