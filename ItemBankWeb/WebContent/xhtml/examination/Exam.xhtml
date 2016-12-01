@@ -8,9 +8,8 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<style type="text/css">
+		<h:outputScript library="js" name="lightbox.js" />
 
-</style>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examForm">
 				<div class="typrography">
@@ -43,7 +42,13 @@
 										</tr>
                                         <c:if test="#{examBean.graphicImage !=''}">
                                           <tr>
-                                              <td align="center"><img src="#{examBean.graphicImage}" /></td>
+                                              <td align="center">
+                                                <div class="gallery-bottom" >
+								                    <div class="col-md-3 gallery-grid">
+								                        <a class="example-image-link" href="#{examBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examBean.graphicImage}" alt=""/></a>
+								                    </div>
+								                </div>
+                                               </td>
                                           </tr>
                                         </c:if>
 									</table>
