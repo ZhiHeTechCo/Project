@@ -28,10 +28,22 @@
                 <p:fileUpload value="#{fileManageBean.uploadFile}" mode="advanced" multiple="true" auto="true"
                     sizeLimit="#{fileManageBean.sizeLimit}" invalidSizeMessage="#{fileManageBean.sizeLimitMessage}"
                     fileUploadListener="#{fileManageBean.doUpload}" skinSimple="true" label="選択" cancelLabel="cancelA"
-                    id="upbtn" rendered="true" update=":ngossfw_error_display fileName" oncomplete="resetButtonDisabled();" >
+                    id="upbtn" process="imgId" rendered="true" update=":ngossfw_error_display fileName" oncomplete="resetButtonDisabled();" >
                 </p:fileUpload>
               </div>
               <table class="table table-striped;">
+                <c:if test="#{fileManageBean.adminFlag == '0'}">
+                  <tr>
+                    <td><h4>试题id:</h4></td>
+                    <td><h:inputText id="imgId" value="#{fileManageBean.imgId}" /></td>
+                  </tr> 
+                </c:if>
+                <c:if test="#{fileManageBean.adminFlag == '1'}">
+                  <tr style="display: none;">
+                    <td><h4>试题id:</h4></td>
+                    <td><h:inputText id="imgId" value="#{fileManageBean.imgId}" /></td>
+                  </tr> 
+                </c:if>
                 <tr>
                   <td><h4>文件:</h4></td>
                   <td><h:panelGroup id="fileName"><h:outputText value="#{fileManageBean.fileName}" /></h:panelGroup></td>

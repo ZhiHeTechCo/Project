@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
+import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 
@@ -110,6 +111,17 @@ public class UserDao extends BaseDao {
      */
     public int insertFileInfo(TbFileInfoBean bean) {
         return getIbatisTemplate().insert("TbFileInfo.insertSelective", bean);
+    }
+    
+    /**
+     * 插入图片试题
+     * 
+     * @param bean 文件信息
+     * @return
+     * @throws Exception
+     */
+    public int updateImgInfo(TbFirstLevelDirectoryBean bean) {
+    	return getIbatisTemplate().insert("TbFirstLevelDirectory.updateByPrimaryKeySelective", bean);
     }
     
     /**

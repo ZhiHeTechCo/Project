@@ -41,9 +41,11 @@
 													<br />
 												</ui:repeat></td>
 										</tr>
-                                        <tr>
-                                            <td><img src="#{examBean.graphicImage}" /></td>
-                                        </tr>
+                                        <c:if test="#{examBean.graphicImage !=''}">
+                                          <tr>
+                                              <td align="center"><img src="#{examBean.graphicImage}" /></td>
+                                          </tr>
+                                        </c:if>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"

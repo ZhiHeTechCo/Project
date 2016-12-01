@@ -1,8 +1,12 @@
 package zh.co.item.bank.web.file.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.List;
 
+import javax.faces.event.PhaseId;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,6 +24,7 @@ import zh.co.common.utils.FileUtils;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
+import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -42,6 +47,10 @@ public class FileManageBean extends BaseController {
     private UploadedFile uploadFile;
     
     private String fileName;
+    
+    private String adminFlag;
+    
+    private Integer imgId;
 
 	public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_006;
@@ -53,7 +62,11 @@ public class FileManageBean extends BaseController {
      */
     public String init() {
     	pushPathHistory("fileManageBean");
-
+    	if("90".equals(WebUtils.getLoginUserInfo().getRole())) {
+    		adminFlag = SystemConstants.FLAG_YES;
+    	} else {
+    		adminFlag = SystemConstants.FLAG_NO;
+    	}
         return SystemConstants.PAGE_ITBK_USER_006;
     }
     
@@ -64,37 +77,55 @@ public class FileManageBean extends BaseController {
      */
     public String doUpload(FileUploadEvent event) {
         try {
-
-          
-            uploadFile = event.getFile();
-            fileName = FileUtils.getCurrentFileName(uploadFile.getFileName());
-            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
-            		+ SystemConstants.LINE_SEPARATOR + WebUtils.getLoginUserId();
-            
-            //文件上传
-            FileUtils.uploadFile(uploadFile.getInputstream(), filePath, fileName);
-
-            //文件检查，是否存在
-            TbFileInfoBean bean = new TbFileInfoBean();
-            bean.setUserId(Integer.valueOf(WebUtils.getLoginUserId()));
-            bean.setFileName(fileName);
-            List<TbFileInfoBean> list = userService.getFileInfoList(bean);
-            //未审核
-        	bean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
-        	//备考清除
-        	bean.setComment("");
-            if(list != null && list.size() > 0) {
-            	bean.setId(list.get(0).getId());
-            	userService.updateFileInfo(bean);
-            } else {
-            	userService.insertFileInfo(bean);
+	            if (!PhaseId.INVOKE_APPLICATION.equals(event.getPhaseId())) {
+	                event.setPhaseId(PhaseId.INVOKE_APPLICATION);
+	                event.queue();
+	                logger.debug("第一次上传");
+	            } else {
+		            uploadFile = event.getFile();
+		            fileName = FileUtils.getCurrentFileName(uploadFile.getFileName());
+		            
+		            //图片导入
+		            if(SystemConstants.FLAG_YES.equals(adminFlag)) {
+		            	BufferedImage bufferedImage = ImageIO.read(uploadFile.getInputstream());  
+		            	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();  
+		                ImageIO.write(bufferedImage, "jpg", outputStream);  
+		                byte[] img = outputStream.toByteArray();
+		                TbFirstLevelDirectoryBean bean = new TbFirstLevelDirectoryBean();
+		                bean.setId(imgId);
+		                bean.setImg(img);
+		                userService.updateImgInfo(bean);
+		                
+		            } else {
+			            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
+			            		+ SystemConstants.LINE_SEPARATOR + WebUtils.getLoginUserId();
+			            
+			            //文件上传
+			            FileUtils.uploadFile(uploadFile.getInputstream(), filePath, fileName);
+			
+			            //文件检查，是否存在
+			            TbFileInfoBean bean = new TbFileInfoBean();
+			            bean.setUserId(Integer.valueOf(WebUtils.getLoginUserId()));
+			            bean.setFileName(fileName);
+			            List<TbFileInfoBean> list = userService.getFileInfoList(bean);
+			            //未审核
+			        	bean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
+			        	//备考清除
+			        	bean.setComment("");
+			            if(list != null && list.size() > 0) {
+			            	bean.setId(list.get(0).getId());
+			            	userService.updateFileInfo(bean);
+			            } else {
+			            	userService.insertFileInfo(bean);
+			            }
+		            }
+		            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
             }
-            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0005), "I");
-            
         } catch (Throwable e) {
         	
             processForException(logger, e);
         }
+       
         return SystemConstants.PAGE_ITBK_USER_006;
     }
     
@@ -139,6 +170,22 @@ public class FileManageBean extends BaseController {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public Integer getImgId() {
+		return imgId;
+	}
+
+	public void setImgId(Integer imgId) {
+		this.imgId = imgId;
+	}
+
+	public String getAdminFlag() {
+		return adminFlag;
+	}
+
+	public void setAdminFlag(String adminFlag) {
+		this.adminFlag = adminFlag;
 	}
 
 }
