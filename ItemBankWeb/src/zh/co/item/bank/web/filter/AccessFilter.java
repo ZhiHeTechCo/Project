@@ -151,7 +151,7 @@ public class AccessFilter implements Filter {
             	response.sendRedirect(path + "/xhtml/common/index.xhtml");
                 return;
             }
-        } else {
+        } /*else {
             String tokenValidator = request.getParameter("tokenValidator");
             String pageToken = request.getParameter("pageToken");
             if ("1".equals(tokenValidator)) {
@@ -172,7 +172,7 @@ public class AccessFilter implements Filter {
                 }
             }
         }
-
+*/
         chain.doFilter(arg0, arg1);
         WebUtils.removeSessionContext();
         // HTTP 1.1
