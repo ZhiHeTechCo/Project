@@ -53,6 +53,8 @@ public class ExamClassifyBean extends BaseController {
 
     private UserModel userInfo;
 
+    private String showExamFlag;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
     }
@@ -73,6 +75,13 @@ public class ExamClassifyBean extends BaseController {
             classifyBean = new TbQuestionClassifyBean();
 
             userInfo = WebUtils.getLoginUserInfo();
+            if (!checkuser()) {
+                // 跳转至登录画面
+                return SystemConstants.PAGE_ITBK_USER_002;
+            }
+            // 语言信息为空，则智能推题不显示。
+            showExamFlag = StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())
+                    ? "" : "true";
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -158,8 +167,8 @@ public class ExamClassifyBean extends BaseController {
      */
     public String examSearch() {
         try {
-            if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils
-                    .isEmpty(classifyBean.getJlptLevel()) && StringUtils.isEmpty(classifyBean.getJtestLevel()))) {
+            if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
+                    && StringUtils.isEmpty(classifyBean.getJtestLevel()))) {
                 logger.log(MessageId.ITBK_E_0006);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
                 throw ex;
@@ -235,8 +244,12 @@ public class ExamClassifyBean extends BaseController {
         this.classifyBean = classifyBean;
     }
 
-    public CmnLogger getLogger() {
-        return logger;
+    public String getShowExamFlag() {
+        return showExamFlag;
+    }
+
+    public void setShowExamFlag(String showExamFlag) {
+        this.showExamFlag = showExamFlag;
     }
 
 }
