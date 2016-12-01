@@ -165,11 +165,11 @@ public class ExamService {
     /**
      * 根据试题ID检索试题（考试模式）
      * 
-     * @param questionId
+     * @param map[questionId,userId]
      * @return
      */
-    public ExamModel selectReportDetailByQuestionId(Integer questionId) {
-        return examDao.selectReportDetailByQuestionId(questionId);
+    public ExamModel selectReportDetailByQuestionId(Map<String, Object> map) {
+        return examDao.selectReportDetailByQuestionId(map);
     }
 
     /**

@@ -64,11 +64,11 @@ public class ExamDao extends BaseDao {
     /**
      * 检索指定试题（试题模式）
      * 
-     * @param questionId
+     * @param map[questionId,userId]
      * @return
      */
-    public ExamModel selectReportDetailByQuestionId(Integer questionId) {
-        return (ExamModel) getIbatisTemplate().selectOne("Question.selectReportDetailByQuestionId", questionId);
+    public ExamModel selectReportDetailByQuestionId(Map<String, Object> map) {
+        return (ExamModel) getIbatisTemplate().selectOne("Question.selectReportDetailByQuestionId", map);
     }
 
     /**

@@ -1,7 +1,9 @@
 package zh.co.item.bank.web.exam.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -123,6 +125,10 @@ public class ExamResultBean extends BaseController {
     public String showDetail() {
         try {
             pushPathHistory("examResultBean");
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
+            if (!checkuser()) {
+                return SystemConstants.PAGE_ITBK_EXAM_004;
+            }
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
             if (StringUtils.isEmpty(subject)) {
@@ -141,7 +147,10 @@ public class ExamResultBean extends BaseController {
                 question = examService.selectQuestionById(questionId);
             } else {
                 // 考试模式
-                question = examService.selectReportDetailByQuestionId(questionId);
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("questionId", questionId);
+                map.put("userId", userInfo.getId());
+                question = examService.selectReportDetailByQuestionId(map);
             }
             if(question != null) {
             	prepareData();
@@ -152,7 +161,7 @@ public class ExamResultBean extends BaseController {
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
-    
+
     /**
      * 画面序号,折行
      * 
@@ -160,26 +169,26 @@ public class ExamResultBean extends BaseController {
      */
     private void prepareData() {
 
-            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-            	question.setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(question.getA()) && question.getA().length() > CmnContants.FOLDING_LINE) {
-            	question.setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(question.getB()) && question.getB().length() > CmnContants.FOLDING_LINE) {
-            	question.setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(question.getC()) && question.getC().length() > CmnContants.FOLDING_LINE) {
-            	question.setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(question.getD()) && question.getD().length() > CmnContants.FOLDING_LINE) {
-            	question.setLayoutStyle("pageDirection");
-            } else {
-            	question.setLayoutStyle("lineDirection");
-            }
+        if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getA()) && question.getA().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getB()) && question.getB().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getC()) && question.getC().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getD()) && question.getD().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else {
+            question.setLayoutStyle("lineDirection");
+        }
 
-            if ("lineDirection".equals(question.getLayoutStyle())) {
-            	question.setRadioClass("radioTable1");
-            } else {
-            	question.setRadioClass("radioTable2");
-            }
+        if ("lineDirection".equals(question.getLayoutStyle())) {
+            question.setRadioClass("radioTable1");
+        } else {
+            question.setRadioClass("radioTable2");
+        }
     }
 
     /**
@@ -213,20 +222,27 @@ public class ExamResultBean extends BaseController {
             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                     .getRequest();
             String source = request.getParameter("source");
-
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
+            if (!checkuser()) {
+                return SystemConstants.PAGE_ITBK_EXAM_004;
+            }
             reportModels = new ArrayList<ExamReportModel>();
             // 本次考试出现的试题种别
             List<String> examTypes = examCollectionService.getReportTypes(source);
             // 对应种别正确率
             ExamReportModel param = new ExamReportModel();
             param.setSource(source);
+            param.setUserId(userInfo.getId());
             for (String type : examTypes) {
                 param.setExamType(type);
                 ExamReportModel record = examCollectionService.getPercentage(param);
                 reportModels.add(record);
             }
 
-            questions = examCollectionService.getExamReport(source);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("source", source);
+            map.put("userId", userInfo.getId());
+            questions = examCollectionService.getExamReport(map);
             // 没有查询到当前考题的成绩
             if (questions == null || questions.size() == 0) {
                 // 去试题选择
