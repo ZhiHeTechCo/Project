@@ -3,6 +3,7 @@
 <mapper namespace="TuUser" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TuUserBean" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="wechat" property="wechat" jdbcType="CHAR" />
@@ -17,7 +18,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, nick_name, wechat, CONVERT(AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) USING UTF8) AS password, 
+    id, open_id, name, nick_name, wechat, CONVERT(AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) USING UTF8) AS password, 
     role, birthday, telephone, email, jlpt_level, jtest_level, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TuUserBeanKey" >
@@ -31,13 +32,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TuUserBean" >
-    insert into tu_user (id, name, nick_name, 
-      wechat, password, 
+    insert into tu_user (id, open_id, name, 
+      nick_name, wechat, password, 
       role, birthday, telephone, email, 
       jlpt_level, jtest_level, create_time, 
       update_time)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{wechat,jdbcType=CHAR}, AES_ENCRYPT(#{password,jdbcType=VARCHAR}, UNHEX(MD5('${DB_ENCODE_KEY}'))), 
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{wechat,jdbcType=CHAR}, AES_ENCRYPT(#{password,jdbcType=VARCHAR}, UNHEX(MD5('${DB_ENCODE_KEY}'))), 
       #{role,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, #{telephone,jdbcType=CHAR}, #{email,jdbcType=CHAR}, 
       #{jlptLevel,jdbcType=CHAR}, #{jtestLevel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
@@ -47,6 +48,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="openId != null" >
+        open_id,
       </if>
       <if test="name != null" >
         name,
@@ -89,6 +93,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -130,6 +137,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TuUserBean" >
     update tu_user
     <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -171,7 +181,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TuUserBean" >
     update tu_user
-    set name = #{name,jdbcType=VARCHAR},
+    set open_id = #{openId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       wechat = #{wechat,jdbcType=CHAR},
       password = AES_ENCRYPT(#{password,jdbcType=VARCHAR}, UNHEX(MD5('${DB_ENCODE_KEY}'))),

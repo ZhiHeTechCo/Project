@@ -21,13 +21,13 @@
   </select>
 
   <!-- 取得指定用户名个数(wechat) -->
-  <select id="countUserAccountForWechat" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+  <select id="countUserAccountForWechat" resultType="java.lang.Integer" parameterType="zh.co.item.bank.db.entity.TuUserBean">
     select
       count(id) 
     from
       tu_user 
     where
-      (name = #{account, jdbcType=VARCHAR } or email = #{account, jdbcType=VARCHAR })
+       open_id = #{openId, jdbcType=VARCHAR }
        and wechat = '1'
   </select>
   
@@ -38,18 +38,20 @@
     FROM
       vu_user_model
     where
+    <!-- 微信登录 -->
+      <if  test = "openId != null and openId != ''" > 
+        open_id = #{openId, jdbcType=VARCHAR }
+        and wechat = '1'
+     </if >
+     <!-- 用户民密码登录 -->
+     <if  test = "openId == null or openId == ''" > 
       (name = #{name, jdbcType=VARCHAR } or email = #{name, jdbcType=VARCHAR })
-      <choose>
-      <when  test = "password != null and password != ''" > 
       and CONVERT( 
         AES_DECRYPT(password, UNHEX(MD5('${DB_ENCODE_KEY}'))) 
           USING UTF8
       ) = #{password, jdbcType=CHAR }
-     </when >
-     <otherwise>
-      and wechat = '1'
-     </otherwise>
-     </choose>
+     </if >
+
   </select>
   
     <select id="selectUserById" parameterType="java.lang.Integer" resultType="zh.co.item.bank.model.entity.UserModel">

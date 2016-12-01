@@ -3,6 +3,8 @@ package zh.co.item.bank.db.entity;
 import java.util.Date;
 
 public class TuUserBean extends TuUserBeanKey {
+    private String openId;
+
     private String name;
 
     private String nickName;
@@ -26,6 +28,14 @@ public class TuUserBean extends TuUserBeanKey {
     private Date createTime;
 
     private Date updateTime;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
+    }
 
     public String getName() {
         return name;

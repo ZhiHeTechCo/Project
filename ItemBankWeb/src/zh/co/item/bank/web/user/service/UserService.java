@@ -196,6 +196,36 @@ public class UserService {
     }
     
     /**
+     * 微信用户绑定PC登录
+     * 
+     * @param userInfo
+     * @param newPassword
+     * @return
+     * @throws Exception
+     */
+    public int bindUserInfo(UserModel userInfo) throws Exception {
+    	int count = 0;
+    	TuUserBean newUser = new TuUserBean();
+    	
+    	//用户
+    	newUser.setName(userInfo.getName());
+    	//如果用户名已经存在
+    	if(userDao.isUserExist(newUser)) {
+    		logger.log(MessageId.ITBK_E_0001);
+            CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0001);
+            throw ex;
+    	}
+    	
+    	newUser.setId(userInfo.getId());
+    	//密码
+    	newUser.setPassword(userInfo.getPassword());
+
+    	//更新时间
+    	newUser.setUpdateTime(new Date());
+    	count = userDao.updateUserInfo(newUser);
+    	return count;
+    }
+    /**
      * 更新用户上传试题
      * 
      * @param bean 文件信息

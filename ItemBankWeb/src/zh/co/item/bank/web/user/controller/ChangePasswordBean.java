@@ -14,6 +14,7 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -32,6 +33,9 @@ public class ChangePasswordBean extends BaseController {
     
     @Inject
     private UserService userService;
+    
+    /**旧密码*/
+    private String name;
     
     /**旧密码*/
     private String oldPassword;
@@ -57,8 +61,10 @@ public class ChangePasswordBean extends BaseController {
     	
     	pushPathHistory("changePasswordBean");
     	if(StringUtils.isEmpty(WebUtils.getLoginUserInfo().getPassword())) {
+    		//微信绑定PC登录账号
     		this.setFlag = SystemConstants.FLAG_NO;
     	} else {
+    		//修改密码
     		this.setFlag = SystemConstants.FLAG_YES;
     	}
         return SystemConstants.PAGE_ITBK_USER_004;
@@ -70,6 +76,12 @@ public class ChangePasswordBean extends BaseController {
      */
     public String changePassword() {
         try {
+        	////微信绑定PC登录账号的场合
+        	if(SystemConstants.FLAG_NO.equals(setFlag)) {
+        		if(StringUtils.isEmpty(name)) {
+            		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"用户名"});
+            	}
+        	}
         	if(StringUtils.isEmpty(newPassword)) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
         	}
@@ -77,7 +89,23 @@ public class ChangePasswordBean extends BaseController {
         		
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"6位以上字母、数字或下划线组成的密码"});
         	}
-        	userService.changePassword(WebUtils.getLoginUserInfo(), oldPassword, newPassword);
+        	if(SystemConstants.FLAG_YES.equals(setFlag)) {
+        		userService.changePassword(WebUtils.getLoginUserInfo(), oldPassword, newPassword);
+        	} else {
+        		UserModel userInfo = WebUtils.getLoginUserInfo();
+        		userInfo.setName(name);
+        		userInfo.setPassword(newPassword);
+        		userService.bindUserInfo(userInfo);
+        	}
+        	
+        	if(StringUtils.isEmpty(WebUtils.getLoginUserInfo().getPassword())) {
+        		//微信绑定PC登录账号
+        		this.setFlag = SystemConstants.FLAG_NO;
+        	} else {
+        		//修改密码
+        		this.setFlag = SystemConstants.FLAG_YES;
+        	}
+        	newPassword = "";
         	setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0004), "I");
         } catch (Exception e) {
         	processForException(logger, e);
@@ -131,6 +159,14 @@ public class ChangePasswordBean extends BaseController {
 
 	public void setSetFlag(String setFlag) {
 		this.setFlag = setFlag;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 
