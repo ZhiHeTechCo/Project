@@ -57,8 +57,12 @@
 									<td width="20%" >
 										<h4>题干</h4>
 									</td>
-									<td colspan="4"><h:outputText
-											value="#{examResultBean.question.context}" /> <ins>
+									<td colspan="4">
+                                         <ui:repeat value="#{examResultBean.question.contextList}" var="stringItem">
+                                                  <h:outputText value="#{stringItem}" />
+                                                  <br />
+                                          </ui:repeat>
+                                         <ins>
 											<h:outputText value="#{examResultBean.question.contextKey}" />
 										</ins> <h:outputText value="#{examResultBean.question.contextAfter}" />
 									</td>
