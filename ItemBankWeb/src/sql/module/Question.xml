@@ -60,10 +60,10 @@
 		and year = #{year} 
 		</if>
 		order by 
-		<if test="exam =='1'">
+		<if test="exam ==1">
 		year desc,
 		</if>
-		<if test="exam =='2'">
+		<if test="exam ==2">
 		year+0 desc,
 		</if>
 		 no
