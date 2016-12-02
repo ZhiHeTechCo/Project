@@ -210,7 +210,8 @@ public class ResumeBean extends BaseController {
      * @return
      */
     public String toClassify() {
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
     }
 
     private boolean checkuser() {
