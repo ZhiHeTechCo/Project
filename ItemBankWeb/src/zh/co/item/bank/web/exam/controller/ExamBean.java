@@ -70,10 +70,10 @@ public class ExamBean extends BaseController {
 
     /** 大题干 */
     private String subject;
-    
+
     /** 大题干List */
     private List<String> subjectList;
-    
+
     /** 图片 */
     private String graphicImage;
 
@@ -108,7 +108,7 @@ public class ExamBean extends BaseController {
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
-            graphicImage="";
+            graphicImage = "";
             status = null;
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -308,13 +308,17 @@ public class ExamBean extends BaseController {
             if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                     .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getA()) && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getA())
+                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getB()) && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getB())
+                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getC()) && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getC())
+                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getD()) && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
+            } else if (StringUtils.isNotEmpty(questions.get(i).getD())
+                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
                 questions.get(i).setLayoutStyle("pageDirection");
             } else {
                 questions.get(i).setLayoutStyle("lineDirection");
@@ -349,14 +353,18 @@ public class ExamBean extends BaseController {
                 examModel.setUserId(userInfo.getId());
                 TbCollectionBean collection = collectionService.selectCollectionForOne(examModel);
 
+                // 用户ID
                 collection.setId(userInfo.getId());
 
+                // 试题ID
                 collection.setQuestionId(Integer.valueOf(examModel.getNo()));
 
+                // 第几次做
                 short count = collection.getCount() == null ? 0 : collection.getCount();
                 count = (short) (count + 1);
                 collection.setCount(count);
 
+                // resultX
                 String param = "setResult" + count;
 
                 Method method = collection.getClass().getMethod(param, new Class[] { String.class });
@@ -364,6 +372,8 @@ public class ExamBean extends BaseController {
                 method.invoke(collection, new Object[] { choice });
                 if (examModel.getAnswer().equals(choice)) {
                     collection.setFinish("1");
+                } else {
+                    collection.setFinish("0");
                 }
                 // 错题表登录·更新
                 if (count == 1) {
@@ -576,12 +586,12 @@ public class ExamBean extends BaseController {
         this.status = status;
     }
 
-	public String getGraphicImage() {
-		return graphicImage;
-	}
+    public String getGraphicImage() {
+        return graphicImage;
+    }
 
-	public void setGraphicImage(String graphicImage) {
-		this.graphicImage = graphicImage;
-	}
+    public void setGraphicImage(String graphicImage) {
+        this.graphicImage = graphicImage;
+    }
 
 }
