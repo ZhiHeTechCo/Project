@@ -82,7 +82,7 @@ public class ExamBean extends BaseController {
 
     /** --考试模式用变量-- */
     // 试题结构
-    CopyOnWriteArrayList<ExamModel> safeList = new CopyOnWriteArrayList<ExamModel>();
+    CopyOnWriteArrayList<ExamModel> safeList;
     // 考试进行状态
     private String status;
     // 考卷年
@@ -232,7 +232,7 @@ public class ExamBean extends BaseController {
                 year = examDropoutService.getYear(getExamDropoutBean());
             }
             // 获得试题结构(一次考试只获取一次)
-            if (safeList.size() == 0) {
+            if (safeList == null || safeList.size() == 0) {
                 List<ExamModel> examStructure = examService.getStructure(classifyBean);
                 safeList.addAll(examStructure);
             }
@@ -242,7 +242,7 @@ public class ExamBean extends BaseController {
                 // TODO 添加年限选择后废弃
                 if (year == null) {
                     // 获取试题
-                    List<ExamModel> temps = examService.getTestQuestion(map);
+                    List<ExamModel> temps = examService.getTestQuestion(map);//TODO 检索太慢
                     year = temps.get(0).getYear();
                     map.put("year", year);
                 }
@@ -306,7 +306,6 @@ public class ExamBean extends BaseController {
         // 折行
         subjectList = CmnStringUtils.getSubjectList(subject);
     }
-
 
     /**
      * [确认]按钮点下
@@ -544,6 +543,14 @@ public class ExamBean extends BaseController {
         this.subject = subject;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public List<String> getSubjectList() {
         return subjectList;
     }
@@ -566,6 +573,14 @@ public class ExamBean extends BaseController {
 
     public void setGraphicImage(String graphicImage) {
         this.graphicImage = graphicImage;
+    }
+
+    public CopyOnWriteArrayList<ExamModel> getSafeList() {
+        return safeList;
+    }
+
+    public void setSafeList(CopyOnWriteArrayList<ExamModel> safeList) {
+        this.safeList = safeList;
     }
 
 }
