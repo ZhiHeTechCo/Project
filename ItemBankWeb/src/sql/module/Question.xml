@@ -5,8 +5,7 @@
 <mapper namespace="Question">
 
 	<select id="selectLastInsertId" resultType="INTEGER">
-		select
-		last_insert_id()
+		select last_insert_id()
 	</select>
 
 	<select id="selectQuestionDetailForAll" resultType="zh.co.item.bank.model.entity.ExamModel">
@@ -29,7 +28,8 @@
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select c.*,d.finish from (select a.subject, b.* from
 		tb_first_level_directory a right join
-		vb_question_detail b on a.id = b.father_id where
+		vb_question_detail b on a.id =
+		b.father_id where
 		a.id=#{fatherId,jdbcType=INTEGER}) c left join
 		tb_collection d on c.no=d.question_id where d.id=#{userId} and
 		d.finish !='1' and d.finish!='9'
@@ -51,45 +51,62 @@
 		order by structureId
 	</select>
 
-	<select id="getTestQuestion" parameterType="java.util.Map"
-		resultType="zh.co.item.bank.model.entity.ExamModel">
-        select * from vb_question_detail where no not in(select question_id from tb_exam_collection
-        where user_id = #{userId}
-        ) and structure_id = #{structureId} and delete_flag='0'
-		<if test="year !=null">
-		and year = #{year} 
-		</if>
-		order by 
+	<select id="getYear" parameterType="java.util.Map"
+		resultType="java.lang.String">
+		select year from vb_question_detail where no not in(select question_id
+		from tb_exam_collection
+		where user_id = #{userId}
+		) and structure_id = #{structureId} and delete_flag='0'
+		group by year
+		order by
 		<if test="exam ==1">
-		year desc,
+			year desc,
 		</if>
 		<if test="exam ==2">
-		year+0 desc,
+			year+0 desc,
 		</if>
-		 no
+		no
+		limit 1
 	</select>
-<!-- 2009年以前的试题，使用旧结构 -->
-    <select id="getTestQuestionsOld" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
-        resultType="zh.co.item.bank.model.entity.ExamModel">
-        select b.id as structureId,b.title,a.id as classifyId,a.exam as
-        exam,a.jlpt_level as jlptLevel,a.jtest_level as jtestLevel from
-        tb_question_classify a right join tb_question_structure_old b on
-        a.id=b.classify_id
-        where a.exam = #{exam}
-        <if test="jlptLevel !=null">
-            and a.jlpt_level=#{jlptLevel}
-        </if>
-        <if test="jtestLevel !=null">
-            and a.jtest_level=#{jtestLevel}
-        </if>
-        order by structureId
-    </select>
-<!-- 2009年以前的试题，使用旧结构 -->
-    <select id="selectTitleByIdOld" parameterType="java.lang.Integer"
-        resultType="java.lang.String">
-        select title from tb_question_structure_old
-        where id = #{id}
-    </select>
+
+	<select id="getTestQuestion" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select * from vb_question_detail where no not in(select question_id
+		from tb_exam_collection
+		where user_id = #{userId}
+		) and structure_id = #{structureId} and delete_flag='0'
+		and year = #{year}
+		order by
+		<if test="exam ==1">
+			year desc,
+		</if>
+		<if test="exam ==2">
+			year+0 desc,
+		</if>
+		no
+	</select>
+	<!-- 2009年以前的试题，使用旧结构 -->
+	<select id="getTestQuestionsOld" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select b.id as structureId,b.title,a.id as classifyId,a.exam as
+		exam,a.jlpt_level as jlptLevel,a.jtest_level as jtestLevel from
+		tb_question_classify a right join tb_question_structure_old b on
+		a.id=b.classify_id
+		where a.exam = #{exam}
+		<if test="jlptLevel !=null">
+			and a.jlpt_level=#{jlptLevel}
+		</if>
+		<if test="jtestLevel !=null">
+			and a.jtest_level=#{jtestLevel}
+		</if>
+		order by structureId
+	</select>
+	<!-- 2009年以前的试题，使用旧结构 -->
+	<select id="selectTitleByIdOld" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select title from tb_question_structure_old
+		where id = #{id}
+	</select>
 
 	<select id="selectQuestionByFatherId" parameterType="INTEGER"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
@@ -150,21 +167,13 @@
 		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
 		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
 		q.structure_id AS structureId, q.father_id as fatherId,
-		`d`.`exam` AS `exam`,`d`.`exam_type` AS
-		`examType`,`d`.`jlpt_level` AS
-		`jlptLevel`,`d`.`jtest_level` AS
-		`jtestLevel`
+		`d`.`exam` AS `exam`,`d`.`exam_type` AS `examType`,
+		`d`.`jlpt_level` AS `jlptLevel`,`d`.`jtest_level` AS `jtestLevel`
 		from
-		tb_question_classify d, (select * from tb_question
-		where no not in
-		(select question_id from
-		tb_collection where
-		id=#{userId})
-		)
-		q
+		tb_question_classify d, (select * from tb_question where no not in
+		(select question_id from tb_collection where id=#{userId})) q
 		where
-		q.classify_id=d.id
-		and q.delete_flag = '0'
+		q.classify_id=d.id and q.delete_flag = '0'
 		<if test="jtestLevel !=null || jlptLevel !=null">
 			and (d.jtest_level=#{jtestLevel,jdbcType=CHAR} or
 			d.jlpt_level=#{jlptLevel,jdbcType=CHAR})
@@ -180,10 +189,12 @@
 		`answer`,`q`.`analysis` AS `analysis`,`q`.`delete_flag` AS
 		`deleteFlag`,`q`.`source` AS `source`, q.classify_id AS classifyId,
 		q.structure_id AS structureId, q.father_id as fatherId,
-		`d`.`exam` AS `exam`,`d`.`exam_type` AS
+		`d`.`exam` AS
+		`exam`,`d`.`exam_type` AS
 		`examType`,`d`.`jlpt_level` AS
 		`jlptLevel`,`d`.`jtest_level` AS `jtestLevel`
-		from tb_question_classify d, (select * from tb_question
+		from tb_question_classify
+		d, (select * from tb_question
 		where no not in
 		(select question_id from
 		tb_collection where
@@ -192,7 +203,8 @@
 		q
 		where
 		q.classify_id=d.id
-		and q.delete_flag = '0'
+		and
+		q.delete_flag = '0'
 		<if test="exam !=null &amp; exam !=''">
 			and exam = #{exam,jdbcType=CHAR}
 		</if>
@@ -235,10 +247,12 @@
 
 	<select id="selectReportDetailByQuestionId" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select a.my_answer, b.* from tb_exam_collection a ,vb_question_detail b
+		select a.my_answer, b.* from tb_exam_collection a
+		,vb_question_detail b
 		where
 		a.question_id=b.`no` and
-		delete_flag = '0' and
+		delete_flag = '0'
+		and
 		no =#{questionId} and user_id =#{userId}
 	</select>
 
@@ -311,7 +325,7 @@
 		where no = #{no,jdbcType=INTEGER}
 	</update>
 
-<!-- 未用 -->
+	<!-- 未用 -->
 	<insert id="insertQuestionClassify" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert into tb_question_classify
 		<trim prefix="(" suffix=")" suffixOverrides=",">

@@ -241,10 +241,12 @@ public class ExamBean extends BaseController {
 
                 // TODO 添加年限选择后废弃
                 if (year == null) {
-                    // 获取试题
-                    List<ExamModel> temps = examService.getTestQuestion(map);//TODO 检索太慢
-                    year = temps.get(0).getYear();
-                    map.put("year", year);
+                    // 获取题库中最新一年的试题year
+                    year = examService.getYear(map);
+                    if (year == null) {
+                        safeList.remove(model);
+                        continue;
+                    }
                 }
                 // TODO 添加年限选择后废弃
                 map.put("year", year);
