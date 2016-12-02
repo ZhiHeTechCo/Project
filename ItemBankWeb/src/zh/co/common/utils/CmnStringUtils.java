@@ -10,8 +10,10 @@ import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;
 
 import sun.misc.BASE64Encoder;
+import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
+import zh.co.item.bank.model.entity.ExamModel;
 
 /**
  * <p>[概 要]string process utilities</p>
@@ -662,4 +664,44 @@ public final class CmnStringUtils {
 			return "";
 		}
 	}
+	
+    /**
+     * 设置序号
+     * 设置显示格式
+     * @param questions
+     * @return
+     */
+	public static List<ExamModel> answerLayoutSet(List<ExamModel> questions) {
+    	
+		if(questions != null && questions.size() > 0) {
+	        for (int i = 0; i < questions.size(); i++) {
+	            questions.get(i).setRowNo(i + 1);
+	            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+	                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+	                questions.get(i).setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(questions.get(i).getA())
+	                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
+	                questions.get(i).setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(questions.get(i).getB())
+	                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
+	                questions.get(i).setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(questions.get(i).getC())
+	                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
+	                questions.get(i).setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(questions.get(i).getD())
+	                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
+	                questions.get(i).setLayoutStyle("pageDirection");
+	            } else {
+	                questions.get(i).setLayoutStyle("lineDirection");
+	            }
+	
+	            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+	                questions.get(i).setRadioClass("radioTable1");
+	            } else {
+	                questions.get(i).setRadioClass("radioTable2");
+	            }
+	        }
+		}
+        return questions;
+    }
 }

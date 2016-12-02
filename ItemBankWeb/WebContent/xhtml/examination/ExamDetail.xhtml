@@ -9,6 +9,7 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+        <h:outputScript library="js" name="lightbox.js" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examDetailForm">
 				<div class="typrography">
@@ -32,8 +33,23 @@
 										<td align="center"><h4>问题</h4></td>
 									</tr>
 									<tr>
-										<td><h:outputText value="#{examResultBean.subject}" /></td>
+										<td><ui:repeat value="#{examResultBean.subjectList}" var="stringItem">
+                                              <h:outputText value="#{stringItem}" />
+                                              <br />
+                                            </ui:repeat>
+                                        </td>
 									</tr>
+                                    <c:if test="#{examResultBean.graphicImage !=''}">
+                                      <tr>
+                                          <td align="center">
+                                            <div class="gallery-bottom" >
+                                                <div class="col-md-3 gallery-grid">
+                                                    <a class="example-image-link" href="#{examResultBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examResultBean.graphicImage}" alt=""/></a>
+                                                </div>
+                                            </div>
+                                           </td>
+                                      </tr>
+                                    </c:if>
 								</table>
 							</c:if>
 							<table class="table table-bordered">

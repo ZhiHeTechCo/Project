@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
-import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -302,37 +301,12 @@ public class ExamBean extends BaseController {
      * @param subject 题干
      */
     private void prepareData(String subject) {
-        // 画面序号
-        for (int i = 0; i < questions.size(); i++) {
-            questions.get(i).setRowNo(i + 1);
-            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-                questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getA())
-                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-                questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getB())
-                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-                questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getC())
-                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-                questions.get(i).setLayoutStyle("pageDirection");
-            } else if (StringUtils.isNotEmpty(questions.get(i).getD())
-                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-                questions.get(i).setLayoutStyle("pageDirection");
-            } else {
-                questions.get(i).setLayoutStyle("lineDirection");
-            }
-
-            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-                questions.get(i).setRadioClass("radioTable1");
-            } else {
-                questions.get(i).setRadioClass("radioTable2");
-            }
-        }
+        // 画面序号和显示设置
+        questions = CmnStringUtils.answerLayoutSet(questions);
         // 折行
         subjectList = CmnStringUtils.getSubjectList(subject);
     }
+
 
     /**
      * [确认]按钮点下
