@@ -14,7 +14,7 @@ public class CmnContants {
 
     public static final int MEMORY_CURVE_DAY = 7;
 
-    public static final int FOLDING_LINE = 12;
+    public static final int FOLDING_LINE = 13;
 
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
 
