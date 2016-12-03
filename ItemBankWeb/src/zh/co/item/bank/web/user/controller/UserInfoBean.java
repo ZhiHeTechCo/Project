@@ -62,7 +62,11 @@ public class UserInfoBean extends BaseController {
     	userInfo = new UserModel();
 
         try {
-
+        	//session过期
+        	if(WebUtils.getLoginUserInfo() == null) {
+        		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+                return pageController.init();
+        	}
         	Map<String, Object> map = new HashMap<String, Object>();
 	        map.put("modelId", CmnContants.MODELID_BQD0003);
 	        map.put("name", "jlpt_level");
@@ -93,6 +97,11 @@ public class UserInfoBean extends BaseController {
     public String updateUserInfo() {
 
         try {
+        	//session过期
+        	if(WebUtils.getLoginUserInfo() == null) {
+        		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+                return pageController.init();
+        	}
         	if(StringUtils.isNotEmpty(userInfo.getBirthdayEx())) {
         		SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
         		userInfo.setBirthday(sdf.parse(userInfo.getBirthdayEx()));

@@ -67,6 +67,12 @@ public class ChangePasswordBean extends BaseController {
     		//修改密码
     		this.setFlag = SystemConstants.FLAG_YES;
     	}
+    	
+    	//session过期
+    	if(WebUtils.getLoginUserInfo() == null) {
+    		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+            return pageController.init();
+    	}
         return SystemConstants.PAGE_ITBK_USER_004;
     }
     
@@ -76,6 +82,11 @@ public class ChangePasswordBean extends BaseController {
      */
     public String changePassword() {
         try {
+        	//session过期
+        	if(WebUtils.getLoginUserInfo() == null) {
+        		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+                return pageController.init();
+        	}
         	////微信绑定PC登录账号的场合
         	if(SystemConstants.FLAG_NO.equals(setFlag)) {
         		if(StringUtils.isEmpty(name)) {
@@ -120,6 +131,11 @@ public class ChangePasswordBean extends BaseController {
      */
     public String goBack() {
         try {
+        	//session过期
+        	if(WebUtils.getLoginUserInfo() == null) {
+        		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+                return pageController.init();
+        	}
         	if(fromPageId != null) {
         		String pageId = (String)fromPageId;
         		String controllerName = pageAndControllerMap.get(pageId);
