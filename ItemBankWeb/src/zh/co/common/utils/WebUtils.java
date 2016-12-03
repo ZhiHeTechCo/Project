@@ -627,10 +627,13 @@ public class WebUtils {
      * @return
      */
     public static boolean judgeIsMoblie() {
+    	boolean isMoblie = false;
+    	
+    	try{
     	FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext extContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
-		boolean isMoblie = false;
+		
 		String[] mobileAgents = { "iphone", "android", "phone", "mobile", "wap", "netfront", "java", "opera mobi",
 				"opera mini", "ucweb", "windows ce", "symbian", "series", "webos", "sony", "blackberry", "dopod",
 				"nokia", "samsung", "palmsource", "xda", "pieplus", "meizu", "midp", "cldc", "motorola", "foma",
@@ -654,6 +657,9 @@ public class WebUtils {
 				}
 			}
 		}
+    	} catch (Exception e) {
+    		logger.debug("浏览器判断失败:" + e.getMessage(), e);
+    	}
 		return isMoblie;
 	}
 }

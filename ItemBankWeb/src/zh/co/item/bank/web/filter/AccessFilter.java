@@ -159,13 +159,6 @@ public class AccessFilter implements Filter {
         	}
         	
         }
-        
-        if((!URI.endsWith(path + "/xhtml/common/index.xhtml")) && (!URI.endsWith(path + "/")) && WebUtils.getLoginUserInfo() == null) {
-        	BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
-        	pageController.init();
-        	response.sendRedirect(request.getContextPath() + "/xhtml/user/signIn.xhtml");
-        	return;
-        }
         /*else {
             String tokenValidator = request.getParameter("tokenValidator");
             String pageToken = request.getParameter("pageToken");
