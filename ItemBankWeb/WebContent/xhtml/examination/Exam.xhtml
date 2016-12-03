@@ -25,6 +25,11 @@
 									escape="false" />
 							</h:panelGroup>
 							<c:if test="#{examBean.title != ''}">
+								<c:if test="#{examBean.graphicImage !=''}">
+									<h5 style="color: #3382C9;">
+										<span class="glyphicon glyphicon-info-sign"></span>点击图片可放大。
+									</h5>
+								</c:if>
 								<h4>
 									<b><h:outputText value="#{examBean.title}"></h:outputText></b>
 								</h4>
@@ -40,17 +45,21 @@
 													<br />
 												</ui:repeat></td>
 										</tr>
-                                        <c:if test="#{examBean.graphicImage !=''}">
-                                          <tr>
-                                              <td align="center">
-                                                <div class="gallery-bottom" >
-								                    <div class="col-md-3 gallery-grid">
-								                        <a class="example-image-link" href="#{examBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examBean.graphicImage}" alt=""/></a>
-								                    </div>
-								                </div>
-                                               </td>
-                                          </tr>
-                                        </c:if>
+										<c:if test="#{examBean.graphicImage !=''}">
+											<tr>
+												<td align="center">
+													<div class="gallery-bottom">
+														<div class="col-md-3 gallery-grid">
+															<a class="example-image-link"
+																href="#{examBean.graphicImage}"
+																data-lightbox="example-set"><img
+																class="example-image" src="#{examBean.graphicImage}"
+																alt="" /></a>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</c:if>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
@@ -62,10 +71,10 @@
 										</h4>
 									</h:column>
 									<h:column>
-                                          <ui:repeat value="#{item.contextList}" var="stringItem">
-                                                  <h:outputText value="#{stringItem}" />
-                                                  <br />
-                                          </ui:repeat><ins>#{item.contextKey}</ins>#{item.contextAfter}
+										<ui:repeat value="#{item.contextList}" var="stringItem">
+											<h:outputText value="#{stringItem}" />
+										</ui:repeat>
+										<ins>#{item.contextKey}</ins>#{item.contextAfter}
                                           <hr />
 										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
 											value="#{item.myAnswer}" />
@@ -122,7 +131,10 @@
 										</h:commandButton>
 									</div>
 									<div class="clearfix"></div>
-									<h5><span class="glyphicon glyphicon-exclamation-sign"></span>  注意："直接退出"将清空本次的做题记录。</h5>
+									<h5>
+										<span class="glyphicon glyphicon-exclamation-sign"></span>
+										注意："直接退出"将清空本次的做题记录。
+									</h5>
 								</c:if>
 							</c:if>
 							<c:if test="#{examBean.title == ''}">
