@@ -55,10 +55,10 @@ public class ExamResultBean extends BaseController {
     private Integer questionId;
 
     private String subject;
-    
+
     /** 大题干List */
     private List<String> subjectList;
-    
+
     private String graphicImage;
 
     private UserModel userInfo;
@@ -118,6 +118,16 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
+     * 返回试题选择
+     * 
+     * @return
+     */
+    public String goBackToClassify() {
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
+    }
+
+    /**
      * [试题详细]画面初始化
      * 
      * @return
@@ -129,11 +139,11 @@ public class ExamResultBean extends BaseController {
             if (!checkuser()) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
             }
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequest();
             if (StringUtils.isEmpty(subject)) {
                 subject = "";
             }
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequest();
             questionId = Integer.valueOf(request.getParameter("questionId"));
             examFlag = request.getParameter("examFlag");
             if (questionId == null) {
@@ -152,8 +162,8 @@ public class ExamResultBean extends BaseController {
                 map.put("userId", userInfo.getId());
                 question = examService.selectReportDetailByQuestionId(map);
             }
-            if(question != null) {
-            	prepareData();
+            if (question != null) {
+                prepareData();
             }
 
         } catch (Exception e) {
@@ -344,20 +354,20 @@ public class ExamResultBean extends BaseController {
         this.reportModels = reportModels;
     }
 
-	public List<String> getSubjectList() {
-		return subjectList;
-	}
+    public List<String> getSubjectList() {
+        return subjectList;
+    }
 
-	public void setSubjectList(List<String> subjectList) {
-		this.subjectList = subjectList;
-	}
+    public void setSubjectList(List<String> subjectList) {
+        this.subjectList = subjectList;
+    }
 
-	public String getGraphicImage() {
-		return graphicImage;
-	}
+    public String getGraphicImage() {
+        return graphicImage;
+    }
 
-	public void setGraphicImage(String graphicImage) {
-		this.graphicImage = graphicImage;
-	}
-    
+    public void setGraphicImage(String graphicImage) {
+        this.graphicImage = graphicImage;
+    }
+
 }
