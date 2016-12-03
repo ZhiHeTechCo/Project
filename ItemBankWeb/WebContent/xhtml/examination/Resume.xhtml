@@ -9,7 +9,7 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-        <h:outputScript library="js" name="lightbox.js" />
+		<h:outputScript library="js" name="lightbox.js" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="resumeForm">
 				<div class="typrography">
@@ -36,24 +36,28 @@
 										<tr>
 											<td align="center"><h4>问题</h4></td>
 										</tr>
-                                        <tr>
-                                            <td><ui:repeat value="#{resumeBean.subjectList}" var="stringItem">
-                                                  <h:outputText value="#{stringItem}" />
-                                                  <br />
-                                                </ui:repeat>
-                                            </td>
-                                        </tr>
-                                        <c:if test="#{resumeBean.graphicImage !=''}">
-                                          <tr>
-                                              <td align="center">
-                                                <div class="gallery-bottom" >
-                                                    <div class="col-md-3 gallery-grid">
-                                                        <a class="example-image-link" href="#{resumeBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{resumeBean.graphicImage}" alt=""/></a>
-                                                    </div>
-                                                </div>
-                                               </td>
-                                          </tr>
-                                        </c:if>
+										<tr>
+											<td><ui:repeat value="#{resumeBean.subjectList}"
+													var="stringItem">
+													<h:outputText value="#{stringItem}" />
+													<br />
+												</ui:repeat></td>
+										</tr>
+										<c:if test="#{resumeBean.graphicImage !=''}">
+											<tr>
+												<td align="center">
+													<div class="gallery-bottom">
+														<div class="col-md-3 gallery-grid">
+															<a class="example-image-link"
+																href="#{resumeBean.graphicImage}"
+																data-lightbox="example-set"><img
+																class="example-image" src="#{resumeBean.graphicImage}"
+																alt="" /></a>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</c:if>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
@@ -62,22 +66,23 @@
 										<h4>
 											<h:outputText value="#{item.rowNo}"></h:outputText>
 										</h4>
-                                    </h:column>
-                                    <h:column>
-                                          <ui:repeat value="#{item.contextList}" var="stringItem">
-                                                  <h:outputText value="#{stringItem}" />
-                                          </ui:repeat><ins>#{item.contextKey}</ins>#{item.contextAfter}
+									</h:column>
+									<h:column>
+										<ui:repeat value="#{item.contextList}" var="stringItem">
+											<h:outputText value="#{stringItem}" />
+										</ui:repeat>
+										<ins>#{item.contextKey}</ins>#{item.contextAfter}
                                           <hr />
-                                        <h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-                                            value="#{item.myAnswer}" />
-                                          <h:selectOneRadio value="#{item.myAnswer}"
-                                              layout="pageDirection" class="radioTable2">
-                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
-                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
-                                              <f:selectItem itemValue="3" itemLabel="#{item.c}" />
-                                              <f:selectItem itemValue="4" itemLabel="#{item.d}" />
-                                          </h:selectOneRadio>
-                                    </h:column>								
+										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
+											value="#{item.myAnswer}" />
+										<h:selectOneRadio value="#{item.myAnswer}"
+											layout="pageDirection" class="radioTable2">
+											<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+											<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+											<f:selectItem itemValue="3" itemLabel="#{item.c}" />
+											<f:selectItem itemValue="4" itemLabel="#{item.d}" />
+										</h:selectOneRadio>
+									</h:column>
 								</h:dataTable>
 								<div class="form-submit1">
 									<h:commandButton value="确认" class="button1"
@@ -85,6 +90,9 @@
 								</div>
 							</c:if>
 							<c:if test="#{resumeBean.tableShow eq null}">
+								<h5 style="color: red;">
+									<span class="glyphicon glyphicon-exclamation-sign"></span> 错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。
+								</h5>
 								<div class="form-submit1" style="margin-top: 50px;">
 									<h:commandButton value="去做题" class="button1"
 										action="#{resumeBean.toClassify}" id="toClassifyBtn" />
