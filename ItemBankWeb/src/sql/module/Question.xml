@@ -60,12 +60,11 @@
 		group by year
 		order by
 		<if test="exam ==1">
-			year desc,
+			year desc
 		</if>
 		<if test="exam ==2">
-			year+0 desc,
+			year+0 desc
 		</if>
-		no
 		limit 1
 	</select>
 
