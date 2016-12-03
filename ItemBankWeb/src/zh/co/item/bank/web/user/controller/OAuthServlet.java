@@ -1,6 +1,9 @@
 package zh.co.item.bank.web.user.controller;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TuUserBean;
@@ -30,7 +34,7 @@ import zh.co.item.bank.web.user.service.UserService;
 public class OAuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    private UserService userService;
+    private static HashMap<String, Calendar> oAuthCodeCollection = new HashMap<String, Calendar>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,21 +47,26 @@ public class OAuthServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
-        // 用户同意授权后，能获取到code
-        String code = request.getParameter("code");
-        String state = request.getParameter("state");
-        //请求页面
-        String controller = request.getParameter("controller");
-        //"wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525" 志和
-        //"wx83bc8453af909375", "d55015caf4f35e3433c8256371a468a8" 测试号
-        // 用户同意授权
-        if (!"authdeny".equals(code)) {
-        	if(StringUtils.isEmpty(WebUtils.getLoginUserId()) || WebUtils.getLoginUserId().equals("null") || WebUtils.getLoginUserInfo() == null) {
+		synchronized(this) {
+			CmnLogger logger = CmnLogger.getLogger(BaseController.class);
+			logger.debug("微信授权请求参数：" + request.getQueryString());
+			request.setCharacterEncoding("utf-8");
+	        response.setCharacterEncoding("utf-8");
+	
+	
+	        // 用户同意授权后，能获取到code
+	        String code = request.getParameter("code");
+	        String state = request.getParameter("state");
+	        //请求页面
+	        String controller = request.getParameter("controller");
+	        //"wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525" 志和
+	        //"wx83bc8453af909375", "d55015caf4f35e3433c8256371a468a8" 测试号
+	        // 用户同意授权
+	        if (!"authdeny".equals(code) && !oAuthCodeCollection.containsKey(code)) {
+	        	Calendar now = Calendar.getInstance();
+	        	oAuthCodeCollection.put(code, now);
 	            // 获取网页授权access_token
-	            WeixinOauth2Token weixinOauth2Token = WebUtils.getOauth2AccessToken("wx2481686107ccd94e", "1f1f2ba400e6b2f01fd6e27b179b9525", code);
+	            WeixinOauth2Token weixinOauth2Token = WebUtils.getOauth2AccessToken("wx83bc8453af909375", "d55015caf4f35e3433c8256371a468a8", code);
 	            if(weixinOauth2Token != null) {
 		            // 网页授权接口访问凭证
 		            String accessToken = weixinOauth2Token.getAccessToken();
@@ -73,7 +82,7 @@ public class OAuthServlet extends HttpServlet {
 		            ServletContext servletContext = this.getServletContext();  
 		            WebApplicationContext context =   
 		                    WebApplicationContextUtils.getWebApplicationContext(servletContext);  
-		            userService = (UserService) context.getBean("userService"); 
+		            UserService userService = (UserService) context.getBean("userService"); 
 		            
 		            UserModel model = userService.loginForWechat(userInfo);
 		            if(model != null) {
@@ -81,23 +90,32 @@ public class OAuthServlet extends HttpServlet {
 		            	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(model.getId()));
 		            }
 		            WebUtils.setSessionAttribute(WebUtils.SESSION_USER_AGENT, SystemConstants.AGENT_FLAG);
+	            } else {
+	            	response.sendRedirect(request.getContextPath() + "/xhtml/common/index.xhtml");
 	            }
-        	}
-
-        }
-        // 跳转到index.jsp
-        BaseController pageController = (BaseController) SpringAppContextManager.getBean(controller);
-        if(pageController != null) {
-	        pageController.init();
-	        if("examClassifyBean".equals(controller)) {
-	        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/ExamClassify.xhtml");
-	        } else if("resumeBean".equals(controller)) {
-	        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/Resume.xhtml");
-	        } else {
-	        	response.sendRedirect(request.getContextPath() + "/xhtml/common/home.xhtml");
+		        // 跳转到index.jsp
+		        BaseController pageController = (BaseController) SpringAppContextManager.getBean(controller);
+		        if(pageController != null && WebUtils.getLoginUserInfo() != null) {
+			        pageController.init();
+			        if("examClassifyBean".equals(controller)) {
+			        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/ExamClassify.xhtml");
+			        } else if("resumeBean".equals(controller)) {
+			        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/Resume.xhtml");
+			        } else {
+			        	response.sendRedirect(request.getContextPath() + "/xhtml/common/home.xhtml");
+			        }
+		        } else {
+		        	response.sendRedirect(request.getContextPath() + "/xhtml/common/index.xhtml");
+		        }
 	        }
-        } else {
-        	response.sendRedirect(request.getContextPath() + "/xhtml/common/home.xhtml");
+	        if(oAuthCodeCollection.containsKey(code)) {
+	        	Calendar calendar = Calendar.getInstance();
+	        	calendar.add(Calendar.HOUR_OF_DAY, -1);
+	        	if(oAuthCodeCollection.get(code).compareTo(calendar) < 0) {
+	        		oAuthCodeCollection.remove(code);
+	        	}
+	        }
+
         }
         
 	}

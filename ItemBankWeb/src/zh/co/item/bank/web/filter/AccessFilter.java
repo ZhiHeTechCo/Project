@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import zh.co.common.constant.SystemConstants;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.WebUtils;
 
@@ -137,20 +138,24 @@ public class AccessFilter implements Filter {
             chain.doFilter(arg0, arg1);
             return;
         } 
+        Object agentFlag = WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT);
         if ("GET".equals(method)) {
-        	if (URI.endsWith(path + "/xhtml/common/index.xhtml") || URI.endsWith(path + "/")) {
-                
-                session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
-                session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
-                session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_TITLE);
-                session.removeAttribute(WebUtils.SESSION_PAGE_TOKEN);
-                String newToken = this.generateTokenId();
-                logger.debug("index reset Token as :" + newToken);
-                session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
-            } else {
-            	response.sendRedirect(path + "/xhtml/common/index.xhtml");
-                return;
-            }
+        	if(!SystemConstants.AGENT_FLAG.equals(agentFlag)) {
+        		if (URI.endsWith(path + "/xhtml/common/index.xhtml") || URI.endsWith(path + "/")) {
+                    
+                    session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
+                    session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
+                    session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_TITLE);
+                    session.removeAttribute(WebUtils.SESSION_PAGE_TOKEN);
+                    String newToken = this.generateTokenId();
+                    logger.debug("index reset Token as :" + newToken);
+                    session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
+                } else {
+                	response.sendRedirect(path + "/xhtml/common/index.xhtml");
+                    return;
+                }
+        	}
+        	
         } /*else {
             String tokenValidator = request.getParameter("tokenValidator");
             String pageToken = request.getParameter("pageToken");

@@ -27,6 +27,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -473,12 +474,46 @@ public class WebUtils {
                 int errorCode = jsonObject.getInt("errcode");
                 String errorMsg = jsonObject.getString("errmsg");
                 logger.debug("获取网页授权凭证失败 errcode:{" + errorCode + "} errmsg:{"+ errorMsg + "}", e);
-
+                if(42001 == errorCode)  {
+                	String accessToken = getWeixinAccessToken(appId, appSecret);
+            		if(!StringUtils.isEmpty(accessToken)) {
+            			wat = getOauth2AccessToken(appId, appSecret, code);
+            		}
+                }
             }
         }
         return wat;
     }
     
+    private static String getWeixinAccessToken(String appId, String appSecret) {
+        // 拼接请求地址
+        String requestUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=SECRET";
+        requestUrl = requestUrl.replace("APPID", appId);
+        requestUrl = requestUrl.replace("SECRET", appSecret);
+        // 获取网页授权凭证
+        JSONObject jsonObject = httpsRequest(requestUrl, "GET", null);
+        String accessToken = "";
+        if (null != jsonObject) {
+            try {
+            	//access_token超时，获取access_token
+            	if("42001".equals(jsonObject.getString("access_token"))) {
+            		accessToken = null;
+            		int errorCode = jsonObject.getInt("errcode");
+                    String errorMsg = jsonObject.getString("errmsg");
+                    logger.debug("获取网页授权凭证失败 errcode:{" + errorCode + "} errmsg:{"+ errorMsg + "}");
+            	} else {
+            		accessToken =  jsonObject.getString("access_token");
+            	}
+
+            } catch (Exception e) {
+                int errorCode = jsonObject.getInt("errcode");
+                String errorMsg = jsonObject.getString("errmsg");
+                logger.debug("获取网页授权凭证失败 errcode:{" + errorCode + "} errmsg:{"+ errorMsg + "}", e);
+
+            }
+        }
+        return accessToken;
+    }
     /**
      * 发送https请求
      * 
@@ -531,6 +566,7 @@ public class WebUtils {
             inputStream.close();
             inputStream = null;
             conn.disconnect();
+            logger.debug("微信请求返回：" + buffer.toString());
             jsonObject = JSONObject.fromObject(buffer.toString());
         } catch (ConnectException ce) {
         	logger.debug("连接超时：{}", ce);
