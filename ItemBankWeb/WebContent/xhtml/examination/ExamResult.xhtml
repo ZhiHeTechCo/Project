@@ -68,7 +68,6 @@
 											<f:param name="questionId" value="#{item.no}"></f:param> 
                                       <ui:repeat value="#{item.contextList}" var="stringItem">
                                                   <h:outputText value="#{stringItem}" />
-                                                  <br />
                                       </ui:repeat>
                                       <ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
@@ -98,6 +97,7 @@
                                             </td>
                                         </tr>
 									</c:if>
+									<!-- 
 									<tr>
 										<td><h4>您的选择</h4></td>
 										<h:panelGroup rendered="#{item.myAnswer eq '1'}">
@@ -116,6 +116,7 @@
 											<td colspan="4">未选择</td>
 										</h:panelGroup>
 									</tr>
+									 -->
 									<tr>
 										<td><h4>正确答案</h4></td>
 										<h:panelGroup rendered="#{item.answer eq '1'}">
