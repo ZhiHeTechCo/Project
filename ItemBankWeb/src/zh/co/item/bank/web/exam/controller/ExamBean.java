@@ -113,6 +113,19 @@ public class ExamBean extends BaseController {
             map.put("userId", userInfo.getId());
             // 智能选题
             if (classifyBean == null) {
+//                // 做题等级比当前等级高一个级别
+//                if (StringUtils.isNotEmpty(userInfo.getJlptLevel())) {
+//                    int level = Integer.parseInt(userInfo.getJlptLevel());
+//                    if (level != 1) {
+//                        map.put("jlptLevel", String.valueOf(level - 1));
+//                    }
+//                }
+//                if (StringUtils.isNotEmpty(userInfo.getJtestLevel())) {
+//                    int level = Integer.parseInt(userInfo.getJtestLevel());
+//                    if (level != 1) {
+//                        map.put("jtestLevel", String.valueOf(level - 1));
+//                    }
+//                }
                 if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
                     map.put("jlptLevel", userInfo.getJlptLevel());
                 }
@@ -432,7 +445,6 @@ public class ExamBean extends BaseController {
         map.put("source", source);
         map.put("startTime", startTime);
         examService.deleteExamCollectionBySource(map);
-        saveDropoutInfo();
         doclear();
         // 跳转至试题选择
         ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
