@@ -21,7 +21,7 @@
 									layout="block">
 									<h:outputText
 										value="${request.getAttribute('request-message-content')}"
-										escape="false" style="padding-left: 15px;"/>
+										escape="false" style="padding-left: 15px;" />
 								</h:panelGroup>
 								<table class="toTable">
 									<tr>
@@ -34,7 +34,8 @@
 													onblur="if (this.value == '') {this.value = '用户名';}" />
 											</div>
 										</td>
-										<td><span class="msg" style="margin-left: 10px">用户名/邮箱</span></td>
+										<td><span class="msg" style="margin-left: 10px">用户名/邮箱</span>
+										</td>
 									</tr>
 									<tr>
 										<td>
@@ -47,7 +48,7 @@
 													onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
 											</div>
 										</td>
-										<td><span class="msg" style="margin-left: 10px">6位以上字母、数字或下划线组成</span></td>
+										<td><span class="msg" style="margin-left: 10px">密码</span></td>
 									</tr>
 									<tr>
 										<td>
@@ -63,8 +64,14 @@
 							</div>
 							<div class="col-md-4 contact-top_right">
 								<h3>帮助</h3>
-								<p><span class="glyphicon glyphicon-info-sign"></span> 登录时遇到任何问题，可以扫描底部二维码，在微信中直接给我们留言。</p>
-                                <p><span class="glyphicon glyphicon-info-sign"></span> 您也可以点击上方菜单【留言板】反馈您的问题。</p>
+								<p>
+									<span class="glyphicon glyphicon-info-sign"></span>
+									登录时遇到任何问题，可以扫描底部二维码，在微信中直接给我们留言。
+								</p>
+								<p>
+									<span class="glyphicon glyphicon-info-sign"></span>
+									您也可以点击上方菜单【留言板】反馈您的问题。
+								</p>
 							</div>
 						</div>
 					</div>
