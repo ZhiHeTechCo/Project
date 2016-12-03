@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import zh.co.common.constant.SystemConstants;
+import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 
 /**
@@ -156,7 +158,15 @@ public class AccessFilter implements Filter {
                 }
         	}
         	
-        } /*else {
+        }
+        
+        if((!URI.endsWith(path + "/xhtml/common/index.xhtml")) && (!URI.endsWith(path + "/")) && WebUtils.getLoginUserInfo() == null) {
+        	BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
+        	pageController.init();
+        	response.sendRedirect(request.getContextPath() + "/xhtml/user/signIn.xhtml");
+        	return;
+        }
+        /*else {
             String tokenValidator = request.getParameter("tokenValidator");
             String pageToken = request.getParameter("pageToken");
             if ("1".equals(tokenValidator)) {
