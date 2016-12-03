@@ -217,4 +217,13 @@ public class ExamService {
         examDao.deleteExamCollectionBySource(map);
     }
 
+    /**
+     * 去最新一年的试题
+     * @param map
+     * @return
+     */
+    public String getYear(Map<String, Object> map) {
+        return examDao.getYear(map);
+    }
+
 }

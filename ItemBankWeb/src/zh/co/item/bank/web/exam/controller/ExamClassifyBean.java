@@ -3,6 +3,7 @@ package zh.co.item.bank.web.exam.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,6 +20,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
+import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 
@@ -179,6 +181,8 @@ public class ExamClassifyBean extends BaseController {
         }
         ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
         examBean.setClassifyBean(classifyBean);
+        examBean.setYear(null);
+        examBean.setSafeList(new CopyOnWriteArrayList<ExamModel>());
         return examBean.examSearch();
     }
 

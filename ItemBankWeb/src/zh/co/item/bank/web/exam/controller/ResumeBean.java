@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.controller;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
@@ -56,6 +58,11 @@ public class ResumeBean extends BaseController {
     private String title;
 
     private String subject;
+    
+    /** 大题干List */
+    private List<String> subjectList;
+    
+    private String graphicImage;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_005;
@@ -75,6 +82,10 @@ public class ResumeBean extends BaseController {
             }
 
             pushPathHistory("resumeBean");
+            title = "";
+            subjectList = new ArrayList<String>();
+            subject = "";
+            graphicImage = "";
             // 检索符合记忆曲线的错题，取第一件
             Integer userId = userInfo.getId();
             questions = resumeService.selectQuestionForError(userId);
@@ -122,13 +133,13 @@ public class ResumeBean extends BaseController {
             question = questions.get(0);
         }
         // 画面序号
-        for (int i = 0; i < questions.size(); i++) {
-            questions.get(i).setRowNo(i + 1);
-        }
+        questions = CmnStringUtils.answerLayoutSet(questions);
         // 题目
         title = examService.getTitle(question.getStructureId());
         // 大题干
         subject = StringUtils.isEmpty(question.getSubject()) ? "" : question.getSubject();
+        subjectList = CmnStringUtils.getSubjectList(subject);
+        graphicImage = CmnStringUtils.getGraphicImage(question.getImg());
     }
 
     /**
@@ -193,6 +204,8 @@ public class ResumeBean extends BaseController {
             ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
             examResultBean.setQuestions(questions);
             examResultBean.setSubject(subject);
+            examResultBean.setSubjectList(subjectList);
+            examResultBean.setGraphicImage(graphicImage);
             examResultBean.setResume(true);
             return examResultBean.init();
 
@@ -210,7 +223,8 @@ public class ResumeBean extends BaseController {
      * @return
      */
     public String toClassify() {
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
     }
 
     private boolean checkuser() {
@@ -254,5 +268,21 @@ public class ResumeBean extends BaseController {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+	public List<String> getSubjectList() {
+		return subjectList;
+	}
+
+	public void setSubjectList(List<String> subjectList) {
+		this.subjectList = subjectList;
+	}
+
+	public String getGraphicImage() {
+		return graphicImage;
+	}
+
+	public void setGraphicImage(String graphicImage) {
+		this.graphicImage = graphicImage;
+	}
 
 }

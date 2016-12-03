@@ -23,6 +23,7 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
+							<h5 style="color:#3382C9;"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。</h5>
 							<h4>
 								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
 							</h4>
@@ -32,8 +33,23 @@
                                         <td align="center"><h4>问题</h4></td>
                                     </tr>
                                     <tr>
-                                        <td><h:outputText value="#{examResultBean.subject}" /></td>
+                                        <td><ui:repeat value="#{examResultBean.subjectList}" var="stringItem">
+                                              <h:outputText value="#{stringItem}" />
+                                              <br />
+                                            </ui:repeat>
+                                        </td>
                                     </tr>
+                                    <c:if test="#{examResultBean.graphicImage !=''}">
+                                      <tr>
+                                          <td align="center">
+                                            <div class="gallery-bottom" >
+                                                <div class="col-md-3 gallery-grid">
+                                                    <a class="example-image-link" href="#{examResultBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examResultBean.graphicImage}" alt=""/></a>
+                                                </div>
+                                            </div>
+                                           </td>
+                                      </tr>
+                                    </c:if>
                                 </table>
                             </c:if>
 							<h:dataTable class="table table-bordered" rendered="true"
@@ -49,7 +65,11 @@
 											action="#{examResultBean.showDetail}"
 											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
 											class="list-group-item">
-											<f:param name="questionId" value="#{item.no}"></f:param> #{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
+											<f:param name="questionId" value="#{item.no}"></f:param> 
+                                      <ui:repeat value="#{item.contextList}" var="stringItem">
+                                                  <h:outputText value="#{stringItem}" />
+                                      </ui:repeat>
+                                      <ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
 									<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 										<tr>
@@ -77,6 +97,7 @@
                                             </td>
                                         </tr>
 									</c:if>
+									<!-- 
 									<tr>
 										<td><h4>您的选择</h4></td>
 										<h:panelGroup rendered="#{item.myAnswer eq '1'}">
@@ -95,6 +116,7 @@
 											<td colspan="4">未选择</td>
 										</h:panelGroup>
 									</tr>
+									 -->
 									<tr>
 										<td><h4>正确答案</h4></td>
 										<h:panelGroup rendered="#{item.answer eq '1'}">

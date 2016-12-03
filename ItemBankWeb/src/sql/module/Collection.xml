@@ -222,14 +222,16 @@
 				question_id,
 				count,
 				result1,
-				time1)
+				time1,
+				finish)
 		values 
 		<foreach collection="list" item="item" index="index" separator=",">
 					(#{item.id,jdbcType=INTEGER},
 					#{item.questionId,jdbcType=INTEGER},
 					#{item.count,jdbcType=SMALLINT},
 					#{item.result1,jdbcType=CHAR},
-					CURDATE())
+					CURDATE(),
+					#{item.finish,jdbcType=CHAR})
 		</foreach>
 	</insert>
 

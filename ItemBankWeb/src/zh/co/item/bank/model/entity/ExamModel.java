@@ -1,6 +1,9 @@
 package zh.co.item.bank.model.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import zh.co.common.utils.CmnStringUtils;
 
 public class ExamModel extends QuestionBean {
 
@@ -48,6 +51,8 @@ public class ExamModel extends QuestionBean {
 
     /** radio样式 */
     private String radioClass;
+    
+    private List<String> contextList;
 
     public int getUserId() {
         return userId;
@@ -168,5 +173,13 @@ public class ExamModel extends QuestionBean {
     public void setRadioClass(String radioClass) {
         this.radioClass = radioClass;
     }
+
+	public List<String> getContextList() {
+		return CmnStringUtils.getSubjectList(this.getContext());
+	}
+
+	public void setContextList(List<String> contextList) {
+		this.contextList = contextList;
+	}
 
 }

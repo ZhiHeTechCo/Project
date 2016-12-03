@@ -9,6 +9,7 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+        <h:outputScript library="js" name="lightbox.js" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="resumeForm">
 				<div class="typrography">
@@ -35,10 +36,24 @@
 										<tr>
 											<td align="center"><h4>问题</h4></td>
 										</tr>
-										<tr>
-											<td><h:outputText value="#{resumeBean.subject}"></h:outputText>
-											</td>
-										</tr>
+                                        <tr>
+                                            <td><ui:repeat value="#{resumeBean.subjectList}" var="stringItem">
+                                                  <h:outputText value="#{stringItem}" />
+                                                  <br />
+                                                </ui:repeat>
+                                            </td>
+                                        </tr>
+                                        <c:if test="#{resumeBean.graphicImage !=''}">
+                                          <tr>
+                                              <td align="center">
+                                                <div class="gallery-bottom" >
+                                                    <div class="col-md-3 gallery-grid">
+                                                        <a class="example-image-link" href="#{resumeBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{resumeBean.graphicImage}" alt=""/></a>
+                                                    </div>
+                                                </div>
+                                               </td>
+                                          </tr>
+                                        </c:if>
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
@@ -47,25 +62,22 @@
 										<h4>
 											<h:outputText value="#{item.rowNo}"></h:outputText>
 										</h4>
-										<td colspan="4">#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
-										</td>
-										<tr>
-											<td><h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-													value="#{item.myAnswer}"></h:inputHidden></td>
-											<td><input name="myAnswer#{item.rowNo}" type="radio"
-												value="1"
-												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='1';" />${item.a}</td>
-											<td><input name="myAnswer#{item.rowNo}" type="radio"
-												value="2"
-												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='2';" />${item.b}</td>
-											<td><input name="myAnswer#{item.rowNo}" type="radio"
-												value="3"
-												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='3';" />${item.c}</td>
-											<td><input name="myAnswer#{item.rowNo}" type="radio"
-												value="4"
-												onclick="document.getElementById('resumeForm:qt:#{item.rowNo-1}:myAnswer').value='4';" />${item.d}</td>
-										</tr>
-									</h:column>
+                                    </h:column>
+                                    <h:column>
+                                          <ui:repeat value="#{item.contextList}" var="stringItem">
+                                                  <h:outputText value="#{stringItem}" />
+                                          </ui:repeat><ins>#{item.contextKey}</ins>#{item.contextAfter}
+                                          <hr />
+                                        <h:inputHidden id="myAnswer" name="#{item.myAnswer}"
+                                            value="#{item.myAnswer}" />
+                                          <h:selectOneRadio value="#{item.myAnswer}"
+                                              layout="pageDirection" class="radioTable2">
+                                              <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                                              <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                                              <f:selectItem itemValue="3" itemLabel="#{item.c}" />
+                                              <f:selectItem itemValue="4" itemLabel="#{item.d}" />
+                                          </h:selectOneRadio>
+                                    </h:column>								
 								</h:dataTable>
 								<div class="form-submit1">
 									<h:commandButton value="确认" class="button1"

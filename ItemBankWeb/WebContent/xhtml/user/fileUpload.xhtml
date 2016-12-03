@@ -50,19 +50,19 @@
                 </tr>         
               </table>
               <div class="form-submit1">
-                  <h:commandButton id="selectFile" value="上传文件" 
+                  <h:commandButton id="selectFile" value="上传文件" style="margin-right: 5px;"
                       onclick="cancelToken(this);selectFile(this,'flform:upbtn_input');"/>
               </div>
               <div class="form-submit1">
-                  <h:commandButton id="downloadFile" value="下载文件" 
+                  <h:commandButton id="downloadFile" value="下载文件" style="margin-right: 5px;"
                       action="#{fileManageBean.doDownLoad}" onclick="clickDownloadFile(this)"/>
               </div>
               <div class="form-submit1">
-                  <h:commandButton id="toExamBtn" value="去试题库" 
+                  <h:commandButton id="toExamBtn" value="去试题库" style="margin-right: 5px;"
                       action="#{userInfoBean.toExam}" />
               </div>
               <div class="form-submit1">
-                  <h:commandButton id="toResumeBtn" value="去错题库" 
+                  <h:commandButton id="toResumeBtn" value="去错题库" style="margin-right: 5px;"
                       action="#{userInfoBean.toResume}" />
               </div>
               </h:form>
