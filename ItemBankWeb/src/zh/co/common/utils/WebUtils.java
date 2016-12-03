@@ -217,10 +217,17 @@ public class WebUtils {
      */
     public static void setRequestAttribute(String attributeName, Object attributeValue) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = facesContext.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
-        request.setAttribute(attributeName, attributeValue);
-
+        ServletRequestAttributes ra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        if (facesContext != null) {
+            //JSF
+        	ExternalContext extContext = facesContext.getExternalContext();
+            HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
+            request.setAttribute(attributeName, attributeValue);
+        } else if ( ra != null ){
+            //SpringMvc
+            HttpServletRequest request = ra.getRequest();
+            request.setAttribute(attributeName, attributeValue);
+        } 
     }
 
     
