@@ -104,7 +104,7 @@ public class QuestionInsertController extends BaseController {
                 classifyBean.setJlptLevel(question.getJlptLevel());
             }
             if (!question.getJtestLevel().isEmpty()) {
-                classifyBean.setJtestLevel(question.getJlptLevel());
+                classifyBean.setJtestLevel(question.getJtestLevel());
             }
             // ClassifyId
             Integer classifyId = examService.getClassifyId(classifyBean);
@@ -114,6 +114,7 @@ public class QuestionInsertController extends BaseController {
                 throw ex;
             }
             question.setClassifyId(classifyId);
+            question.setDeleteFlag("1");
             // 登录试题表
             questionService.insertQuestion(question);
 

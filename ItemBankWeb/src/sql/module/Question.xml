@@ -377,6 +377,12 @@
 			<if test="context !=null">
 				context,
 			</if>
+			<if test="contextKey !=null">
+				context_key,
+			</if>
+			<if test="contextAfter !=null">
+				context_after,
+			</if>
 			<if test="a !=null">
 				a,
 			</if>
@@ -407,10 +413,19 @@
 			<if test="fatherId !=null">
 				father_id,
 			</if>
+			<if test="deleteFlag !=null">
+				delete_flag,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="context !=null">
 				#{context,jdbcType=VARCHAR},
+			</if>
+			<if test="contextKey !=null">
+				#{contextKey,jdbcType=VARCHAR},
+			</if>
+			<if test="contextAfter !=null">
+				#{contextAfter,jdbcType=VARCHAR},
 			</if>
 			<if test="a !=null">
 				#{a,jdbcType=VARCHAR},
@@ -441,6 +456,9 @@
 			</if>
 			<if test="fatherId !=null">
 				#{fatherId,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag !=null">
+				#{deleteFlag,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
