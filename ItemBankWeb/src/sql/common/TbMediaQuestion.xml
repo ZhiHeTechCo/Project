@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TbMediaQuestion" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
+    <id column="no" property="no" jdbcType="INTEGER" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="a" property="a" jdbcType="VARCHAR" />
+    <result column="b" property="b" jdbcType="VARCHAR" />
+    <result column="c" property="c" jdbcType="VARCHAR" />
+    <result column="d" property="d" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="CHAR" />
+    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="CHAR" />
+    <result column="year" property="year" jdbcType="CHAR" />
+    <result column="media_id" property="mediaId" jdbcType="INTEGER" />
+    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+    <result column="structure_id" property="structureId" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, context, a, b, c, d, answer, analysis, source, year, media_id, classify_id, structure_id, 
+    delete_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBeanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_media_question
+    where no = #{no,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBeanKey" >
+    delete from tb_media_question
+    where no = #{no,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
+    insert into tb_media_question (no, context, a, 
+      b, c, d, answer, 
+      analysis, source, year, media_id, 
+      classify_id, structure_id, delete_flag
+      )
+    values (#{no,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR}, #{a,jdbcType=VARCHAR}, 
+      #{b,jdbcType=VARCHAR}, #{c,jdbcType=VARCHAR}, #{d,jdbcType=VARCHAR}, #{answer,jdbcType=CHAR}, 
+      #{analysis,jdbcType=VARCHAR}, #{source,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{mediaId,jdbcType=INTEGER}, 
+      #{classifyId,jdbcType=INTEGER}, #{structureId,jdbcType=INTEGER}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
+    insert into tb_media_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+      <if test="a != null" >
+        a,
+      </if>
+      <if test="b != null" >
+        b,
+      </if>
+      <if test="c != null" >
+        c,
+      </if>
+      <if test="d != null" >
+        d,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="analysis != null" >
+        analysis,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
+      <if test="structureId != null" >
+        structure_id,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=CHAR},
+      </if>
+      <if test="analysis != null" >
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=CHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="structureId != null" >
+        #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
+    update tb_media_question
+    <set >
+      <if test="context != null" >
+        context = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        a = #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        b = #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        c = #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        d = #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=CHAR},
+      </if>
+      <if test="analysis != null" >
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=CHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=CHAR},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyId != null" >
+        classify_id = #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="structureId != null" >
+        structure_id = #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
+    update tb_media_question
+    set context = #{context,jdbcType=VARCHAR},
+      a = #{a,jdbcType=VARCHAR},
+      b = #{b,jdbcType=VARCHAR},
+      c = #{c,jdbcType=VARCHAR},
+      d = #{d,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=CHAR},
+      analysis = #{analysis,jdbcType=VARCHAR},
+      source = #{source,jdbcType=CHAR},
+      year = #{year,jdbcType=CHAR},
+      media_id = #{mediaId,jdbcType=INTEGER},
+      classify_id = #{classifyId,jdbcType=INTEGER},
+      structure_id = #{structureId,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=CHAR}
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>
