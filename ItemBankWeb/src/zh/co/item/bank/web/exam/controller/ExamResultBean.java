@@ -169,6 +169,16 @@ public class ExamResultBean extends BaseController {
         } catch (Exception e) {
             processForException(this.logger, e);
         }
+
+        // 权限判断
+        // if (Integer.parseInt(userInfo.getRole()) >= 90) {
+        // // 试题管理
+        // QuestionUpdateController questionUpdateController =
+        // (QuestionUpdateController) SpringAppContextManager
+        // .getBean("questionUpdateController");
+        // questionUpdateController.setQuestion(question);
+        // return questionUpdateController.init();
+        // }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
 
@@ -217,6 +227,24 @@ public class ExamResultBean extends BaseController {
             }
         } catch (Exception e) {
             processForException(this.logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_004;
+    }
+
+    /**
+     * 试题报错（暂时不用）
+     * 
+     * @return
+     */
+    public String reportError() {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                .getRequest();
+        String questionId = request.getParameter("questionId");
+        if (questionId != null) {
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
+            if (!checkuser()) {
+                return SystemConstants.PAGE_ITBK_EXAM_004;
+            }
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
