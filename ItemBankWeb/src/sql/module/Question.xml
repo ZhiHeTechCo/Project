@@ -26,7 +26,7 @@
 
 	<select id="selectErrorByFatherId" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select c.*,d.finish from (select a.subject, b.* from
+		select c.*,d.finish from (select a.subject, a.img, b.* from
 		tb_first_level_directory a right join
 		vb_question_detail b on a.id =
 		b.father_id where
