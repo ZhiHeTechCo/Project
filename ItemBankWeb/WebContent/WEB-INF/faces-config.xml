@@ -78,11 +78,14 @@
       <to-view-id>/xhtml/examination/ExamReport.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
+      <from-outcome>ITBK_EXAM_007</from-outcome>
+      <to-view-id>/xhtml/examination/MediaExam.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_QUE_001</from-outcome>
       <to-view-id>/xhtml/examination/QuestionInsert.xhtml</to-view-id>
    </navigation-case>
-   
-   
+
    <navigation-case>
       <from-outcome>page_forward_error</from-outcome>
       <to-view-id>/xhtml/common/page_forward_error.xhtml</to-view-id>
