@@ -91,6 +91,8 @@ public class SystemConstants {
 	public static final String PAGE_ITBK_EXAM_005 = "ITBK_EXAM_005";
 	/** 考试结果一览 */
 	public static final String PAGE_ITBK_EXAM_006 = "ITBK_EXAM_006";
+	/** 听力 */
+	public static final String PAGE_ITBK_EXAM_007 = "ITBK_EXAM_007";
 	/** 试题登录 */
 	public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     
