@@ -3,23 +3,24 @@
 <mapper namespace="TbMediaQuestion" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
     <id column="no" property="no" jdbcType="INTEGER" />
-    <result column="context" property="context" jdbcType="VARCHAR" />
-    <result column="a" property="a" jdbcType="VARCHAR" />
-    <result column="b" property="b" jdbcType="VARCHAR" />
-    <result column="c" property="c" jdbcType="VARCHAR" />
-    <result column="d" property="d" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="CHAR" />
+    <result column="a" property="a" jdbcType="CHAR" />
+    <result column="b" property="b" jdbcType="CHAR" />
+    <result column="c" property="c" jdbcType="CHAR" />
+    <result column="d" property="d" jdbcType="CHAR" />
+    <result column="a_img" property="aImg" jdbcType="LONGVARBINARY" />
+    <result column="b_img" property="bImg" jdbcType="LONGVARBINARY" />
+    <result column="c_img" property="cImg" jdbcType="LONGVARBINARY" />
+    <result column="d_img" property="dImg" jdbcType="LONGVARBINARY" />
     <result column="answer" property="answer" jdbcType="CHAR" />
-    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
-    <result column="source" property="source" jdbcType="CHAR" />
-    <result column="year" property="year" jdbcType="CHAR" />
-    <result column="media_id" property="mediaId" jdbcType="INTEGER" />
-    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+    <result column="analysis" property="analysis" jdbcType="CHAR" />
     <result column="structure_id" property="structureId" jdbcType="INTEGER" />
+    <result column="media_id" property="mediaId" jdbcType="INTEGER" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    no, context, a, b, c, d, answer, analysis, source, year, media_id, classify_id, structure_id, 
-    delete_flag
+    no, context, a, b, c, d, a_img, b_img, c_img, d_img, answer, analysis, structure_id, 
+    media_id, delete_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBeanKey" >
     select 
@@ -32,16 +33,16 @@
     where no = #{no,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
-    insert into tb_media_question (no, context, a, 
-      b, c, d, answer, 
-      analysis, source, year, media_id, 
-      classify_id, structure_id, delete_flag
-      )
-    values (#{no,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR}, #{a,jdbcType=VARCHAR}, 
-      #{b,jdbcType=VARCHAR}, #{c,jdbcType=VARCHAR}, #{d,jdbcType=VARCHAR}, #{answer,jdbcType=CHAR}, 
-      #{analysis,jdbcType=VARCHAR}, #{source,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{mediaId,jdbcType=INTEGER}, 
-      #{classifyId,jdbcType=INTEGER}, #{structureId,jdbcType=INTEGER}, #{deleteFlag,jdbcType=CHAR}
-      )
+    insert into tb_media_question (no, context, a, b, 
+      c, d, a_img, b_img, 
+      c_img, d_img, answer, 
+      analysis, structure_id, media_id, 
+      delete_flag)
+    values (#{no,jdbcType=INTEGER}, #{context,jdbcType=CHAR}, #{a,jdbcType=CHAR}, #{b,jdbcType=CHAR}, 
+      #{c,jdbcType=CHAR}, #{d,jdbcType=CHAR}, #{aImg,jdbcType=LONGVARBINARY}, #{bImg,jdbcType=LONGVARBINARY}, 
+      #{cImg,jdbcType=LONGVARBINARY}, #{dImg,jdbcType=LONGVARBINARY}, #{answer,jdbcType=CHAR}, 
+      #{analysis,jdbcType=CHAR}, #{structureId,jdbcType=INTEGER}, #{mediaId,jdbcType=INTEGER}, 
+      #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
     insert into tb_media_question
@@ -64,26 +65,29 @@
       <if test="d != null" >
         d,
       </if>
+      <if test="aImg != null" >
+        a_img,
+      </if>
+      <if test="bImg != null" >
+        b_img,
+      </if>
+      <if test="cImg != null" >
+        c_img,
+      </if>
+      <if test="dImg != null" >
+        d_img,
+      </if>
       <if test="answer != null" >
         answer,
       </if>
       <if test="analysis != null" >
         analysis,
       </if>
-      <if test="source != null" >
-        source,
-      </if>
-      <if test="year != null" >
-        year,
+      <if test="structureId != null" >
+        structure_id,
       </if>
       <if test="mediaId != null" >
         media_id,
-      </if>
-      <if test="classifyId != null" >
-        classify_id,
-      </if>
-      <if test="structureId != null" >
-        structure_id,
       </if>
       <if test="deleteFlag != null" >
         delete_flag,
@@ -94,40 +98,43 @@
         #{no,jdbcType=INTEGER},
       </if>
       <if test="context != null" >
-        #{context,jdbcType=VARCHAR},
+        #{context,jdbcType=CHAR},
       </if>
       <if test="a != null" >
-        #{a,jdbcType=VARCHAR},
+        #{a,jdbcType=CHAR},
       </if>
       <if test="b != null" >
-        #{b,jdbcType=VARCHAR},
+        #{b,jdbcType=CHAR},
       </if>
       <if test="c != null" >
-        #{c,jdbcType=VARCHAR},
+        #{c,jdbcType=CHAR},
       </if>
       <if test="d != null" >
-        #{d,jdbcType=VARCHAR},
+        #{d,jdbcType=CHAR},
+      </if>
+      <if test="aImg != null" >
+        #{aImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="bImg != null" >
+        #{bImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="cImg != null" >
+        #{cImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="dImg != null" >
+        #{dImg,jdbcType=LONGVARBINARY},
       </if>
       <if test="answer != null" >
         #{answer,jdbcType=CHAR},
       </if>
       <if test="analysis != null" >
-        #{analysis,jdbcType=VARCHAR},
-      </if>
-      <if test="source != null" >
-        #{source,jdbcType=CHAR},
-      </if>
-      <if test="year != null" >
-        #{year,jdbcType=CHAR},
-      </if>
-      <if test="mediaId != null" >
-        #{mediaId,jdbcType=INTEGER},
-      </if>
-      <if test="classifyId != null" >
-        #{classifyId,jdbcType=INTEGER},
+        #{analysis,jdbcType=CHAR},
       </if>
       <if test="structureId != null" >
         #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=INTEGER},
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=CHAR},
@@ -138,40 +145,43 @@
     update tb_media_question
     <set >
       <if test="context != null" >
-        context = #{context,jdbcType=VARCHAR},
+        context = #{context,jdbcType=CHAR},
       </if>
       <if test="a != null" >
-        a = #{a,jdbcType=VARCHAR},
+        a = #{a,jdbcType=CHAR},
       </if>
       <if test="b != null" >
-        b = #{b,jdbcType=VARCHAR},
+        b = #{b,jdbcType=CHAR},
       </if>
       <if test="c != null" >
-        c = #{c,jdbcType=VARCHAR},
+        c = #{c,jdbcType=CHAR},
       </if>
       <if test="d != null" >
-        d = #{d,jdbcType=VARCHAR},
+        d = #{d,jdbcType=CHAR},
+      </if>
+      <if test="aImg != null" >
+        a_img = #{aImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="bImg != null" >
+        b_img = #{bImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="cImg != null" >
+        c_img = #{cImg,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="dImg != null" >
+        d_img = #{dImg,jdbcType=LONGVARBINARY},
       </if>
       <if test="answer != null" >
         answer = #{answer,jdbcType=CHAR},
       </if>
       <if test="analysis != null" >
-        analysis = #{analysis,jdbcType=VARCHAR},
-      </if>
-      <if test="source != null" >
-        source = #{source,jdbcType=CHAR},
-      </if>
-      <if test="year != null" >
-        year = #{year,jdbcType=CHAR},
-      </if>
-      <if test="mediaId != null" >
-        media_id = #{mediaId,jdbcType=INTEGER},
-      </if>
-      <if test="classifyId != null" >
-        classify_id = #{classifyId,jdbcType=INTEGER},
+        analysis = #{analysis,jdbcType=CHAR},
       </if>
       <if test="structureId != null" >
         structure_id = #{structureId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=INTEGER},
       </if>
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=CHAR},
@@ -181,18 +191,19 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbMediaQuestionBean" >
     update tb_media_question
-    set context = #{context,jdbcType=VARCHAR},
-      a = #{a,jdbcType=VARCHAR},
-      b = #{b,jdbcType=VARCHAR},
-      c = #{c,jdbcType=VARCHAR},
-      d = #{d,jdbcType=VARCHAR},
+    set context = #{context,jdbcType=CHAR},
+      a = #{a,jdbcType=CHAR},
+      b = #{b,jdbcType=CHAR},
+      c = #{c,jdbcType=CHAR},
+      d = #{d,jdbcType=CHAR},
+      a_img = #{aImg,jdbcType=LONGVARBINARY},
+      b_img = #{bImg,jdbcType=LONGVARBINARY},
+      c_img = #{cImg,jdbcType=LONGVARBINARY},
+      d_img = #{dImg,jdbcType=LONGVARBINARY},
       answer = #{answer,jdbcType=CHAR},
-      analysis = #{analysis,jdbcType=VARCHAR},
-      source = #{source,jdbcType=CHAR},
-      year = #{year,jdbcType=CHAR},
-      media_id = #{mediaId,jdbcType=INTEGER},
-      classify_id = #{classifyId,jdbcType=INTEGER},
+      analysis = #{analysis,jdbcType=CHAR},
       structure_id = #{structureId,jdbcType=INTEGER},
+      media_id = #{mediaId,jdbcType=INTEGER},
       delete_flag = #{deleteFlag,jdbcType=CHAR}
     where no = #{no,jdbcType=INTEGER}
   </update>

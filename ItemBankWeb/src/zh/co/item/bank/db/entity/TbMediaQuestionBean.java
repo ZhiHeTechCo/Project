@@ -11,19 +11,21 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
 
     private String d;
 
+    private byte[] aImg;
+
+    private byte[] bImg;
+
+    private byte[] cImg;
+
+    private byte[] dImg;
+
     private String answer;
 
     private String analysis;
 
-    private String source;
-
-    private String year;
+    private Integer structureId;
 
     private Integer mediaId;
-
-    private Integer classifyId;
-
-    private Integer structureId;
 
     private String deleteFlag;
 
@@ -67,6 +69,38 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
         this.d = d == null ? null : d.trim();
     }
 
+    public byte[] getaImg() {
+        return aImg;
+    }
+
+    public void setaImg(byte[] aImg) {
+        this.aImg = aImg;
+    }
+
+    public byte[] getbImg() {
+        return bImg;
+    }
+
+    public void setbImg(byte[] bImg) {
+        this.bImg = bImg;
+    }
+
+    public byte[] getcImg() {
+        return cImg;
+    }
+
+    public void setcImg(byte[] cImg) {
+        this.cImg = cImg;
+    }
+
+    public byte[] getdImg() {
+        return dImg;
+    }
+
+    public void setdImg(byte[] dImg) {
+        this.dImg = dImg;
+    }
+
     public String getAnswer() {
         return answer;
     }
@@ -83,20 +117,12 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
         this.analysis = analysis == null ? null : analysis.trim();
     }
 
-    public String getSource() {
-        return source;
+    public Integer getStructureId() {
+        return structureId;
     }
 
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year == null ? null : year.trim();
+    public void setStructureId(Integer structureId) {
+        this.structureId = structureId;
     }
 
     public Integer getMediaId() {
@@ -105,22 +131,6 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
 
     public void setMediaId(Integer mediaId) {
         this.mediaId = mediaId;
-    }
-
-    public Integer getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
-    }
-
-    public Integer getStructureId() {
-        return structureId;
-    }
-
-    public void setStructureId(Integer structureId) {
-        this.structureId = structureId;
     }
 
     public String getDeleteFlag() {

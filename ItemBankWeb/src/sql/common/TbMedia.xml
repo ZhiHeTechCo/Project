@@ -3,12 +3,14 @@
 <mapper namespace="TbMedia" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbMediaBean" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="language" property="language" jdbcType="CHAR" />
     <result column="media" property="media" jdbcType="LONGVARBINARY" />
+    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+    <result column="language" property="language" jdbcType="CHAR" />
+    <result column="source" property="source" jdbcType="CHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, language, media, delete_flag
+    id, media, classify_id, language, source, delete_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbMediaBeanKey" >
     select 
@@ -21,10 +23,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbMediaBean" >
-    insert into tb_media (id, language, media, 
-      delete_flag)
-    values (#{id,jdbcType=INTEGER}, #{language,jdbcType=CHAR}, #{media,jdbcType=LONGVARBINARY}, 
-      #{deleteFlag,jdbcType=CHAR})
+    insert into tb_media (id, media, classify_id, 
+      language, source, delete_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{media,jdbcType=LONGVARBINARY}, #{classifyId,jdbcType=INTEGER}, 
+      #{language,jdbcType=CHAR}, #{source,jdbcType=CHAR}, #{deleteFlag,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbMediaBean" >
     insert into tb_media
@@ -32,11 +36,17 @@
       <if test="id != null" >
         id,
       </if>
+      <if test="media != null" >
+        media,
+      </if>
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
       <if test="language != null" >
         language,
       </if>
-      <if test="media != null" >
-        media,
+      <if test="source != null" >
+        source,
       </if>
       <if test="deleteFlag != null" >
         delete_flag,
@@ -46,11 +56,17 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="media != null" >
+        #{media,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=INTEGER},
+      </if>
       <if test="language != null" >
         #{language,jdbcType=CHAR},
       </if>
-      <if test="media != null" >
-        #{media,jdbcType=LONGVARBINARY},
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=CHAR},
@@ -60,11 +76,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbMediaBean" >
     update tb_media
     <set >
+      <if test="media != null" >
+        media = #{media,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="classifyId != null" >
+        classify_id = #{classifyId,jdbcType=INTEGER},
+      </if>
       <if test="language != null" >
         language = #{language,jdbcType=CHAR},
       </if>
-      <if test="media != null" >
-        media = #{media,jdbcType=LONGVARBINARY},
+      <if test="source != null" >
+        source = #{source,jdbcType=CHAR},
       </if>
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=CHAR},
@@ -74,8 +96,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbMediaBean" >
     update tb_media
-    set language = #{language,jdbcType=CHAR},
-      media = #{media,jdbcType=LONGVARBINARY},
+    set media = #{media,jdbcType=LONGVARBINARY},
+      classify_id = #{classifyId,jdbcType=INTEGER},
+      language = #{language,jdbcType=CHAR},
+      source = #{source,jdbcType=CHAR},
       delete_flag = #{deleteFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
