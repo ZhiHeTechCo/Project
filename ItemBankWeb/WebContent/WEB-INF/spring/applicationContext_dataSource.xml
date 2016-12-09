@@ -33,6 +33,8 @@
                 <value>classpath:sql/common/TbForumAsker.xml</value>
                 <value>classpath:sql/common/TbForumResponse.xml</value>
                 <value>classpath:sql/common/TbGrammar.xml</value>
+                <value>classpath:sql/common/TbMedia.xml</value>
+                <value>classpath:sql/common/TbMediaQuestion.xml</value>
                 <value>classpath:sql/common/TbQuestion.xml</value>
                 <value>classpath:sql/common/TbQuestionClassify.xml</value>
                 <value>classpath:sql/common/TbQuestionStructure.xml</value>
@@ -45,6 +47,7 @@
                 
                 <value>classpath:sql/module/CodeManage.xml</value>
                 <value>classpath:sql/module/UserManage.xml</value>
+                <value>classpath:sql/module/Media.xml</value>
                 <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
                 <value>classpath:sql/module/ExamCollection.xml</value>

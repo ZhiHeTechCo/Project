@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Media">
+
+    <select id="selectClassifyId" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
+        resultType="java.lang.Integer">
+        select id from tb_question_classify where delete_flag = '0'
+        <if test="exam !=null &amp; exam !=''">
+            and exam = #{exam,jdbcType=CHAR}
+        </if>
+        <if test="jlptLevel !=null &amp; jlptLevel !=''">
+            and jlpt_level = #{jlptLevel,jdbcType=CHAR}
+        </if>
+        <if test="jtestLevel !=null &amp; jtestLevel !=''">
+            and jtest_level = #{jtestLevel,jdbcType=CHAR}
+        </if>
+        <if test="examType !=null &amp; examType !=''">
+            and exam_type = #{examType,jdbcType=CHAR}
+        </if>
+        group by id
+        order by id
+    </select>
+
+	<select id="selectMedia" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.MediaModel">
+		select a.*,b.time,b.`status` from (
+			select id, media, classify_id from tb_media
+			where id not in(select media_id from tb_media_collection where user_id=#{userId,jdbcType=INTEGER})
+			and delete_flag='0' and classify_id=#{classifyId,jdbcType=INTEGER}
+		) a left join tb_media_collection b
+        on a.id = b.media_id
+        <if test="status !=null">
+        where status = #{status}
+        </if>
+        order by b.status
+        limit 1
+	</select>
+
+	<select id="selectQuestionByMediaId" parameterType="INTEGER"
+		resultType="zh.co.item.bank.model.entity.MediaModel">
+		select * from tb_media_question where media_id = #{mediaId}
+	</select>
+
+    <select id="selectStructuresByClassifyId" parameterType="INTEGER"
+        resultType="zh.co.item.bank.db.entity.TbQuestionStructureBean">
+        select id, title, classify_id from tb_question_structure where classify_id=#{classifyId,jdbcType=INTEGER}
+        order by id
+    </select>
+
+</mapper>

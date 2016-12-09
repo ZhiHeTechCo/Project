@@ -27,12 +27,15 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
+import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamDropoutService;
 import zh.co.item.bank.web.exam.service.ExamService;
+import zh.co.item.bank.web.exam.service.MediaService;
 
 /**
  * 考试画面
@@ -57,6 +60,9 @@ public class ExamBean extends BaseController {
 
     @Inject
     private ExamDropoutService examDropoutService;
+
+    @Inject
+    private MediaService mediaService;
 
     /** 试题 */
     private List<ExamModel> questions;
@@ -90,6 +96,14 @@ public class ExamBean extends BaseController {
     // 开始做题时间
     Date startTime = null;
 
+    /** --听力模式用变量-- */
+    // 音频
+    MediaModel mediaModel;
+    // 听力试题
+    List<MediaModel> mediaQuestions;
+    // 大题目
+    List<TbQuestionStructureBean> structures;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
@@ -113,19 +127,6 @@ public class ExamBean extends BaseController {
             map.put("userId", userInfo.getId());
             // 智能选题
             if (classifyBean == null) {
-//                // 做题等级比当前等级高一个级别
-//                if (StringUtils.isNotEmpty(userInfo.getJlptLevel())) {
-//                    int level = Integer.parseInt(userInfo.getJlptLevel());
-//                    if (level != 1) {
-//                        map.put("jlptLevel", String.valueOf(level - 1));
-//                    }
-//                }
-//                if (StringUtils.isNotEmpty(userInfo.getJtestLevel())) {
-//                    int level = Integer.parseInt(userInfo.getJtestLevel());
-//                    if (level != 1) {
-//                        map.put("jtestLevel", String.valueOf(level - 1));
-//                    }
-//                }
                 if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
                     map.put("jlptLevel", userInfo.getJlptLevel());
                 }
@@ -165,11 +166,26 @@ public class ExamBean extends BaseController {
                         questions = examService.classifySearch(classifyBean, map);
                     }
 
+                    // 选择了听力
+                } else if ("6".equals(classifyBean.getExamType())) {
+                    // 初始化
+                    mediaModel = null;
+                    mediaQuestions = new ArrayList<MediaModel>();
+                    structures = new ArrayList<TbQuestionStructureBean>();
+
+                    mediaQuestions = selectForMediaQuestions();
+                    if (mediaQuestions == null || mediaQuestions.size() == 0) {
+                        // 题库已空
+                        logger.log(MessageId.ITBK_I_0010);
+                        CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
+                        throw ex;
+                    }
+                    return SystemConstants.PAGE_ITBK_EXAM_007;
+
                     // 正常条件检索
                 } else {
                     questions = examService.classifySearch(classifyBean, map);
                 }
-
             }
 
             if (questions == null || questions.size() == 0) {
@@ -211,6 +227,40 @@ public class ExamBean extends BaseController {
         }
 
         return SystemConstants.PAGE_ITBK_EXAM_002;
+    }
+
+    /**
+     * 检索听力试题
+     * 
+     * @return
+     */
+    private List<MediaModel> selectForMediaQuestions() {
+        // 获取ClassifyId
+        List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
+        if (classifyIds == null || classifyIds.size() == 0) {
+            return null;
+        }
+
+        // 获取音频
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userInfo.getId());
+        for (Integer classifyId : classifyIds) {
+            map.put("classifyId", classifyId);
+            mediaModel = mediaService.getMedia(map);
+            if (mediaModel == null) {
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (mediaModel == null) {
+            return null;
+        }
+        // 获取大题目
+        structures = mediaService.selectForStructures((Integer) map.get("classifyId"));
+
+        // 获取听力试题
+        return mediaService.getMediaQuestions(mediaModel.getId());
     }
 
     /**
@@ -595,6 +645,30 @@ public class ExamBean extends BaseController {
 
     public void setSafeList(CopyOnWriteArrayList<ExamModel> safeList) {
         this.safeList = safeList;
+    }
+
+    public MediaModel getMediaModel() {
+        return mediaModel;
+    }
+
+    public void setMediaModel(MediaModel mediaModel) {
+        this.mediaModel = mediaModel;
+    }
+
+    public List<TbQuestionStructureBean> getStructures() {
+        return structures;
+    }
+
+    public void setStructures(List<TbQuestionStructureBean> structures) {
+        this.structures = structures;
+    }
+
+    public List<MediaModel> getMediaQuestions() {
+        return mediaQuestions;
+    }
+
+    public void setMediaQuestions(List<MediaModel> mediaQuestions) {
+        this.mediaQuestions = mediaQuestions;
     }
 
 }

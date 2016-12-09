@@ -2,6 +2,8 @@ package zh.co.item.bank.db.entity;
 
 public class TbMediaBean extends TbMediaBeanKey {
     private byte[] media;
+    
+    private Integer classifyId;
 
     private Integer classifyId;
 
@@ -41,6 +43,14 @@ public class TbMediaBean extends TbMediaBeanKey {
 
     public void setSource(String source) {
         this.source = source == null ? null : source.trim();
+    }
+
+    public Integer getClassifyId() {
+        return classifyId;
+    }
+
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
     }
 
     public String getDeleteFlag() {

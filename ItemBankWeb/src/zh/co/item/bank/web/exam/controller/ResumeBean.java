@@ -97,7 +97,6 @@ public class ResumeBean extends BaseController {
                 if (questions.size() == 0) {
                     tableShow = null;
                     logger.log(MessageId.ITBK_I_0006);
-//                    throw new CmnBizException(MessageId.ITBK_I_0006);
 
                 } else {
                     tableShow = MessageUtils.getMessage(MessageId.ITBK_I_0007);
