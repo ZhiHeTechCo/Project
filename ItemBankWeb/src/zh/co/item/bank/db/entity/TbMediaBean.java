@@ -5,8 +5,6 @@ public class TbMediaBean extends TbMediaBeanKey {
     
     private Integer classifyId;
 
-    private Integer classifyId;
-
     private String language;
 
     private String source;
@@ -19,14 +17,6 @@ public class TbMediaBean extends TbMediaBeanKey {
 
     public void setMedia(byte[] media) {
         this.media = media;
-    }
-
-    public Integer getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
     }
 
     public String getLanguage() {
