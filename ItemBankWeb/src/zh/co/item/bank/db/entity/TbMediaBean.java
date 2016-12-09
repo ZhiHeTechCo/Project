@@ -2,7 +2,7 @@ package zh.co.item.bank.db.entity;
 
 public class TbMediaBean extends TbMediaBeanKey {
     private byte[] media;
-    
+
     private Integer classifyId;
 
     private String language;
@@ -19,6 +19,14 @@ public class TbMediaBean extends TbMediaBeanKey {
         this.media = media;
     }
 
+    public Integer getClassifyId() {
+        return classifyId;
+    }
+
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
+    }
+
     public String getLanguage() {
         return language;
     }
@@ -33,14 +41,6 @@ public class TbMediaBean extends TbMediaBeanKey {
 
     public void setSource(String source) {
         this.source = source == null ? null : source.trim();
-    }
-
-    public Integer getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
     }
 
     public String getDeleteFlag() {

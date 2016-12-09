@@ -5,10 +5,10 @@ import java.util.Date;
 public class TbMediaCollectionBean {
     private Integer mediaId;
 
-    private Integer userId;
-    
     private Integer questionId;
-    
+
+    private Integer userId;
+
     private String myAnswer;
 
     private Date time;
@@ -23,6 +23,14 @@ public class TbMediaCollectionBean {
         this.mediaId = mediaId;
     }
 
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
     public Integer getUserId() {
         return userId;
     }
@@ -31,23 +39,15 @@ public class TbMediaCollectionBean {
         this.userId = userId;
     }
 
-    public Integer getQuestionId() {
-		return questionId;
-	}
+    public String getMyAnswer() {
+        return myAnswer;
+    }
 
-	public void setQuestionId(Integer questionId) {
-		this.questionId = questionId;
-	}
+    public void setMyAnswer(String myAnswer) {
+        this.myAnswer = myAnswer == null ? null : myAnswer.trim();
+    }
 
-	public String getMyAnswer() {
-		return myAnswer;
-	}
-
-	public void setMyAnswer(String myAnswer) {
-		this.myAnswer = myAnswer;
-	}
-
-	public Date getTime() {
+    public Date getTime() {
         return time;
     }
 
