@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.MediaModel;
@@ -63,4 +64,12 @@ public class MediaService {
         return mediaDao.getStructures(classifyId);
     }
 
+	/**
+	 * 登录做题记录
+	 * 
+	 * @param beans
+	 */
+	public void insertMediaCollections(List<TbMediaCollectionBean> beans) {
+		mediaDao.insertMediaCollections(beans);
+	}
 }

@@ -26,6 +26,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
+import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -180,6 +181,8 @@ public class ExamBean extends BaseController {
                         CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                         throw ex;
                     }
+                    // 画面序号和显示设置
+                    mediaQuestions = CmnStringUtils.selectionLayoutSet(mediaQuestions);
                     return SystemConstants.PAGE_ITBK_EXAM_007;
 
                     // 正常条件检索
@@ -261,6 +264,50 @@ public class ExamBean extends BaseController {
 
         // 获取听力试题
         return mediaService.getMediaQuestions(mediaModel.getId());
+    }
+
+    /**
+     * 听力提交
+     * 
+     * @return
+     */
+    public String submitMedia() {
+        // 中途退出保存（暂不支持）TODO
+
+        // 更新听力记录表
+        List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
+        for (MediaModel model : mediaQuestions) {
+
+            TbMediaCollectionBean collection = new TbMediaCollectionBean();
+            // 音频ID
+            collection.setMediaId(model.getMediaId());
+            // 用户ID
+            collection.setUserId(userInfo.getId());
+            // 试题ID
+            collection.setQuestionId(model.getNo());
+            // 状态1：已完成
+            collection.setStatus("1");
+            // 答案
+            collection.setMyAnswer(model.getMyAnswer());
+            list.add(collection);
+        }
+        mediaService.insertMediaCollections(list);
+
+        // 去结果一览画面
+        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        return examResultBean.mediaReport();
+    }
+
+    /**
+     * 听力退出
+     * 
+     * @return
+     */
+    public String doMediaExit() {
+
+        // 返回试题一览画面
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
     }
 
     /**

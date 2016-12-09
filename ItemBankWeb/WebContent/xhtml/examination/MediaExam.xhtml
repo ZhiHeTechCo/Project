@@ -34,16 +34,70 @@
 										<h4>#{item.title}</h4>
 										<h:dataTable id="mq" class="table table-bordered"
 											rendered="true" value="#{examBean.mediaQuestions}"
-											var="question" width="100%">
+											var="mquestion" width="100%">
 											<h:column>
-												<h:panelGroup
-													rendered="#{item.id eq question.structureId}">
-													#{question.context}
+												<h:panelGroup rendered="#{item.id eq mquestion.structureId}">
+													#{mquestion.context}
+												<!-- <hr /> -->
+													<!-- 文字 -->
+													<c:if test="#{mquestion.a ne ''}">
+														<h:selectOneRadio value="#{mquestion.myAnswer}"
+															layout="#{mquestion.layoutStyle}"
+															class="#{mquestion.radioClass}">
+															<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+															<c:if test="#{mquestion.b ne ''}">
+																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+															</c:if>
+															<c:if test="#{mquestion.c ne ''}">
+																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+															</c:if>
+															<c:if test="#{mquestion.d ne ''}">
+																<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+															</c:if>
+														</h:selectOneRadio>
+													</c:if>
+													<!-- 图片 -->
+													<c:if test="#{mquestion.aImg ne null}">
+														<h:selectOneRadio value="#{mquestion.myAnswer}">
+															<f:selectItem itemValue="1" itemLabel="#{mquestion.aImg}" />
+															<c:if test="#{mquestion.bImg ne null}">
+																<f:selectItem itemValue="2"
+																	itemLabel="#{mquestion.bImg}" />
+															</c:if>
+															<c:if test="#{mquestion.cImg ne null}">
+																<f:selectItem itemValue="3"
+																	itemLabel="#{mquestion.cImg}" />
+															</c:if>
+															<c:if test="#{mquestion.dImg ne null}">
+																<f:selectItem itemValue="4"
+																	itemLabel="#{mquestion.dImg}" />
+															</c:if>
+														</h:selectOneRadio>
+													</c:if>
 												</h:panelGroup>
 											</h:column>
 										</h:dataTable>
 									</h:column>
 								</h:dataTable>
+							</c:if>
+							<c:if test="#{examBean.mediaModel ne null}">
+								<div class="form-submit1">
+									<h:commandButton value="提交" class="button1"
+										style="margin-right: 5px;" action="#{examBean.submitMedia}"
+										id="doSubmitMediaBtn">
+									</h:commandButton>
+								</div>
+								<div class="form-submit1">
+									<h:commandButton value="直接退出" class="button1"
+										style="margin-right: 5px;" action="#{examBean.doMediaExit}"
+										id="doMediaaBtn">
+									</h:commandButton>
+								</div>
+								<div class="clearfix"></div>
+								<h5>
+									<span class="glyphicon glyphicon-exclamation-sign"></span>
+									注意："直接退出"将清空本次的做题记录。
+								</h5>
 							</c:if>
 							<c:if test="#{examBean.mediaModel eq null}">
 								<div class="form-submit1">

@@ -296,6 +296,15 @@ public class ExamResultBean extends BaseController {
 
     }
 
+    /**
+     * 听力结果一览
+     * @return
+     */
+    public String mediaReport() {
+    	// TODO
+    	return SystemConstants.PAGE_ITBK_EXAM_007;
+	}
+
     private boolean checkuser() {
         if (userInfo == null) {
             logger.log(MessageId.COMMON_E_0009);

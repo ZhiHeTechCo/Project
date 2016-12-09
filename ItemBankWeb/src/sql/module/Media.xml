@@ -27,7 +27,8 @@
 		resultType="zh.co.item.bank.model.entity.MediaModel">
 		select a.*,b.time,b.`status` from (
 			select id, media, classify_id from tb_media
-			where id not in(select media_id from tb_media_collection where user_id=#{userId,jdbcType=INTEGER})
+			where id not in
+			(select media_id from tb_media_collection where user_id=#{userId,jdbcType=INTEGER} group by media_id)
 			and delete_flag='0' and classify_id=#{classifyId,jdbcType=INTEGER}
 		) a left join tb_media_collection b
         on a.id = b.media_id
@@ -48,5 +49,22 @@
         select id, title, classify_id from tb_question_structure where classify_id=#{classifyId,jdbcType=INTEGER}
         order by id
     </select>
+    
+    <insert id="insertMediaCollection" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
+		insert into tb_media_collection (
+		        media_id,
+				user_id,
+				question_id,
+				my_answer,
+				status)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+					(#{item.mediaId,jdbcType=INTEGER},
+					#{item.userId,jdbcType=INTEGER},
+					#{item.questionId,jdbcType=INTEGER},
+					#{item.myAnswer,jdbcType=CHAR},
+					#{item.status,jdbcType=CHAR})
+		</foreach>
+	</insert>
 
 </mapper>

@@ -6,6 +6,10 @@ public class TbMediaCollectionBean {
     private Integer mediaId;
 
     private Integer userId;
+    
+    private Integer questionId;
+    
+    private String myAnswer;
 
     private Date time;
 
@@ -27,7 +31,23 @@ public class TbMediaCollectionBean {
         this.userId = userId;
     }
 
-    public Date getTime() {
+    public Integer getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
+	}
+
+	public String getMyAnswer() {
+		return myAnswer;
+	}
+
+	public void setMyAnswer(String myAnswer) {
+		this.myAnswer = myAnswer;
+	}
+
+	public Date getTime() {
         return time;
     }
 

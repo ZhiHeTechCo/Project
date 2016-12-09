@@ -10,7 +10,7 @@ public class MediaModel extends TbMediaQuestionBean {
     // 用户ID
     private int userId;
 
-    // 听力音频ID
+    // 听力音频ID[检索用（登录不用）]
     private Integer id;
 
     // 听力音频

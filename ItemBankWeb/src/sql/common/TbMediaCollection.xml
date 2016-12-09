@@ -22,6 +22,12 @@
       <if test="userId != null" >
         user_id,
       </if>
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="myAnswer != null" >
+        my_answer,
+      </if>
       <if test="time != null" >
         time,
       </if>
@@ -35,6 +41,12 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="myAnswer != null" >
+        #{myAnswer,jdbcType=CHAR},
       </if>
       <if test="time != null" >
         #{time,jdbcType=TIME},
