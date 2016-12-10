@@ -14,7 +14,7 @@ public class MediaModel extends TbMediaQuestionBean {
     private Integer id;
 
     // 听力音频
-    private byte[] media;
+    private String mediaPath;
 
     // 用户选择答案
     private String myAnswer;
@@ -62,15 +62,17 @@ public class MediaModel extends TbMediaQuestionBean {
         this.id = id;
     }
 
-    public byte[] getMedia() {
-        return media;
-    }
 
-    public void setMedia(byte[] media) {
-        this.media = media;
-    }
 
-    public String getMyAnswer() {
+    public String getMediaPath() {
+		return mediaPath;
+	}
+
+	public void setMediaPath(String mediaPath) {
+		this.mediaPath = mediaPath;
+	}
+
+	public String getMyAnswer() {
         return myAnswer;
     }
 
