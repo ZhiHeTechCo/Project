@@ -55,6 +55,9 @@ public class SystemConstants {
     /**文件上传保存路径*/
     public static final String FILEUPLOAD_PATH = "fileupload_path";
 
+    /**听力保存路径*/
+    public static final String MEDIA_FILE_PATH = "media_file_path";
+    
 
     /**---------------------画面ID------------------------------
     /**系统index画面*/
