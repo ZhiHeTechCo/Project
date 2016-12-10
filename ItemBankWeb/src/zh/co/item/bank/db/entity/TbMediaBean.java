@@ -1,7 +1,7 @@
 package zh.co.item.bank.db.entity;
 
 public class TbMediaBean extends TbMediaBeanKey {
-    private byte[] media;
+    private String mediaPath;
 
     private Integer classifyId;
 
@@ -11,12 +11,12 @@ public class TbMediaBean extends TbMediaBeanKey {
 
     private String deleteFlag;
 
-    public byte[] getMedia() {
-        return media;
+    public String getMediaPath() {
+        return mediaPath;
     }
 
-    public void setMedia(byte[] media) {
-        this.media = media;
+    public void setMediaPath(String mediaPath) {
+        this.mediaPath = mediaPath == null ? null : mediaPath.trim();
     }
 
     public Integer getClassifyId() {
