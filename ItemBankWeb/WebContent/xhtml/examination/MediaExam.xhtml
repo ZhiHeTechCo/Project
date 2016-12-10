@@ -43,11 +43,11 @@ body{
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<c:if test="#{examBean.mediaModel.media ne null}">
+							<c:if test="#{examBean.mediaModel.mediaPath ne null}">
 								<!-- 显示音频 -->
                                 <div class="audio_wrap">
 								    <div class="music_control">
-								        <audio id="listen" controls="controls"></audio>
+								        <audio id="listen" controls="controls" autobuffer="autobuffer" src ="#{examBean.mediaModel.mediaPath}"></audio>
 								    </div>
 							    </div>
 
@@ -67,7 +67,7 @@ body{
 								
 								    //获得json中图片的地址
 								    var audio = document.getElementById("listen");
-								    audio.src = "${request.contextPath}/mp3/BIGBANG_SOBER.mp3";//地址
+								    //audio.src = "${request.contextPath}/mp3/BIGBANG_SOBER.mp3";//地址
 								    audio.className="bg_music";
 								    
 								    audio_array.push(audio);

@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.exam.controller;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -236,8 +237,9 @@ public class ExamBean extends BaseController {
      * 检索听力试题
      * 
      * @return
+     * @throws IOException 
      */
-    private List<MediaModel> selectForMediaQuestions() {
+    private List<MediaModel> selectForMediaQuestions() throws IOException {
         // 获取ClassifyId
         List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
         if (classifyIds == null || classifyIds.size() == 0) {
@@ -253,6 +255,7 @@ public class ExamBean extends BaseController {
             if (mediaModel == null) {
                 continue;
             } else {
+            	mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
                 break;
             }
         }

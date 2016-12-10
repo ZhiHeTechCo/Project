@@ -1,5 +1,9 @@
 package zh.co.common.utils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -664,6 +668,45 @@ public final class CmnStringUtils {
 		} else {
 			return "";
 		}
+	}
+	
+	/**
+	 * 将二进制mp3转换为base64编码
+	 * @param 文件路径
+	 * 
+	 * @return
+	 * @throws IOException 
+	 */
+	public static String getMedia(String path) throws IOException {
+		
+    	//根据文件路径取得byte[]
+    	String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH)
+        		+ File.separator + path;
+    	 File file = new File(filePath);
+    	 
+    	 FileInputStream fis = null;
+    	 ByteArrayOutputStream bos = null;  
+    	 try {
+    		 fis = new FileInputStream(file);
+        	 bos = new ByteArrayOutputStream(); 
+        	 int read = 0;
+        	 byte[] bytes = new byte[1024];
+             while ((read = fis.read(bytes)) != -1) {
+            	 bos.write(bytes, 0, read);
+             }
+             bos.flush();
+             BASE64Encoder encoder = new BASE64Encoder();  
+ 	        return "data:audio/mp3;base64," + encoder.encode(bos.toByteArray());
+    	 } catch (IOException e) {
+             throw e;
+         } finally {
+             if (fis != null) {
+            	 fis.close();
+             }
+             if (bos != null) {
+            	 bos.close();
+             }
+         }
 	}
 	
     /**
