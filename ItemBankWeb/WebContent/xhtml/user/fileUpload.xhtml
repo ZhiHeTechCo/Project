@@ -25,8 +25,8 @@
               </h:panelGroup>
               <h:form id="flform" enctype="multipart/form-data;charset=UTF-8">
               <div style="display: none;">
-                <p:fileUpload value="#{fileManageBean.uploadFile}" mode="advanced"  auto="true" allowTypes="/(\.|\/)(gif|jpe?g|png|zip|rar)$/"
-                    sizeLimit="#{fileManageBean.sizeLimit}" invalidSizeMessage="#{fileManageBean.sizeLimitMessage}" fileLimitMessage="请上传gif|jpg|jpeg|png|zip|rar类型的文件！" 
+                <p:fileUpload value="#{fileManageBean.uploadFile}" mode="advanced"  auto="true" allowTypes="/(\.|\/)(jpg|zip|rar)$/"
+                    sizeLimit="#{fileManageBean.sizeLimit}" invalidSizeMessage="#{fileManageBean.sizeLimitMessage}" fileLimitMessage="请上传jpg|zip|rar类型的文件！" 
                     fileUploadListener="#{fileManageBean.doUpload}" skinSimple="true" label="选择" cancelLabel="取消"
                     id="upbtn" process="imgId" rendered="true" update=":ngossfw_error_display fileName" oncomplete="resetButtonDisabled();" >
                 </p:fileUpload>
