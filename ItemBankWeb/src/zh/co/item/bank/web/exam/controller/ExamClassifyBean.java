@@ -77,7 +77,7 @@ public class ExamClassifyBean extends BaseController {
             classifyBean = new TbQuestionClassifyBean();
 
             userInfo = WebUtils.getLoginUserInfo();
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 // 跳转至登录画面
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
@@ -107,7 +107,7 @@ public class ExamClassifyBean extends BaseController {
     public String classifySearch() {
 
         try {
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 // 跳转至登录画面
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
@@ -140,7 +140,7 @@ public class ExamClassifyBean extends BaseController {
     public String smartSearch() {
         try {
 
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 // 跳转至登录画面
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
@@ -196,16 +196,6 @@ public class ExamClassifyBean extends BaseController {
         examBean.setClassifyBean(classifyBean);
 
         return examBean.init();
-    }
-
-    private boolean checkuser() {
-        if (userInfo == null) {
-            logger.log(MessageId.COMMON_E_0009);
-            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-            processForException(logger, ex);
-            return false;
-        }
-        return true;
     }
 
     public List<TsCodeBean> getExams() {

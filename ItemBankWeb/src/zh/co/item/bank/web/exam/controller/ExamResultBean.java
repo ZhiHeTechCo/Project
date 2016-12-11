@@ -19,14 +19,17 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
+import zh.co.item.bank.web.forum.service.ForumService;
 
 /**
  * 结果一览画面
@@ -43,6 +46,9 @@ public class ExamResultBean extends BaseController {
 
     @Inject
     private ExamCollectionService examCollectionService;
+
+    @Inject
+    private ForumService forumService;
 
     private List<ExamModel> questions;
 
@@ -136,7 +142,7 @@ public class ExamResultBean extends BaseController {
         try {
             pushPathHistory("examResultBean");
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
             }
             if (StringUtils.isEmpty(subject)) {
@@ -212,7 +218,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 询问解析（暂时不用）
+     * 询问解析
      * 
      * @return
      */
@@ -220,10 +226,29 @@ public class ExamResultBean extends BaseController {
         try {
             if (questionId != null) {
                 userInfo = (UserModel) WebUtils.getLoginUserInfo();
-                if (!checkuser()) {
+                if (!checkuser(userInfo)) {
                     return SystemConstants.PAGE_ITBK_EXAM_004;
                 }
+                ForumModel model = new ForumModel();
+                model.setAsker(userInfo.getId());
+                model.setQuestionId(questionId);
 
+                if (forumService.selectForumAskerForOne(model) == 1) {
+                    // 当前用户已询问过此道问题
+                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0016), MESSAGE_LEVEL_INFO);
+
+                } else if (forumService.checkQuestionIsExist(questionId) == 1) {
+                    // 其他用户已询问过此道问题
+                    forumService.insertForumAsker(model, true);
+                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), MESSAGE_LEVEL_INFO);
+
+                } else {
+                    // 首次有用户询问此道问题
+                    forumService.insertForumAsker(model, false);
+                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), MESSAGE_LEVEL_INFO);
+                }
+            } else {
+                setMessage(MessageUtils.getMessage(MessageId.ITBK_E_0008), MESSAGE_LEVEL_ERROR);
             }
         } catch (Exception e) {
             processForException(this.logger, e);
@@ -232,7 +257,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 试题报错（暂时不用）
+     * 试题报错（暂时不用）   
      * 
      * @return
      */
@@ -242,7 +267,7 @@ public class ExamResultBean extends BaseController {
         String questionId = request.getParameter("questionId");
         if (questionId != null) {
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
             }
         }
@@ -261,7 +286,7 @@ public class ExamResultBean extends BaseController {
                     .getRequest();
             String source = request.getParameter("source");
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
             }
             reportModels = new ArrayList<ExamReportModel>();
@@ -298,21 +323,12 @@ public class ExamResultBean extends BaseController {
 
     /**
      * 听力结果一览
+     * 
      * @return
      */
     public String mediaReport() {
-    	// TODO
-    	return SystemConstants.PAGE_ITBK_EXAM_007;
-	}
-
-    private boolean checkuser() {
-        if (userInfo == null) {
-            logger.log(MessageId.COMMON_E_0009);
-            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-            processForException(logger, ex);
-            return false;
-        }
-        return true;
+        // TODO
+        return SystemConstants.PAGE_ITBK_EXAM_007;
     }
 
     public ExamService getExamService() {

@@ -27,6 +27,7 @@ import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.model.entity.PathElement;
+import zh.co.item.bank.model.entity.UserModel;
 
 /**
  * <p>[概要] 共通Controller</p>
@@ -347,6 +348,7 @@ public abstract class BaseController {
      * @param pageTitle
      * @param pageAction
      */
+    @SuppressWarnings("unchecked")
     public static void pushPathHistory(String pageId, String pageTitle, String pageController) {
         if (SystemConstants.PAGE_ITBK_COM_001.equals(pageId)) {
             WebUtils.clearPathHistory();
@@ -416,5 +418,20 @@ public abstract class BaseController {
         BaseController controller = (BaseController) SpringAppContextManager.getBean(controllerName);
         return controller;
         
+    }
+
+    /**
+     * session中是否存在用户信息
+     * @param userInfo
+     * @return
+     */
+    protected boolean checkuser(UserModel userInfo) {
+        if (userInfo == null) {
+            logger.log(MessageId.COMMON_E_0009);
+            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
+            processForException(logger, ex);
+            return false;
+        }
+        return true;
     }
 }

@@ -429,7 +429,7 @@ public class ExamBean extends BaseController {
      */
     public String doSubmit() {
         try {
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
             // 批量登录数据用
@@ -597,16 +597,6 @@ public class ExamBean extends BaseController {
         bean.setJlptLevel(classifyBean.getJlptLevel());
         bean.setJtestLevel(classifyBean.getJtestLevel());
         return bean;
-    }
-
-    private boolean checkuser() {
-        if (userInfo == null) {
-            logger.log(MessageId.COMMON_E_0009);
-            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-            processForException(logger, ex);
-            return false;
-        }
-        return true;
     }
 
     public ExamService getExamService() {

@@ -76,7 +76,7 @@ public class ResumeBean extends BaseController {
     public String init() {
         try {
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 // 跳转至登录画面
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
@@ -148,7 +148,7 @@ public class ResumeBean extends BaseController {
      */
     public String doResumeSubmit() {
         try {
-            if (!checkuser()) {
+            if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
 
@@ -224,16 +224,6 @@ public class ResumeBean extends BaseController {
     public String toClassify() {
         ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
         return examClassifyBean.init();
-    }
-
-    private boolean checkuser() {
-        if (userInfo == null) {
-            logger.log(MessageId.COMMON_E_0009);
-            CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-            processForException(logger, ex);
-            return false;
-        }
-        return true;
     }
 
     public List<ExamModel> getQuestions() {

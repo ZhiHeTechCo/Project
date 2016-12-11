@@ -133,16 +133,6 @@ public class QuestionInsertController extends BaseController {
         return init();
     }
 
-    // private boolean checkuser() {
-    // if (userInfo == null) {
-    // logger.log(MessageId.COMMON_E_0009);
-    // CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-    // processForException(logger, ex);
-    // return false;
-    // }
-    // return true;
-    // }
-
     public List<TsCodeBean> getExams() {
         return exams;
     }
