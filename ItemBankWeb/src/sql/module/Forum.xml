@@ -4,21 +4,21 @@
 
 <mapper namespace="Forum">
 
-	<select id="selectForumForAll" resultType="ForumModel">
-		select * from vb_forum
+	<select id="selectForumForAll" resultType="zh.co.item.bank.model.entity.ForumModel">
+		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum a, (select @rowNO :=0) x
 	</select>
 
 	<select id="selectForumByAsker" parameterType="Integer"
-		resultType="ForumModel">
-		select * from vb_forum_my where asker = #{id}
+		resultType="zh.co.item.bank.model.entity.ForumModel">
+		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_my, (select @rowNO :=0) x where asker = #{id}
 	</select>
 
 	<select id="selectForumByQuestionId" parameterType="Integer"
-		resultType="ForumModel">
+		resultType="zh.co.item.bank.model.entity.ForumModel">
 		select * from vb_forum where question_id = #{questionId}
 	</select>
 
-	<select id="selectForumAskerForOne" parameterType="ForumModel"
+	<select id="selectForumAskerForOne" parameterType="zh.co.item.bank.model.entity.ForumModel"
 		resultType="Integer">
 		select count(no) from tb_forum_asker where asker = #{asker}
 		and question_id = #{questionId}
@@ -30,18 +30,18 @@
 		#{questionId}
 	</select>
 
-	<select id="selectAllAsker" parameterType="Integer" resultType="UserBean">
-		select u.name from tb_forum_asker a left join tu_user u on u.id =
-		a.asker where question_id = #{questionId}
-	</select>
-
-	<select id="selectQuestionByContext" parameterType="com.zh.hs.business.model.ForumModel"
-		resultType="com.zh.hs.business.model.ForumModel">
+	<select id="selectQuestionByContext" parameterType="zh.co.item.bank.model.entity.ForumModel"
+		resultType="zh.co.item.bank.model.entity.ForumModel">
 		select * from tb_tmp_question
 		where context = #{context}
 	</select>
 
-	<update id="updateForumResponse" parameterType="com.zh.hs.business.model.ForumModel">
+    <select id="selectAllAsker" parameterType="Integer" resultType="zh.co.item.bank.db.entity.TuUserBean">
+        select u.nick_name from tb_forum_asker a left join tu_user u on u.id =
+        a.asker where question_id = #{questionId}
+    </select>
+
+	<update id="updateForumResponse" parameterType="zh.co.item.bank.model.entity.ForumModel">
 		update tb_forum_response
 		<set>
 			<if test="count !=null || count !=0">
@@ -114,7 +114,7 @@
 		where question_id = #{questionId,jdbcType=INTEGER}
 	</update>
 
-	<update id="doUp" parameterType="com.zh.hs.business.model.ForumResponseBean">
+	<update id="doUp" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean">
 		update tb_forum_response
 		<set>
 			<if test="count1 == -1">
@@ -150,32 +150,6 @@
 		</set>
 		where question_id = #{questionId,jdbcType=INTEGER}
 	</update>
-
-	<insert id="insertForumAsker" parameterType="com.zh.hs.business.model.ForumModel">
-		insert into tb_forum_asker
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="no !=null">
-				no,
-			</if>
-			<if test="questionId !=null">
-				question_id,
-			</if>
-			<if test="asker !=null">
-				asker,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="no !=null">
-				#{no,jdbcType=INTEGER},
-			</if>
-			<if test="questionId !=null">
-				#{questionId,jdbcType=INTEGER},
-			</if>
-			<if test="asker !=null">
-				#{asker,jdbcType=INTEGER},
-			</if>
-		</trim>
-	</insert>
 
 	<insert id="insertForumResponse" parameterType="INTEGER">
 		insert into

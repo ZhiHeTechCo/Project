@@ -111,6 +111,10 @@ public class VbForumBean {
 
     private String examType;
 
+    private String examTypeName;
+
+    private String examName;
+
     private String statusName;
 
     public Integer getQuestionId() {
@@ -543,6 +547,22 @@ public class VbForumBean {
 
     public void setExamType(String examType) {
         this.examType = examType == null ? null : examType.trim();
+    }
+
+    public String getExamTypeName() {
+        return examTypeName;
+    }
+
+    public void setExamTypeName(String examTypeName) {
+        this.examTypeName = examTypeName;
+    }
+
+    public String getExamName() {
+        return examName;
+    }
+
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public String getStatusName() {

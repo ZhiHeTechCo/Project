@@ -75,4 +75,7 @@
           </if>
     </select>
 
+    <select id="selectUserForNickName" resultType="zh.co.item.bank.db.entity.TuUserBean">
+        select id, nick_name from tu_user
+    </select>
 </mapper>
