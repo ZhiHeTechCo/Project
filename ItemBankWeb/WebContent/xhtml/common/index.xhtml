@@ -106,13 +106,18 @@
                                   <f:param name='pageController' value="resumeBean"></f:param>
                                 </h:commandLink>
                               </li>
+                          <li>
+                            <h:commandLink value="试题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="questionInsertController"></f:param>
+                            </h:commandLink>
+                          </li>
                               <li>
                                 <h:commandLink value="考题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
                                   <f:param name='pageController' value="fileManageBean"></f:param>
                                 </h:commandLink>
                               </li>
-<!-- 	                          <li><a href="toMyQuestions">我的提问</a></li>
-	                          <li><a href="toAnswerQuestion">回答问题</a></li> -->
+	                          <li><a href="toMyQuestions">我的提问</a></li>
+	                          <li><a href="toAnswerQuestion">回答问题</a></li>
 	                          <li><h:commandLink value="切换用户" action="#{pageTopController.changeUser}"
                               onclick="return buttonDisable();" /></li>
 	                          <li><h:commandLink value="退出" action="#{pageTopController.logOut}"
@@ -187,7 +192,10 @@
 	            </c:otherwise>
             </c:choose>
             </li>
-            <!-- <li id="li-comunication">交流区</li> -->
+            <li id="li-comunication"><h:commandLink value="交流区" action="#{pageTopController.pageNavigator}"
+                onclick="return buttonDisable();">
+                <f:param name='pageController' value="forumController"></f:param>
+              </h:commandLink></li>
             <li id="li-message">
               <h:commandLink value="留言板" action="#{pageTopController.pageNavigator}"
                 onclick="return buttonDisable();">

@@ -9,7 +9,7 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-        <h:outputScript library="js" name="lightbox.js" />
+		<h:outputScript library="js" name="lightbox.js" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examDetailForm">
 				<div class="typrography">
@@ -33,35 +33,39 @@
 										<td align="center"><h4>问题</h4></td>
 									</tr>
 									<tr>
-										<td><ui:repeat value="#{examResultBean.subjectList}" var="stringItem">
-                                              <h:outputText value="#{stringItem}" />
-                                              <br />
-                                            </ui:repeat>
-                                        </td>
+										<td><ui:repeat value="#{examResultBean.subjectList}"
+												var="stringItem">
+												<h:outputText value="#{stringItem}" />
+												<br />
+											</ui:repeat></td>
 									</tr>
-                                    <c:if test="#{examResultBean.graphicImage !=''}">
-                                      <tr>
-                                          <td align="center">
-                                            <div class="gallery-bottom" >
-                                                <div class="col-md-3 gallery-grid">
-                                                    <a class="example-image-link" href="#{examResultBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examResultBean.graphicImage}" alt=""/></a>
-                                                </div>
-                                            </div>
-                                           </td>
-                                      </tr>
-                                    </c:if>
+									<c:if test="#{examResultBean.graphicImage !=''}">
+										<tr>
+											<td align="center">
+												<div class="gallery-bottom">
+													<div class="col-md-3 gallery-grid">
+														<a class="example-image-link"
+															href="#{examResultBean.graphicImage}"
+															data-lightbox="example-set"><img
+															class="example-image"
+															src="#{examResultBean.graphicImage}" alt="" /></a>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</c:if>
 								</table>
 							</c:if>
 							<table class="table table-bordered">
 								<tr>
-									<td width="20%" >
+									<td width="20%">
 										<h4>题干</h4>
 									</td>
-									<td colspan="4">
-                                         <ui:repeat value="#{examResultBean.question.contextList}" var="stringItem">
-                                                  <h:outputText value="#{stringItem}" />
-                                          </ui:repeat>
-                                         <ins>
+									<td><ui:repeat
+											value="#{examResultBean.question.contextList}"
+											var="stringItem">
+											<h:outputText value="#{stringItem}" />
+										</ui:repeat> <ins>
 											<h:outputText value="#{examResultBean.question.contextKey}" />
 										</ins> <h:outputText value="#{examResultBean.question.contextAfter}" />
 									</td>
@@ -69,27 +73,39 @@
 								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
 									<tr>
 										<td width="20%"><h4>选项</h4></td>
-										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.answer}"
-                                                layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}" readonly="true" disabled="true">
-                                                <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
-                                                <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
-                                                <f:selectItem itemValue="3" itemLabel="  C：#{examResultBean.question.c}" />
-                                                <f:selectItem itemValue="4" itemLabel="  D：#{examResultBean.question.d}" />
-                                            </h:selectOneRadio>
-										</td>
+										<td width="80%"><h:selectOneRadio
+												value="#{examResultBean.question.answer}"
+												layout="#{examResultBean.question.layoutStyle}"
+												class="#{examResultBean.question.radioClass}"
+												readonly="true" disabled="true">
+												<f:selectItem itemValue="1"
+													itemLabel="  A：#{examResultBean.question.a}" />
+												<f:selectItem itemValue="2"
+													itemLabel="  B：#{examResultBean.question.b}" />
+												<f:selectItem itemValue="3"
+													itemLabel="  C：#{examResultBean.question.c}" />
+												<f:selectItem itemValue="4"
+													itemLabel="  D：#{examResultBean.question.d}" />
+											</h:selectOneRadio></td>
 									</tr>
 								</c:if>
 								<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
 									<tr>
-										<td width="20%" ><h4>选项</h4></td>
-										<td width="80%" colspan="4"><h:selectOneRadio value="#{examResultBean.question.answer}"
-                                                layout="#{examResultBean.question.layoutStyle}" class="#{examResultBean.question.radioClass}"  readonly="true" disabled="true">
-                                                <f:selectItem itemValue="1" itemLabel="  A：#{examResultBean.question.a}" />
-                                                <f:selectItem itemValue="2" itemLabel="  B：#{examResultBean.question.b}" />
-                                                <f:selectItem itemValue="3" itemLabel="  C：#{examResultBean.question.c}" />
-                                                <f:selectItem itemValue="4" itemLabel="  D：#{examResultBean.question.d}" />
-                                            </h:selectOneRadio>
-                                        </td>
+										<td width="20%"><h4>选项</h4></td>
+										<td width="80%" colspan="4"><h:selectOneRadio
+												value="#{examResultBean.question.answer}"
+												layout="#{examResultBean.question.layoutStyle}"
+												class="#{examResultBean.question.radioClass}"
+												readonly="true" disabled="true">
+												<f:selectItem itemValue="1"
+													itemLabel="  A：#{examResultBean.question.a}" />
+												<f:selectItem itemValue="2"
+													itemLabel="  B：#{examResultBean.question.b}" />
+												<f:selectItem itemValue="3"
+													itemLabel="  C：#{examResultBean.question.c}" />
+												<f:selectItem itemValue="4"
+													itemLabel="  D：#{examResultBean.question.d}" />
+											</h:selectOneRadio></td>
 									</tr>
 								</c:if>
 								<!-- 
@@ -111,7 +127,7 @@
 								 -->
 								<c:if test="#{examResultBean.examFlag eq 'true'}">
 									<tr>
-										<td  width="20%"><h4>您的选择</h4></td>
+										<td width="20%"><h4>您的选择</h4></td>
 										<c:if test="#{examResultBean.question.myAnswer eq '1'}">
 											<td colspan="4">A</td>
 										</c:if>
@@ -124,13 +140,14 @@
 										<c:if test="#{examResultBean.question.myAnswer eq '4'}">
 											<td colspan="4">D</td>
 										</c:if>
-										<c:if test="#{examResultBean.question.myAnswer eq null || examResultBean.question.myAnswer eq ''}">
+										<c:if
+											test="#{examResultBean.question.myAnswer eq null || examResultBean.question.myAnswer eq ''}">
 											<td colspan="4">未选择</td>
 										</c:if>
 									</tr>
 								</c:if>
 								<tr>
-									<td width="20%" ><h4>解析</h4></td>
+									<td width="20%"><h4>解析</h4></td>
 									<td colspan="4"><c:if
 											test="#{examResultBean.question.analysis eq null}">暂无</c:if>
 										<h:outputText value="#{examResultBean.question.analysis}" /></td>
@@ -148,12 +165,12 @@
 								</tr>
 								 -->
 								<tr>
-									<td ><h4>试题种别</h4></td>
+									<td><h4>试题种别</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.examTypeName}" /></td>
 								</tr>
 								<tr>
-									<td ><h4>试题出处</h4></td>
+									<td><h4>试题出处</h4></td>
 									<td colspan="4"><h:outputText
 											value="#{examResultBean.question.source}" /></td>
 								</tr>
@@ -176,6 +193,12 @@
 												<h:commandButton value="继续做题" class="button1"
 													action="#{examResultBean.goBackToExam}"
 													id="goBackToExamBtn" />
+											</div>
+										</td>
+										<td>
+											<div class="form-submit1">
+												<h:commandButton value="询问解析" class="button1"
+													action="#{examResultBean.askQuestion}" id="askQuestion" />
 											</div>
 										</td>
 									</c:if>

@@ -49,8 +49,11 @@
                 </h:commandLink>
               </c:otherwise>
             </c:choose></li>
-         <!--  <li id="li-comunication">交流区</li> -->
-          <li id="li-message">
+            <li id="li-comunication"><h:commandLink value="交流区" action="#{pageTopController.pageNavigator}"
+                onclick="return buttonDisable();">
+                <f:param name='pageController' value="forumController"></f:param>
+              </h:commandLink></li>
+            <li id="li-message">
             <h:commandLink value="留言板" action="#{pageTopController.pageNavigator}"
               onclick="return buttonDisable();">
               <f:param name='pageController' value="messageBean"></f:param>

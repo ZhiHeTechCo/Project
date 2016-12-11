@@ -39,6 +39,11 @@
                             </h:commandLink>
                           </li>
                           <li>
+                            <h:commandLink value="试题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="questionInsertController"></f:param>
+                            </h:commandLink>
+                          </li>
+                          <li>
                             <h:commandLink value="考题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
                               <f:param name='pageController' value="fileManageBean"></f:param>
                             </h:commandLink>
