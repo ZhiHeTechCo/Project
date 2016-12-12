@@ -2051,6 +2051,18 @@ p.contact_msg {
 	outline: none;
 }
 
+.to select {
+    padding: 10px;
+    width: 31%;
+    font-size: 1em;
+    margin: 10px 0;
+    border: 1px solid #999;
+    color: #999;
+    background: none;
+    float: left;
+    outline: none;
+}
+
 .to input[type="password"] {
 	padding: 10px;
 	width: 31%;
