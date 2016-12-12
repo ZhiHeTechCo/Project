@@ -38,6 +38,13 @@
                               <f:param name='pageController' value="resumeBean"></f:param>
                             </h:commandLink>
                           </li>
+                          <c:when test="#{session.getAttribute('session-user-info').getRole() == '90'}">
+                          <li>
+                            <h:commandLink value="试题审核" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                              <f:param name='fileSearchBean' value="questionInsertController"></f:param>
+                            </h:commandLink>
+                          </li>
+                          </c:when>
                           <li>
                             <h:commandLink value="试题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
                               <f:param name='pageController' value="questionInsertController"></f:param>
