@@ -67,12 +67,13 @@
 												<h4>考试级别：</h4>
 											</c:if>
 										</h:panelGroup></td>
-									<td><h:panelGroup id="levelWrapper">
+									<td class="to">
+                                      <h:panelGroup id="levelWrapper">
 											<c:choose>
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jlptLevel}"
-														style="width: 60px">
+														style="width: 50%;">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jlptLevels}"
 															var="entry" itemValue="#{entry.key}"
@@ -82,7 +83,7 @@
 												<c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
 													<h:selectOneMenu
 														value="#{examClassifyBean.classifyBean.jtestLevel}"
-														style="width: 60px">
+														style="width: 50%;">
 														<f:selectItem itemValue="" itemLabel="" />
 														<f:selectItems value="#{examClassifyBean.jtestLevels}"
 															var="entry" itemValue="#{entry.key}"
@@ -90,7 +91,8 @@
 													</h:selectOneMenu>
 												</c:when>
 											</c:choose>
-										</h:panelGroup></td>
+										</h:panelGroup>
+                                      </td>
 								</tr>
 								<tr>
 									<td><h4>考试类别：</h4></td>

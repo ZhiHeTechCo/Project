@@ -19,72 +19,57 @@
                   <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
                 </h:panelGroup>
                 <h4>请输入您的信息：</h4>
-                <table class="toTable">
+                <table class="to toTable">
                   <tr>
-                  <td style="color: red;">*</td>
-                    <td>  <div class="col-md-6" style="width: 100%;">
+                  <td style="width: 60px;">用户名</td>
+                    <td>
+                       <span class="msg" style="margin-left: 15px">用户名/邮箱</span>
+                        <div class="col-md-6" style="width: 80%;">
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            <h:inputText id="name" value="#{signUpBean.userInfo.name}" class="form-control" maxlength="30" 
+                            <h:inputText id="name" value="#{signUpBean.userInfo.name}" style="width:100%;" maxlength="30" 
                               onfocus="if (this.value == '用户名') {this.value = '';}"
                               onblur="if (this.value == '') {this.value = '用户名';}" />  
                         </div>
                     </td>
-                    <td><span class="msg" style="margin-left: 10px">用户名/邮箱</span></td>
                   </tr>
                   <tr>
-                  <td style="color: red;">*</td>
-                    <td><div class="col-md-6" style="width: 100%;">
+                  <td style="width: 60px;">密码</td>
+                    <td>
+                       <span class="msg" style="margin-left: 15px">6位以上字母、数字或下划线组成</span>
+                       <div class="col-md-6" style="width: 80%;">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                            <h:inputSecret redisplay="true" id="password" value="#{signUpBean.userInfo.password}" class="form-control" maxlength="10" placeholder="密碼" 
+                            <h:inputSecret redisplay="true" id="password" value="#{signUpBean.userInfo.password}" style="width:100%;" maxlength="10" placeholder="密碼" 
                               onfocus="this.value = '';"
                         onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
                         </div>
                     </td>
-                    <td><span class="msg" style="margin-left: 10px">6位以上字母、数字或下划线组成</span></td>
                   </tr>
-                </table>
-                <!-- 
-                        <table class="toTable">
-                            <tr>
-                                <td><input type="text" class="text" value="手机"
-                                    onfocus="if (this.value == '手机') {this.value = '';}"
-                                    onblur="if (this.value == '') {this.value = '手机';}" /></td>
-                                <td><input type="text" class="text2" value="Email(非必需)"
-                                    onfocus="if (this.value == 'Email(非必需)') {this.value = '';}"
-                                    onblur="if (this.value == '') {this.value = 'Email(非必需)';}" />
-                                </td>
-                            </tr>
-                        </table>
-                        <table id=company class="toTable" style="display: none">
-                            <tr>
-                                <td><input type="text" class="text" value="企业名称"
-                                    onfocus="if (this.value == '企业名称') {this.value = '';}"
-                                    onblur="if (this.value == '') {this.value = '企业名称';}" /></td>
-                                <td><input type="text" class="text2" value="固话(非必需)"
-                                    onfocus="if (this.value == '固话(非必需)') {this.value = '';}"
-                                    onblur="if (this.value == '') {this.value = '固话(非必需)';}" /></td>
-                            </tr>
-                        </table>
-                         -->
-                <table class="toTable">
                   <tr>
                     <td colspan="2"><h4>考试级别：</h4></td>
                   </tr>
                   <tr>
                     <td style="width: 60px;"><h5>JLPT</h5></td>
-                    <td><h:selectOneMenu value="#{signUpBean.userInfo.jlptLevel}">
-                        <f:selectItem itemValue="" itemLabel="" />
-                        <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
-                          itemLabel="#{entry.value}" />
-                      </h:selectOneMenu></td>
+                    <td>
+                      <div class="col-md-6" style="width: 100%;">
+                        <h:selectOneMenu value="#{signUpBean.userInfo.jlptLevel}" style="width:40%;">
+                          <f:selectItem itemValue="" itemLabel="" />
+                          <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
+                            itemLabel="#{entry.value}" />
+                        </h:selectOneMenu>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="width: 60px;"><h5>J.TEST</h5></td>
-                    <td><h:selectOneMenu value="#{signUpBean.userInfo.jtestLevel}">
-                        <f:selectItem itemValue="" itemLabel="" />
-                        <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
-                          itemLabel="#{entry.value}" />
-                      </h:selectOneMenu></td>
+                    <td>
+                      <div class="col-md-6" style="width: 100%;">
+                        <h:selectOneMenu value="#{signUpBean.userInfo.jtestLevel}" style="width:40%;">
+                          <f:selectItem itemValue="" itemLabel="" />
+                          <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
+                            itemLabel="#{entry.value}" />
+                        </h:selectOneMenu>
+                      </div>
+                    </td>
                   </tr>
                 </table>
                 <div class="form-submit1">

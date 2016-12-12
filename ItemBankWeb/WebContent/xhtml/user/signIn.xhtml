@@ -23,32 +23,31 @@
 										value="${request.getAttribute('request-message-content')}"
 										escape="false" style="padding-left: 15px;" />
 								</h:panelGroup>
-								<table class="toTable">
+								<table class="to toTable">
 									<tr>
 										<td>
+                                            <span class="msg" style="margin-left: 15px">用户名/邮箱</span>
 											<div class="col-md-6" style="width: 100%;">
 												<span class="glyphicon glyphicon-user form-control-feedback"></span>
 												<h:inputText id="name" value="#{signInBean.userInfo.name}"
-													class="form-control" maxlength="30"
+													style="width:100%;" maxlength="30"
 													onfocus="if (this.value == '用户名') {this.value = '';}"
 													onblur="if (this.value == '') {this.value = '用户名';}" />
 											</div>
 										</td>
-										<td><span class="msg" style="margin-left: 10px">用户名/邮箱</span>
-										</td>
 									</tr>
 									<tr>
 										<td>
+                                            <span class="msg" style="margin-left: 15px">密码</span>
 											<div class="col-md-6" style="width: 100%;">
 												<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 												<h:inputSecret redisplay="true" id="password"
 													value="#{signInBean.userInfo.password}"
-													class="form-control" maxlength="10" placeholder="密碼"
+													style="width:100%;"  maxlength="10" placeholder="密碼"
 													onfocus="this.value = '';"
 													onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
 											</div>
 										</td>
-										<td><span class="msg" style="margin-left: 10px">密码</span></td>
 									</tr>
 									<tr>
 										<td>
