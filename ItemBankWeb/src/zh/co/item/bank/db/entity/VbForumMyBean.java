@@ -1,6 +1,8 @@
 package zh.co.item.bank.db.entity;
 
 public class VbForumMyBean {
+    private String nickName;
+
     private Integer asker;
 
     private Integer questionId;
@@ -14,6 +16,14 @@ public class VbForumMyBean {
     private String status;
 
     private String statusName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
 
     public Integer getAsker() {
         return asker;

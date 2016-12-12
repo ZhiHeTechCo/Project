@@ -15,67 +15,65 @@ public class VbForumBean {
 
     private String response1;
 
-    private Short count1;
+    private Integer count1;
 
     private Integer responser2;
 
     private String response2;
 
-    private Short count2;
+    private Integer count2;
 
     private Integer responser3;
 
     private String response3;
 
-    private Short count3;
+    private Integer count3;
 
     private Integer responser4;
 
     private String response4;
 
-    private Short count4;
+    private Integer count4;
 
     private Integer responser5;
 
     private String response5;
 
-    private Short count5;
+    private Integer count5;
 
     private Integer responser6;
 
     private String response6;
 
-    private Short count6;
+    private Integer count6;
 
     private Integer responser7;
 
     private String response7;
 
-    private Short count7;
+    private Integer count7;
 
     private Integer responser8;
 
     private String response8;
 
-    private Short count8;
+    private Integer count8;
 
     private Integer responser9;
 
     private String response9;
 
-    private Short count9;
+    private Integer count9;
 
     private Integer responser10;
 
     private String response10;
 
-    private Short count10;
+    private Integer count10;
 
     private String status;
 
     private Date createTime;
-
-    private Integer no;
 
     private String context;
 
@@ -97,7 +95,7 @@ public class VbForumBean {
 
     private String source;
 
-    private Integer classifyId;
+    private Integer fatherId;
 
     private Integer structureId;
 
@@ -111,9 +109,11 @@ public class VbForumBean {
 
     private String examType;
 
+    private String examName;
+
     private String examTypeName;
 
-    private String examName;
+    private String levelName;
 
     private String statusName;
 
@@ -165,11 +165,11 @@ public class VbForumBean {
         this.response1 = response1 == null ? null : response1.trim();
     }
 
-    public Short getCount1() {
+    public Integer getCount1() {
         return count1;
     }
 
-    public void setCount1(Short count1) {
+    public void setCount1(Integer count1) {
         this.count1 = count1;
     }
 
@@ -189,11 +189,11 @@ public class VbForumBean {
         this.response2 = response2 == null ? null : response2.trim();
     }
 
-    public Short getCount2() {
+    public Integer getCount2() {
         return count2;
     }
 
-    public void setCount2(Short count2) {
+    public void setCount2(Integer count2) {
         this.count2 = count2;
     }
 
@@ -213,11 +213,11 @@ public class VbForumBean {
         this.response3 = response3 == null ? null : response3.trim();
     }
 
-    public Short getCount3() {
+    public Integer getCount3() {
         return count3;
     }
 
-    public void setCount3(Short count3) {
+    public void setCount3(Integer count3) {
         this.count3 = count3;
     }
 
@@ -237,11 +237,11 @@ public class VbForumBean {
         this.response4 = response4 == null ? null : response4.trim();
     }
 
-    public Short getCount4() {
+    public Integer getCount4() {
         return count4;
     }
 
-    public void setCount4(Short count4) {
+    public void setCount4(Integer count4) {
         this.count4 = count4;
     }
 
@@ -261,11 +261,11 @@ public class VbForumBean {
         this.response5 = response5 == null ? null : response5.trim();
     }
 
-    public Short getCount5() {
+    public Integer getCount5() {
         return count5;
     }
 
-    public void setCount5(Short count5) {
+    public void setCount5(Integer count5) {
         this.count5 = count5;
     }
 
@@ -285,11 +285,11 @@ public class VbForumBean {
         this.response6 = response6 == null ? null : response6.trim();
     }
 
-    public Short getCount6() {
+    public Integer getCount6() {
         return count6;
     }
 
-    public void setCount6(Short count6) {
+    public void setCount6(Integer count6) {
         this.count6 = count6;
     }
 
@@ -309,11 +309,11 @@ public class VbForumBean {
         this.response7 = response7 == null ? null : response7.trim();
     }
 
-    public Short getCount7() {
+    public Integer getCount7() {
         return count7;
     }
 
-    public void setCount7(Short count7) {
+    public void setCount7(Integer count7) {
         this.count7 = count7;
     }
 
@@ -333,11 +333,11 @@ public class VbForumBean {
         this.response8 = response8 == null ? null : response8.trim();
     }
 
-    public Short getCount8() {
+    public Integer getCount8() {
         return count8;
     }
 
-    public void setCount8(Short count8) {
+    public void setCount8(Integer count8) {
         this.count8 = count8;
     }
 
@@ -357,11 +357,11 @@ public class VbForumBean {
         this.response9 = response9 == null ? null : response9.trim();
     }
 
-    public Short getCount9() {
+    public Integer getCount9() {
         return count9;
     }
 
-    public void setCount9(Short count9) {
+    public void setCount9(Integer count9) {
         this.count9 = count9;
     }
 
@@ -381,11 +381,11 @@ public class VbForumBean {
         this.response10 = response10 == null ? null : response10.trim();
     }
 
-    public Short getCount10() {
+    public Integer getCount10() {
         return count10;
     }
 
-    public void setCount10(Short count10) {
+    public void setCount10(Integer count10) {
         this.count10 = count10;
     }
 
@@ -403,14 +403,6 @@ public class VbForumBean {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getNo() {
-        return no;
-    }
-
-    public void setNo(Integer no) {
-        this.no = no;
     }
 
     public String getContext() {
@@ -493,12 +485,12 @@ public class VbForumBean {
         this.source = source == null ? null : source.trim();
     }
 
-    public Integer getClassifyId() {
-        return classifyId;
+    public Integer getFatherId() {
+        return fatherId;
     }
 
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
+    public void setFatherId(Integer fatherId) {
+        this.fatherId = fatherId;
     }
 
     public Integer getStructureId() {
@@ -549,20 +541,28 @@ public class VbForumBean {
         this.examType = examType == null ? null : examType.trim();
     }
 
-    public String getExamTypeName() {
-        return examTypeName;
-    }
-
-    public void setExamTypeName(String examTypeName) {
-        this.examTypeName = examTypeName;
-    }
-
     public String getExamName() {
         return examName;
     }
 
     public void setExamName(String examName) {
-        this.examName = examName;
+        this.examName = examName == null ? null : examName.trim();
+    }
+
+    public String getExamTypeName() {
+        return examTypeName;
+    }
+
+    public void setExamTypeName(String examTypeName) {
+        this.examTypeName = examTypeName == null ? null : examTypeName.trim();
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName == null ? null : levelName.trim();
     }
 
     public String getStatusName() {
