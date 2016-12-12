@@ -70,6 +70,9 @@ public class FileSearchBean extends BaseController {
 	        map.put("modelId", CmnContants.MODELID_BQD0005);
 	        map.put("name", "review");
 	        reviewFlagList = userService.getCodelist(map);
+	        
+	        fileBean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
+	        doSearch();
 		} catch (Exception e) {
             processForException(logger, e);
         }
@@ -98,13 +101,13 @@ public class FileSearchBean extends BaseController {
      * 文件下载
      * @return
      */
-    public void doDownLoad(String fileName) {
+    public void doDownLoad(Integer userId, String fileName) {
         try {
 
             // 文件路径
             String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH);
 
-            String downloadPath = filePath + File.separator;
+            String downloadPath = filePath + File.separator + userId + File.separator;
             if (!FileUtils.checkExistFile(downloadPath + fileName)) {
 
                 throw new CmnSysException(MessageId.COMMON_E_0010, new Object[] { fileName });

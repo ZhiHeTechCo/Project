@@ -5,7 +5,7 @@
 <html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core" 
   xmlns:p="http://primefaces.org/ui">
-<ui:composition template="../../xhtml/common/template_upload.xhtml"
+<ui:composition template="../../xhtml/common/template.xhtml"
   xmlns:component="http://java.sun.com/jsf/composite/component">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
@@ -39,7 +39,7 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
-              <h:form id="flform" enctype="multipart/form-data;charset=UTF-8">
+              <h:form id="fsform">
               
               <table class="table table-striped;">
                 <tr>
@@ -48,6 +48,10 @@
                       <f:selectItem itemValue="" itemLabel="" />
                       <f:selectItems value="#{fileSearchBean.reviewFlagList}" var="entry" itemValue="#{entry.key}"
                         itemLabel="#{entry.value}" />
+                        <f:ajax event="change" execute="@this"
+                        render="wrapper"
+                        listener="#{fileSearchBean.doSearch}"
+                        onevent="updateCallBack" />
                       </h:selectOneMenu>
                   </td>
                 </tr>         
@@ -59,6 +63,7 @@
                 <span class="tcdPageCode"></span>
               </div>
               <div style="clear: both"></div>
+              <h:panelGroup id="wrapper">
               <div>
                 <h:dataTable id="books" headerClass="dataTableHeaderCenter" rowClasses="list-row" border="1"
                   width="100%" value="#{fileSearchBean.paginator.model}"  var="content">
@@ -66,7 +71,7 @@
                     <f:facet name="header">
                       <h:outputText value="文件名" />
                     </f:facet>
-                    <h:commandLink value="#{content.fileName}" action="#{fileSearchBean.doDownLoad(content.fileName)}" onclick="return buttonDisable();" />
+                    <h:commandLink value="#{content.fileName}" action="#{fileSearchBean.doDownLoad(content.userId,content.fileName)}" onclick="return cancelToken(this, 1);" />
                   </h:column>
                   <h:column>
                     <f:facet name="header">
@@ -98,6 +103,7 @@
                   </h:column>
                 </h:dataTable>
               </div>
+              </h:panelGroup>
               </h:form>
             </div>
           </div>
