@@ -23,8 +23,10 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<h5 style="color: #6682C9;"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumController.askers}
-								标记了这道题。</h5>
+							<h5 style="color: #6682C9;">
+								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumController.askers}
+								标记了这道题。
+							</h5>
 							<h:dataTable class="table" rendered="true"
 								value="#{forumController.forumModel}" var="item">
 								<h:column>
@@ -98,10 +100,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count1}人赞&nbsp;&nbsp;
+														<h:outputText id="count1" value="#{response.count1}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="1"></f:param>
+															<f:ajax render="count1"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -134,10 +139,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count2}人赞&nbsp;&nbsp;
+														<h:outputText id="count2" value="#{response.count2}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="2"></f:param>
+															<f:ajax render="count2"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -170,10 +178,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count3}人赞&nbsp;&nbsp;
+														<h:outputText id="count3" value="#{response.count3}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="3"></f:param>
+															<f:ajax render="count3"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -206,10 +217,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count4}人赞&nbsp;&nbsp;
+														<h:outputText id="count4" value="#{response.count4}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="4"></f:param>
+															<f:ajax render="count4"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -242,10 +256,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count5}人赞&nbsp;&nbsp;
+														<h:outputText id="count5" value="#{response.count5}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="5"></f:param>
+															<f:ajax render="count5"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -278,10 +295,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count6}人赞&nbsp;&nbsp;
+														<h:outputText id="count6" value="#{response.count6}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="6"></f:param>
+															<f:ajax render="count6"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -314,10 +334,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count7}人赞&nbsp;&nbsp;
+														<h:outputText id="count7" value="#{response.count7}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="7"></f:param>
+															<f:ajax render="count7"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -350,10 +373,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count8}人赞&nbsp;&nbsp;
+														<h:outputText id="count8" value="#{response.count8}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="8"></f:param>
+															<f:ajax render="count8"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -386,10 +412,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count9}人赞&nbsp;&nbsp;
+														<h:outputText id="count9" value="#{response.count9}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="9"></f:param>
+															<f:ajax render="count9"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
@@ -422,10 +451,13 @@
 											</tr>
 											<tr>
 												<td><h5>
-														#{response.count10}人赞&nbsp;&nbsp;
+														<h:outputText id="count10" value="#{response.count10}">
+														</h:outputText>
+														人赞&nbsp;&nbsp;
 														<h:commandLink value="" action="#{forumController.doUp}">
 															<f:param name='questionId' value="#{response.questionId}"></f:param>
 															<f:param name='upResponse' value="10"></f:param>
+															<f:ajax render="count10"></f:ajax>
 															<span class="glyphicon glyphicon-thumbs-up"></span>
 														</h:commandLink>
 													</h5></td>
