@@ -18,9 +18,6 @@ public class ForumModel extends VbForumBean {
     /** 行号 */
     private int rowNo;
 
-    /** 回答 */
-    private String myResponse;
-
     private String responserName1;
     private String responserName2;
     private String responserName3;
@@ -142,14 +139,6 @@ public class ForumModel extends VbForumBean {
 
     public void setUserName(Map<Integer, String> userName) {
         this.userName = userName;
-    }
-
-    public String getMyResponse() {
-        return myResponse;
-    }
-
-    public void setMyResponse(String myResponse) {
-        this.myResponse = myResponse;
     }
 
 }

@@ -56,6 +56,9 @@ public class ForumController extends BaseController {
     /** 一览画面显示用 */
     private ForumModel forumModel;
 
+    // 我的回答
+    private String myResponse;
+
     // 提问人
     private String askers;
 
@@ -140,45 +143,35 @@ public class ForumController extends BaseController {
      */
     public String responseQuestion() {
         try {
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequest();
-            String questionId = request.getParameter("questionId");
-            // 游客身份
-            int id = 0;
-            if (!checkuser(userInfo)) {
-                setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0018), MESSAGE_LEVEL_INFO);
-            } else {
-                id = userInfo.getId();
-            }
-            if (StringUtils.isNotEmpty(questionId)) {
-                Integer no = Integer.parseInt(questionId);
-                forumModel = forumService.selectForumByQuestionId(no);
-                // 设置ResponserX和ResponseX的值
-                for (int i = 1; i <= 10; i++) {
-                    String param = "getResponse" + i;
-                    Method methodGet = forumModel.getClass().getMethod(param);
-                    String setResponse = "setResponse" + i;
-                    String setResponser = "setResponser" + i;
-                    if (methodGet.invoke(forumModel) == null) {
-                        forumModel.setCount((short) i);
-                        // 待回答→待确认
-                        forumModel.setStatus("1");
-                        Method methodSetResponse = forumModel.getClass().getMethod(setResponse, String.class);
-                        methodSetResponse.invoke(forumModel, forumModel.getMyResponse());
-                        Method methodSetResponser = forumModel.getClass().getMethod(setResponser, Integer.class);
-                        methodSetResponser.invoke(forumModel, id);
-                        if (i == 10) {
-                            // 待审核
-                            forumModel.setStatus("3");
-                        }
-                        break;
-                    }
-                }
+            // 用户信息不存在则使用游客身份
+            int id = userInfo != null ? userInfo.getId() : 0;
 
-                forumService.updateForumResponse(forumModel);
-                forumModel = forumService.selectForumByQuestionId(no);
-                setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0019), MESSAGE_LEVEL_INFO);
+            // 设置ResponserX和ResponseX的值
+            for (int i = 1; i <= 10; i++) {
+                String param = "getResponse" + i;
+                Method methodGet = forumModel.getClass().getMethod(param);
+                String setResponse = "setResponse" + i;
+                String setResponser = "setResponser" + i;
+                if (methodGet.invoke(forumModel) == null) {
+                    forumModel.setCount((short) i);
+                    // 待回答→待确认
+                    forumModel.setStatus("1");
+                    Method methodSetResponse = forumModel.getClass().getMethod(setResponse, String.class);
+                    methodSetResponse.invoke(forumModel, myResponse);
+                    Method methodSetResponser = forumModel.getClass().getMethod(setResponser, Integer.class);
+                    methodSetResponser.invoke(forumModel, id);
+                    if (i == 10) {
+                        // 待审核
+                        forumModel.setStatus("3");
+                    }
+                    break;
+                }
             }
+
+            forumService.updateForumResponse(forumModel);
+            myResponse = null;
+            setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0019), MESSAGE_LEVEL_INFO);
+
         } catch (Exception e) {
             processForException(logger, e);
         }
@@ -261,6 +254,14 @@ public class ForumController extends BaseController {
 
     public void setAskers(String askers) {
         this.askers = askers;
+    }
+
+    public String getMyResponse() {
+        return myResponse;
+    }
+
+    public void setMyResponse(String myResponse) {
+        this.myResponse = myResponse;
     }
 
 }

@@ -166,7 +166,7 @@
 												</tr>
 											</h:panelGroup>
 											<tr>
-												<td colspan="2">#{response.response6}</td>
+												<td colspan="2">#{response.response3}</td>
 											</tr>
 											<tr>
 												<td><h5>
@@ -442,15 +442,13 @@
 								<span class="glyphicon glyphicon-pencil"></span> 回答这道题
 							</h5>
 							<h:inputTextarea style="width: 100%" id="myResponse"
-								value="#{forumController.forumModel.myResponse}" />
+								value="#{forumController.myResponse}" />
 							<div class="form-button1" style="margin-top: 30px;">
 								<input type="button" id="checkinputbutton" value="提交回答"
-									onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输入您的回答再提交'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
+									onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输入您的回答再提交!'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
 								<h:commandButton value="提交回答" id="responseQuestion"
 									style="display: none;"
 									action="#{forumController.responseQuestion}">
-									<f:param name="questionId"
-										value="#{forumController.forumModel.questionId}"></f:param>
 								</h:commandButton>
 							</div>
 							<div class="form-submit1" style="margin-top: 30px;">
