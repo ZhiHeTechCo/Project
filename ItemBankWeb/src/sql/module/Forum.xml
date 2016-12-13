@@ -10,7 +10,7 @@
 
 	<select id="selectForumByAsker" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ForumModel">
-		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_my, (select @rowNO :=0) x where asker = #{id}
+		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_my a, (select @rowNO :=0) x where asker = #{id}
 	</select>
 
 	<select id="selectForumByQuestionId" parameterType="Integer"

@@ -23,9 +23,28 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<h5 style="color: #3382C9;">
-								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干查看。
-							</h5>
+							<div style="float: left;">
+								<h5 style="color: #3382C9;">
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干查看。
+								</h5>
+							</div>
+							<div style="float: right;">
+								<c:if test="#{session.getAttribute('session-user-id') != null}">
+									<h5 style="color: orange;">
+										<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;
+										<c:if test="#{forumController.justShowMine eq 'true'}">
+											<h:commandLink value="查看全部提问"
+												action="#{forumController.showAllQuestion}"
+												onclick="return buttonDisable();"></h:commandLink>
+										</c:if>
+										<c:if test="#{forumController.justShowMine ne 'true'}">
+											<h:commandLink value="只看我的提问"
+												action="#{forumController.showAllMyQuestion}"
+												onclick="return buttonDisable();"></h:commandLink>
+										</c:if>
+									</h5>
+								</c:if>
+							</div>
 							<h:dataTable class="searchTable table-striped" rendered="true"
 								value="#{forumController.forumModels}" var="item">
 								<h:column>

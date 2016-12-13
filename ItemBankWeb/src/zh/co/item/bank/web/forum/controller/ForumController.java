@@ -63,6 +63,8 @@ public class ForumController extends BaseController {
     // 提问人
     private String askers;
 
+    private String justShowMine;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_FORUM_001;
     }
@@ -74,6 +76,9 @@ public class ForumController extends BaseController {
      */
     public String init() {
         try {
+            if ("true".equals(justShowMine)) {
+                return showAllMyQuestion();
+            }
             pushPathHistory("forumController");
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
@@ -81,12 +86,23 @@ public class ForumController extends BaseController {
             }
 
             forumModels = forumService.selectForumForAll();
+            justShowMine = "false";
 
         } catch (Exception e) {
             processForException(logger, e);
         }
 
         return getPageId();
+    }
+
+    /**
+     * 显示全部问题
+     * 
+     * @return
+     */
+    public String showAllQuestion() {
+        justShowMine = "false";
+        return init();
     }
 
     /**
@@ -101,6 +117,7 @@ public class ForumController extends BaseController {
                 return SystemConstants.PAGE_ITBK_USER_002;
             }
 
+            justShowMine = "true";
             forumModels = forumService.selectForumByAsker(userInfo.getId());
 
         } catch (Exception e) {
@@ -265,6 +282,14 @@ public class ForumController extends BaseController {
 
     public void setMyResponse(String myResponse) {
         this.myResponse = myResponse;
+    }
+
+    public String getJustShowMine() {
+        return justShowMine;
+    }
+
+    public void setJustShowMine(String justShowMine) {
+        this.justShowMine = justShowMine;
     }
 
 }
