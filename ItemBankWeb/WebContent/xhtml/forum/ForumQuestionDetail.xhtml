@@ -36,11 +36,13 @@
 									<tr>
 										<td width="20%"><h4>选项</h4></td>
 										<td width="80%" colspan="4"><h:selectOneRadio
-												value="#{item.answer}" readonly="true" disabled="true">
-												<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-												<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-												<f:selectItem itemValue="6" itemLabel="  C：#{item.c}" />
-												<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+												value="#{item.answer}" readonly="true" disabled="true"
+															layout="#{item.layoutStyle}"
+															class="#{item.radioClass}">
+												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+												<f:selectItem itemValue="6" itemLabel="#{item.c}" />
+												<f:selectItem itemValue="4" itemLabel="#{item.d}" />
 											</h:selectOneRadio></td>
 									</tr>
 									<tr>

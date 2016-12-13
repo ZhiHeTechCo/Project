@@ -16,6 +16,7 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
@@ -122,6 +123,8 @@ public class ForumController extends BaseController {
             if (StringUtils.isNotEmpty(questionId)) {
                 Integer id = Integer.parseInt(questionId);
                 forumModel = forumService.selectForumByQuestionId(id);
+                // 选项格式设置
+                forumModel = CmnStringUtils.selectionLayoutSet(forumModel);
                 // 获取提问用户
                 searchAsker(id);
                 Map<Integer, String> userName = userService.selectUserForNickName();

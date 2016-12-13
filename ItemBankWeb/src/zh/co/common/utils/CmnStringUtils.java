@@ -18,6 +18,7 @@ import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.MediaModel;
 
 /**
@@ -748,6 +749,43 @@ public final class CmnStringUtils {
 		}
         return questions;
     }
+
+	/**
+	 * 设置序号
+	 * 设置显示格式
+	 * @param questions
+	 * @return
+	 */
+	public static ForumModel selectionLayoutSet(ForumModel forumModel) {
+	    
+	    if(forumModel != null) {
+	            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+	                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+	                forumModel.setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(forumModel.getA())
+	                    && forumModel.getA().length() > CmnContants.FOLDING_LINE) {
+	                forumModel.setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(forumModel.getB())
+	                    && forumModel.getB().length() > CmnContants.FOLDING_LINE) {
+	                forumModel.setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(forumModel.getC())
+	                    && forumModel.getC().length() > CmnContants.FOLDING_LINE) {
+	                forumModel.setLayoutStyle("pageDirection");
+	            } else if (!StringUtils.isEmpty(forumModel.getD())
+	                    && forumModel.getD().length() > CmnContants.FOLDING_LINE) {
+	                forumModel.setLayoutStyle("pageDirection");
+	            } else {
+	                forumModel.setLayoutStyle("lineDirection");
+	            }
+	            
+	            if ("lineDirection".equals(forumModel.getLayoutStyle())) {
+	                forumModel.setRadioClass("radioTable1");
+	            } else {
+	                forumModel.setRadioClass("radioTable2");
+	            }
+	        }
+	    return forumModel;
+	}
 	
 	/**
 	 * 设置序号

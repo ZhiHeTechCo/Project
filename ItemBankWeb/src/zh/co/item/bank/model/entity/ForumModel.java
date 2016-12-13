@@ -18,6 +18,12 @@ public class ForumModel extends VbForumBean {
     /** 行号 */
     private int rowNo;
 
+    /** radio显示格式 */
+    private String layoutStyle;
+
+    /** radio样式 */
+    private String radioClass;
+
     private String responserName1;
     private String responserName2;
     private String responserName3;
@@ -47,6 +53,22 @@ public class ForumModel extends VbForumBean {
 
     public void setRowNo(int rowNo) {
         this.rowNo = rowNo;
+    }
+
+    public String getLayoutStyle() {
+        return layoutStyle;
+    }
+
+    public void setLayoutStyle(String layoutStyle) {
+        this.layoutStyle = layoutStyle;
+    }
+
+    public String getRadioClass() {
+        return radioClass;
+    }
+
+    public void setRadioClass(String radioClass) {
+        this.radioClass = radioClass;
     }
 
     public void setStatusName(String statusName) {
