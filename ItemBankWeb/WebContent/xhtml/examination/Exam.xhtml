@@ -139,8 +139,12 @@
 							</c:if>
 							<c:if test="#{examBean.title == ''}">
 								<div class="form-submit1">
-									<h:commandButton value="我的错题" class="button1"
+									<h:commandButton value="我的错题" class="button1" style="margin-right: 5px;"
 										action="#{examBean.doResume}" id="doResumeBtn" />
+								</div>
+								<div class="form-submit1">
+									<h:commandButton value="其他题型" class="button1"
+										action="#{examBean.goBackToClassify}" id="goBackToClassifyBtn" />
 								</div>
 							</c:if>
 						</div>
