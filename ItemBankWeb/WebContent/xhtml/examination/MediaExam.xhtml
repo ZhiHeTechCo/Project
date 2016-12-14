@@ -89,10 +89,10 @@
 									<h:column>
 										<h4>#{item.title}</h4>
 										<h:dataTable id="mq" class="table table-bordered"
-											rendered="true" value="#{examBean.mediaQuestions}"
+											rendered="true" value="#{item.mediaQuestions}"
 											var="mquestion" width="100%">
 											<h:column>
-												<h:panelGroup rendered="#{item.id eq mquestion.structureId}">
+												
 													#{mquestion.context}
 												<!-- <hr /> -->
 													<!-- 文字 -->
@@ -130,7 +130,6 @@
 															</c:if>
 														</h:selectOneRadio>
 													</c:if>
-												</h:panelGroup>
 											</h:column>
 										</h:dataTable>
 									</h:column>

@@ -20,6 +20,7 @@ import zh.co.common.prop.PropertiesUtils;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.MediaModel;
+import zh.co.item.bank.model.entity.TbQuestionStructure;
 
 /**
  * <p>[概 要]string process utilities</p>
@@ -793,37 +794,42 @@ public final class CmnStringUtils {
 	 * @param questions
 	 * @return
 	 */
-	public static List<MediaModel> selectionLayoutSet(List<MediaModel> questions) {
+	public static void selectionLayoutSet(List<TbQuestionStructure> structures) {
 		
-		if(questions != null && questions.size() > 0) {
-			for (int i = 0; i < questions.size(); i++) {
-				questions.get(i).setRowNo(i + 1);
-				if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-						.equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-					questions.get(i).setLayoutStyle("pageDirection");
-				} else if (!StringUtils.isEmpty(questions.get(i).getA())
-						&& questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-					questions.get(i).setLayoutStyle("pageDirection");
-				} else if (!StringUtils.isEmpty(questions.get(i).getB())
-						&& questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-					questions.get(i).setLayoutStyle("pageDirection");
-				} else if (!StringUtils.isEmpty(questions.get(i).getC())
-						&& questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-					questions.get(i).setLayoutStyle("pageDirection");
-				} else if (!StringUtils.isEmpty(questions.get(i).getD())
-						&& questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-					questions.get(i).setLayoutStyle("pageDirection");
-				} else {
-					questions.get(i).setLayoutStyle("lineDirection");
-				}
-				
-				if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-					questions.get(i).setRadioClass("radioTable1");
-				} else {
-					questions.get(i).setRadioClass("radioTable2");
+		if(structures != null && structures.size() > 0) {
+			 for(TbQuestionStructure item : structures) {
+				if(item.getMediaQuestions() != null && item.getMediaQuestions().size() > 0 ) {
+					List<MediaModel> questions = item.getMediaQuestions();
+					if(questions != null && questions.size() > 0) {
+						for (int i = 0; i < questions.size(); i++) {
+							if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+									.equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+								questions.get(i).setLayoutStyle("pageDirection");
+							} else if (!StringUtils.isEmpty(questions.get(i).getA())
+									&& questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
+								questions.get(i).setLayoutStyle("pageDirection");
+							} else if (!StringUtils.isEmpty(questions.get(i).getB())
+									&& questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
+								questions.get(i).setLayoutStyle("pageDirection");
+							} else if (!StringUtils.isEmpty(questions.get(i).getC())
+									&& questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
+								questions.get(i).setLayoutStyle("pageDirection");
+							} else if (!StringUtils.isEmpty(questions.get(i).getD())
+									&& questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
+								questions.get(i).setLayoutStyle("pageDirection");
+							} else {
+								questions.get(i).setLayoutStyle("lineDirection");
+							}
+							
+							if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+								questions.get(i).setRadioClass("radioTable1");
+							} else {
+								questions.get(i).setRadioClass("radioTable2");
+							}
+						}
+					}
 				}
 			}
 		}
-		return questions;
 	}
 }

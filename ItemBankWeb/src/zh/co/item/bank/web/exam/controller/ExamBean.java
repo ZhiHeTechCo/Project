@@ -29,9 +29,9 @@ import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
 import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
-import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.MediaModel;
+import zh.co.item.bank.model.entity.TbQuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
@@ -104,7 +104,7 @@ public class ExamBean extends BaseController {
     // 听力试题
     List<MediaModel> mediaQuestions;
     // 大题目
-    List<TbQuestionStructureBean> structures;
+    List<TbQuestionStructure> structures;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
@@ -173,17 +173,16 @@ public class ExamBean extends BaseController {
                     // 初始化
                     mediaModel = null;
                     mediaQuestions = new ArrayList<MediaModel>();
-                    structures = new ArrayList<TbQuestionStructureBean>();
-
-                    mediaQuestions = selectForMediaQuestions();
-                    if (mediaQuestions == null || mediaQuestions.size() == 0) {
+                    structures = new ArrayList<TbQuestionStructure>();
+                    selectForMediaQuestions();
+                    if (structures == null || structures.size() == 0) {
                         // 题库已空
                         logger.log(MessageId.ITBK_I_0010);
                         CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                         throw ex;
                     }
                     // 画面序号和显示设置
-                    mediaQuestions = CmnStringUtils.selectionLayoutSet(mediaQuestions);
+                    CmnStringUtils.selectionLayoutSet(structures);
                     return SystemConstants.PAGE_ITBK_EXAM_007;
 
                     // 正常条件检索
@@ -239,11 +238,11 @@ public class ExamBean extends BaseController {
      * @return
      * @throws IOException 
      */
-    private List<MediaModel> selectForMediaQuestions() throws IOException {
+    private void selectForMediaQuestions() throws IOException {
         // 获取ClassifyId
         List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
         if (classifyIds == null || classifyIds.size() == 0) {
-            return null;
+            return;
         }
 
         // 获取音频
@@ -260,13 +259,11 @@ public class ExamBean extends BaseController {
             }
         }
         if (mediaModel == null) {
-            return null;
+            return;
         }
         // 获取大题目
-        structures = mediaService.selectForStructures((Integer) map.get("classifyId"));
-
-        // 获取听力试题
-        return mediaService.getMediaQuestions(mediaModel.getId());
+        map.put("mediaId", mediaModel.getId());
+        structures = mediaService.selectMediaQuestions(map);
     }
 
     /**
@@ -695,11 +692,11 @@ public class ExamBean extends BaseController {
         this.mediaModel = mediaModel;
     }
 
-    public List<TbQuestionStructureBean> getStructures() {
+    public List<TbQuestionStructure> getStructures() {
         return structures;
     }
 
-    public void setStructures(List<TbQuestionStructureBean> structures) {
+    public void setStructures(List<TbQuestionStructure> structures) {
         this.structures = structures;
     }
 

@@ -50,6 +50,35 @@
         order by id
     </select>
     
+    <resultMap id="mediaQuestionsResult" type="zh.co.item.bank.model.entity.TbQuestionStructure">  
+      <result property="title" column="title"/>
+      <result property="classifyId" column="classify_id"/>
+      <collection property="mediaQuestions" ofType="zh.co.item.bank.model.entity.MediaModel" >
+        <id column="no" property="no" jdbcType="INTEGER" />
+        <result column="context" property="context" jdbcType="CHAR" />
+        <result column="context_img" property="contextImg" jdbcType="LONGVARBINARY" />
+        <result column="a" property="a" jdbcType="CHAR" />
+        <result column="b" property="b" jdbcType="CHAR" />
+        <result column="c" property="c" jdbcType="CHAR" />
+        <result column="d" property="d" jdbcType="CHAR" />
+        <result column="answer" property="answer" jdbcType="CHAR" />
+        <result column="analysis" property="analysis" jdbcType="CHAR" />
+        <result column="structure_id" property="structureId" jdbcType="INTEGER" />
+        <result column="media_id" property="mediaId" jdbcType="INTEGER" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+      </collection>
+    </resultMap>
+
+    <select id="selectMediaQuestions" parameterType="java.util.Map" resultMap="mediaQuestionsResult">
+        SELECT t1.title, t1.classify_id, t3.*, t3.no as rowNo 
+          FROM tb_question_structure t1,tb_question_classify t2,
+           tb_media_question t3
+          WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id
+          and t1.classify_id = #{classifyId,jdbcType=INTEGER} AND t3.media_id = #{mediaId,jdbcType=INTEGER}
+        order by t3.no
+    </select>
+    
+    
     <insert id="insertMediaCollection" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
 		insert into tb_media_collection (
 		        media_id,

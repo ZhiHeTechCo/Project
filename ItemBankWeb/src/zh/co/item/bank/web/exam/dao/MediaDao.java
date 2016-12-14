@@ -10,6 +10,7 @@ import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.MediaModel;
+import zh.co.item.bank.model.entity.TbQuestionStructure;
 
 /**
  * 听力模块
@@ -70,5 +71,15 @@ public class MediaDao extends BaseDao {
 	 */
 	public void insertMediaCollections(List<TbMediaCollectionBean> beans) {
 		getIbatisTemplate().insert("Media.insertMediaCollection", beans);
+	}
+	
+	/**
+	 * 听力题检索
+	 * @param map
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TbQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
+		return getIbatisTemplate().selectList("Media.selectMediaQuestions", map);
 	}
 }
