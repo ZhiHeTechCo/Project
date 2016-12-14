@@ -13,8 +13,8 @@ public class MediaModel extends TbMediaQuestionBean {
     // 听力音频ID[检索用（登录不用）]
     private Integer id;
 
-    // 听力音频
-    private byte[] media;
+    // 图片Base64
+    private String contextImgCode;
     
     // 听力音频路径
     private String mediaPath;
@@ -65,12 +65,12 @@ public class MediaModel extends TbMediaQuestionBean {
         this.id = id;
     }
 
-    public byte[] getMedia() {
-		return media;
+	public String getContextImgCode() {
+		return CmnStringUtils.getGraphicImage(this.getContextImg());
 	}
 
-	public void setMedia(byte[] media) {
-		this.media = media;
+	public void setContextImgCode(String contextImgCode) {
+		this.contextImgCode = contextImgCode;
 	}
 
 	public String getMediaPath() {

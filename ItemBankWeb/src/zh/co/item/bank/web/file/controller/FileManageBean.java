@@ -25,6 +25,7 @@ import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
+import zh.co.item.bank.db.entity.TbMediaQuestionBean;
 import zh.co.item.bank.web.user.service.UserService;
 
 /**
@@ -51,6 +52,9 @@ public class FileManageBean extends BaseController {
     private String adminFlag;
     
     private Integer imgId;
+
+	private boolean checked;
+    
 
 	public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_006;
@@ -91,10 +95,17 @@ public class FileManageBean extends BaseController {
 		            	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();  
 		                ImageIO.write(bufferedImage, "jpg", outputStream);  
 		                byte[] img = outputStream.toByteArray();
-		                TbFirstLevelDirectoryBean bean = new TbFirstLevelDirectoryBean();
-		                bean.setId(imgId);
-		                bean.setImg(img);
-		                userService.updateImgInfo(bean);
+		                if(checked) {
+		                	TbMediaQuestionBean bean = new TbMediaQuestionBean();
+		                	bean.setNo(imgId);
+		                	bean.setContextImg(img);
+		                	userService.updateMediaImgInfo(bean);
+		                } else {
+			                TbFirstLevelDirectoryBean bean = new TbFirstLevelDirectoryBean();
+			                bean.setId(imgId);
+			                bean.setImg(img);
+			                userService.updateImgInfo(bean);
+		                }
 		                
 		            } else {
 			            String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_PATH)
@@ -188,5 +199,12 @@ public class FileManageBean extends BaseController {
 	public void setAdminFlag(String adminFlag) {
 		this.adminFlag = adminFlag;
 	}
+	
+    public boolean isChecked() {
+		return checked;
+	}
 
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 }

@@ -17,6 +17,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
+import zh.co.item.bank.db.entity.TbMediaQuestionBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
@@ -285,6 +286,19 @@ public class UserService {
     public int updateImgInfo(TbFirstLevelDirectoryBean bean) throws Exception {
         int count = 0;
         count = userDao.updateImgInfo(bean);
+        return count;
+    }
+    
+    /**
+     * 插入听力图片试题
+     * 
+     * @param bean 文件信息
+     * @return
+     * @throws Exception
+     */
+    public int updateMediaImgInfo(TbMediaQuestionBean bean) throws Exception {
+        int count = 0;
+        count = userDao.updateMediaImgInfo(bean);
         return count;
     }
 

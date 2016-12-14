@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
+import zh.co.item.bank.db.entity.TbMediaQuestionBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 
@@ -130,6 +131,17 @@ public class UserDao extends BaseDao {
      */
     public int updateImgInfo(TbFirstLevelDirectoryBean bean) {
         return getIbatisTemplate().insert("TbFirstLevelDirectory.updateByPrimaryKeySelective", bean);
+    }
+    
+    /**
+     * 插入听力图片试题
+     * 
+     * @param bean 文件信息
+     * @return
+     * @throws Exception
+     */
+    public int updateMediaImgInfo(TbMediaQuestionBean bean) {
+        return getIbatisTemplate().insert("TbMediaQuestion.updateByPrimaryKeySelective", bean);
     }
 
     /**

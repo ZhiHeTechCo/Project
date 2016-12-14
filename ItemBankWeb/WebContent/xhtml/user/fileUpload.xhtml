@@ -35,7 +35,13 @@
                 <c:if test="#{fileManageBean.adminFlag == '0'}">
                   <tr>
                     <td><h4>试题id:</h4></td>
-                    <td><h:inputText id="imgId" value="#{fileManageBean.imgId}" /></td>
+                    <td><h:inputText id="imgId" value="#{fileManageBean.imgId}" />
+                         <h:selectBooleanCheckbox id="media" value="#{fileManageBean.checked}" onchange="cancelToken(this);">听力
+                         <f:ajax event="change" execute="@this"
+                        listener="#{fileManageBean.isChecked}"
+                        oncomplete="resetButtonDisabled();" />
+                         </h:selectBooleanCheckbox>
+                    </td>
                   </tr> 
                 </c:if>
                 <c:if test="#{fileManageBean.adminFlag == '1'}">

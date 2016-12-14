@@ -70,16 +70,16 @@
     </resultMap>
 
     <select id="selectMediaQuestions" parameterType="java.util.Map" resultMap="mediaQuestionsResult">
-      <![CDATA[     SELECT t1.title, t1.classify_id, t3.*, (
+       SELECT t1.title, t1.classify_id, t3.*, (
             SELECT COUNT(*)+1
             FROM tb_media_question t4
-            WHERE t4.no < t3.no) AS rowNo
+            WHERE t4.no  <![CDATA[ < ]]>t3.no) AS rowNo
           FROM tb_question_structure t1,tb_question_classify t2,
            tb_media_question t3
           WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id
           and t1.classify_id = #{classifyId,jdbcType=INTEGER} AND t3.media_id = #{mediaId,jdbcType=INTEGER}
         order by t3.no
-        ]]>
+        
     </select>
     
     
