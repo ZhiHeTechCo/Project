@@ -3,6 +3,8 @@ package zh.co.item.bank.db.entity;
 public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
     private String context;
 
+    private byte[] contextImg;
+
     private String a;
 
     private String b;
@@ -10,14 +12,6 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
     private String c;
 
     private String d;
-
-    private byte[] aImg;
-
-    private byte[] bImg;
-
-    private byte[] cImg;
-
-    private byte[] dImg;
 
     private String answer;
 
@@ -35,6 +29,14 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
 
     public void setContext(String context) {
         this.context = context == null ? null : context.trim();
+    }
+
+    public byte[] getContextImg() {
+        return contextImg;
+    }
+
+    public void setContextImg(byte[] contextImg) {
+        this.contextImg = contextImg;
     }
 
     public String getA() {
@@ -67,38 +69,6 @@ public class TbMediaQuestionBean extends TbMediaQuestionBeanKey {
 
     public void setD(String d) {
         this.d = d == null ? null : d.trim();
-    }
-
-    public byte[] getaImg() {
-        return aImg;
-    }
-
-    public void setaImg(byte[] aImg) {
-        this.aImg = aImg;
-    }
-
-    public byte[] getbImg() {
-        return bImg;
-    }
-
-    public void setbImg(byte[] bImg) {
-        this.bImg = bImg;
-    }
-
-    public byte[] getcImg() {
-        return cImg;
-    }
-
-    public void setcImg(byte[] cImg) {
-        this.cImg = cImg;
-    }
-
-    public byte[] getdImg() {
-        return dImg;
-    }
-
-    public void setdImg(byte[] dImg) {
-        this.dImg = dImg;
     }
 
     public String getAnswer() {
