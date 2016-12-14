@@ -102,9 +102,7 @@ public class ExamBean extends BaseController {
     // 音频
     MediaModel mediaModel;
     // 听力试题
-    List<MediaModel> mediaQuestions;
-    // 大题目
-    List<TbQuestionStructure> structures;
+    List<TbQuestionStructure> mediaQuestions;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
@@ -172,17 +170,16 @@ public class ExamBean extends BaseController {
                 } else if ("6".equals(classifyBean.getExamType())) {
                     // 初始化
                     mediaModel = null;
-                    mediaQuestions = new ArrayList<MediaModel>();
-                    structures = new ArrayList<TbQuestionStructure>();
+                    mediaQuestions = new ArrayList<TbQuestionStructure>();
                     selectForMediaQuestions();
-                    if (structures == null || structures.size() == 0) {
+                    if (mediaQuestions == null || mediaQuestions.size() == 0) {
                         // 题库已空
                         logger.log(MessageId.ITBK_I_0010);
                         CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                         throw ex;
                     }
                     // 画面序号和显示设置
-                    CmnStringUtils.selectionLayoutSet(structures);
+                    CmnStringUtils.selectionLayoutSet(mediaQuestions);
                     return SystemConstants.PAGE_ITBK_EXAM_007;
 
                     // 正常条件检索
@@ -236,7 +233,7 @@ public class ExamBean extends BaseController {
      * 检索听力试题
      * 
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     private void selectForMediaQuestions() throws IOException {
         // 获取ClassifyId
@@ -254,7 +251,7 @@ public class ExamBean extends BaseController {
             if (mediaModel == null) {
                 continue;
             } else {
-            	mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+                mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
                 break;
             }
         }
@@ -263,7 +260,7 @@ public class ExamBean extends BaseController {
         }
         // 获取大题目
         map.put("mediaId", mediaModel.getId());
-        structures = mediaService.selectMediaQuestions(map);
+        mediaQuestions = mediaService.selectMediaQuestions(map);
     }
 
     /**
@@ -276,34 +273,40 @@ public class ExamBean extends BaseController {
 
         // 更新听力记录表
         List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
-        for (MediaModel model : mediaQuestions) {
-
-            TbMediaCollectionBean collection = new TbMediaCollectionBean();
-            // 音频ID
-            collection.setMediaId(model.getMediaId());
-            // 用户ID
-            collection.setUserId(userInfo.getId());
-            // 试题ID
-            collection.setQuestionId(model.getNo());
-            // 状态1：已完成
-            collection.setStatus("1");
-            // 答案
-            collection.setMyAnswer(model.getMyAnswer());
-            list.add(collection);
+        for (TbQuestionStructure model : mediaQuestions) {
+            List<MediaModel> questions = model.getQuestion();
+            for (MediaModel question : questions) {
+                if (question != null) {
+                    TbMediaCollectionBean collection = new TbMediaCollectionBean();
+                    // 音频ID
+                    collection.setMediaId(question.getMediaId());
+                    // 用户ID
+                    collection.setUserId(userInfo.getId());
+                    // 试题ID
+                    collection.setQuestionId(question.getNo());
+                    // 状态1：已完成
+                    collection.setStatus("1");
+                    // 答案
+                    collection.setMyAnswer(question.getMyAnswer());
+                    list.add(collection);
+                }
+            }
         }
         mediaService.insertMediaCollections(list);
 
         // 去结果一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        examResultBean.setMediaQuestions(mediaQuestions);
+        examResultBean.setMediaModel(mediaModel);
         return examResultBean.mediaReport();
     }
 
     /**
-     * 听力退出
+     * 听力退出·返回试题选择
      * 
      * @return
      */
-    public String doMediaExit() {
+    public String goBackToClassify() {
 
         // 返回试题一览画面
         ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
@@ -692,19 +695,11 @@ public class ExamBean extends BaseController {
         this.mediaModel = mediaModel;
     }
 
-    public List<TbQuestionStructure> getStructures() {
-        return structures;
-    }
-
-    public void setStructures(List<TbQuestionStructure> structures) {
-        this.structures = structures;
-    }
-
-    public List<MediaModel> getMediaQuestions() {
+    public List<TbQuestionStructure> getMediaQuestions() {
         return mediaQuestions;
     }
 
-    public void setMediaQuestions(List<MediaModel> mediaQuestions) {
+    public void setMediaQuestions(List<TbQuestionStructure> mediaQuestions) {
         this.mediaQuestions = mediaQuestions;
     }
 

@@ -9,23 +9,39 @@
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<h:outputScript library="js" name="lightbox.js" />
-<style>
-
+		<style>
 .music_control {
-  display: block;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+	display: block;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-@-webkit-keyframes a_music_play{
-    0%{ -webkit-transform: rotate(0deg);}
-    100%{ -webkit-transform: rotate(360deg);}
+@
+-webkit-keyframes a_music_play { 0%{
+	-webkit-transform: rotate(0deg);
 }
+100%{
+-webkit-transform
 
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+}
+}
 </style>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="mediaExamForm">
@@ -43,11 +59,12 @@
 							</h:panelGroup>
 							<c:if test="#{examBean.mediaModel.mediaPath ne null}">
 								<!-- 显示音频 -->
-                                <div class="audio_wrap">
-								    <div class="music_control">
-								        <audio id="listen" controls="controls" autobuffer="autobuffer" src ="#{examBean.mediaModel.mediaPath}"></audio>
-								    </div>
-							    </div>
+								<div class="audio_wrap">
+									<div class="music_control">
+										<audio id="listen" controls="controls" autobuffer="autobuffer"
+											src="#{examBean.mediaModel.mediaPath}"></audio>
+									</div>
+								</div>
 
 								<script>
 
@@ -85,50 +102,49 @@
 								</script>
 								<!-- 显示大题目 -->
 								<h:dataTable id="title" rendered="true"
-									value="#{examBean.structures}" var="item" width="100%">
+									value="#{examBean.mediaQuestions}" var="item" width="100%">
 									<h:column>
 										<h4>#{item.title}</h4>
 										<h:dataTable id="mq" class="table table-bordered"
-											rendered="true" value="#{item.mediaQuestions}"
-											var="mquestion" width="100%">
+											rendered="true" value="#{item.question}" var="mquestion"
+											width="100%">
 											<h:column>
 													#{mquestion.context}
-												<!-- <hr /> -->
 													<!-- 文字 -->
-													<c:if test="#{mquestion.a ne ''}">
-														<h:selectOneRadio value="#{mquestion.myAnswer}"
-															layout="#{mquestion.layoutStyle}"
-															class="#{mquestion.radioClass}">
-															<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
-															<c:if test="#{mquestion.b ne ''}">
-																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
-															</c:if>
-															<c:if test="#{mquestion.c ne ''}">
-																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
-															</c:if>
-															<c:if test="#{mquestion.d ne ''}">
-																<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
-															</c:if>
-														</h:selectOneRadio>
-													</c:if>
-													<!-- 图片 -->
-                                                    <c:if test="#{mquestion.contextImgCode !=''}">
-                                                      <table align="center">
-                                                        <tr>
-                                                            <td align="center">
-                                                                <div class="gallery-bottom">
-                                                                    <div class="col-md-3 gallery-grid">
-                                                                        <a class="example-image-link"
-                                                                            href="#{mquestion.contextImgCode}"
-                                                                            data-lightbox="example-set"><img
-                                                                            class="example-image" src="#{mquestion.contextImgCode}"
-                                                                            alt="" /></a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                      </table>
-                                                    </c:if>
+												<c:if test="#{mquestion.a ne ''}">
+													<h:selectOneRadio value="#{mquestion.myAnswer}"
+														layout="#{mquestion.layoutStyle}"
+														class="#{mquestion.radioClass}">
+														<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+														<c:if test="#{mquestion.b ne ''}">
+															<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+														</c:if>
+														<c:if test="#{mquestion.c ne ''}">
+															<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+														</c:if>
+														<c:if test="#{mquestion.d ne ''}">
+															<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+														</c:if>
+													</h:selectOneRadio>
+												</c:if>
+												<!-- 图片 -->
+												<c:if test="#{mquestion.contextImgCode !=''}">
+													<table align="center">
+														<tr>
+															<td align="center">
+																<div class="gallery-bottom">
+																	<div class="col-md-3 gallery-grid">
+																		<a class="example-image-link"
+																			href="#{mquestion.contextImgCode}"
+																			data-lightbox="example-set"><img
+																			class="example-image"
+																			src="#{mquestion.contextImgCode}" alt="" /></a>
+																	</div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</c:if>
 											</h:column>
 										</h:dataTable>
 									</h:column>
@@ -143,7 +159,7 @@
 								</div>
 								<div class="form-submit1">
 									<h:commandButton value="直接退出" class="button1"
-										style="margin-right: 5px;" action="#{examBean.doMediaExit}"
+										style="margin-right: 5px;" action="#{examBean.goBackToClassify}"
 										id="doMediaaBtn">
 									</h:commandButton>
 								</div>
@@ -155,8 +171,13 @@
 							</c:if>
 							<c:if test="#{examBean.mediaModel eq null}">
 								<div class="form-submit1">
-									<h:commandButton value="我的错题" class="button1"
+									<h:commandButton value="我的错题" class="button1" style="margin-right: 5px;"
 										action="#{examBean.doResume}" id="doResumeBtn" />
+								</div>
+								<div class="form-submit1">
+									<h:commandButton value="其他题型" class="button1"
+										action="#{examBean.goBackToClassify}"
+										id="goBackToClassifyBtn" />
 								</div>
 							</c:if>
 						</div>

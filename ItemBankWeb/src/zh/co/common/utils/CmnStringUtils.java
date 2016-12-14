@@ -798,8 +798,8 @@ public final class CmnStringUtils {
 		
 		if(structures != null && structures.size() > 0) {
 			 for(TbQuestionStructure item : structures) {
-				if(item.getMediaQuestions() != null && item.getMediaQuestions().size() > 0 ) {
-					List<MediaModel> questions = item.getMediaQuestions();
+				if(item.getQuestion() != null && item.getQuestion().size() > 0 ) {
+					List<MediaModel> questions = item.getQuestion();
 					if(questions != null && questions.size() > 0) {
 						for (int i = 0; i < questions.size(); i++) {
 							if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG

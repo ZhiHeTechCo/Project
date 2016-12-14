@@ -53,7 +53,7 @@
     <resultMap id="mediaQuestionsResult" type="zh.co.item.bank.model.entity.TbQuestionStructure">  
       <result property="title" column="title"/>
       <result property="classifyId" column="classify_id"/>
-      <collection property="mediaQuestions" ofType="zh.co.item.bank.model.entity.MediaModel" >
+      <collection property="question" ofType="zh.co.item.bank.model.entity.MediaModel" >
         <id column="no" property="no" jdbcType="INTEGER" />
         <result column="context" property="context" jdbcType="CHAR" />
         <result column="context_img" property="contextImg" jdbcType="LONGVARBINARY" />

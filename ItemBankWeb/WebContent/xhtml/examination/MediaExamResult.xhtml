@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<h:outputScript library="js" name="lightbox.js" />
+		<style>
+.music_control {
+	display: block;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@
+-webkit-keyframes a_music_play { 0%{
+	-webkit-transform: rotate(0deg);
+}
+100%{
+-webkit-transform
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+ 
+
+
+
+
+
+rotate
+
+
+
+
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+
+
+
+
+);
+}
+}
+</style>
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="mediaExamResultForm">
+				<div class="typrography">
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
+					<div class="container">
+						<div class="bs-example">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<c:if test="#{examResultBean.mediaModel.mediaPath ne null}">
+								<!-- 显示音频 -->
+								<div class="audio_wrap">
+									<div class="music_control">
+										<audio id="listen" controls="controls" autobuffer="autobuffer"
+											src="#{examResultBean.mediaModel.mediaPath}"></audio>
+									</div>
+								</div>
+
+								<script>
+
+                                function load_ready(){
+                                    audio_array[0].play();
+                                    audio_array[0].loop=true;
+                                }
+                                
+                                
+                                /*声音脚本 开始*/
+                                //音频标签存放数组
+                                var audio_array=[];
+                                function loadSound(){
+                                    var audio_num=0;
+                                
+                                    //获得json中图片的地址
+                                    var audio = document.getElementById("listen");
+                                    //audio.src = "${request.contextPath}/mp3/BIGBANG_SOBER.mp3";//地址
+                                    audio.className="bg_music";
+                                    
+                                    audio_array.push(audio);
+                                    $(".audio_wrap").append(audio);
+                                    
+                                    audio_array[0].load();
+                                    audio_array[0].addEventListener("canplaythrough", function(){
+                                
+                                        load_ready();
+                                
+                                    });
+                                    
+                                }
+                                
+                                /*声音脚本 结束*/
+                                loadSound();
+                                </script>
+								<!-- 显示大题目 -->
+								<h:dataTable id="title" rendered="true"
+									value="#{examResultBean.mediaQuestions}" var="item"
+									width="100%">
+									<h:column>
+										<h4>#{item.title}</h4>
+										<h:dataTable id="mq" class="table table-bordered"
+											rendered="true" value="#{item.question}" var="mquestion"
+											width="100%">
+											<h:column>
+												#{mquestion.context}
+											<!-- <hr /> -->
+												<!-- 文字 -->
+												<c:if test="#{mquestion.a ne ''}">
+													<h:selectOneRadio value="#{mquestion.myAnswer}"
+														layout="#{mquestion.layoutStyle}"
+														class="#{mquestion.radioClass}" readonly="true"
+														disabled="true">
+														<c:if
+															test="#{mquestion.myAnswer eq '1'} &amp; #{mquestion.answer eq '1'}">
+															<span style="color: #99DD00;"
+																class="glyphicon glyphicon-ok"></span>
+														</c:if>
+														<c:if
+															test="#{mquestion.myAnswer eq '1'} &amp; #{mquestion.answer ne '1'}">
+															<span style="color: red;"
+																class="glyphicon glyphicon-remove"></span>
+														</c:if>
+														<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+														<c:if test="#{mquestion.b ne ''}">
+															<c:if
+																test="#{mquestion.myAnswer eq '2'} &amp; #{mquestion.answer eq '2'}">
+																<span style="color: #99DD00;"
+																	class="glyphicon glyphicon-ok"></span>
+															</c:if>
+															<c:if
+																test="#{mquestion.myAnswer eq '2'} &amp; #{mquestion.answer ne '2'}">
+																<span style="color: red;"
+																	class="glyphicon glyphicon-remove"></span>
+															</c:if>
+															<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+														</c:if>
+														<c:if test="#{mquestion.c ne ''}">
+															<c:if
+																test="#{mquestion.myAnswer eq '3'} &amp; #{mquestion.answer eq '3'}">
+																<span style="color: #99DD00;"
+																	class="glyphicon glyphicon-ok"></span>
+															</c:if>
+															<c:if
+																test="#{mquestion.myAnswer eq '3'} &amp; #{mquestion.answer ne '3'}">
+																<span style="color: red;"
+																	class="glyphicon glyphicon-remove"></span>
+															</c:if>
+															<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+														</c:if>
+														<c:if test="#{mquestion.d ne ''}">
+															<c:if
+																test="#{mquestion.myAnswer eq '4'} &amp; #{mquestion.answer eq '4'}">
+																<span style="color: #99DD00;"
+																	class="glyphicon glyphicon-ok"></span>
+															</c:if>
+															<c:if
+																test="#{mquestion.myAnswer eq '4'} &amp; #{mquestion.answer ne '4'}">
+																<span style="color: red;"
+																	class="glyphicon glyphicon-remove"></span>
+															</c:if>
+															<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+														</c:if>
+													</h:selectOneRadio>
+												</c:if>
+												<!-- 图片 -->
+												<c:if test="#{mquestion.contextImgCode !=''}">
+													<table align="center">
+														<tr>
+															<td align="center">
+																<div class="gallery-bottom">
+																	<div class="col-md-3 gallery-grid">
+																		<a class="example-image-link"
+																			href="#{mquestion.contextImgCode}"
+																			data-lightbox="example-set"><img
+																			class="example-image"
+																			src="#{mquestion.contextImgCode}" alt="" /></a>
+																	</div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</c:if>
+											</h:column>
+										</h:dataTable>
+									</h:column>
+								</h:dataTable>
+							</c:if>
+							<div class="form-submit1">
+								<h:commandButton value="返回试题选择" class="button1"
+									action="#{examResultBean.goBackToClassify}"
+									id="goBackToClassifyBtn" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

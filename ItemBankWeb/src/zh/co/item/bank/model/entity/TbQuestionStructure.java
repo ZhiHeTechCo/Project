@@ -6,16 +6,14 @@ import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 
 public class TbQuestionStructure extends TbQuestionStructureBean {
 
-	private List<MediaModel> mediaQuestions;
+    private List<MediaModel> question;
 
-	public List<MediaModel> getMediaQuestions() {
-		return mediaQuestions;
-	}
+    public List<MediaModel> getQuestion() {
+        return question;
+    }
 
-	public void setMediaQuestions(List<MediaModel> mediaQuestions) {
-		this.mediaQuestions = mediaQuestions;
-	}
-
-
+    public void setQuestion(List<MediaModel> question) {
+        this.question = question;
+    }
 
 }

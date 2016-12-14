@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Scope;
 import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
-import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
@@ -26,6 +25,8 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.MediaModel;
+import zh.co.item.bank.model.entity.TbQuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
@@ -74,6 +75,12 @@ public class ExamResultBean extends BaseController {
     private String examFlag;
 
     private List<ExamReportModel> reportModels;
+
+    /** 听力 */
+    // 听力试题
+    private List<TbQuestionStructure> mediaQuestions;
+    // 音频
+    MediaModel mediaModel;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -257,7 +264,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 试题报错（暂时不用）   
+     * 试题报错（暂时不用）
      * 
      * @return
      */
@@ -327,8 +334,7 @@ public class ExamResultBean extends BaseController {
      * @return
      */
     public String mediaReport() {
-        // TODO
-        return SystemConstants.PAGE_ITBK_EXAM_007;
+        return SystemConstants.PAGE_ITBK_EXAM_008;
     }
 
     public ExamService getExamService() {
@@ -421,6 +427,22 @@ public class ExamResultBean extends BaseController {
 
     public void setGraphicImage(String graphicImage) {
         this.graphicImage = graphicImage;
+    }
+
+    public List<TbQuestionStructure> getMediaQuestions() {
+        return mediaQuestions;
+    }
+
+    public void setMediaQuestions(List<TbQuestionStructure> mediaQuestions) {
+        this.mediaQuestions = mediaQuestions;
+    }
+
+    public MediaModel getMediaModel() {
+        return mediaModel;
+    }
+
+    public void setMediaModel(MediaModel mediaModel) {
+        this.mediaModel = mediaModel;
     }
 
 }
