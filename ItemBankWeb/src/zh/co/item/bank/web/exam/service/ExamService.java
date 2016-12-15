@@ -11,6 +11,7 @@ import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.item.bank.db.entity.TbErrorReportBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -192,7 +193,8 @@ public class ExamService {
     /**
      * 获取试题结构
      * 
-     * @param map[exam, examType]
+     * @param map[exam,
+     *            examType]
      * @return
      */
     public List<ExamModel> getStructure(TbQuestionClassifyBean classifyBean) {
@@ -228,4 +230,10 @@ public class ExamService {
         return examDao.getYear(map);
     }
 
+    /**
+     * 试题报错
+     */
+    public void insertErrorReport(TbErrorReportBean bean) {
+        examDao.insertErrorReport(bean);
+    }
 }

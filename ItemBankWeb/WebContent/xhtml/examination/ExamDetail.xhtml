@@ -70,61 +70,23 @@
 										</ins> <h:outputText value="#{examResultBean.question.contextAfter}" />
 									</td>
 								</tr>
-								<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
-									<tr>
-										<td width="20%"><h4>选项</h4></td>
-										<td width="80%"><h:selectOneRadio
-												value="#{examResultBean.question.answer}"
-												layout="#{examResultBean.question.layoutStyle}"
-												class="#{examResultBean.question.radioClass}"
-												readonly="true" disabled="true">
-												<f:selectItem itemValue="1"
-													itemLabel="  A：#{examResultBean.question.a}" />
-												<f:selectItem itemValue="2"
-													itemLabel="  B：#{examResultBean.question.b}" />
-												<f:selectItem itemValue="3"
-													itemLabel="  C：#{examResultBean.question.c}" />
-												<f:selectItem itemValue="4"
-													itemLabel="  D：#{examResultBean.question.d}" />
-											</h:selectOneRadio></td>
-									</tr>
-								</c:if>
-								<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
-									<tr>
-										<td width="20%"><h4>选项</h4></td>
-										<td width="80%" colspan="4"><h:selectOneRadio
-												value="#{examResultBean.question.answer}"
-												layout="#{examResultBean.question.layoutStyle}"
-												class="#{examResultBean.question.radioClass}"
-												readonly="true" disabled="true">
-												<f:selectItem itemValue="1"
-													itemLabel="  A：#{examResultBean.question.a}" />
-												<f:selectItem itemValue="2"
-													itemLabel="  B：#{examResultBean.question.b}" />
-												<f:selectItem itemValue="3"
-													itemLabel="  C：#{examResultBean.question.c}" />
-												<f:selectItem itemValue="4"
-													itemLabel="  D：#{examResultBean.question.d}" />
-											</h:selectOneRadio></td>
-									</tr>
-								</c:if>
-								<!-- 
 								<tr>
-									<td width="20%" ><h4>正确答案</h4></td>
-									<c:if test="#{examResultBean.question.answer eq '1'}">
-										<td colspan="4">A</td>
-									</c:if>
-									<c:if test="#{examResultBean.question.answer eq '2'}">
-										<td colspan="4">B</td>
-									</c:if>
-									<c:if test="#{examResultBean.question.answer eq '3'}">
-										<td colspan="4">C</td>
-									</c:if>
-									<c:if test="#{examResultBean.question.answer eq '4'}">
-										<td colspan="4">D</td>
-									</c:if>
+									<td width="20%"><h4>选项</h4></td>
+									<td width="80%" colspan="4"><h:selectOneRadio
+											value="#{examResultBean.question.answer}"
+											layout="#{examResultBean.question.layoutStyle}"
+											class="#{examResultBean.question.radioClass}" readonly="true"
+											disabled="true">
+											<f:selectItem itemValue="1"
+												itemLabel="  A：#{examResultBean.question.a}" />
+											<f:selectItem itemValue="2"
+												itemLabel="  B：#{examResultBean.question.b}" />
+											<f:selectItem itemValue="3"
+												itemLabel="  C：#{examResultBean.question.c}" />
+											<f:selectItem itemValue="4"
+												itemLabel="  D：#{examResultBean.question.d}" />
+										</h:selectOneRadio></td>
 								</tr>
-								 -->
 								<c:if test="#{examResultBean.examFlag eq 'true'}">
 									<tr>
 										<td width="20%"><h4>您的选择</h4></td>
@@ -152,18 +114,6 @@
 											test="#{examResultBean.question.analysis eq null}">暂无</c:if>
 										<h:outputText value="#{examResultBean.question.analysis}" /></td>
 								</tr>
-								<!-- 
-								<tr>
-									<td width="20%" ><h4>考试类别</h4></td>
-									<td colspan="4"><h:outputText
-											value="#{examResultBean.question.examName}" /></td>
-								</tr>
-								<tr>
-									<td ><h4>考试级别</h4></td>
-									<td colspan="4"><h:outputText
-											value="#{examResultBean.question.levelName}" /></td>
-								</tr>
-								 -->
 								<tr>
 									<td><h4>试题种别</h4></td>
 									<td colspan="4"><h:outputText
@@ -198,7 +148,13 @@
 										<td>
 											<div class="form-submit1">
 												<h:commandButton value="询问解析" class="button1"
-													action="#{examResultBean.askQuestion}" id="askQuestion" />
+													action="#{examResultBean.askQuestion}" id="askQuestionBtn" />
+											</div>
+										</td>
+										<td>
+											<div class="form-submit1">
+												<h:commandButton value="试题报错" class="button1"
+													action="#{examResultBean.reportError}" id="reportErrorBtn" />
 											</div>
 										</td>
 									</c:if>

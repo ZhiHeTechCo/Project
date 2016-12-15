@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Named;
 
 import zh.co.common.dao.BaseDao;
+import zh.co.item.bank.db.entity.TbErrorReportBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 
@@ -136,4 +137,10 @@ public class ExamDao extends BaseDao {
         return (String) getIbatisTemplate().selectOne("Question.getYear", map);
     }
 
+    /**
+     * 试题报错
+     */
+    public void insertErrorReport(TbErrorReportBean bean){
+        getIbatisTemplate().insert("ErrorReport.insertSelective", bean);
+    }
 }

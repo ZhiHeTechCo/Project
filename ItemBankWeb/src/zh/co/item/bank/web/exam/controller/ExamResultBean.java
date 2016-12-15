@@ -21,6 +21,7 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.TbErrorReportBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
@@ -87,7 +88,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * [结果一览]画面初始化
+     * [做題模式结果一览]画面初始化
      */
     public String init() {
         try {
@@ -99,45 +100,50 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 返回[试题库]/[错题库]画面
+     * [考试结果一览]画面初始化
      * 
      * @return
      */
-    public String goBackToExam() {
-        if (isResume) {
-            ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
-            return resumeBean.init();
+    public String examReport() {
+        try {
+            // 显示本次考试结果
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequest();
+            String source = request.getParameter("source");
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
+            if (!checkuser(userInfo)) {
+                return SystemConstants.PAGE_ITBK_EXAM_004;
+            }
+            reportModels = new ArrayList<ExamReportModel>();
+            // 本次考试出现的试题种别
+            List<String> examTypes = examCollectionService.getReportTypes(source);
+            // 对应种别正确率
+            ExamReportModel param = new ExamReportModel();
+            param.setSource(source);
+            param.setUserId(userInfo.getId());
+            for (String type : examTypes) {
+                param.setExamType(type);
+                ExamReportModel record = examCollectionService.getPercentage(param);
+                reportModels.add(record);
+            }
 
-        } else {
-            ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
-            examBean.setClassifyBean(classifyBean);
-            examBean.setQuestions(null);
-            return examBean.init();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("source", source);
+            map.put("userId", userInfo.getId());
+            questions = examCollectionService.getExamReport(map);
+            // 没有查询到当前考题的成绩
+            if (questions == null || questions.size() == 0) {
+                // 去试题选择
+                ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+                return classifyBean.init();
+            }
+
+        } catch (Exception e) {
+            processForException(this.logger, e);
         }
-    }
+        // 去[考试结果一览]画面
+        return SystemConstants.PAGE_ITBK_EXAM_006;
 
-    /**
-     * [试题详细]返回结果一览画面
-     * 
-     * @return
-     */
-    public String goBackToResult() {
-        // 前画面为考试结果一览
-        if (StringUtils.isNotEmpty(examFlag)) {
-            return examReport();
-        }
-        // 做题结果一览
-        return init();
-    }
-
-    /**
-     * 返回试题选择
-     * 
-     * @return
-     */
-    public String goBackToClassify() {
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
     }
 
     /**
@@ -196,36 +202,21 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 画面序号,折行
+     * [试题详细]返回结果一览画面
      * 
-     * @param subject 题干
+     * @return
      */
-    private void prepareData() {
-
-        if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-                .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-            question.setLayoutStyle("pageDirection");
-        } else if (StringUtils.isNotEmpty(question.getA()) && question.getA().length() > CmnContants.FOLDING_LINE) {
-            question.setLayoutStyle("pageDirection");
-        } else if (StringUtils.isNotEmpty(question.getB()) && question.getB().length() > CmnContants.FOLDING_LINE) {
-            question.setLayoutStyle("pageDirection");
-        } else if (StringUtils.isNotEmpty(question.getC()) && question.getC().length() > CmnContants.FOLDING_LINE) {
-            question.setLayoutStyle("pageDirection");
-        } else if (StringUtils.isNotEmpty(question.getD()) && question.getD().length() > CmnContants.FOLDING_LINE) {
-            question.setLayoutStyle("pageDirection");
-        } else {
-            question.setLayoutStyle("lineDirection");
+    public String goBackToResult() {
+        // 前画面为考试结果一览
+        if (StringUtils.isNotEmpty(examFlag)) {
+            return examReport();
         }
-
-        if ("lineDirection".equals(question.getLayoutStyle())) {
-            question.setRadioClass("radioTable1");
-        } else {
-            question.setRadioClass("radioTable2");
-        }
+        // 做题结果一览
+        return init();
     }
 
     /**
-     * 询问解析
+     * [试题详细]询问解析
      * 
      * @return
      */
@@ -264,7 +255,7 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 试题报错（暂时不用）
+     * [试题详细]试题报错
      * 
      * @return
      */
@@ -273,63 +264,77 @@ public class ExamResultBean extends BaseController {
                 .getRequest();
         String questionId = request.getParameter("questionId");
         if (questionId != null) {
-            userInfo = (UserModel) WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
-                return SystemConstants.PAGE_ITBK_EXAM_004;
+                return SystemConstants.PAGE_ITBK_USER_002;
             }
+            // 登录报错表
+            TbErrorReportBean bean = new TbErrorReportBean();
+            bean.setUserId(userInfo.getId());
+            bean.setQuestionId(Integer.parseInt(questionId));
+            examService.insertErrorReport(bean);
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
 
     /**
-     * [考试结果一览]画面初始化
+     * 返回[试题库]/[错题库]画面
      * 
      * @return
      */
-    public String examReport() {
-        try {
-            // 显示本次考试结果
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequest();
-            String source = request.getParameter("source");
-            userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser(userInfo)) {
-                return SystemConstants.PAGE_ITBK_EXAM_004;
-            }
-            reportModels = new ArrayList<ExamReportModel>();
-            // 本次考试出现的试题种别
-            List<String> examTypes = examCollectionService.getReportTypes(source);
-            // 对应种别正确率
-            ExamReportModel param = new ExamReportModel();
-            param.setSource(source);
-            param.setUserId(userInfo.getId());
-            for (String type : examTypes) {
-                param.setExamType(type);
-                ExamReportModel record = examCollectionService.getPercentage(param);
-                reportModels.add(record);
-            }
+    public String goBackToExam() {
+        if (isResume) {
+            ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
+            return resumeBean.init();
 
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("source", source);
-            map.put("userId", userInfo.getId());
-            questions = examCollectionService.getExamReport(map);
-            // 没有查询到当前考题的成绩
-            if (questions == null || questions.size() == 0) {
-                // 去试题选择
-                ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-                return classifyBean.init();
-            }
-
-        } catch (Exception e) {
-            processForException(this.logger, e);
+        } else {
+            ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+            examBean.setClassifyBean(classifyBean);
+            examBean.setQuestions(null);
+            return examBean.init();
         }
-        // 去[考试结果一览]画面
-        return SystemConstants.PAGE_ITBK_EXAM_006;
-
     }
 
     /**
-     * 听力结果一览
+     * 返回试题选择
+     * 
+     * @return
+     */
+    public String goBackToClassify() {
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
+    }
+
+    /**
+     * 共通：画面序号,折行
+     * 
+     * @param subject 题干
+     */
+    private void prepareData() {
+
+        if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getA()) && question.getA().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getB()) && question.getB().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getC()) && question.getC().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else if (StringUtils.isNotEmpty(question.getD()) && question.getD().length() > CmnContants.FOLDING_LINE) {
+            question.setLayoutStyle("pageDirection");
+        } else {
+            question.setLayoutStyle("lineDirection");
+        }
+
+        if ("lineDirection".equals(question.getLayoutStyle())) {
+            question.setRadioClass("radioTable1");
+        } else {
+            question.setRadioClass("radioTable2");
+        }
+    }
+
+    /**
+     * [听力]结果一览
      * 
      * @return
      */

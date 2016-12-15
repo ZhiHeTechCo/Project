@@ -23,35 +23,41 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<h5 style="color:#3382C9;"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。</h5>
+							<h5 style="color: #3382C9;">
+								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。
+							</h5>
 							<h4>
 								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
 							</h4>
-                            <c:if test="#{examResultBean.subject !=''}">
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td align="center"><h4>问题</h4></td>
-                                    </tr>
-                                    <tr>
-                                        <td><ui:repeat value="#{examResultBean.subjectList}" var="stringItem">
-                                              <h:outputText value="#{stringItem}" />
-                                              <br />
-                                            </ui:repeat>
-                                        </td>
-                                    </tr>
-                                    <c:if test="#{examResultBean.graphicImage !=''}">
-                                      <tr>
-                                          <td align="center">
-                                            <div class="gallery-bottom" >
-                                                <div class="col-md-3 gallery-grid">
-                                                    <a class="example-image-link" href="#{examResultBean.graphicImage}" data-lightbox="example-set" ><img class="example-image" src="#{examResultBean.graphicImage}" alt=""/></a>
-                                                </div>
-                                            </div>
-                                           </td>
-                                      </tr>
-                                    </c:if>
-                                </table>
-                            </c:if>
+							<c:if test="#{examResultBean.subject !=''}">
+								<table class="table table-bordered">
+									<tr>
+										<td align="center"><h4>问题</h4></td>
+									</tr>
+									<tr>
+										<td><ui:repeat value="#{examResultBean.subjectList}"
+												var="stringItem">
+												<h:outputText value="#{stringItem}" />
+												<br />
+											</ui:repeat></td>
+									</tr>
+									<c:if test="#{examResultBean.graphicImage !=''}">
+										<tr>
+											<td align="center">
+												<div class="gallery-bottom">
+													<div class="col-md-3 gallery-grid">
+														<a class="example-image-link"
+															href="#{examResultBean.graphicImage}"
+															data-lightbox="example-set"><img
+															class="example-image"
+															src="#{examResultBean.graphicImage}" alt="" /></a>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</c:if>
+								</table>
+							</c:if>
 							<h:dataTable class="table table-bordered" rendered="true"
 								value="#{examResultBean.questions}" var="item">
 								<h:column>
@@ -65,58 +71,23 @@
 											action="#{examResultBean.showDetail}"
 											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
 											class="list-group-item">
-											<f:param name="questionId" value="#{item.no}"></f:param> 
-                                      <ui:repeat value="#{item.contextList}" var="stringItem">
-                                                  <h:outputText value="#{stringItem}" />
-                                      </ui:repeat>
-                                      <ins>#{item.contextKey}</ins>#{item.contextAfter}
+											<f:param name="questionId" value="#{item.no}"></f:param>
+											<ui:repeat value="#{item.contextList}" var="stringItem">
+												<h:outputText value="#{stringItem}" />
+											</ui:repeat>
+											<ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
-									<c:if test="#{examResultBean.classifyBean.examType ne '5'}">
-										<tr>
-											<td><h4>选项</h4></td>
-											<td><h:selectOneRadio value="#{item.myAnswer}"
-                                                layout="#{item.layoutStyle}" class="#{item.radioClass}" readonly="true" disabled="true">
-                                                <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-                                                <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-                                                <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
-                                                <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-                                            </h:selectOneRadio>
-											</td>
-										</tr>
-									</c:if>
-									<c:if test="#{examResultBean.classifyBean.examType eq '5'}">
-										<tr>
-                                            <td><h4>选项</h4></td>
-                                            <td><h:selectOneRadio value="#{item.myAnswer}"
-                                                layout="pageDirection" class="radioTable2" readonly="true" disabled="true">
-                                                <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-                                                <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-                                                <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
-                                                <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-                                            </h:selectOneRadio>
-                                            </td>
-                                        </tr>
-									</c:if>
-									<!-- 
 									<tr>
-										<td><h4>您的选择</h4></td>
-										<h:panelGroup rendered="#{item.myAnswer eq '1'}">
-											<td colspan="4">A</td>
-										</h:panelGroup>
-										<h:panelGroup rendered="#{item.myAnswer eq '2'}">
-											<td colspan="4">B</td>
-										</h:panelGroup>
-										<h:panelGroup rendered="#{item.myAnswer eq '3'}">
-											<td colspan="4">C</td>
-										</h:panelGroup>
-										<h:panelGroup rendered="#{item.myAnswer eq '4'}">
-											<td colspan="4">D</td>
-										</h:panelGroup>
-										<h:panelGroup rendered="#{item.myAnswer eq ''}">
-											<td colspan="4">未选择</td>
-										</h:panelGroup>
+										<td><h4>选项</h4></td>
+										<td><h:selectOneRadio value="#{item.myAnswer}"
+												layout="#{item.layoutStyle}" class="#{item.radioClass}"
+												readonly="true" disabled="true">
+												<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+												<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+												<f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+												<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+											</h:selectOneRadio></td>
 									</tr>
-									 -->
 									<tr>
 										<td><h4>正确答案</h4></td>
 										<h:panelGroup rendered="#{item.answer eq '1'}">
