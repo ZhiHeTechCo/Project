@@ -30,6 +30,8 @@
           function getMediaFail() {
         	  var mediaMsg = document.getElementById("mediaMsg");
         	  mediaMsg.innerText = "音频加载失败,请刷新页面重试!";
+        	  var loadImg = document.getElementById("loadImg");
+        	  loadImg.src = "";
           }
           function getMediaCallBack(data) {
         	    var ajaxStatus = data.status;
@@ -39,12 +41,16 @@
         	    case "begin":
         	    	 var mediaMsg = document.getElementById("mediaMsg");
                      mediaMsg.innerText = "音频加载中,请稍后!";
+                     var loadImg = document.getElementById("loadImg");
+                     loadImg.src = "${request.contextPath}/resources/images/loading.gif";
         	        break;
         	    // complete
         	    case "complete":
         	    	resetButtonDisabled();
         	    	var mediaMsg = document.getElementById("mediaMsg");
                     mediaMsg.innerText = "就绪";
+                    var loadImg = document.getElementById("loadImg");
+                    loadImg.src = "";
         	        break;
         	    case "success":
         	    	break;
@@ -75,7 +81,8 @@
                                     render="audioWrapper "
                                     listener="#{examBean.getMedia}" onevent="getMediaCallBack" onerror="getMediaFail"/>
                                 </h:commandButton>
-                                <span id ="mediaMsg" style="padding-left: 20px;"></span>
+                                <span id ="mediaMsg" style="padding-left: 20px;color: #3382C9;"></span>
+                                <img id="loadImg" src=""/>
                               </div>
                               
                                <h:panelGroup id="audioWrapper" >
@@ -154,7 +161,6 @@
                                                  </h:panelGroup>
                                                  <h:panelGroup rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c eq '' and mquestion.d eq ''}">
                                                     <h:selectOneRadio value="#{mquestion.myAnswer}" layout="#{mquestion.layoutStyle}" class="#{mquestion.radioClass}">
-                                                      
                                                         <f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
                                                         <f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
                                                     </h:selectOneRadio>
