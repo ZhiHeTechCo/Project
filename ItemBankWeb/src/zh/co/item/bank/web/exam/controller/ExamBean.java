@@ -101,6 +101,8 @@ public class ExamBean extends BaseController {
     /** --听力模式用变量-- */
     // 音频
     MediaModel mediaModel;
+    
+    private String mediaReady;
     // 听力试题
     List<TbQuestionStructure> mediaQuestions;
 
@@ -123,6 +125,7 @@ public class ExamBean extends BaseController {
             subject = "";
             graphicImage = "";
             status = null;
+            this.mediaReady = "none";
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
             // 智能选题
@@ -251,7 +254,7 @@ public class ExamBean extends BaseController {
             if (mediaModel == null) {
                 continue;
             } else {
-                mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+                
                 break;
             }
         }
@@ -263,6 +266,14 @@ public class ExamBean extends BaseController {
         mediaQuestions = mediaService.selectMediaQuestions(map);
     }
 
+    public void getMedia() {
+    	try {
+			mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+			this.mediaReady = "block";
+		} catch (IOException e) {
+			processForException(logger, e);
+		}
+    }
     /**
      * 听力提交
      * 
@@ -334,6 +345,7 @@ public class ExamBean extends BaseController {
             if (userInfo == null) {
                 userInfo = WebUtils.getLoginUserInfo();
             }
+            this.mediaReady = "none";
             // 检索用Map
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -702,5 +714,14 @@ public class ExamBean extends BaseController {
     public void setMediaQuestions(List<TbQuestionStructure> mediaQuestions) {
         this.mediaQuestions = mediaQuestions;
     }
+
+	public String getMediaReady() {
+		return mediaReady;
+	}
+
+	public void setMediaReady(String mediaReady) {
+		this.mediaReady = mediaReady;
+	}
+
 
 }
