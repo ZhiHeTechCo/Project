@@ -190,14 +190,13 @@ public class ExamResultBean extends BaseController {
         }
 
         // 权限判断
-        // if (Integer.parseInt(userInfo.getRole()) >= 90) {
-        // // 试题管理
-        // QuestionUpdateController questionUpdateController =
-        // (QuestionUpdateController) SpringAppContextManager
-        // .getBean("questionUpdateController");
-        // questionUpdateController.setQuestion(question);
-        // return questionUpdateController.init();
-        // }
+        if (Integer.parseInt(userInfo.getRole()) >= 90) {
+            // 试题管理
+            QuestionUpdateController questionUpdateController = (QuestionUpdateController) SpringAppContextManager
+                    .getBean("questionUpdateController");
+            questionUpdateController.setQuestion(question);
+            return questionUpdateController.init();
+        }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
 

@@ -106,5 +106,7 @@ public class SystemConstants {
     public static final String PAGE_ITBK_EXAM_008 = "ITBK_EXAM_008";
     /** 试题登录 */
     public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
+    /** 试题更新 */
+    public static final String PAGE_ITBK_QUE_002 = "ITBK_QUE_002";
 
 }

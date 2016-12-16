@@ -28,13 +28,6 @@ public class QuestionDao extends BaseDao {
     }
 
     /**
-     * 登录一级表
-     */
-    public void insertFirstLevelDirectory(TbFirstLevelDirectoryBean bean) {
-        getIbatisTemplate().insert("TbFirstLevelDirectory.insertSelective", bean);
-    }
-
-    /**
      * 检索最后插入的数据
      * 
      * @return
@@ -61,5 +54,30 @@ public class QuestionDao extends BaseDao {
      */
     public Integer selectFLDByName(TbFirstLevelDirectoryBean firstLevelDirectoryBean) {
         return (Integer) getIbatisTemplate().selectOne("Question.selectFLDByName", firstLevelDirectoryBean);
+    }
+
+    /**
+     * 登录一级表
+     */
+    public void insertFirstLevelDirectory(TbFirstLevelDirectoryBean bean) {
+        getIbatisTemplate().insert("TbFirstLevelDirectory.insertSelective", bean);
+    }
+
+    /**
+     * 更新一级表
+     * 
+     * @param bean
+     */
+    public void updateFirstLevelDirectory(TbFirstLevelDirectoryBean bean) {
+        getIbatisTemplate().update("TbFirstLevelDirectory.updateByPrimaryKeySelective", bean);
+    }
+
+    /**
+     * 更新问题表
+     * 
+     * @param model
+     */
+    public void updateQuestion(ExamModel model) {
+        getIbatisTemplate().update("Question.updateQuestion", model);
     }
 }

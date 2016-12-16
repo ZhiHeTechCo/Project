@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="questionUpdateForm">
+				<div class="typrography">
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题修正</h2>
+					<div class="container">
+						<div class="bs-example">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<table class="toTable" style="width: 100%">
+								<tr>
+									<td>
+										<h4>试题ID：</h4>
+									</td>
+									<td><h:outputText value="#{questionUpdateController.question.no}" /></td>
+								</tr>
+								<tr>
+									<td style="width: 10%;"><h4>题目：</h4></td>
+									<td colspan="4"><h:selectOneMenu
+											value="#{questionUpdateController.question.structureId}"
+											style="width:100%;">
+											<f:selectItems value="#{questionUpdateController.structures}"
+												var="entry" itemValue="#{entry.id}"
+												itemLabel="#{entry.title}" />
+										</h:selectOneMenu></td>
+								</tr>
+								<tr>
+									<td><h4>主题干：</h4></td>
+									<td colspan="4"><h:inputTextarea style="width: 100%"
+											value="#{questionUpdateController.question.subject}"></h:inputTextarea></td>
+								</tr>
+								<tr>
+									<td rowspan="3">
+										<h4>题干：</h4>
+									</td>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.context}" /></td>
+								</tr>
+								<tr>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.contextKey}" /></td>
+								</tr>
+								<tr>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.contextAfter}" />
+									</td>
+								</tr>
+								<tr>
+									<td><h4>选项：</h4></td>
+									<td><h:inputText
+											value="#{questionUpdateController.question.a}" /></td>
+									<td><h:inputText
+											value="#{questionUpdateController.question.b}" /></td>
+									<td><h:inputText
+											value="#{questionUpdateController.question.c}" /></td>
+									<td><h:inputText
+											value="#{questionUpdateController.question.d}" /></td>
+								</tr>
+								<tr>
+									<td><h4>答案：</h4></td>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.answer}" /></td>
+								</tr>
+								<tr>
+									<td><h4>解析：</h4></td>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.analysis}" /></td>
+								</tr>
+								<tr>
+									<td><h4>考题种别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionUpdateController.question.exam}">
+											<f:selectItems value="#{questionUpdateController.exams}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td><h4>考试类别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionUpdateController.question.examType}">
+											<f:selectItems value="#{questionUpdateController.examTypes}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td><h4>考试级别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionUpdateController.question.jlptLevel}">
+											<f:selectItems value="#{questionUpdateController.jlptLevels}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio> <h:selectOneRadio
+											value="#{questionUpdateController.question.jtestLevel}">
+											<f:selectItems
+												value="#{questionUpdateController.jtestLevels}" var="entry"
+												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td><h4>试题出处：</h4></td>
+									<td colspan="4"><h:inputText
+											value="#{questionUpdateController.question.source}" /></td>
+								</tr>
+							</table>
+							<div class="form-submit1">
+								<h:commandButton value="提交" class="button1"
+									action="#{questionUpdateController.doUpdate}" id="doInsertBtn" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

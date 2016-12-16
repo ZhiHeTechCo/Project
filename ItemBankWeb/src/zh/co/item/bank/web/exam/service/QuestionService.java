@@ -120,10 +120,42 @@ public class QuestionService {
     }
 
     /**
+     * 更新试题
+     * 
+     * @param examModel
+     */
+    public void updateQuestion(ExamModel model) {
+        if (!model.getSubject().isEmpty()) {
+            // 更新一级表
+            TbFirstLevelDirectoryBean firstLevelDirectoryBean = new TbFirstLevelDirectoryBean();
+            firstLevelDirectoryBean.setSubject(model.getSubject());
+            firstLevelDirectoryBean.setId(model.getFatherId());
+            
+            updateFirstLevelDirectory(firstLevelDirectoryBean);
+
+        }
+
+        if (model.getSource().isEmpty()) {
+            model.setSource(null);
+        }
+        if (model.getAnalysis().isEmpty()) {
+            model.setAnalysis(null);
+        }
+        questionDao.updateQuestion(model);
+    }
+
+    /**
      * 登录一级表
      */
     public void insertFirstLevelDirectory(TbFirstLevelDirectoryBean bean) {
         questionDao.insertFirstLevelDirectory(bean);
+    }
+
+    /**
+     * 更新一级表
+     */
+    public void updateFirstLevelDirectory(TbFirstLevelDirectoryBean bean) {
+        questionDao.updateFirstLevelDirectory(bean);
     }
 
     /**
