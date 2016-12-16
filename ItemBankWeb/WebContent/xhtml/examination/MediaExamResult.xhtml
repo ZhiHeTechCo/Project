@@ -196,20 +196,22 @@
 															<h:outputText value="#{mquestion.c}" />
 														</div>
 														<div style="width: 25%; float: left">
-															<h:panelGroup rendered="#{mquestion.answer eq '4'}">
-																<span class="glyphicon glyphicon-ok"></span>
+															<h:panelGroup rendered="#{mquestion.d ne ''}">
+																<h:panelGroup rendered="#{mquestion.answer eq '4'}">
+																	<span class="glyphicon glyphicon-ok"></span>
+																</h:panelGroup>
+																<h:panelGroup
+																	rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '4'}">
+																	<span class="glyphicon glyphicon-remove"></span>
+																</h:panelGroup>
+																<h:panelGroup
+																	rendered="#{mquestion.myAnswer ne '4' and mquestion.answer ne '4'}">
+																	<span style="color: #FFFFFF;"
+																		class="glyphicon glyphicon-chevron-right"></span>
+																</h:panelGroup>
+																D:
+																<h:outputText value="#{mquestion.d}" />
 															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '4'}">
-																<span class="glyphicon glyphicon-remove"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne '4' and mquestion.answer ne '4'}">
-																<span style="color: #FFFFFF;"
-																	class="glyphicon glyphicon-chevron-right"></span>
-															</h:panelGroup>
-															D:
-															<h:outputText value="#{mquestion.d}" />
 														</div>
 														<!-- 图片 -->
 														<c:if test="#{mquestion.contextImgCode !=''}">
