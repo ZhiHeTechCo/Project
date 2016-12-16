@@ -80,4 +80,15 @@ public class QuestionDao extends BaseDao {
     public void updateQuestion(ExamModel model) {
         getIbatisTemplate().update("Question.updateQuestion", model);
     }
+
+    /**
+     * 根据选择获取大题目
+     * 
+     * @param classifyId
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbQuestionStructureBean> getStructuresByClassifyId(Integer classifyId) {
+        return getIbatisTemplate().selectList("Media.selectStructuresByClassifyId", classifyId);
+    }
 }

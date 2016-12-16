@@ -130,7 +130,7 @@ public class QuestionService {
             TbFirstLevelDirectoryBean firstLevelDirectoryBean = new TbFirstLevelDirectoryBean();
             firstLevelDirectoryBean.setSubject(model.getSubject());
             firstLevelDirectoryBean.setId(model.getFatherId());
-            
+
             updateFirstLevelDirectory(firstLevelDirectoryBean);
 
         }
@@ -165,6 +165,16 @@ public class QuestionService {
      */
     public List<TbQuestionStructureBean> getStructures() {
         return questionDao.selectStructureForAll();
+    }
+
+    /**
+     * 根据选择获取大题目
+     * 
+     * @param classifyId
+     * @return
+     */
+    public List<TbQuestionStructureBean> getStructuresByClassifyId(Integer classifyId) {
+        return questionDao.getStructuresByClassifyId(classifyId);
     }
 
 }

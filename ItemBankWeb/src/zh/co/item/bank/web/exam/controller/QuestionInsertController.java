@@ -53,9 +53,7 @@ public class QuestionInsertController extends BaseController {
     // 题目
     private List<TbQuestionStructureBean> structures = new ArrayList<TbQuestionStructureBean>();
 
-    private ExamModel question = new ExamModel();
-
-    // private TuUserBean userInfo;
+    private ExamModel question;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_QUE_001;
@@ -74,10 +72,8 @@ public class QuestionInsertController extends BaseController {
             jlptLevels = examService.getJlptLevels();
             jtestLevels = examService.getJtestLevels();
 
+            question = new ExamModel();
             structures = questionService.getStructures();
-
-            // userInfo = (TuUserBean)
-            // WebUtils.getSessionAttribute(WebUtils.SESSION_USER_INFO);
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -131,6 +127,33 @@ public class QuestionInsertController extends BaseController {
      */
     public String reInit() {
         return init();
+    }
+
+    /**
+     * [重置题目]按钮按下
+     * 
+     * @return
+     */
+    public String selectStructure() {
+        TbQuestionClassifyBean classifyBean = new TbQuestionClassifyBean();
+        if (!question.getExam().isEmpty()) {
+            classifyBean.setExam(question.getExam());
+        }
+        if (!question.getExamType().isEmpty()) {
+            classifyBean.setExamType(question.getExamType());
+        }
+        if (!question.getJlptLevel().isEmpty()) {
+            classifyBean.setJlptLevel(question.getJlptLevel());
+        }
+        if (!question.getJtestLevel().isEmpty()) {
+            classifyBean.setJtestLevel(question.getJtestLevel());
+        }
+        // ClassifyId
+        Integer classifyId = examService.getClassifyId(classifyBean);
+        if (classifyId != null) {
+            structures = questionService.getStructuresByClassifyId(classifyId);
+        }
+        return getPageId();
     }
 
     public List<TsCodeBean> getExams() {

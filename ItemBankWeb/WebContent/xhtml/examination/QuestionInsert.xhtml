@@ -12,7 +12,8 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="questionInsertForm">
 				<div class="typrography">
-					<h2 style="text-align: center;padding-bottom: 20px;color:#3382C9;">试题登录</h2>
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题登录</h2>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -23,6 +24,44 @@
 									escape="false" />
 							</h:panelGroup>
 							<table class="toTable" style="width: 100%">
+								<tr>
+									<td><h4>考题种别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionInsertController.question.exam}">
+											<f:selectItems value="#{questionInsertController.exams}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td><h4>考试类别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionInsertController.question.examType}">
+											<f:selectItems value="#{questionInsertController.examTypes}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td><h4>考试级别：</h4></td>
+									<td colspan="4"><h:selectOneRadio
+											value="#{questionInsertController.question.jlptLevel}">
+											<f:selectItems value="#{questionInsertController.jlptLevels}"
+												var="entry" itemValue="#{entry.key}"
+												itemLabel="#{entry.value}" />
+										</h:selectOneRadio> <h:selectOneRadio
+											value="#{questionInsertController.question.jtestLevel}">
+											<f:selectItems
+												value="#{questionInsertController.jtestLevels}" var="entry"
+												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+										</h:selectOneRadio></td>
+								</tr>
+								<tr>
+									<td colspan="5"><div class="form-submit1">
+											<h:commandButton value="重置题目" class="button1"
+												action="#{questionInsertController.selectStructure}" />
+										</div></td>
+								</tr>
 								<tr>
 									<td><h4>题目：</h4></td>
 									<td colspan="4"><h:selectOneMenu
@@ -74,38 +113,6 @@
 									<td><h4>解析：</h4></td>
 									<td colspan="4"><h:inputText
 											value="#{questionInsertController.question.analysis}" /></td>
-								</tr>
-								<tr>
-									<td><h4>考题种别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{questionInsertController.question.exam}">
-											<f:selectItems value="#{questionInsertController.exams}"
-												var="entry" itemValue="#{entry.key}"
-												itemLabel="#{entry.value}" />
-										</h:selectOneRadio></td>
-								</tr>
-								<tr>
-									<td><h4>考试类别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{questionInsertController.question.examType}">
-											<f:selectItems value="#{questionInsertController.examTypes}"
-												var="entry" itemValue="#{entry.key}"
-												itemLabel="#{entry.value}" />
-										</h:selectOneRadio></td>
-								</tr>
-								<tr>
-									<td><h4>考试级别：</h4></td>
-									<td colspan="4"><h:selectOneRadio
-											value="#{questionInsertController.question.jlptLevel}">
-											<f:selectItems value="#{questionInsertController.jlptLevels}"
-												var="entry" itemValue="#{entry.key}"
-												itemLabel="#{entry.value}" />
-										</h:selectOneRadio> <h:selectOneRadio
-											value="#{questionInsertController.question.jtestLevel}">
-											<f:selectItems
-												value="#{questionInsertController.jtestLevels}" var="entry"
-												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-										</h:selectOneRadio></td>
 								</tr>
 								<tr>
 									<td><h4>试题出处：</h4></td>
