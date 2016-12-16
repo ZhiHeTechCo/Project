@@ -236,12 +236,14 @@ public class ForumController extends BaseController {
      */
     private void searchAsker(Integer questionId) {
         List<TuUserBean> nickNames = forumService.selectAllAsker(questionId);
+        String tmp = null;
         for (TuUserBean user : nickNames) {
             if (user != null) {
                 // 画面上显示所有提问者，用;隔开
-                askers = askers != null ? user.getNickName() : askers + SystemConstants.SEMIKOMA + user.getNickName();
+                tmp = tmp == null ? user.getNickName() : tmp + SystemConstants.SEMIKOMA + user.getNickName();
             }
         }
+        askers = tmp;
     }
 
     public Map<Integer, String> getUserName() {
