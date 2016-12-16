@@ -21,7 +21,7 @@ import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.exam.service.QuestionService;
 
 /**
- * 试题类型选择画面
+ * 试题登录画面
  * 
  * @author gaoya
  *
@@ -119,7 +119,7 @@ public class QuestionInsertController extends BaseController {
             questionService.insertQuestion(question);
 
         } catch (Exception e) {
-            System.out.println(e);
+            processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_QUE_001;
     }
