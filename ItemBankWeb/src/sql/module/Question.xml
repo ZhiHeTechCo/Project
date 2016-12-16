@@ -357,20 +357,6 @@
 		</trim>
 	</insert>
 
-	<insert id="insertSecondLevelDirectory" parameterType="java.lang.String">
-		insert into tb_first_level_directory
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="subject != null">
-				subject,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="subject != null">
-				#{subject,jdbcType=CHAR},
-			</if>
-		</trim>
-	</insert>
-
 	<insert id="insertQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		insert tb_question
 		<trim prefix="(" suffix=")" suffixOverrides=",">
