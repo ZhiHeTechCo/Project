@@ -110,6 +110,9 @@ public class QuestionInsertController extends BaseController {
                 throw ex;
             }
             question.setClassifyId(classifyId);
+            if(classifyBean.getExam().equals("1")){
+                question.setYear(question.getSource().substring(5, 9));
+            }
             question.setDeleteFlag("1");
             // 登录试题表
             questionService.insertQuestion(question);
