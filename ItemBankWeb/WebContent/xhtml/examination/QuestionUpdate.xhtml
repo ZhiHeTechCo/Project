@@ -28,7 +28,8 @@
 									<td>
 										<h4>试题ID：</h4>
 									</td>
-									<td><h:outputText value="#{questionUpdateController.question.no}" /></td>
+									<td><h:outputText
+											value="#{questionUpdateController.question.no}" /></td>
 								</tr>
 								<tr>
 									<td style="width: 10%;"><h4>题目：</h4></td>
@@ -121,8 +122,14 @@
 								</tr>
 							</table>
 							<div class="form-submit1">
-								<h:commandButton value="提交" class="button1"
+								<h:commandButton value="提交" class="button1" style="margin-right: 5px;"
 									action="#{questionUpdateController.doUpdate}" id="doInsertBtn" />
+							</div>
+							<div class="form-submit1">
+								<h:commandButton value="返回前页" class="button1"
+									action="#{questionUpdateController.goBackToResult}"
+									id="goBackToResultBtn">
+								</h:commandButton>
 							</div>
 						</div>
 					</div>
