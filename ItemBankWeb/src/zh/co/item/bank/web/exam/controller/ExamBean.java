@@ -106,6 +106,8 @@ public class ExamBean extends BaseController {
     // 听力试题
     List<TbQuestionStructure> mediaQuestions;
 
+    private String source;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
@@ -382,6 +384,8 @@ public class ExamBean extends BaseController {
                 if (questions == null || questions.size() == 0) {
                     safeList.remove(model);
                     continue;
+                } else if (source == null || !source.equals(questions.get(0).getSource())) {
+                    source = questions.get(0).getSource();
                 }
 
                 Integer fatherId = questions.get(0).getFatherId();
@@ -399,19 +403,19 @@ public class ExamBean extends BaseController {
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
-//                // 听力
-//                // 获取音频
-//                String source = questions.get(0).getSource();
-//                mediaModel = mediaService.selectMediaBySource(source);
-//                if (mediaModel != null) {
-//                    // 获取大题目
-//                    map.put("mediaId", mediaModel.getId());
-//                    mediaQuestions = mediaService.selectMediaQuestions(map);
-//                    // 画面序号和显示设置
-//                    CmnStringUtils.selectionLayoutSet(mediaQuestions);
-//                    // 跳转至听力画面
-//                    return SystemConstants.PAGE_ITBK_EXAM_007;
-//                }
+//              // 听力
+//              // 获取音频
+//              String source = questions.get(0).getSource();
+//              mediaModel = mediaService.selectMediaBySource(source);
+//              if (mediaModel != null) {
+//                  // 获取大题目
+//                  map.put("mediaId", mediaModel.getId());
+//                  mediaQuestions = mediaService.selectMediaQuestions(map);
+//                  // 画面序号和显示设置
+//                  CmnStringUtils.selectionLayoutSet(mediaQuestions);
+//                  // 跳转至听力画面
+//                  return SystemConstants.PAGE_ITBK_EXAM_007;
+//              }
 
                 status = "end";
                 // 删除中途退出表
@@ -419,7 +423,7 @@ public class ExamBean extends BaseController {
                 doclear();
                 // 考试完成，显示成绩
                 ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-                return examResultBean.examReport(questions.get(0).getSource());
+                return examResultBean.examReport(source);
             } else {
                 logger.log(MessageId.ITBK_I_0015);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
