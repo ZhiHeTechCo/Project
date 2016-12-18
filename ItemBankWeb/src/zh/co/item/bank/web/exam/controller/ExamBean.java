@@ -101,7 +101,7 @@ public class ExamBean extends BaseController {
     /** --听力模式用变量-- */
     // 音频
     MediaModel mediaModel;
-    
+
     private String mediaReady;
     // 听力试题
     List<TbQuestionStructure> mediaQuestions;
@@ -171,9 +171,6 @@ public class ExamBean extends BaseController {
 
                     // 选择了听力
                 } else if ("6".equals(classifyBean.getExamType())) {
-                    // 初始化
-                    mediaModel = null;
-                    mediaQuestions = new ArrayList<TbQuestionStructure>();
                     selectForMediaQuestions();
                     if (mediaQuestions == null || mediaQuestions.size() == 0) {
                         // 题库已空
@@ -239,6 +236,9 @@ public class ExamBean extends BaseController {
      * @throws IOException
      */
     private void selectForMediaQuestions() throws IOException {
+        // 初始化
+        mediaModel = null;
+        mediaQuestions = new ArrayList<TbQuestionStructure>();
         // 获取ClassifyId
         List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
         if (classifyIds == null || classifyIds.size() == 0) {
@@ -254,7 +254,7 @@ public class ExamBean extends BaseController {
             if (mediaModel == null) {
                 continue;
             } else {
-                
+
                 break;
             }
         }
@@ -267,13 +267,14 @@ public class ExamBean extends BaseController {
     }
 
     public void getMedia() {
-    	try {
-			mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-			this.mediaReady = "block";
-		} catch (IOException e) {
-			processForException(logger, e);
-		}
+        try {
+            mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+            this.mediaReady = "block";
+        } catch (IOException e) {
+            processForException(logger, e);
+        }
     }
+
     /**
      * 听力提交
      * 
@@ -356,7 +357,7 @@ public class ExamBean extends BaseController {
             if (year == null) {
                 year = examDropoutService.getYear(getExamDropoutBean());
             }
-            // 获得试题结构(一次考试只获取一次)
+            // 获得试题结构(一次考试只获取一次)(听力大题目不检索)
             if (safeList == null || safeList.size() == 0) {
                 List<ExamModel> examStructure = examService.getStructure(classifyBean);
                 safeList.addAll(examStructure);
@@ -398,13 +399,27 @@ public class ExamBean extends BaseController {
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
+//                // 听力
+//                // 获取音频
+//                String source = questions.get(0).getSource();
+//                mediaModel = mediaService.selectMediaBySource(source);
+//                if (mediaModel != null) {
+//                    // 获取大题目
+//                    map.put("mediaId", mediaModel.getId());
+//                    mediaQuestions = mediaService.selectMediaQuestions(map);
+//                    // 画面序号和显示设置
+//                    CmnStringUtils.selectionLayoutSet(mediaQuestions);
+//                    // 跳转至听力画面
+//                    return SystemConstants.PAGE_ITBK_EXAM_007;
+//                }
+
                 status = "end";
-                // 删除中途退出表 TODO
+                // 删除中途退出表
                 examDropoutService.deleteExamDropout(getExamDropoutBean());
                 doclear();
                 // 考试完成，显示成绩
                 ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-                return examResultBean.examReport();
+                return examResultBean.examReport(questions.get(0).getSource());
             } else {
                 logger.log(MessageId.ITBK_I_0015);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
@@ -572,10 +587,11 @@ public class ExamBean extends BaseController {
         status = "exist";
         doSubmit();
         saveDropoutInfo();
+        String source = questions.get(0).getSource();
         doclear();
         // 跳转至成绩一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-        return examResultBean.examReport();
+        return examResultBean.examReport(source);
     }
 
     /**
@@ -715,13 +731,12 @@ public class ExamBean extends BaseController {
         this.mediaQuestions = mediaQuestions;
     }
 
-	public String getMediaReady() {
-		return mediaReady;
-	}
+    public String getMediaReady() {
+        return mediaReady;
+    }
 
-	public void setMediaReady(String mediaReady) {
-		this.mediaReady = mediaReady;
-	}
-
+    public void setMediaReady(String mediaReady) {
+        this.mediaReady = mediaReady;
+    }
 
 }

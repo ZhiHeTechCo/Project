@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
@@ -13,6 +14,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
@@ -55,6 +57,7 @@ public class QuestionUpdateController extends BaseController {
 
     private ExamModel question = new ExamModel();
 
+    private String examFlag;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_QUE_002;
@@ -119,6 +122,22 @@ public class QuestionUpdateController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * [试题详细]返回结果一览画面
+     * 
+     * @return
+     */
+    public String goBackToResult() {
+        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        // 前画面为考试结果一览
+        if (StringUtils.isNotEmpty(examFlag)) {
+            examFlag = null;
+            return examResultBean.examReport(question.getSource());
+        }
+        // 做题结果一览
+        return examResultBean.init();
+    }
+
     public List<TsCodeBean> getExams() {
         return exams;
     }
@@ -165,6 +184,14 @@ public class QuestionUpdateController extends BaseController {
 
     public void setStructures(List<TbQuestionStructureBean> structures) {
         this.structures = structures;
+    }
+
+    public String getExamFlag() {
+        return examFlag;
+    }
+
+    public void setExamFlag(String examFlag) {
+        this.examFlag = examFlag;
     }
 
 }

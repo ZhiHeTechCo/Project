@@ -56,6 +56,11 @@
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 										</h:selectOneRadio></td>
 								</tr>
+                                <tr>
+                                    <td><h4>试题出处：</h4></td>
+                                    <td colspan="4"><h:inputText
+                                            value="#{questionInsertController.question.source}" /></td>
+                                </tr>
 								<tr>
 									<td colspan="5"><div class="form-submit1">
 											<h:commandButton value="重置题目" class="button1"
@@ -113,11 +118,6 @@
 									<td><h4>解析：</h4></td>
 									<td colspan="4"><h:inputText
 											value="#{questionInsertController.question.analysis}" /></td>
-								</tr>
-								<tr>
-									<td><h4>试题出处：</h4></td>
-									<td colspan="4"><h:inputText
-											value="#{questionInsertController.question.source}" /></td>
 								</tr>
 							</table>
 							<div class="form-submit1">

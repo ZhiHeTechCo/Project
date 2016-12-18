@@ -104,16 +104,14 @@ public class ExamResultBean extends BaseController {
      * 
      * @return
      */
-    public String examReport() {
+    public String examReport(String source) {
         try {
             // 显示本次考试结果
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                    .getRequest();
-            String source = request.getParameter("source");
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
             }
+
             reportModels = new ArrayList<ExamReportModel>();
             // 本次考试出现的试题种别
             List<String> examTypes = examCollectionService.getReportTypes(source);
@@ -131,6 +129,7 @@ public class ExamResultBean extends BaseController {
             map.put("source", source);
             map.put("userId", userInfo.getId());
             questions = examCollectionService.getExamReport(map);
+
             // 没有查询到当前考题的成绩
             if (questions == null || questions.size() == 0) {
                 // 去试题选择
@@ -195,6 +194,9 @@ public class ExamResultBean extends BaseController {
             QuestionUpdateController questionUpdateController = (QuestionUpdateController) SpringAppContextManager
                     .getBean("questionUpdateController");
             questionUpdateController.setQuestion(question);
+            if (StringUtils.isNotEmpty(examFlag)) {
+                questionUpdateController.setExamFlag("true");
+            }
             return questionUpdateController.init();
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
@@ -208,7 +210,7 @@ public class ExamResultBean extends BaseController {
     public String goBackToResult() {
         // 前画面为考试结果一览
         if (StringUtils.isNotEmpty(examFlag)) {
-            return examReport();
+            return examReport(question.getSource());
         }
         // 做题结果一览
         return init();
