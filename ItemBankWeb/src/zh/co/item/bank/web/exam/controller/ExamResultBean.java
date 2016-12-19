@@ -146,6 +146,19 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
+     * [考试结果一览]转至听力画面
+     * 
+     * @return
+     */
+    public String toMediaExam() {
+        ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+        // 设置为听力
+        classifyBean.setExamType("6");
+        examBean.setClassifyBean(classifyBean);
+        return examBean.mediaOfExam(questions.get(0).getSource());
+    }
+
+    /**
      * [试题详细]画面初始化
      * 
      * @return
@@ -340,6 +353,8 @@ public class ExamResultBean extends BaseController {
      * @return
      */
     public String mediaReport() {
+        // TODO
+        // 听力做题结果登录
         return SystemConstants.PAGE_ITBK_EXAM_008;
     }
 
