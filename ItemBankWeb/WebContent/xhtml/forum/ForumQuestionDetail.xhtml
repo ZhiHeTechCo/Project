@@ -37,8 +37,7 @@
 										<td width="20%"><h4>选项</h4></td>
 										<td width="80%" colspan="4"><h:selectOneRadio
 												value="#{item.answer}" readonly="true" disabled="true"
-															layout="#{item.layoutStyle}"
-															class="#{item.radioClass}">
+												layout="#{item.layoutStyle}" class="#{item.radioClass}">
 												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
 												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
 												<f:selectItem itemValue="6" itemLabel="#{item.c}" />
@@ -94,7 +93,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '1'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -115,6 +114,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName1}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="1"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -133,7 +146,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '2'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -154,6 +167,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName2}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="2"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -172,7 +199,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '3'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -193,6 +220,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName3}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="3"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -211,7 +252,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '4'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -232,6 +273,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName4}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="4"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -250,7 +305,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '5'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -271,6 +326,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName5}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="5"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -289,7 +358,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '6'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -310,6 +379,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName6}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="6"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -328,7 +411,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '7'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -349,6 +432,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName7}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="7"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -367,7 +464,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '8'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -388,6 +485,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName8}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="8"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -406,7 +517,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '9'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -427,6 +538,20 @@
 												<td align="right"><h5>
 														回答者：#{response.responserName9}</h5></td>
 											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="9"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
+											</tr>
 										</h:column>
 									</h:dataTable>
 								</div>
@@ -445,7 +570,7 @@
 											<h:panelGroup rendered="#{response.systemChoose eq '10'}">
 												<tr>
 													<td colspan="2"><h4 class="glyphicon glyphicon-ok"
-															style="color: #99DD00">&nbsp;最佳答案</h4></td>
+															style="color: #99DD00">&nbsp;推荐答案</h4></td>
 												</tr>
 											</h:panelGroup>
 											<tr>
@@ -465,6 +590,20 @@
 													</h5></td>
 												<td align="right"><h5>
 														回答者：#{response.responserName10}</h5></td>
+											</tr>
+											<tr>
+												<td align="right" colspan="2"><h:panelGroup
+														rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+														<h:commandLink value=""
+															action="#{forumController.selectAsAnswer}">
+															<f:param name='item' value="10"></f:param>
+															<span class="glyphicon glyphicon-ok-sign"></span>
+														</h:commandLink>
+														<h:commandLink value=""
+															action="#{forumController.moveAsAnswer}">
+															<span class="glyphicon glyphicon-remove-sign"></span>
+														</h:commandLink>
+													</h:panelGroup></td>
 											</tr>
 										</h:column>
 									</h:dataTable>

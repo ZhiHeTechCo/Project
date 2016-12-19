@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.forum.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -114,5 +115,13 @@ public class ForumService {
      */
     public List<TuUserBean> selectAllAsker(Integer questionId) {
         return forumDao.selectAllAsker(questionId);
+    }
+
+    /**
+     * 管理員选择答案
+     * @param item
+     */
+    public void updateSystemChoose(Map<String, Object> param) {
+        forumDao.updateSystemChoose(param);
     }
 }
