@@ -65,21 +65,32 @@ public class MediaService {
         return mediaDao.getStructures(classifyId);
     }
 
-	/**
-	 * 登录做题记录
-	 * 
-	 * @param beans
-	 */
-	public void insertMediaCollections(List<TbMediaCollectionBean> beans) {
-		mediaDao.insertMediaCollections(beans);
-	}
-	
-	/**
-	 * 听力检索
-	 * @param map
-	 * @return
-	 */
-	public List<TbQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
-		return mediaDao.selectMediaQuestions(map);
-	}
+    /**
+     * 登录做题记录
+     * 
+     * @param beans
+     */
+    public void insertMediaCollections(List<TbMediaCollectionBean> beans) {
+        mediaDao.insertMediaCollections(beans);
+    }
+
+    /**
+     * 听力检索
+     * 
+     * @param map
+     * @return
+     */
+    public List<TbQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
+        return mediaDao.selectMediaQuestions(map);
+    }
+
+    /**
+     * 检索当前试题的听力音频
+     * 
+     * @param source
+     * @return
+     */
+    public MediaModel selectMediaBySource(String source) {
+        return mediaDao.selectMediaBySource(source);
+    }
 }

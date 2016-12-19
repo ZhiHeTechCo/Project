@@ -82,4 +82,14 @@ public class MediaDao extends BaseDao {
 	public List<TbQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
 		return getIbatisTemplate().selectList("Media.selectMediaQuestions", map);
 	}
+
+    /**
+     * 检索当前试题的听力音频
+     * 
+     * @param source
+     * @return
+     */
+    public MediaModel selectMediaBySource(String source) {
+        return (MediaModel) getIbatisTemplate().selectOne("Media.selectMediaBySource", source);
+    }
 }
