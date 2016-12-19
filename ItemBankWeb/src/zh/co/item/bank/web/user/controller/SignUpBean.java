@@ -64,7 +64,8 @@ public class SignUpBean extends BaseController {
 	        jtestLevels = userService.getCodelist(map);
 	        
 	        userInfo = new TuUserBean();
-
+	    	userInfo.setName("用户名");
+	    	userInfo.setPassword("密码");
     	 } catch (Throwable e) {
              processForException(logger, e);
          }

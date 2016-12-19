@@ -26,7 +26,7 @@
 								<table class="to toTable">
 									<tr>
 										<td>
-                                            <span class="msg" style="margin-left: 15px">用户名/邮箱</span>
+                                            <span class="msg" style="margin-left: 15px">手机号/邮箱</span>
 											<div class="col-md-6" style="width: 100%;">
 												<span class="glyphicon glyphicon-user form-control-feedback"></span>
 												<h:inputText id="name" value="#{signInBean.userInfo.name}"
@@ -41,10 +41,10 @@
                                             <span class="msg" style="margin-left: 15px">密码</span>
 											<div class="col-md-6" style="width: 100%;">
 												<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-												<h:inputSecret redisplay="true" id="password"
+												<h:inputText redisplay="true" id="password"
 													value="#{signInBean.userInfo.password}"
 													style="width:100%;"  maxlength="10" placeholder="密碼"
-													onfocus="this.value = '';"
+													onfocus="this.value = '';this.type = 'password';"
 													onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
 											</div>
 										</td>
