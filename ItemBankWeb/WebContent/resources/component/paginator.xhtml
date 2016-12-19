@@ -15,23 +15,23 @@
 	
 	<composite:implementation>
 	    <h:panelGroup id="paginator_zero" rendered="#{cc.attrs.paginator.recordsTotal eq 0}">
-	    <h:outputText value="0件 ＜前へ | 1 | 次へ＞" />
+	    <h:outputText value="0件 ＜前一页 | 1 | 下一页＞" />
 	    </h:panelGroup>
 		<h:panelGroup id="paginator" rendered="#{cc.attrs.paginator.recordsTotal gt 0}">
 		<h:outputText value="#{cc.attrs.paginator.recordsTotal}" />
 		<h:outputText value="件中" />
 		<h:outputText value="#{cc.attrs.paginator.fromIndex + 1}" />
-		<h:outputText value="件目～" />
+		<h:outputText value="件～" />
 		<h:outputText value="#{cc.attrs.paginator.toIndex}" />
-		<h:outputText value="件目 " />
+		<h:outputText value="件 " />
 		
-        <h:commandLink value="＜前へ" rendered="#{cc.attrs.paginator.pageIndex gt 1}" onclick="return cancelToken(this)" >
+        <h:commandLink value="＜前一页" rendered="#{cc.attrs.paginator.pageIndex gt 1}" onclick="return cancelToken(this)" >
             <f:ajax onevent="callbackAjaxForPaginator"
                     listener="#{cc.attrs.paginator.prev}" 
                     execute="@this" 
                     render="paginator :#{cc.attrs.form}:search_result_data" />
         </h:commandLink>
-        <h:outputText value="＜前へ" rendered="#{cc.attrs.paginator.pageIndex eq 1}" />
+        <h:outputText value="＜前一页" rendered="#{cc.attrs.paginator.pageIndex eq 1}" />
         
         <h:outputText value=" | " />
         
@@ -71,13 +71,13 @@
         <h:outputText value="#{cc.attrs.paginator.pagesTotal}" rendered="#{cc.attrs.paginator.pageIndex eq cc.attrs.paginator.pagesTotal and cc.attrs.paginator.pagesTotal ne 1}" />
         <h:outputText value=" | " />
         
-        <h:commandLink value="次へ＞" rendered="#{cc.attrs.paginator.pageIndex lt cc.attrs.paginator.pagesTotal}" onclick="return cancelToken(this)" >
+        <h:commandLink value="下一页＞" rendered="#{cc.attrs.paginator.pageIndex lt cc.attrs.paginator.pagesTotal}" onclick="return cancelToken(this)" >
             <f:ajax onevent="callbackAjaxForPaginator"
                     listener="#{cc.attrs.paginator.next}" 
                     execute="@this" 
                     render="paginator :#{cc.attrs.form}:search_result_data" />
         </h:commandLink>
-        <h:outputText value="次へ＞" rendered="#{cc.attrs.paginator.pageIndex == cc.attrs.paginator.pagesTotal}" />
+        <h:outputText value="下一页＞" rendered="#{cc.attrs.paginator.pageIndex == cc.attrs.paginator.pagesTotal}" />
 		</h:panelGroup>
 		
 	</composite:implementation>
