@@ -52,16 +52,20 @@
                 </c:if>
                 <tr>
                   <td><h4>文件:</h4></td>
-                  <td><h:panelGroup id="fileName"><h:outputText value="#{fileManageBean.fileName}" /></h:panelGroup></td>
+                  <td><h:panelGroup id="fileName">
+                       <c:if test="#{fileManageBean.adminFlag == '1'}">
+                         <h:commandLink value="#{fileManageBean.fileName}" action="#{fileManageBean.doDownLoad}" onclick="clickDownloadFile(this)" />
+                       </c:if>
+                       <c:if test="#{fileManageBean.adminFlag == '0'}">
+                         <h:outputText value="#{fileManageBean.fileName}" />
+                       </c:if>
+                       </h:panelGroup>
+                  </td>
                 </tr>         
               </table>
               <div class="form-submit1">
                   <h:commandButton id="selectFile" value="上传文件" style="margin-right: 5px;"
                       onclick="cancelToken(this);selectFile(this,'flform:upbtn_input');"/>
-              </div>
-              <div class="form-submit1">
-                  <h:commandButton id="downloadFile" value="下载文件" style="margin-right: 5px;"
-                      action="#{fileManageBean.doDownLoad}" onclick="clickDownloadFile(this)"/>
               </div>
               <div class="form-submit1">
                   <h:commandButton id="toExamBtn" value="去试题库" style="margin-right: 5px;"
