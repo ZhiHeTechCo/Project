@@ -58,13 +58,14 @@
               </table>
               <div style="text-align: center; float: left;">
                 <h:panelGroup id="search_result_paginator" layout="block">
-                  <component:paginator form="wfform" paginator="#{fileSearchBean.paginator}" />
+                  <component:paginator form="fsform" paginator="#{fileSearchBean.paginator}" />
                 </h:panelGroup>
                 <span class="tcdPageCode"></span>
               </div>
               <div style="clear: both"></div>
               <h:panelGroup id="wrapper">
               <div class="to">
+                <h:panelGroup id= "search_result_data" layout="block">
                 <h:dataTable id="books" class="table table-striped;" 
                   width="100%" value="#{fileSearchBean.paginator.model}"  var="content">
                   <h:column>
@@ -102,6 +103,7 @@
 
                   </h:column>
                 </h:dataTable>
+                </h:panelGroup>
               </div>
               </h:panelGroup>
               </h:form>

@@ -2,6 +2,7 @@ package zh.co.item.bank.web.file.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +91,10 @@ public class FileSearchBean extends BaseController {
             paginator = null;
             fileList = userService.getFileInfoList(fileBean);
     		paginator = new RepeatPaginator(fileList, paginatorLogger);
+    		
+    		Map<String, Object> logMap = new LinkedHashMap<String, Object>();
+    		logMap.put("审核状态", fileBean.getReviewFlag());
+    		paginatorLogger.setParams(logMap);
         } catch (Throwable e) {
             processForException(logger, e);
         }
