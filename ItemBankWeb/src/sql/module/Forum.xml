@@ -41,6 +41,10 @@
         a.asker where question_id = #{questionId}
     </select>
 
+    <update id="updateSystemChoose" parameterType="java.util.Map">
+        update tb_forum_response set system_choose = #{systemChoose} where question_id = #{questionId}
+    </update>
+
 	<update id="updateForumResponse" parameterType="zh.co.item.bank.model.entity.ForumModel">
 		update tb_forum_response
 		<set>

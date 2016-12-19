@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.forum.controller;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -226,6 +227,53 @@ public class ForumController extends BaseController {
             processForException(logger, e);
         }
 
+        return SystemConstants.PAGE_ITBK_FORUM_002;
+    }
+
+    /**
+     * 管理员选择正确答案
+     * 
+     * @return
+     */
+    public String selectAsAnswer() {
+        try {
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequest();
+            String item = request.getParameter("item");
+            if (checkuser(userInfo) && StringUtils.isNotEmpty(item)) {
+                Map<String, Object> param = new HashMap<String, Object>();
+                param.put("systemChoose", item);
+                param.put("questionId", forumModel.getQuestionId());
+                if (Integer.parseInt(userInfo.getRole()) >= 90) {
+                    forumService.updateSystemChoose(param);
+                    forumModel.setSystemChoose(item);
+                }
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return SystemConstants.PAGE_ITBK_FORUM_002;
+    }
+
+    /**
+     * 管理员选择正确答案
+     * 
+     * @return
+     */
+    public String moveAsAnswer() {
+        try {
+            if (checkuser(userInfo)) {
+                Map<String, Object> param = new HashMap<String, Object>();
+                param.put("systemChoose", null);
+                param.put("questionId", forumModel.getQuestionId());
+                if (Integer.parseInt(userInfo.getRole()) >= 90) {
+                    forumService.updateSystemChoose(param);
+                    forumModel.setSystemChoose(null);
+                }
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
         return SystemConstants.PAGE_ITBK_FORUM_002;
     }
 

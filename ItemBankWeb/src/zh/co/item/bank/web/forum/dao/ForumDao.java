@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.forum.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -107,5 +108,14 @@ public class ForumDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<TuUserBean> selectAllAsker(Integer questionId) {
         return getIbatisTemplate().selectList("Forum.selectAllAsker", questionId);
+    }
+
+    /**
+     * 推荐选择答案
+     * 
+     * @param item
+     */
+    public void updateSystemChoose(Map<String, Object> param) {
+        getIbatisTemplate().update("Forum.updateSystemChoose", param);
     }
 }
