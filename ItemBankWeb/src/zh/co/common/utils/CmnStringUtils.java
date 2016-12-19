@@ -27,9 +27,49 @@ import zh.co.item.bank.model.entity.TbQuestionStructure;
  * <p>[備 考]</p>
  * 
  * <p></p>
- * @author lianbinb
+ * @author wangfei
  */
 public final class CmnStringUtils {
+
+    /**
+     * 正则表达式：验证用户名
+     */
+    public static final String REGEX_USERNAME = "^[A-Za-z0-9_]$";
+ 
+    /**
+     * 正则表达式：验证密码
+     */
+    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,10}$";
+ 
+    /**
+     * 正则表达式：验证手机号
+     */
+    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+ 
+    /**
+     * 正则表达式：验证邮箱
+     */
+    public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+ 
+    /**
+     * 正则表达式：验证汉字
+     */
+    public static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
+ 
+    /**
+     * 正则表达式：验证身份证
+     */
+    public static final String REGEX_ID_CARD = "(^\\d{18}$)|(^\\d{15}$)";
+ 
+    /**
+     * 正则表达式：验证URL
+     */
+    public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+ 
+    /**
+     * 正则表达式：验证IP地址
+     */
+    public static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
 
     /**
      * constructor
@@ -411,7 +451,55 @@ public final class CmnStringUtils {
     }
     
     /**
-     * 半角英数字チェック
+     * 用户名チェック
+     * @param str
+     * @return
+     */
+    public static boolean isUserName(String str) {
+        if (str != null && !"".equals(str.trim()))  
+            return str.matches(REGEX_USERNAME);  
+        else  
+            return false; 
+    }
+    
+    /**
+     * 手机号チェック
+     * @param str
+     * @return
+     */
+    public static boolean isPhoneNumber(String str) {
+        if (str != null && !"".equals(str.trim()))  
+            return str.matches(REGEX_MOBILE);  
+        else  
+            return false; 
+    }
+    
+    /**
+     * 邮箱チェック
+     * @param str
+     * @return
+     */
+    public static boolean isMail(String str) {
+        if (str != null && !"".equals(str.trim()))  
+            return str.matches(REGEX_EMAIL);  
+        else  
+            return false; 
+    }
+    
+    /**
+     * 密码チェック
+     * @param str
+     * @return
+     */
+    public static boolean isPassword(String str) {
+        if (str != null && !"".equals(str.trim()))  
+            return str.matches(REGEX_PASSWORD);  
+        else  
+            return false; 
+    }
+    
+    /**
+     * 半角英数字チェックREGEX_PASSWORD
      * @param str
      * @return
      */

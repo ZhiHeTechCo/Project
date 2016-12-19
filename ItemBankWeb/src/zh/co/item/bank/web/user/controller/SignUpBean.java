@@ -16,6 +16,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.web.user.service.UserService;
@@ -80,12 +81,21 @@ public class SignUpBean extends BaseController {
         	if(StringUtils.isEmpty(userInfo.getName())) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"用户名"});
         	}
-        	if(StringUtils.isEmpty(userInfo.getPassword())) {
+        	if(StringUtils.isEmpty(userInfo.getPassword()) || "密码".equals(userInfo.getPassword())) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
         	}
-        	if(userInfo.getPassword().length() < 6 ||(!userInfo.getPassword().matches("[A-Za-z0-9_]+"))) {
-        		
+        	String userName = userInfo.getName();
+        	if((!CmnStringUtils.isUserName(userName)) && (!CmnStringUtils.isPhoneNumber(userName)) && (!CmnStringUtils.isMail(userName)) ) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"手机号/邮箱/5位以上字母、数字或下划线组成的用户名"});
+        	}
+        	if(userInfo.getPassword().length() < 6 ||(!CmnStringUtils.isNumericOrChar(userInfo.getPassword()))) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"6位以上字母、数字或下划线组成的密码"});
+        	}
+        	if(CmnStringUtils.isPhoneNumber(userName)) {
+        		userInfo.setTelephone(userName);
+        	}
+        	if(CmnStringUtils.isMail(userName)) {
+        		userInfo.setEmail(userName);
         	}
             int count = userService.InsertUserInfo(userInfo);
             //注册成功，跳转到登录界面
@@ -94,6 +104,7 @@ public class SignUpBean extends BaseController {
             }
 
         } catch (Exception e) {
+        	userInfo.setPassword("密码");
         	processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_USER_001;

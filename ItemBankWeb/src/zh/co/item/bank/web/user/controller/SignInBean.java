@@ -68,7 +68,7 @@ public class SignInBean extends BaseController {
         	if(StringUtils.isEmpty(userInfo.getName())) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"用户名"});
         	}
-        	if(StringUtils.isEmpty(userInfo.getPassword())) {
+        	if(StringUtils.isEmpty(userInfo.getPassword()) || "密码".equals(userInfo.getPassword())) {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
         	}
         	UserModel loginUserInfo = userService.login(userInfo);
@@ -90,6 +90,7 @@ public class SignInBean extends BaseController {
         	}
 
         } catch (Exception e) {
+        	userInfo.setPassword("密码");
         	processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_USER_002;
