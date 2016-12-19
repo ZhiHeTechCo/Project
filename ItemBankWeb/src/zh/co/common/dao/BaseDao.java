@@ -2,8 +2,9 @@ package zh.co.common.dao;
 
 import javax.annotation.Resource;
 
-import zh.co.common.ibatis.IbatisDaoSupport;
-import zh.co.common.ibatis.IbatisTemplate;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
 import zh.co.common.ibatis.IbatisTemplate;
 
 /**
@@ -14,16 +15,16 @@ import zh.co.common.ibatis.IbatisTemplate;
  * @author 王飞
  * @since 1.0
  */
-public class BaseDao extends IbatisDaoSupport {
+public class BaseDao extends SqlSessionDaoSupport {
 
     /**
      * <p>[概要]设定ibatisTemplate</p>
      * <p>[备考]</p>
      * @param ibatisTemplate ibatisTemplate
      */
-    @Resource(name = "sqlSessionTemplate")
-    public void setIbatisTemplate(IbatisTemplate ibatisTemplate) {
-        super.setIbatisTemplate(ibatisTemplate);
+    @Resource(name = "sqlSession")
+    public void setIbatisTemplate(IbatisTemplate sqlSessionTemplate) {
+        super.setSqlSessionTemplate(sqlSessionTemplate);
     }
     
     
@@ -34,6 +35,6 @@ public class BaseDao extends IbatisDaoSupport {
      * @return
      */
     public IbatisTemplate getIbatisTemplate(){
-        return (IbatisTemplate)super.getIbatisTemplate();
+        return (IbatisTemplate)super.getSqlSession();
     }
 }

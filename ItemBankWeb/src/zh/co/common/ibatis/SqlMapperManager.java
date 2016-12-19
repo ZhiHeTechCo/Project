@@ -69,6 +69,9 @@ public class SqlMapperManager {
     	
         logger.debug("sqlId = " + sqlId);
         String sqlNamespace = sqlId.split("\\.")[0];
+        DynaConfiguration sqlConfig = (DynaConfiguration) sqlSessionFactory
+                .getConfiguration();
+        
         String filePath = sqlMapperFilePath(sqlId);
         File file = new File(filePath);
 		if (!file.exists()) {
@@ -83,7 +86,7 @@ public class SqlMapperManager {
 //            SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) SpringAppContextManager
 //                    .getBean("sqlSessionFactory");
 
-            DynaConfiguration sqlConfig = (DynaConfiguration) sqlSessionFactory
+            sqlConfig = (DynaConfiguration) sqlSessionFactory
                     .getConfiguration();
             sqlConfig.removeSqlMapper(sqlNamespace);
             XmlMapperUtils.addMapper(sqlConfig, file);

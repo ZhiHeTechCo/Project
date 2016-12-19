@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import zh.co.common.constant.SystemConstants;
@@ -64,8 +66,7 @@ public class UserService {
      * 
      * @return 登录件数
      */
-    // @Transactional(propagation = Propagation.REQUIRED, rollbackFor =
-    // Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int InsertUserInfo(TuUserBean userInfo) throws Exception {
         int count = 0;
         // check当前用户名是否已经存在
@@ -129,6 +130,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int changePassword(UserModel userInfo, String oldPassword, String newPassword) throws Exception {
         int count = 0;
         userInfo.setPassword(oldPassword);
@@ -164,6 +166,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int updateUserInfo(UserModel userInfo) throws Exception {
         int count = 0;
         TuUserBean newUser = new TuUserBean();
@@ -192,6 +195,7 @@ public class UserService {
      * @param userInfo
      * @return
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public UserModel loginForWechat(TuUserBean userInfo) {
         UserModel user = new UserModel();
         // check当前用户名是否已经存在
@@ -220,6 +224,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int bindUserInfo(UserModel userInfo) throws Exception {
         int count = 0;
         TuUserBean newUser = new TuUserBean();
@@ -250,6 +255,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int updateFileInfo(TbFileInfoBean bean) throws Exception {
         int count = 0;
         // 更新时间
@@ -265,6 +271,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int insertFileInfo(TbFileInfoBean bean) throws Exception {
         int count = 0;
         Date now = new Date();
@@ -283,6 +290,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int updateImgInfo(TbFirstLevelDirectoryBean bean) throws Exception {
         int count = 0;
         count = userDao.updateImgInfo(bean);
@@ -296,6 +304,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int updateMediaImgInfo(TbMediaQuestionBean bean) throws Exception {
         int count = 0;
         count = userDao.updateMediaImgInfo(bean);

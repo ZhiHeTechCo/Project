@@ -20,7 +20,6 @@
         <property name="dataSourceConfigLocation" value="config/jdbc.properties" />
     </bean>
     
-    
     <!-- 配置mybitas SqlSessionFactoryBean -->  
     <bean id="sqlSessionFactory" class="zh.co.common.ibatis.SqlSessionFactoryBean">
         <property name="dataSource">
@@ -56,12 +55,15 @@
             </list>
         </property>
     </bean>
-    <!-- 配置SqlMapSession -->  
-    <bean id="sqlSessionTemplate" class="zh.co.common.ibatis.IbatisTemplate">
-        <property name="sqlSessionFactory">
-            <ref bean="sqlSessionFactory" />
-        </property>
+    <!-- 配置SqlMapSession -->
+<!--     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean> -->
+    
+    <bean id="sqlSession" class="zh.co.common.ibatis.IbatisTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
+
     <!-- 配置事务管理器 -->
     <bean id="transactionManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

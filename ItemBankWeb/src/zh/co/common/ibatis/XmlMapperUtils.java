@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.session.Configuration;
@@ -88,15 +91,47 @@ public class XmlMapperUtils {
 		XMLMapperBuilder mapperBuilder = null;
 		String url = null;
 		try {
+ 
+            
 			if (!(mapperResource instanceof ByteArrayResource)) {
 				url = mapperResource.getURL().toString();
 			} else {
 				url = ((ByteArrayResource) mapperResource).getDescription();
 			}
+			
+			// 清理原有资源，更新为自己的StrictMap方便，增量重新加载  
+            String[] mapFieldNames = new String[]{  
+                "mappedStatements", "caches",  
+                "resultMaps", "parameterMaps",  
+                "keyGenerators", "sqlFragments"  
+            };  
+            for (String fieldName : mapFieldNames){  
+                Field field = configuration.getClass().getDeclaredField(fieldName);  
+                field.setAccessible(true);  
+                Map map = ((Map)field.get(configuration));  
+                if (!(map instanceof StrictMap)){  
+                    Map newMap = new StrictMap(StringUtils.capitalize(fieldName) + "collection");  
+                    for (Object key : map.keySet()){  
+                        try {  
+                            newMap.put(key, map.get(key));  
+                        }catch(IllegalArgumentException ex){  
+                            newMap.put(key, ex.getMessage());  
+                        }  
+                    }  
+                    field.set(configuration, newMap);  
+                }  
+            }  
+            
+        	Field loadedResourcesField = configuration.getClass().getDeclaredField("loadedResources");  
+            loadedResourcesField.setAccessible(true);  
+            Set loadedResourcesSet = ((Set)loadedResourcesField.get(configuration));  
+            loadedResourcesSet.remove(url);
+
+            
 			logger.debug("loading sql mapper : " + url);
 			mapperBuilder = new XMLMapperBuilder(new InputStreamReader(
 					new BomRemoverInputStream(mapperResource.getInputStream()),
-					"UTF-8"), configuration, url, new HashMap<String, XNode>());
+					"UTF-8"), configuration, url, configuration.getSqlFragments());
 			mapperBuilder.parse();
 		} catch (Exception e) {
 			logger
@@ -385,5 +420,84 @@ public class XmlMapperUtils {
 
 		return sqlIds;
 	}
+	
+	  /** 
+	   * 重写 org.apache.ibatis.session.Configuration.StrictMap 类 
+	   * 来自 MyBatis3.4.0版本，修改 put 方法，允许反复 put更新。 
+	   */  
+	  public static class StrictMap<V> extends HashMap<String, V> {  
+
+	      private static final long serialVersionUID = -4950446264854982944L;  
+	      private String name;  
+
+	      public StrictMap(String name, int initialCapacity, float loadFactor) {  
+	          super(initialCapacity, loadFactor);  
+	          this.name = name;  
+	      }  
+
+	      public StrictMap(String name, int initialCapacity) {  
+	          super(initialCapacity);  
+	          this.name = name;  
+	      }  
+
+	      public StrictMap(String name) {  
+	          super();  
+	          this.name = name;  
+	      }  
+
+	      public StrictMap(String name, Map<String, ? extends V> m) {  
+	          super(m);  
+	          this.name = name;  
+	      }  
+
+	      @SuppressWarnings("unchecked")  
+	      public V put(String key, V value) {  
+	          //(先删除后添加)  
+	      	  remove(key);  
+
+	          // ThinkGem end  
+	          if (containsKey(key)) {  
+	              throw new IllegalArgumentException(name + " already contains value for " + key);  
+	          }  
+	          if (key.contains(".")) {  
+	              final String shortKey = getShortName(key);  
+	              if (super.get(shortKey) == null) {  
+	                  super.put(shortKey, value);  
+	              } else {  
+	                  super.put(shortKey, (V) new Ambiguity(shortKey));  
+	              }  
+	          }  
+	          return super.put(key, value);  
+	      }  
+
+	      public V get(Object key) {  
+	          V value = super.get(key);  
+	          if (value == null) {  
+	              throw new IllegalArgumentException(name + " does not contain value for " + key);  
+	          }  
+	          if (value instanceof Ambiguity) {  
+	              throw new IllegalArgumentException(((Ambiguity) value).getSubject() + " is ambiguous in " + name  
+	                      + " (try using the full name including the namespace, or rename one of the entries)");  
+	          }  
+	          return value;  
+	      }  
+
+	      private String getShortName(String key) {  
+	          final String[] keyparts = key.split("\\.");  
+	          return keyparts[keyparts.length - 1];  
+	      }  
+
+	      protected static class Ambiguity {  
+	          private String subject;  
+
+	          public Ambiguity(String subject) {  
+	              this.subject = subject;  
+	          }  
+
+	          public String getSubject() {  
+	              return subject;  
+	          }  
+	      }    
+	  }
 
 }

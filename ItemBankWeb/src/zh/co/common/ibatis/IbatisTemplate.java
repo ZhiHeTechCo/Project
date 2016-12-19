@@ -12,16 +12,10 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.exceptions.IbatisException;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.support.JdbcAccessor;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -39,87 +33,20 @@ import zh.co.common.utils.WebUtils;
  * the external transaction manager.
  * 
  */
-public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
+public class IbatisTemplate extends SqlSessionTemplate {
 
-    private CmnLogger logger = CmnLogger.getLogger(this.getClass());
+    public IbatisTemplate(SqlSessionFactory sqlSessionFactory) {
+		super(sqlSessionFactory);
+	}
 
-    private SqlSessionFactory sqlSessionFactory;
-
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
-    }
-
-    /**
-     * Default constructor
-     */
-    public IbatisTemplate() {
-
-    }
-
-    public DataSource getDataSource() {
-        DataSource ds = super.getDataSource();
-        return (ds != null) ? ds : sqlSessionFactory.getConfiguration()
-                .getEnvironment().getDataSource();
-    }
-
-    public <T> T execute(IbatisCallback<T> action) {
-        DataSource dataSource = getDataSource();
-
-        // Obtain JDBC Connection to operate on...
-        Connection connection = TransactionUtils.getConnection(dataSource);
-        String errorCode = "";
-        try {
-            SqlSession session = null;
-            session = sqlSessionFactory.openSession(connection);
-
-            // Execute given callback...
-            try {
-                return action.doInIbatis(session);
-            } catch (IbatisException ibe) {
-                Throwable cause = ibe.getCause();
-                if (cause instanceof SQLException) {
-                    SQLException sqle = (SQLException)cause;
-                    errorCode = CmnStringUtils.objToStr(sqle.getErrorCode());
-                }
-                logger.log(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, ibe);
-                throw new CmnSysException(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, ibe);
-            } catch (RuntimeException re) {
-                Throwable cause = re.getCause();
-                if (cause instanceof SQLException) {
-                    SQLException sqle = (SQLException)cause;
-                    errorCode = CmnStringUtils.objToStr(sqle.getErrorCode());
-                }
-                logger.log(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, re);
-                throw new CmnSysException(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, re);
-            } catch (SQLException sqle) {
-                DataAccessException dae = getExceptionTranslator().translate(
-                        "SqlSessionFactory operation", null, sqle);
-                errorCode = CmnStringUtils.objToStr(sqle.getErrorCode());
-                logger.log(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, sqle);
-                throw new CmnSysException(MessageId.COMMON_E_0005, new Object[] { String.valueOf(errorCode) }, sqle);
-            } finally {
-                if (session != null) {
-                    session.close();
-                }
-            }
-        } finally {
-            // Release the connection
-            TransactionUtils.releaseConnection(dataSource, connection);
-        }
-    }
+	private CmnLogger logger = CmnLogger.getLogger(this.getClass());
 
     public int delete(String statement) {
         return delete(statement, null);
     }
 
     public int delete(final String statement, final Object parameter) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback<Integer>() {
-            public Integer doInIbatis(SqlSession sqlSession)
-                    throws SQLException {
-                return sqlSession.delete(statement, parameter);
-            }
-        });
+        return super.delete(statement, parameter);
     }
 
     public int insert(String statement) {
@@ -127,13 +54,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
     }
 
     public int insert(final String statement, final Object parameter) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback<Integer>() {
-            public Integer doInIbatis(SqlSession sqlSession)
-                    throws SQLException {
-                return sqlSession.insert(statement, parameter);
-            }
-        });
+        return super.insert(statement, parameter);
     }
 
     public void select(String statement, Object parameter, ResultHandler handler) {
@@ -142,13 +63,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
 
     public void select(final String statement, final Object parameter,
             final RowBounds rowBounds, final ResultHandler handler) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        execute(new IbatisCallback() {
-            public Object doInIbatis(SqlSession sqlSession) throws SQLException {
-                sqlSession.select(statement, parameter, rowBounds, handler);
-                return null;
-            }
-        });
+        super.select(statement, parameter, rowBounds, handler);
     }
 
     public List selectList(String statement) {
@@ -161,12 +76,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
 
     public List selectList(final String statement, final Object parameter,
             final RowBounds rowBounds) {
-        SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback<List>() {
-            public List doInIbatis(SqlSession sqlSession) throws SQLException {
-                return sqlSession.selectList(statement, parameter, rowBounds);
-            }
-        });
+        return super.selectList(statement, parameter, rowBounds);
     }
     
     public List selectPageList(final String statement, final Object parameter) throws CmnBizException {
@@ -199,12 +109,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
     }
 
     public Object selectOne(final String statement, final Object parameter) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback() {
-            public Object doInIbatis(SqlSession sqlSession) throws SQLException {
-                return sqlSession.selectOne(statement, parameter);
-            }
-        });
+        return super.selectOne(statement, parameter);
     }
 
     public int update(String statement) {
@@ -212,47 +117,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
     }
 
     public int update(final String statement, final Object parameter) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback<Integer>() {
-            public Integer doInIbatis(SqlSession sqlSession)
-                    throws SQLException {
-                return sqlSession.update(statement, parameter);
-            }
-        });
-    }
-    
-    /**
-     * execute exec SQL
-     * 
-     * @param statement
-     *            id of the statement
-     * @param parameter
-     *            parameters of the statement
-     * @return Object
-     */
-    public Object exec(final String statement, final Object parameter) {
-    	SqlMapperManager.reload(statement, sqlSessionFactory);
-        return execute(new IbatisCallback() {
-            public Object doInIbatis(SqlSession sqlSession) throws SQLException {
-            	Configuration conf = sqlSession.getConfiguration();
-            	MappedStatement ms = conf.getMappedStatement(statement);
-            	String type = ms.getSqlCommandType().name();
-            	if(SqlCommandType.SELECT.name().equals(type)){
-            		 return sqlSession.selectList(statement, parameter);
-            	}else if(SqlCommandType.INSERT.name().equals(type)){
-            		return sqlSession.insert(statement, parameter);
-            	}else if(SqlCommandType.UPDATE.name().equals(type)){
-            		return sqlSession.update(statement, parameter);
-            	}else if(SqlCommandType.DELETE.name().equals(type)){
-            		return  sqlSession.delete(statement, parameter);
-            	}else {
-            		//SqlCommandType.UNKOWN
-            		logger.log(MessageId.COMMON_E_0007, new Object[] {statement});
-    	            throw new CmnSysException(MessageId.COMMON_E_0007, new Object[] {statement});
-            	}
-        
-            }
-        });
+    	return super.update(statement, parameter);
     }
     
     public List<Map<String, Object>> executeQuerySql(String sql) {
@@ -262,7 +127,7 @@ public class IbatisTemplate extends JdbcAccessor implements IbatisOperations {
         ResultSet rset = null;
         String errorCode = "";
         try {
-            DataSource dataSource = getDataSource();
+            DataSource dataSource = super.getSqlSessionFactory().getConfiguration().getEnvironment().getDataSource();
             connection = TransactionUtils.getConnection(dataSource);
 
             stmt = connection.createStatement();
