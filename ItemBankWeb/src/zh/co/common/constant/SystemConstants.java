@@ -42,6 +42,8 @@ public class SystemConstants {
 
     /** 分号 */
     public static final String SEMIKOMA = ";";
+    /** 空串 */
+    public static final String EMPTY = "";
 
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/

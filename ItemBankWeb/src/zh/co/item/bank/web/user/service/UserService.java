@@ -17,6 +17,7 @@ import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.db.entity.TbMediaQuestionBean;
@@ -203,6 +204,9 @@ public class UserService {
             // 存在的场合，自动登录
             user = userDao.getUserInfo(userInfo);
         } else {
+        	if(!CmnStringUtils.isUserName(userInfo.getNickName())) {
+        		userInfo.setNickName(SystemConstants.EMPTY);
+        	}
             // 不存在的场合，注册，自动登录
             int count = userDao.insertUserInfo(userInfo);
             if (count > 0) {
