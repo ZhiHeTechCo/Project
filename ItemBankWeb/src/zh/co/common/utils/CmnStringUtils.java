@@ -773,7 +773,9 @@ public final class CmnStringUtils {
     	String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH)
         		+ File.separator + path;
     	 File file = new File(filePath);
-    	 
+    	 if(!file.exists()) {
+    		 return SystemConstants.EMPTY;
+    	 }
     	 FileInputStream fis = null;
     	 ByteArrayOutputStream bos = null;  
     	 try {

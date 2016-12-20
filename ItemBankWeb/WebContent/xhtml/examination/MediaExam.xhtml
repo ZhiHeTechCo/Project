@@ -47,12 +47,17 @@
         	    // complete
         	    case "complete":
         	    	resetButtonDisabled();
-        	    	var mediaMsg = document.getElementById("mediaMsg");
-                    mediaMsg.innerText = "就绪";
-                    var loadImg = document.getElementById("loadImg");
-                    loadImg.src = "";
         	        break;
         	    case "success":
+        	    	var audio = document.getElementById("listen");
+        	    	if(audio == null || audio.src == "" ) {
+        	    		getMediaFail();
+        	    	} else {
+                        var mediaMsg = document.getElementById("mediaMsg");
+                        mediaMsg.innerText = "就绪";
+                        var loadImg = document.getElementById("loadImg");
+                        loadImg.src = "";
+        	    	}
         	    	break;
              }
          }
