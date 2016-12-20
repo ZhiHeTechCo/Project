@@ -13,9 +13,12 @@ public class MediaModel extends TbMediaQuestionBean {
     // 听力音频ID[检索用（登录不用）]
     private Integer id;
 
+    // 试题来源
+    private String source;
+
     // 图片Base64
     private String contextImgCode;
-    
+
     // 听力音频路径
     private String mediaPath;
 
@@ -65,23 +68,31 @@ public class MediaModel extends TbMediaQuestionBean {
         this.id = id;
     }
 
-	public String getContextImgCode() {
-		return CmnStringUtils.getGraphicImage(this.getContextImg());
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public void setContextImgCode(String contextImgCode) {
-		this.contextImgCode = contextImgCode;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public String getMediaPath() {
-		return mediaPath;
-	}
+    public String getContextImgCode() {
+        return CmnStringUtils.getGraphicImage(this.getContextImg());
+    }
 
-	public void setMediaPath(String mediaPath) {
-		this.mediaPath = mediaPath;
-	}
+    public void setContextImgCode(String contextImgCode) {
+        this.contextImgCode = contextImgCode;
+    }
 
-	public String getMyAnswer() {
+    public String getMediaPath() {
+        return mediaPath;
+    }
+
+    public void setMediaPath(String mediaPath) {
+        this.mediaPath = mediaPath;
+    }
+
+    public String getMyAnswer() {
         return myAnswer;
     }
 

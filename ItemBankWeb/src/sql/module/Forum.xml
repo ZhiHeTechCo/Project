@@ -115,7 +115,7 @@
 				status = #{status},
 			</if>
 		</set>
-		where question_id = #{questionId,jdbcType=INTEGER}
+		where question_id = #{questionId}
 	</update>
 
 	<update id="doUp" parameterType="zh.co.item.bank.db.entity.TbForumResponseBean">
@@ -152,7 +152,7 @@
 				count10 = count10 + 1,
 			</if>
 		</set>
-		where question_id = #{questionId,jdbcType=INTEGER}
+		where question_id = #{questionId}
 	</update>
 
 	<insert id="insertForumResponse" parameterType="INTEGER">

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
-import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;

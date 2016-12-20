@@ -25,7 +25,7 @@
 							</h:panelGroup>
 							<h5 style="color: #3382C9;">说明：背景色为红色表示做错。</h5>
 							<h5>
-								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。
+								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。（听力不支持查看详细，请在做完后直接确认。）
 							</h5>
 							<h4 style="text-align: center;">
 								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examResultBean.questions.get(0).source}&nbsp;&nbsp;
@@ -193,15 +193,9 @@
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '6'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
+											<div class="report" style="background: #DDDDDD;">
+												<b>#{item.rowNo}</b>
+											</div>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
 												<div
 													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
@@ -216,17 +210,22 @@
 							</c:forEach>
 							<div class="clearfix"></div>
 							<br />
-							<h4>
-								-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
-							</h4>
-							<h5>
-								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
-							</h5>
-							<h3>
-								<h:commandLink action="#{examResultBean.toMediaExam}">
-									<span class="glyphicon glyphicon-headphones"></span>
-								</h:commandLink>
-							</h3>
+							<c:if test="#{examResultBean.mediaQuestions eq null}">
+								<h4>
+									-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
+								</h4>
+								<h5>
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
+								</h5>
+								<h5>
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;建议在Wifi环境下使用。
+								</h5>
+								<h3>
+									<h:commandLink action="#{examResultBean.toMediaExam}">
+										<span class="glyphicon glyphicon-headphones"></span>
+									</h:commandLink>
+								</h3>
+							</c:if>
 						</div>
 						<hr />
 						<div class="form-submit1">

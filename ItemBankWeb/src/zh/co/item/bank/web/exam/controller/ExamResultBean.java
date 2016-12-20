@@ -81,7 +81,7 @@ public class ExamResultBean extends BaseController {
     // 听力试题
     private List<TbQuestionStructure> mediaQuestions;
     // 音频
-    MediaModel mediaModel;
+    private MediaModel mediaModel;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -348,14 +348,21 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * [听力]结果一览
+     * [听力]结果一览（init）
      * 
      * @return
      */
     public String mediaReport() {
-        // TODO
-        // 听力做题结果登录
         return SystemConstants.PAGE_ITBK_EXAM_008;
+    }
+    
+    
+    /**
+     * [听力][考试模式]返回考试结果一览
+     * @return
+     */
+    public String goBackToExamResult() {
+        return examReport(mediaModel.getSource());
     }
 
     public ExamService getExamService() {

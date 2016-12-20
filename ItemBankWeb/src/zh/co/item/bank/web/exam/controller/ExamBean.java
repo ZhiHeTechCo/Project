@@ -331,26 +331,46 @@ public class ExamBean extends BaseController {
 
         // 更新听力记录表
         List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
+        List<ExamModel> examCollections = new ArrayList<ExamModel>();
         for (TbQuestionStructure model : mediaQuestions) {
             List<MediaModel> questions = model.getQuestion();
+            // 考试模式需登录考试表
             for (MediaModel question : questions) {
                 if (question != null) {
                     TbMediaCollectionBean collection = new TbMediaCollectionBean();
+                    ExamModel examModel = new ExamModel();
                     // 音频ID
                     collection.setMediaId(question.getMediaId());
                     // 用户ID
                     collection.setUserId(userInfo.getId());
+                    examModel.setUserId(userInfo.getId());
                     // 试题ID
                     collection.setQuestionId(question.getNo());
+                    examModel.setNo(question.getNo());
                     // 状态1：已完成
                     collection.setStatus("1");
-                    // 答案
+                    // 用户答案
                     collection.setMyAnswer(question.getMyAnswer());
+                    examModel.setMyAnswer(question.getMyAnswer());
+                    // 正确答案
+                    examModel.setAnswer(question.getAnswer());
+                    // 试题来源
+                    examModel.setSource(mediaModel.getSource());
+                    // StructureId
+                    examModel.setStructureId(question.getStructureId());
+                    // 题型种别[6:听力]
+                    examModel.setExamType("6");
                     list.add(collection);
+                    examCollections.add(examModel);
                 }
             }
         }
         mediaService.insertMediaCollections(list);
+        // 批量登录考试做题记录表
+        if (StringUtils.isNotEmpty(status) && examCollections.size() != 0) {
+            examCollectionService.insertExamCollection(examCollections);
+            status = null;
+        }
 
         // 去结果一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
@@ -468,6 +488,7 @@ public class ExamBean extends BaseController {
                 // 考试完成，显示成绩
                 ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
                 examResultBean.setClassifyBean(classifyBean);
+                examResultBean.setMediaQuestions(null);
                 return examResultBean.examReport(source);
             } else {
                 logger.log(MessageId.ITBK_I_0015);

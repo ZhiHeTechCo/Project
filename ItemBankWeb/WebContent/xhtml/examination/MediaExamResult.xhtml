@@ -242,12 +242,17 @@
 										</h:dataTable>
 									</c:when>
 								</c:when>
-								<div class="form-submit1">
-									<h:commandButton value="返回试题选择" class="button1"
-										action="#{examResultBean.goBackToClassify}"
-										id="goBackToClassifyBtn" />
-								</div>
 							</c:choose>
+							<div class="form-submit1">
+								<h:commandButton value="查看考试成绩" class="button1"
+									action="#{examResultBean.goBackToExamResult}"
+									id="goBackToExamResultBtn" />
+							</div>
+							<div class="form-submit1">
+								<h:commandButton value="返回试题选择" class="button1"
+									action="#{examResultBean.goBackToClassify}"
+									id="goBackToClassifyBtn" />
+							</div>
 						</div>
 					</div>
 				</div>
