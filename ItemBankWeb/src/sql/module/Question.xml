@@ -32,7 +32,7 @@
 		b.father_id where
 		a.id=#{fatherId,jdbcType=INTEGER}) c left join
 		tb_collection d on c.no=d.question_id where d.id=#{userId} and
-		d.finish !='1' and d.finish!='9'
+		(d.finish !='1' and d.finish!='9' or (d.finish='1' and DATEDIFF(CURDATE(),d.update_time)>=30))
 	</select>
 
 	<select id="getStructure" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
