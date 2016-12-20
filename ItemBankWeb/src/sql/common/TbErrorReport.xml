@@ -7,11 +7,16 @@
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="media_id" property="mediaId" jdbcType="INTEGER" />
     <result column="result" property="result" jdbcType="CHAR" />
+    <result column="reason" property="reason" jdbcType="CHAR" />
     <result column="comment" property="comment" jdbcType="CHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
+    <result column="assessor" property="assessor" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, question_id, media_id, result, comment, status
+    id, user_id, question_id, media_id, result, reason, comment, status, assessor, create_time, 
+    update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbErrorReportBeanKey" >
     select 
@@ -25,11 +30,13 @@
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbErrorReportBean" >
     insert into tb_error_report (id, user_id, question_id, 
-      media_id, result, comment, 
-      status)
+      media_id, result, reason, 
+      comment, status, assessor, 
+      create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, 
-      #{mediaId,jdbcType=INTEGER}, #{result,jdbcType=CHAR}, #{comment,jdbcType=CHAR}, 
-      #{status,jdbcType=CHAR})
+      #{mediaId,jdbcType=INTEGER}, #{result,jdbcType=CHAR}, #{reason,jdbcType=CHAR}, 
+      #{comment,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{assessor,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbErrorReportBean" >
     insert into tb_error_report
@@ -49,11 +56,23 @@
       <if test="result != null" >
         result,
       </if>
+      <if test="reason != null" >
+        reason,
+      </if>
       <if test="comment != null" >
         comment,
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="assessor != null" >
+        assessor,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -72,11 +91,23 @@
       <if test="result != null" >
         #{result,jdbcType=CHAR},
       </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=CHAR},
+      </if>
       <if test="comment != null" >
         #{comment,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
+      </if>
+      <if test="assessor != null" >
+        #{assessor,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -95,11 +126,23 @@
       <if test="result != null" >
         result = #{result,jdbcType=CHAR},
       </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=CHAR},
+      </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=CHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="assessor != null" >
+        assessor = #{assessor,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -110,8 +153,12 @@
       question_id = #{questionId,jdbcType=INTEGER},
       media_id = #{mediaId,jdbcType=INTEGER},
       result = #{result,jdbcType=CHAR},
+      reason = #{reason,jdbcType=CHAR},
       comment = #{comment,jdbcType=CHAR},
-      status = #{status,jdbcType=CHAR}
+      status = #{status,jdbcType=CHAR},
+      assessor = #{assessor,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

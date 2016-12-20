@@ -1,5 +1,7 @@
 package zh.co.item.bank.db.entity;
 
+import java.util.Date;
+
 public class TbErrorReportBean extends TbErrorReportBeanKey {
     private Integer userId;
 
@@ -9,9 +11,17 @@ public class TbErrorReportBean extends TbErrorReportBeanKey {
 
     private String result;
 
+    private String reason;
+
     private String comment;
 
     private String status;
+
+    private Integer assessor;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Integer getUserId() {
         return userId;
@@ -45,6 +55,14 @@ public class TbErrorReportBean extends TbErrorReportBeanKey {
         this.result = result == null ? null : result.trim();
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
+    }
+
     public String getComment() {
         return comment;
     }
@@ -59,5 +77,29 @@ public class TbErrorReportBean extends TbErrorReportBeanKey {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public Integer getAssessor() {
+        return assessor;
+    }
+
+    public void setAssessor(Integer assessor) {
+        this.assessor = assessor;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
