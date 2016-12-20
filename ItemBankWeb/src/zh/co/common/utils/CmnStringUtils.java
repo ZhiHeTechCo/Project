@@ -35,42 +35,42 @@ public final class CmnStringUtils {
      * 正则表达式：验证用户名
      */
     public static final String REGEX_USERNAME = "^[A-Za-z0-9_]$";
-    
+
     /**
      * 正则表达式：验证用户名
      */
     public static final String REGEX_NICKNAME = "^[\u4e00-\u9fa5_a-zA-Z0-9]+$";
- 
+
     /**
      * 正则表达式：验证密码
      */
     public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,10}$";
- 
+
     /**
      * 正则表达式：验证手机号
      */
     public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
- 
+
     /**
      * 正则表达式：验证邮箱
      */
     public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
- 
+
     /**
      * 正则表达式：验证汉字
      */
     public static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
- 
+
     /**
      * 正则表达式：验证身份证
      */
     public static final String REGEX_ID_CARD = "(^\\d{18}$)|(^\\d{15}$)";
- 
+
     /**
      * 正则表达式：验证URL
      */
     public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
- 
+
     /**
      * 正则表达式：验证IP地址
      */
@@ -84,6 +84,7 @@ public final class CmnStringUtils {
 
     /**
      * if the string is end with another string
+     * 
      * @param strObj the source string object
      * @param ends the end string object
      * @return true or false
@@ -94,6 +95,7 @@ public final class CmnStringUtils {
 
     /**
      * if the string is start with another string
+     * 
      * @param strObj the source string object
      * @param starts the end string object
      * @return true or false
@@ -104,6 +106,7 @@ public final class CmnStringUtils {
 
     /**
      * check if the string is empty
+     * 
      * @param str the string to check
      * @return true if empty
      */
@@ -113,6 +116,7 @@ public final class CmnStringUtils {
 
     /**
      * null string to empty string
+     * 
      * @param str the string to change
      * @return string if empty to ""
      */
@@ -126,6 +130,7 @@ public final class CmnStringUtils {
 
     /**
      * 結果が n バイトになるように文字列 c1 の右に c2 を埋め込んだ値を求める c1, n [ , c2 ]
+     * 
      * @param str the string to append
      * @param length the append length
      * @param unit the append symbol
@@ -146,6 +151,7 @@ public final class CmnStringUtils {
 
     /**
      * 結果が n バイトになるように文字列 c1 の左に c2 を埋め込んだ値を求める c1, n [ , c2 ]
+     * 
      * @param str the string to append
      * @param length the append length
      * @param unit the append symbol
@@ -168,6 +174,7 @@ public final class CmnStringUtils {
 
     /**
      * 文字列を指定のバイト数に切り捨てる.
+     * 
      * @param str 切り捨てる文字列
      * @param maxLen バイト数
      * @return 切り捨てた文字列
@@ -205,6 +212,7 @@ public final class CmnStringUtils {
      * escape indicated chars in string example:to escape the backslash(\) in
      * "111\n33" escapeString("111\n33", new char[]{'\\'}) the result string is
      * "111\\n33"
+     * 
      * @param str source string
      * @param escChar chars want to be escaped
      * @return string was escaped
@@ -400,8 +408,8 @@ public final class CmnStringUtils {
         }
         return String.valueOf(o);
     }
-    
-    public static byte[] strToByte(String str){
+
+    public static byte[] strToByte(String str) {
         byte[] bytes = null;
         try {
             bytes = str.getBytes(SystemConstants.FILE_ENCODING);
@@ -409,8 +417,8 @@ public final class CmnStringUtils {
         }
         return bytes;
     }
-    
-    public static String byteToStr(byte[] bytes){
+
+    public static String byteToStr(byte[] bytes) {
         String str = null;
         try {
             str = new String(bytes, SystemConstants.FILE_ENCODING);
@@ -418,115 +426,125 @@ public final class CmnStringUtils {
         }
         return str;
     }
-    
+
     public static String replaceString(String src, String oldReplacement, String newReplacement) {
-    	if(src == null || src.trim().length() == 0) {
-    		return "";
-    	} else {
-    		return src.replace(oldReplacement, newReplacement);
-    	}
+        if (src == null || src.trim().length() == 0) {
+            return "";
+        } else {
+            return src.replace(oldReplacement, newReplacement);
+        }
     }
+
     /**
      * リストをログに出力する
+     * 
      * @param paramList
      * @return
      */
     public static <T> String toString(List<T> paramList) {
         StringBuilder sb = new StringBuilder();
-        for(T item : paramList) {
-            if(!isEmptyStr(item.toString())) {
+        for (T item : paramList) {
+            if (!isEmptyStr(item.toString())) {
                 sb.append(item.toString() + ",");
             }
         }
-        if(sb.lastIndexOf(",") > -1) {
+        if (sb.lastIndexOf(",") > -1) {
             sb.deleteCharAt(sb.lastIndexOf(","));
         }
         return sb.toString();
     }
+
     /**
      * 半角数字チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isNumeric(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches("^[0-9]*$");  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches("^[0-9]*$");
+        else
+            return false;
     }
-    
+
     /**
      * 用户名チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isUserName(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches(REGEX_USERNAME);  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches(REGEX_USERNAME);
+        else
+            return false;
     }
-    
+
     /**
      * 昵称チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isNickName(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches(REGEX_NICKNAME);  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches(REGEX_NICKNAME);
+        else
+            return false;
     }
-    
+
     /**
      * 手机号チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isPhoneNumber(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches(REGEX_MOBILE);  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches(REGEX_MOBILE);
+        else
+            return false;
     }
-    
+
     /**
      * 邮箱チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isMail(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches(REGEX_EMAIL);  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches(REGEX_EMAIL);
+        else
+            return false;
     }
-    
+
     /**
      * 密码チェック
+     * 
      * @param str
      * @return
      */
     public static boolean isPassword(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches(REGEX_PASSWORD);  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches(REGEX_PASSWORD);
+        else
+            return false;
     }
-    
+
     /**
      * 半角英数字チェックREGEX_PASSWORD
+     * 
      * @param str
      * @return
      */
     public static boolean isNumericOrChar(String str) {
-        if (str != null && !"".equals(str.trim()))  
-            return str.matches("^[A-Za-z0-9]*$");  
-        else  
-            return false; 
+        if (str != null && !"".equals(str.trim()))
+            return str.matches("^[A-Za-z0-9]*$");
+        else
+            return false;
     }
-    
+
     /**
      * 指定した文字列が全角文字のみか判断する
      *
@@ -534,12 +552,12 @@ public final class CmnStringUtils {
      * @return trueなら全角文字のみ 空の場合は常にtrueとなる
      */
     public static boolean isZenkakuOnly(String source) {
-        if (source != null && !"".equals(source.trim()))  
-            return source.matches("^[^ -~｡-ﾟ]+$");  
-        else  
-            return false; 
+        if (source != null && !"".equals(source.trim()))
+            return source.matches("^[^ -~｡-ﾟ]+$");
+        else
+            return false;
     }
-    
+
     /**
      * 指定した文字列が半角文字のみか判断する
      *
@@ -547,36 +565,36 @@ public final class CmnStringUtils {
      * @return trueなら半角文字のみ 空の場合は常にtrueとなる
      */
     public static boolean isSimpleHankakuOnly(String source) {
-    	char[] chars = source.toCharArray();
-    	for (char c : chars) {
-    		if (!((c >= '\u0020' && c <= '\u007e') || (c >= '\uff61' && c <= '\uff9f'))) {
+        char[] chars = source.toCharArray();
+        for (char c : chars) {
+            if (!((c >= '\u0020' && c <= '\u007e') || (c >= '\uff61' && c <= '\uff9f'))) {
                 return false;
-    		}
-    	}
-    	return true;
+            }
+        }
+        return true;
     }
-    
 
     public static boolean equals(String str1, String str2) {
-        if ((str1 == null || str1 == "") && (str2 != null && str2 != ""))  
+        if ((str1 == null || str1 == "") && (str2 != null && str2 != ""))
             return false;
-        else if((str2 == null || str2 == "") && (str1 != null && str1 != "")) {
+        else if ((str2 == null || str2 == "") && (str1 != null && str1 != "")) {
             return false;
-        } else if ((str1 == null || str1 == "") && (str2 == null || str2 == "")){
+        } else if ((str1 == null || str1 == "") && (str2 == null || str2 == "")) {
             return true;
-        } else if(str1 != null && str2 != null && str1.equals(str2)) {
+        } else if (str1 != null && str2 != null && str1.equals(str2)) {
             return true;
         }
-        return false; 
+        return false;
     }
 
     /**
      * 3桁ごとに、,を付与して表示する。
+     * 
      * @param arg2
      * @return
      */
     public static String setCommaToStr(Object arg2) {
-        if(arg2==null ){
+        if (arg2 == null) {
             return null;
         }
         String arg = getStrWithNoComma(arg2.toString());
@@ -594,17 +612,17 @@ public final class CmnStringUtils {
         }
 
         String value = new StringBuilder(arg).reverse().toString();
-        StringBuilder sb = new StringBuilder();  
-        for(int i=0;i<value.length();i+=3){  
-            if(i+3>value.length()){  
-                sb.append(value.substring(i, value.length()));  
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < value.length(); i += 3) {
+            if (i + 3 > value.length()) {
+                sb.append(value.substring(i, value.length()));
                 break;
             }
-                sb.append(value.substring(i, i+3)+",");
+            sb.append(value.substring(i, i + 3) + ",");
         }
         String newValue = sb.toString();
-        if(newValue.endsWith(",")){
-            newValue = newValue.substring(0, newValue.length()-1);  
+        if (newValue.endsWith(",")) {
+            newValue = newValue.substring(0, newValue.length() - 1);
         }
         String result = new StringBuilder(newValue).reverse().toString();
         if (!CmnStringUtils.isEmptyStr(sign)) {
@@ -616,65 +634,77 @@ public final class CmnStringUtils {
     public static String getStrWithNoComma(String arg2) {
         return arg2.replace(",", "");
     }
-    
+
     /**
-     * <p>[概 要]レコードのフォーマットチェック</p>
-     * <p>[備 考]</p>
+     * <p>
+     * [概 要]レコードのフォーマットチェック
+     * </p>
+     * <p>
+     * [備 考]
+     * </p>
      * 
      * @param data
      * @return チェック結果
      */
-	public static boolean checkDataFormat (String pattern, String[] data) {
-		//String a = "\"[\\s\\S]*\"";
-		Pattern p = Pattern.compile(pattern); 
+    public static boolean checkDataFormat(String pattern, String[] data) {
+        // String a = "\"[\\s\\S]*\"";
+        Pattern p = Pattern.compile(pattern);
 
-		List<String> data1 = Arrays.asList(data);
-		for (String col:data1) {
-			Matcher m = p.matcher(col);
-			if (!m.find()){
-				return false;
-			}
-		}
-		return true;
-	}
-	
+        List<String> data1 = Arrays.asList(data);
+        for (String col : data1) {
+            Matcher m = p.matcher(col);
+            if (!m.find()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
-     * <p>[概 要]文字列にクオーテーションを付ける</p>
-     * <p>[備 考]</p>
+     * <p>
+     * [概 要]文字列にクオーテーションを付ける
+     * </p>
+     * <p>
+     * [備 考]
+     * </p>
      * 
      * @param str
      * @return String
      */
     public static String setQuotationToStr(String str) {
-        if(str == null ){
+        if (str == null) {
             return null;
         }
         StringBuilder sb = new StringBuilder();
         sb.append("\"").append(str).append("\"");
         return sb.toString();
     }
-    
+
     /**
-     * <p>[概 要]文字列にクオーテーションを 取り除く</p>
-     * <p>[備 考]</p>
+     * <p>
+     * [概 要]文字列にクオーテーションを 取り除く
+     * </p>
+     * <p>
+     * [備 考]
+     * </p>
      * 
      * @param obj
      * @return String
      */
     public static String trimQuotationFromStr(Object obj) {
-        if(obj == null ){
+        if (obj == null) {
             return null;
         }
         String str = obj.toString();
         if (str.indexOf("\"") > -1) {
-        	str = str.substring(str.indexOf("\"") + 1);
+            str = str.substring(str.indexOf("\"") + 1);
         }
         if (str.lastIndexOf("\"") > -1) {
-        	str = str.substring(0, str.lastIndexOf("\""));
+            str = str.substring(0, str.lastIndexOf("\""));
         }
         return str;
     }
-    
+
     /**
      * <p>[概 要]</p>
      * <p>[備 考]</p>
@@ -682,37 +712,38 @@ public final class CmnStringUtils {
      * @param srcStr
      * @return
      */
-    public static String prepareForSqlParamValue(String srcStr){
-        if(srcStr == null){
+    public static String prepareForSqlParamValue(String srcStr) {
+        if (srcStr == null) {
             return "";
         }
         return srcStr.replaceAll("\\\\", "\\\\\\\\").replaceAll("\\%", "\\\\%").replaceAll("\\_", "\\\\_");
     }
 
     /**
-     * 全角数字->　半角数字 
-     */  
+     * 全角数字-> 半角数字
+     */
     public static String full2Half(String src) {
-        if (src == null) {  
-            return "";  
-        }  
-        StringBuilder buf = new StringBuilder(src.length());  
-        char[] ca = src.toCharArray();  
-        for (int i = 0; i < src.length(); i++) {  
-            if (ca[i] >= 65281 && ca[i] <= 65374) {
-                buf.append((char) (ca[i] - 65248)); 
-            // 全角スベース
-            } else if (ca[i] == 12288) { // 如果是全角空格  
-                buf.append(" ");  
-            } else {
-                buf.append(ca[i]);  
-            }  
+        if (src == null) {
+            return "";
         }
-        return buf.toString();  
+        StringBuilder buf = new StringBuilder(src.length());
+        char[] ca = src.toCharArray();
+        for (int i = 0; i < src.length(); i++) {
+            if (ca[i] >= 65281 && ca[i] <= 65374) {
+                buf.append((char) (ca[i] - 65248));
+                // 全角スベース
+            } else if (ca[i] == 12288) { // 如果是全角空格
+                buf.append(" ");
+            } else {
+                buf.append(ca[i]);
+            }
+        }
+        return buf.toString();
     }
 
     /**
      * XX月XX日->MMDD
+     * 
      * @param date
      * @return
      */
@@ -734,209 +765,215 @@ public final class CmnStringUtils {
         month = (mouthStr.length() == 1) ? "0" + mouthStr : mouthStr;
         day = (dayStr.length() == 1) ? "0" + dayStr : dayStr;
 
-        return new String[]{month, day};
+        return new String[] { month, day };
     }
-    
+
     /**
      * 阅读折行显示
+     * 
      * @param subject
      * @return
      */
-	public static List<String> getSubjectList(String subject) {
-		List<String> list = new ArrayList<String>();
-		if(!StringUtils.isEmpty(subject)) {
-			String[] array = subject.split("<br/>");
-			list = Arrays.asList(array);
-		}
-		
-		return list;
-	}
+    public static List<String> getSubjectList(String subject) {
+        List<String> list = new ArrayList<String>();
+        if (!StringUtils.isEmpty(subject)) {
+            String[] array = subject.split("<br/>");
+            list = Arrays.asList(array);
+        }
 
-	public static String getFileSizeByteFromM() {
-		String size = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_SIZE_LIMIT);
-		if(StringUtils.isEmpty(size)) {
-			size = "10";
-		}
-		
-		long limit = Integer.valueOf(size) * 1024 * 1024;
-		
-		return String.valueOf(limit);
-	}
-	
-	/**
-	 * 将数据库二进制图片转换为base64编码
-	 * @param img
-	 * @return
-	 */
-	public static String getGraphicImage(byte[] img) {
-		if(img != null && img.length > 0) {
-			BASE64Encoder encoder = new BASE64Encoder();  
-	        return "data:image/jpg;base64," + encoder.encode(img);
-		} else {
-			return "";
-		}
-	}
-	
-	/**
-	 * 将二进制mp3转换为base64编码
-	 * @param 文件路径
-	 * 
-	 * @return
-	 * @throws IOException 
-	 */
-	public static String getMedia(String path) throws IOException {
-		
-    	//根据文件路径取得byte[]
-    	String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH)
-        		+ File.separator + path;
-    	 File file = new File(filePath);
-    	 if(!file.exists()) {
-    		 return SystemConstants.EMPTY;
-    	 }
-    	 FileInputStream fis = null;
-    	 ByteArrayOutputStream bos = null;  
-    	 try {
-    		 fis = new FileInputStream(file);
-        	 bos = new ByteArrayOutputStream(); 
-        	 int read = 0;
-        	 byte[] bytes = new byte[1024];
-             while ((read = fis.read(bytes)) != -1) {
-            	 bos.write(bytes, 0, read);
-             }
-             bos.flush();
-             BASE64Encoder encoder = new BASE64Encoder();  
- 	        return "data:audio/mp3;base64," + encoder.encode(bos.toByteArray());
-    	 } catch (IOException e) {
-             throw e;
-         } finally {
-             if (fis != null) {
-            	 fis.close();
-             }
-             if (bos != null) {
-            	 bos.close();
-             }
-         }
-	}
-	
+        return list;
+    }
+
+    public static String getFileSizeByteFromM() {
+        String size = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_SIZE_LIMIT);
+        if (StringUtils.isEmpty(size)) {
+            size = "10";
+        }
+
+        long limit = Integer.valueOf(size) * 1024 * 1024;
+
+        return String.valueOf(limit);
+    }
+
     /**
-     * 设置序号
-     * 设置显示格式
+     * 将数据库二进制图片转换为base64编码
+     * 
+     * @param img
+     * @return
+     */
+    public static String getGraphicImage(byte[] img) {
+        if (img != null && img.length > 0) {
+            BASE64Encoder encoder = new BASE64Encoder();
+            return "data:image/jpg;base64," + encoder.encode(img);
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 将二进制mp3转换为base64编码
+     * 
+     * @param 文件路径
+     * 
+     * @return
+     * @throws IOException
+     */
+    public static String getMedia(String path) throws IOException {
+
+        // 根据文件路径取得byte[]
+        String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + File.separator
+                + path;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return SystemConstants.EMPTY;
+        }
+        FileInputStream fis = null;
+        ByteArrayOutputStream bos = null;
+        try {
+            fis = new FileInputStream(file);
+            bos = new ByteArrayOutputStream();
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = fis.read(bytes)) != -1) {
+                bos.write(bytes, 0, read);
+            }
+            bos.flush();
+            BASE64Encoder encoder = new BASE64Encoder();
+            return "data:audio/mp3;base64," + encoder.encode(bos.toByteArray());
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+            if (bos != null) {
+                bos.close();
+            }
+        }
+    }
+
+    /**
+     * 设置序号 设置显示格式
+     * 
      * @param questions
      * @return
      */
-	public static List<ExamModel> answerLayoutSet(List<ExamModel> questions) {
-    	
-		if(questions != null && questions.size() > 0) {
-	        for (int i = 0; i < questions.size(); i++) {
-	            questions.get(i).setRowNo(i + 1);
-	            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-	                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-	                questions.get(i).setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(questions.get(i).getA())
-	                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-	                questions.get(i).setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(questions.get(i).getB())
-	                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-	                questions.get(i).setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(questions.get(i).getC())
-	                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-	                questions.get(i).setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(questions.get(i).getD())
-	                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-	                questions.get(i).setLayoutStyle("pageDirection");
-	            } else {
-	                questions.get(i).setLayoutStyle("lineDirection");
-	            }
-	
-	            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-	                questions.get(i).setRadioClass("radioTable1");
-	            } else {
-	                questions.get(i).setRadioClass("radioTable2");
-	            }
-	        }
-		}
+    public static List<ExamModel> answerLayoutSet(List<ExamModel> questions) {
+
+        if (questions != null && questions.size() > 0) {
+            for (int i = 0; i < questions.size(); i++) {
+                questions.get(i).setRowNo(i + 1);
+                if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                        .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+                    questions.get(i).setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(questions.get(i).getA())
+                        && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
+                    questions.get(i).setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(questions.get(i).getB())
+                        && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
+                    questions.get(i).setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(questions.get(i).getC())
+                        && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
+                    questions.get(i).setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(questions.get(i).getD())
+                        && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
+                    questions.get(i).setLayoutStyle("pageDirection");
+                } else {
+                    questions.get(i).setLayoutStyle("lineDirection");
+                }
+
+                if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+                    questions.get(i).setRadioClass("radioTable1");
+                } else {
+                    questions.get(i).setRadioClass("radioTable2");
+                }
+            }
+        }
         return questions;
     }
 
-	/**
-	 * 设置序号
-	 * 设置显示格式
-	 * @param questions
-	 * @return
-	 */
-	public static ForumModel selectionLayoutSet(ForumModel forumModel) {
-	    
-	    if(forumModel != null) {
-	            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-	                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-	                forumModel.setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(forumModel.getA())
-	                    && forumModel.getA().length() > CmnContants.FOLDING_LINE) {
-	                forumModel.setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(forumModel.getB())
-	                    && forumModel.getB().length() > CmnContants.FOLDING_LINE) {
-	                forumModel.setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(forumModel.getC())
-	                    && forumModel.getC().length() > CmnContants.FOLDING_LINE) {
-	                forumModel.setLayoutStyle("pageDirection");
-	            } else if (!StringUtils.isEmpty(forumModel.getD())
-	                    && forumModel.getD().length() > CmnContants.FOLDING_LINE) {
-	                forumModel.setLayoutStyle("pageDirection");
-	            } else {
-	                forumModel.setLayoutStyle("lineDirection");
-	            }
-	            
-	            if ("lineDirection".equals(forumModel.getLayoutStyle())) {
-	                forumModel.setRadioClass("radioTable1");
-	            } else {
-	                forumModel.setRadioClass("radioTable2");
-	            }
-	        }
-	    return forumModel;
-	}
-	
-	/**
-	 * 设置序号
-	 * 设置显示格式
-	 * @param questions
-	 * @return
-	 */
-	public static void selectionLayoutSet(List<TbQuestionStructure> structures) {
-		
-		if(structures != null && structures.size() > 0) {
-			 for(TbQuestionStructure item : structures) {
-				if(item.getQuestion() != null && item.getQuestion().size() > 0 ) {
-					List<MediaModel> questions = item.getQuestion();
-					if(questions != null && questions.size() > 0) {
-						for (int i = 0; i < questions.size(); i++) {
-							if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
-									.equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-								questions.get(i).setLayoutStyle("pageDirection");
-							} else if (!StringUtils.isEmpty(questions.get(i).getA())
-									&& questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-								questions.get(i).setLayoutStyle("pageDirection");
-							} else if (!StringUtils.isEmpty(questions.get(i).getB())
-									&& questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-								questions.get(i).setLayoutStyle("pageDirection");
-							} else if (!StringUtils.isEmpty(questions.get(i).getC())
-									&& questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-								questions.get(i).setLayoutStyle("pageDirection");
-							} else if (!StringUtils.isEmpty(questions.get(i).getD())
-									&& questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-								questions.get(i).setLayoutStyle("pageDirection");
-							} else {
-								questions.get(i).setLayoutStyle("lineDirection");
-							}
-							
-							if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-								questions.get(i).setRadioClass("radioTable1");
-							} else {
-								questions.get(i).setRadioClass("radioTable2");
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+     * 设置序号 设置显示格式
+     * 
+     * @param questions
+     * @return
+     */
+    public static ForumModel selectionLayoutSet(ForumModel forumModel) {
+
+        if (forumModel != null) {
+            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
+                    .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+                forumModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(forumModel.getA())
+                    && forumModel.getA().length() > CmnContants.FOLDING_LINE) {
+                forumModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(forumModel.getB())
+                    && forumModel.getB().length() > CmnContants.FOLDING_LINE) {
+                forumModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(forumModel.getC())
+                    && forumModel.getC().length() > CmnContants.FOLDING_LINE) {
+                forumModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(forumModel.getD())
+                    && forumModel.getD().length() > CmnContants.FOLDING_LINE) {
+                forumModel.setLayoutStyle("pageDirection");
+            } else {
+                forumModel.setLayoutStyle("lineDirection");
+            }
+
+            if ("lineDirection".equals(forumModel.getLayoutStyle())) {
+                forumModel.setRadioClass("radioTable1");
+            } else {
+                forumModel.setRadioClass("radioTable2");
+            }
+        }
+        return forumModel;
+    }
+
+    /**
+     * 设置序号 设置显示格式
+     * 
+     * @param questions
+     * @return
+     */
+    public static void selectionLayoutSet(List<TbQuestionStructure> structures) {
+
+        if (structures != null && structures.size() > 0) {
+            for (TbQuestionStructure item : structures) {
+                if (item.getQuestion() != null && item.getQuestion().size() > 0) {
+                    List<MediaModel> questions = item.getQuestion();
+                    if (questions != null && questions.size() > 0) {
+                        for (int i = 0; i < questions.size(); i++) {
+                            if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
+                                    && SystemConstants.AGENT_FLAG.equals(
+                                            (String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
+                                questions.get(i).setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(questions.get(i).getA())
+                                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
+                                questions.get(i).setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(questions.get(i).getB())
+                                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
+                                questions.get(i).setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(questions.get(i).getC())
+                                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
+                                questions.get(i).setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(questions.get(i).getD())
+                                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
+                                questions.get(i).setLayoutStyle("pageDirection");
+                            } else {
+                                questions.get(i).setLayoutStyle("lineDirection");
+                            }
+
+                            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
+                                questions.get(i).setRadioClass("radioTable1");
+                                questions.get(i).setDivWidth("showAnswer1");
+                            } else {
+                                questions.get(i).setRadioClass("radioTable2");
+                                questions.get(i).setDivWidth("showAnswer2");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
