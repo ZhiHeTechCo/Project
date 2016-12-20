@@ -2554,7 +2554,7 @@ ul.contact_info span {
 		width: 55%;
 	}
 	.navbar-toggle {
-		margin-top: -50px;
+		margin-top: 0px;
 	}
 	.navbar {
 		min-height: 0;
@@ -2599,7 +2599,7 @@ ul.contact_info span {
 		padding: 5em 1em 0;
 	}
 	.navbar-toggle {
-		margin-top: -47px;
+		margin-top: 0px;
 	}
 	.navbar-default .navbar-collapse {
 		margin-top: 1em;
@@ -2719,7 +2719,7 @@ ul.contact_info span {
 		padding: 1em 0;
 	}
 	.navbar-toggle {
-		margin-top: -50px;
+		margin-top: 0px;
 	}
 	a.button img {
 		width: 6%;
@@ -2899,7 +2899,7 @@ ul.contact_info span {
 		padding: 8em 1em 0;
 	}
 	.navbar-toggle {
-		margin-top: -45px;
+		margin-top: 0px;
 		margin-right: 0px;
 	}
 	.copyrights p {
@@ -2946,7 +2946,7 @@ ul.contact_info span {
 		padding: 8em 1em 0;
 	}
 	.navbar-toggle {
-		margin-top: -45px;
+		margin-top: 0px;
 		margin-right: 0px;
 	}
 	.copyrights p {
@@ -2995,7 +2995,7 @@ ul.contact_info span {
 		letter-spacing: 3px;
 	}
 	.navbar-toggle {
-		margin-top: -41px;
+		margin-top: 0px;
 		margin-right: 0px;
 		padding: 8px 8px;
 		margin-bottom: 0;
