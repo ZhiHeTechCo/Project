@@ -75,6 +75,14 @@ td.location {
 	margin-top: 3px;
 }
 
+div.location {
+    float: left;
+    color: #999999;
+    font-size: 0.875em;
+    width: 75%;
+    margin-top: 3px;
+}
+
 td.phonenum {
 	float: left;
 	color: #999999;
@@ -89,6 +97,14 @@ td.topUrl {
 	font-size: 0.875em;
 	margin-top: 3px;
 	margin-right: 10px;
+}
+
+div.topUrl {
+    float: left;
+    color: #999999;
+    font-size: 0.875em;
+    margin-top: 3px;
+    margin-right: 10px;
 }
 
 p.location {

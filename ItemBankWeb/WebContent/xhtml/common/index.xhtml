@@ -79,11 +79,10 @@
         <div class="header-top">
           <div class="container">
             <table style="width: 100%">
-              <tr>
-                <td class="location"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>重庆志合教育信息咨询服务有限公司</td>
-                <td class="topUrl">
-                  <div>
-	                <c:choose>
+	            <tr>
+	              <td>
+	              <div class="location"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>重庆志合教育信息咨询服务有限公司</div>
+	              <div class="topUrl"><c:choose>
 	                  <c:when test="#{session.getAttribute('session-user-id') != null}">
 	                    <ul id="myTab" class="nav" role="tablist">
 	                      <li role="presentation" class="dropdown"><a id="myTabDrop1" href="#" class="dropdown-toggle"
@@ -91,40 +90,40 @@
 	                          class="caret"></span>
 	                      </a>
 	                        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-                              <li>
-                                <h:commandLink value="个人信息" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="userInfoBean"></f:param>
-                                </h:commandLink>
-                             </li>
-                              <li>
-                                <h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="examClassifyBean"></f:param>
-                                </h:commandLink>
-                              </li>
-                              <li>
-                                <h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="resumeBean"></f:param>
-                                </h:commandLink>
-                              </li>
-                              <c:if test="#{session.getAttribute('session-user-info').getRole() >= '90'}">
-                              <li>
-                                <h:commandLink value="试题审核" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="fileSearchBean"></f:param>
-                                </h:commandLink>
-                              </li>
-                              <li>
-                                <h:commandLink value="试题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="questionInsertController"></f:param>
-                                </h:commandLink>
-                              </li>
-                              </c:if>
-                              <li>
-                                <h:commandLink value="考题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
-                                  <f:param name='pageController' value="fileManageBean"></f:param>
-                                </h:commandLink>
-                              </li>
+	                          <li>
+	                            <h:commandLink value="个人信息" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="userInfoBean"></f:param>
+	                            </h:commandLink>
+	                         </li>
+	                          <li>
+	                            <h:commandLink value="试题库" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="examClassifyBean"></f:param>
+	                            </h:commandLink>
+	                          </li>
+	                          <li>
+	                            <h:commandLink value="我的错题" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="resumeBean"></f:param>
+	                            </h:commandLink>
+	                          </li>
+	                          <c:if test="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+	                          <li>
+	                            <h:commandLink value="试题审核" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="fileSearchBean"></f:param>
+	                            </h:commandLink>
+	                          </li>
+	                          <li>
+	                            <h:commandLink value="试题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="questionInsertController"></f:param>
+	                            </h:commandLink>
+	                          </li>
+	                          </c:if>
+	                          <li>
+	                            <h:commandLink value="考题上传" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+	                              <f:param name='pageController' value="fileManageBean"></f:param>
+	                            </h:commandLink>
+	                          </li>
 	                          <li><h:commandLink value="切换用户" action="#{pageTopController.changeUser}"
-                              onclick="return buttonDisable();" /></li>
+	                              onclick="return buttonDisable();" /></li>
 	                          <li><h:commandLink value="退出" action="#{pageTopController.logOut}"
 	                              onclick="return buttonDisable();" /></li>
 	                        </ul></li>
@@ -145,10 +144,9 @@
 	
 	                    </div>
 	                  </c:otherwise>
-	                </c:choose>
-                  </div>
-                </td>
-              </tr>
+	                </c:choose></div>
+	              </td>
+	            </tr>
             </table>
           </div>
         </div>
