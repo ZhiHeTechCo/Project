@@ -35,6 +35,11 @@ public final class CmnStringUtils {
      * 正则表达式：验证用户名
      */
     public static final String REGEX_USERNAME = "^[A-Za-z0-9_]$";
+    
+    /**
+     * 正则表达式：验证用户名
+     */
+    public static final String REGEX_NICKNAME = "^[\u4e00-\u9fa5_a-zA-Z0-9]+$";
  
     /**
      * 正则表达式：验证密码
@@ -458,6 +463,18 @@ public final class CmnStringUtils {
     public static boolean isUserName(String str) {
         if (str != null && !"".equals(str.trim()))  
             return str.matches(REGEX_USERNAME);  
+        else  
+            return false; 
+    }
+    
+    /**
+     * 昵称チェック
+     * @param str
+     * @return
+     */
+    public static boolean isNickName(String str) {
+        if (str != null && !"".equals(str.trim()))  
+            return str.matches(REGEX_NICKNAME);  
         else  
             return false; 
     }

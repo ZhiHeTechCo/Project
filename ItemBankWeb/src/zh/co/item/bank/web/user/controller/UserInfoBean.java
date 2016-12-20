@@ -104,8 +104,8 @@ public class UserInfoBean extends BaseController {
         		BaseController pageController = (BaseController) SpringAppContextManager.getBean("signInBean");
                 return pageController.init();
         	}
-        	if(StringUtils.isNotEmpty(userInfo.getNickName()) && (!CmnStringUtils.isUserName(userInfo.getNickName()))) {
-        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"由字母、数字或下划线组成的昵称"});
+        	if(StringUtils.isNotEmpty(userInfo.getNickName()) && (!CmnStringUtils.isNickName(userInfo.getNickName()))) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"由汉字、字母、数字或下划线组成的昵称"});
         	}
         	
         	if(StringUtils.isNotEmpty(userInfo.getBirthdayEx())) {

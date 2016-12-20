@@ -204,7 +204,8 @@ public class UserService {
             // 存在的场合，自动登录
             user = userDao.getUserInfo(userInfo);
         } else {
-        	if(!CmnStringUtils.isUserName(userInfo.getNickName())) {
+        	if(!CmnStringUtils.isNickName(userInfo.getNickName())) {
+        		logger.log(MessageId.ITBK_I_0001, new Object[] { userInfo.getName() });
         		userInfo.setNickName(SystemConstants.EMPTY);
         	}
             // 不存在的场合，注册，自动登录
