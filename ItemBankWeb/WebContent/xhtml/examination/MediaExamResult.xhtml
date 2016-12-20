@@ -152,7 +152,7 @@
 				                                        #{mquestion.context}
 														<hr />
 														<!-- 文字 -->
-														<div style="width: 25%; float: left">
+														<div class="#{mquestion.divWidth}">
 															<h:panelGroup rendered="#{mquestion.answer eq '1'}">
 																<span class="glyphicon glyphicon-ok"></span>
 															</h:panelGroup>
@@ -168,7 +168,7 @@
 															A:
 															<h:outputText value="#{mquestion.a}" />
 														</div>
-														<div style="width: 25%; float: left">
+														<div class="#{mquestion.divWidth}">
 															<h:panelGroup rendered="#{mquestion.answer eq '2'}">
 																<span class="glyphicon glyphicon-ok"></span>
 															</h:panelGroup>
@@ -184,7 +184,7 @@
 															B:
 															<h:outputText value="#{mquestion.b}" />
 														</div>
-														<div style="width: 25%; float: left">
+														<div class="#{mquestion.divWidth}">
 															<h:panelGroup rendered="#{mquestion.answer eq '3'}">
 																<span class="glyphicon glyphicon-ok"></span>
 															</h:panelGroup>
@@ -200,7 +200,7 @@
 															C:
 															<h:outputText value="#{mquestion.c}" />
 														</div>
-														<div style="width: 25%; float: left">
+														<div class="#{mquestion.divWidth}">
 															<h:panelGroup rendered="#{mquestion.d ne ''}">
 																<h:panelGroup rendered="#{mquestion.answer eq '4'}">
 																	<span class="glyphicon glyphicon-ok"></span>
@@ -243,11 +243,13 @@
 									</c:when>
 								</c:when>
 							</c:choose>
-							<div class="form-submit1">
-								<h:commandButton value="查看考试成绩" class="button1"
-									action="#{examResultBean.goBackToExamResult}"
-									id="goBackToExamResultBtn" />
-							</div>
+							<c:if test="#{examResultBean.examFlag eq 'true'}">
+								<div class="form-submit1">
+									<h:commandButton value="查看考试成绩" class="button1"
+										action="#{examResultBean.goBackToExamResult}"
+										id="goBackToExamResultBtn" />
+								</div>
+							</c:if>
 							<div class="form-submit1">
 								<h:commandButton value="返回试题选择" class="button1"
 									action="#{examResultBean.goBackToClassify}"
