@@ -305,10 +305,18 @@ public class ExamResultBean extends BaseController {
                     buffer.append(reason);
                     buffer.append(CmnContants.KOMA);
                 }
-                // TODO
+                if (buffer.length() > 0) {
+                    bean.setReason(buffer.substring(0, buffer.length() - 1));
+                }
+                if (StringUtils.isNotEmpty(comment)) {
+                    bean.setComment(comment);
+                }
                 bean.setUserId(userInfo.getId());
                 bean.setQuestionId(questionId);
                 examService.insertErrorReport(bean);
+                logger.log(MessageId.ITBK_I_0014);
+                setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0014), MESSAGE_LEVEL_INFO);
+
             } else {
                 logger.log(MessageId.ITBK_E_0010);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0010);
