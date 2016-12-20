@@ -87,6 +87,19 @@ public class ExamService {
     }
 
     /**
+     * 错误类型
+     * 
+     * @return
+     * @throws Exception
+     */
+    public List<TsCodeBean> getReasons() throws Exception {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("modelId", "BER0001");
+        param.put("name", "reason");
+        return getCodelist(param);
+    }
+
+    /**
      * 取得CodeList
      * 
      * @return list
@@ -193,8 +206,7 @@ public class ExamService {
     /**
      * 获取试题结构
      * 
-     * @param map[exam,
-     *            examType]
+     * @param map[exam, examType]
      * @return
      */
     public List<ExamModel> getStructure(TbQuestionClassifyBean classifyBean) {
@@ -236,4 +248,5 @@ public class ExamService {
     public void insertErrorReport(TbErrorReportBean bean) {
         examDao.insertErrorReport(bean);
     }
+
 }

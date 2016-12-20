@@ -29,7 +29,7 @@ public class CmnContants {
 
     /** 题型 */
     public static final String MODELID_BQD0004 = "BQD0004";
-    
+
     /** 文件审批状态 */
     public static final String MODELID_BQD0005 = "BQD0005";
 
@@ -40,4 +40,6 @@ public class CmnContants {
     public static final String MODELID_SA0001 = "SA0001";
 
     public static final String ROLE = "role";
+
+    public static final String KOMA = ",";
 }

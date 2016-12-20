@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
@@ -23,6 +24,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbErrorReportBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
+import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.ForumModel;
@@ -82,6 +84,14 @@ public class ExamResultBean extends BaseController {
     private List<TbQuestionStructure> mediaQuestions;
     // 音频
     private MediaModel mediaModel;
+
+    /** 试题报错 */
+    // 所有报错类型
+    private List<TsCodeBean> reasons;
+    // 用户选择
+    private List<String> reasonList;
+    // 用户备注
+    private String comment;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -166,6 +176,14 @@ public class ExamResultBean extends BaseController {
     public String showDetail() {
         try {
             pushPathHistory("examResultBean");
+            // 试题报错初始化
+            if (reasons == null) {
+                reasons = examService.getReasons();
+            }
+            reasonList = new ArrayList<String>();
+            comment = null;
+
+            // 获取用户信息
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 return SystemConstants.PAGE_ITBK_EXAM_004;
@@ -274,18 +292,30 @@ public class ExamResultBean extends BaseController {
      * @return
      */
     public String reportError() {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                .getRequest();
-        String questionId = request.getParameter("questionId");
-        if (questionId != null) {
-            if (!checkuser(userInfo)) {
-                return SystemConstants.PAGE_ITBK_USER_002;
+        try {
+            Integer questionId = question.getNo();
+            if (questionId != 0) {
+                if (!checkuser(userInfo)) {
+                    return SystemConstants.PAGE_ITBK_USER_002;
+                }
+                // 登录报错表
+                TbErrorReportBean bean = new TbErrorReportBean();
+                StringBuffer buffer = new StringBuffer();
+                for (String reason : reasonList) {
+                    buffer.append(reason);
+                    buffer.append(CmnContants.KOMA);
+                }
+                // TODO
+                bean.setUserId(userInfo.getId());
+                bean.setQuestionId(questionId);
+                examService.insertErrorReport(bean);
+            } else {
+                logger.log(MessageId.ITBK_E_0010);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0010);
+                throw ex;
             }
-            // 登录报错表
-            TbErrorReportBean bean = new TbErrorReportBean();
-            bean.setUserId(userInfo.getId());
-            bean.setQuestionId(Integer.parseInt(questionId));
-            examService.insertErrorReport(bean);
+        } catch (Exception e) {
+            processForException(this.logger, e);
         }
         return SystemConstants.PAGE_ITBK_EXAM_004;
     }
@@ -355,10 +385,10 @@ public class ExamResultBean extends BaseController {
     public String mediaReport() {
         return SystemConstants.PAGE_ITBK_EXAM_008;
     }
-    
-    
+
     /**
      * [听力][考试模式]返回考试结果一览
+     * 
      * @return
      */
     public String goBackToExamResult() {
@@ -471,6 +501,30 @@ public class ExamResultBean extends BaseController {
 
     public void setMediaModel(MediaModel mediaModel) {
         this.mediaModel = mediaModel;
+    }
+
+    public List<TsCodeBean> getReasons() {
+        return reasons;
+    }
+
+    public void setReasons(List<TsCodeBean> reasons) {
+        this.reasons = reasons;
+    }
+
+    public List<String> getReasonList() {
+        return reasonList;
+    }
+
+    public void setReasonList(List<String> reasonList) {
+        this.reasonList = reasonList;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
 }

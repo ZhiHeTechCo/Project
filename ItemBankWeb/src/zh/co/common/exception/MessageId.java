@@ -144,9 +144,12 @@ public class MessageId {
     /** 请输入{0}！ */
     public static final String ITBK_E_0007 = "ITBK_E_0007";
 
-    /** 询问解析失败，请稍候再试。 */
+    /** 抱歉！询问解析失败，请稍候再试。 */
     public static final String ITBK_E_0008 = "ITBK_E_0008";
 
     /** 抱歉！本套试题听力缺失，我们将尽快补齐。 */
     public static final String ITBK_E_0009 = "ITBK_E_0009";
+    
+    /** 抱歉！试题报错失败，请稍候再试。  */
+    public static final String ITBK_E_0010 = "ITBK_E_0010";
 }

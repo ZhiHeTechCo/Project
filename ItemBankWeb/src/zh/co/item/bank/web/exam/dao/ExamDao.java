@@ -141,6 +141,6 @@ public class ExamDao extends BaseDao {
      * 试题报错
      */
     public void insertErrorReport(TbErrorReportBean bean){
-        getIbatisTemplate().insert("ErrorReport.insertSelective", bean);
+        getIbatisTemplate().insert("TbErrorReport.insertSelective", bean);
     }
 }

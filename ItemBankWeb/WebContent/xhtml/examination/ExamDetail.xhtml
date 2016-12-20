@@ -125,40 +125,71 @@
 											value="#{examResultBean.question.source}" /></td>
 								</tr>
 							</table>
-							<table class="toTable" style="width: 50%">
-								<tr>
-									<td>
-										<div class="form-submit1">
-											<h:commandButton value="返回前页" class="button1"
-												action="#{examResultBean.goBackToResult}"
-												id="goBackToResultBtn" style="margin-right: 5px;">
-											</h:commandButton>
-										</div>
-									</td>
-									<c:if test="#{examResultBean.examFlag ne 'true'}">
+							<div class="form-submit1">
+								<h:commandButton value="返回前页" class="button1"
+									action="#{examResultBean.goBackToResult}"
+									id="goBackToResultBtn" style="margin-right: 5px;">
+								</h:commandButton>
+							</div>
+							<c:if test="#{examResultBean.examFlag ne 'true'}">
+								<div class="form-submit1">
+									<h:commandButton value="继续做题" class="button1"
+										action="#{examResultBean.goBackToExam}" id="goBackToExamBtn"
+										style="margin-right: 5px;" />
+								</div>
+							</c:if>
+							<div class="form-submit1">
+								<h:commandButton value="询问解析" class="button1"
+									action="#{examResultBean.askQuestion}" id="askQuestionBtn" />
+							</div>
+							<div class="clearfix"></div>
+							<hr />
+							<h5 id="down" style="display: ''">
+								<a href="#"
+									onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
+									<span class="glyphicon glyphicon-hand-down"></span>发现错误，点我报错
+								</a>
+							</h5>
+							<h5 id="up" style="display: none">
+								<a href="#"
+									onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
+									<span class="glyphicon glyphicon-hand-up"></span>收起
+								</a>
+							</h5>
+							<div id="detail" style="display: none">
+								<table class="toTable" style="width: 100%;">
+									<tr>
+										<td style="width: 15%;"><h4>错误原因：</h4></td>
 										<td>
-											<div class="form-submit1">
-												<h:commandButton value="继续做题" class="button1"
-													action="#{examResultBean.goBackToExam}"
-													id="goBackToExamBtn" style="margin-right: 5px;" />
+											<div style="width: 100%;">
+												<h:selectManyCheckbox value="#{examResultBean.reasonList}"
+													style="width: 100%">
+													<f:selectItems value="#{examResultBean.reasons}"
+														var="entry" itemValue="#{entry.key}"
+														itemLabel="#{entry.value}">
+													</f:selectItems>
+												</h:selectManyCheckbox>
 											</div>
 										</td>
+									</tr>
+									<tr>
+										<td><h4>其他：</h4></td>
 										<td>
-											<div class="form-submit1">
-												<h:commandButton value="询问解析" class="button1"
-													action="#{examResultBean.askQuestion}" id="askQuestionBtn"
-													style="margin-right: 5px;" />
+											<div style="width: 100%;">
+												<h:inputText value="#{examResultBean.comment}" />
 											</div>
 										</td>
+									</tr>
+									<tr>
 										<td>
 											<div class="form-submit1">
 												<h:commandButton value="试题报错" class="button1"
 													action="#{examResultBean.reportError}" id="reportErrorBtn" />
 											</div>
 										</td>
-									</c:if>
-								</tr>
-							</table>
+									</tr>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

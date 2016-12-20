@@ -28,6 +28,7 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath:sql/common/TbCollection.xml</value>
+                <value>classpath:sql/common/TbErrorReport.xml</value>
                 <value>classpath:sql/common/TbFirstLevelDirectory.xml</value>
                 <value>classpath:sql/common/TbForumAsker.xml</value>
                 <value>classpath:sql/common/TbForumResponse.xml</value>
