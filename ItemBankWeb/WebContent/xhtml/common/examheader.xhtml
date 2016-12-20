@@ -14,8 +14,9 @@
         <div class="container">
           <table style="width: 100%">
             <tr>
-              <td class="location"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>重庆志合教育信息咨询服务有限公司</td>
-              <td class="topUrl"><c:choose>
+              <td>
+              <div class="location"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>重庆志合教育信息咨询服务有限公司</div>
+              <div class="topUrl"><c:choose>
                   <c:when test="#{session.getAttribute('session-user-id') != null}">
                     <ul id="myTab" class="nav" role="tablist">
                       <li role="presentation" class="dropdown"><a id="myTabDrop1" href="#" class="dropdown-toggle"
@@ -77,18 +78,12 @@
 
                     </div>
                   </c:otherwise>
-                </c:choose></td>
+                </c:choose></div>
+              </td>
             </tr>
           </table>
         </div>
       </div>
-    <div class="header-bottom"  style="display:none">
-      <div class="logo text-center">
-          <h1>
-          <h:commandLink value="Item Bank" action="#{pageTopController.init}" onclick="return buttonDisable();" />
-        </h1>  
-      </div>
-    </div>
     </div>
   </div>
 </h:form>
