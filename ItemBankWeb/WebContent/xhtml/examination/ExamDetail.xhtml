@@ -10,6 +10,16 @@
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<h:outputScript library="js" name="lightbox.js" />
+		<script type="text/javascript">
+          function checkSelection() {
+        	  var tmp = $('input:checkbox[id^="examDetailForm\:reasons"]:checked').length;
+        	  if (tmp==0 &amp; document.getElementById('examDetailForm\:comment').value == '') { 
+            	  alert('请输入您的回答再提交!'); return false;
+              } else {
+                  document.getElementById('examDetailForm\:reportErrorBtn').click();
+              }
+          }
+        </script>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examDetailForm">
 				<div class="typrography">
@@ -143,53 +153,59 @@
 									action="#{examResultBean.askQuestion}" id="askQuestionBtn" />
 							</div>
 							<div class="clearfix"></div>
-							<hr />
-							<h5 id="down" style="display: ''">
-								<a href="#"
-									onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
-									<span class="glyphicon glyphicon-hand-down"></span>发现错误，点我报错
-								</a>
-							</h5>
-							<h5 id="up" style="display: none">
-								<a href="#"
-									onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
-									<span class="glyphicon glyphicon-hand-up"></span>收起
-								</a>
-							</h5>
-							<div id="detail" style="display: none">
-								<table class="toTable" style="width: 100%;">
-									<tr>
-										<td style="width: 15%;"><h4>错误原因：</h4></td>
-										<td>
-											<div style="width: 100%;">
-												<h:selectManyCheckbox value="#{examResultBean.reasonList}"
-													style="width: 100%">
-													<f:selectItems value="#{examResultBean.reasons}"
-														var="entry" itemValue="#{entry.key}"
-														itemLabel="#{entry.value}">
-													</f:selectItems>
-												</h:selectManyCheckbox>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td><h4>其他：</h4></td>
-										<td>
-											<div style="width: 100%;">
-												<h:inputText value="#{examResultBean.comment}" />
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="form-submit1">
-												<h:commandButton value="试题报错" class="button1"
-													action="#{examResultBean.reportError}" id="reportErrorBtn" />
-											</div>
-										</td>
-									</tr>
-								</table>
-							</div>
+							<c:if test="#{examResultBean.reasons ne null}">
+								<hr />
+								<h5 id="down" style="display: ''">
+									<a href="#"
+										onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
+										<span class="glyphicon glyphicon-hand-down"></span>发现错误，点我报错
+									</a>
+								</h5>
+								<h5 id="up" style="display: none">
+									<a href="#"
+										onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
+										<span class="glyphicon glyphicon-hand-up"></span>收起
+									</a>
+								</h5>
+								<div id="detail" style="display: none">
+									<table class="toTable" style="width: 100%;">
+										<tr>
+											<td style="width: 15%;"><h4>错误原因：</h4></td>
+											<td>
+												<div style="width: 100%;">
+													<h:selectManyCheckbox value="#{examResultBean.reasonList}"
+														style="width: 100%" id="reasons">
+														<f:selectItems value="#{examResultBean.reasons}"
+															var="entry" itemValue="#{entry.key}"
+															itemLabel="#{entry.value}">
+														</f:selectItems>
+													</h:selectManyCheckbox>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td><h4>其他：</h4></td>
+											<td>
+												<div style="width: 100%;">
+													<h:inputText value="#{examResultBean.comment}" id="comment"/>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="form-button1">
+													<input type="button" id="checkinputbutton" value="试题报错"
+														onclick="checkSelection();" />
+													<h:commandButton value="试题报错" id="reportErrorBtn"
+														style="display: none;"
+														action="#{examResultBean.reportError}">
+													</h:commandButton>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>

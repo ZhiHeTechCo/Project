@@ -683,7 +683,7 @@ public class ExamBean extends BaseController {
     }
 
     /**
-     * ExamDropOutBean
+     * 中途退出表登录参数设置
      * 
      * @return
      */

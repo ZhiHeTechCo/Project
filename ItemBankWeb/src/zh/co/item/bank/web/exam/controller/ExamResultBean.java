@@ -180,6 +180,10 @@ public class ExamResultBean extends BaseController {
             if (reasons == null) {
                 reasons = examService.getReasons();
             }
+            // 未检索到数据，画面不显示报错内容
+            if (reasons.size() == 0) {
+                reasons = null;
+            }
             reasonList = new ArrayList<String>();
             comment = null;
 
