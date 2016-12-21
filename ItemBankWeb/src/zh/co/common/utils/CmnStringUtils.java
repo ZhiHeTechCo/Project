@@ -965,10 +965,8 @@ public final class CmnStringUtils {
 
                             if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
                                 questions.get(i).setRadioClass("radioTable1");
-                                questions.get(i).setDivWidth("showAnswer1");
                             } else {
                                 questions.get(i).setRadioClass("radioTable2");
-                                questions.get(i).setDivWidth("showAnswer2");
                             }
                         }
                     }

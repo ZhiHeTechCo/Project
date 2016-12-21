@@ -52,9 +52,6 @@ public class MediaModel extends TbMediaQuestionBean {
     /** radio样式 */
     private String radioClass;
 
-    /** 结果一览样式 */
-    private String divWidth;
-
     public int getUserId() {
         return userId;
     }
@@ -177,14 +174,6 @@ public class MediaModel extends TbMediaQuestionBean {
 
     public List<String> getContextList() {
         return CmnStringUtils.getSubjectList(this.getContext());
-    }
-
-    public String getDivWidth() {
-        return divWidth;
-    }
-
-    public void setDivWidth(String divWidth) {
-        this.divWidth = divWidth;
     }
 
 }
