@@ -76,7 +76,7 @@
 										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
 											value="#{item.myAnswer}" />
 										<h:selectOneRadio value="#{item.myAnswer}"
-											layout="pageDirection" class="radioTable2">
+											layout="#{item.layoutStyle}" class="#{item.radioClass}">
 											<f:selectItem itemValue="1" itemLabel="#{item.a}" />
 											<f:selectItem itemValue="2" itemLabel="#{item.b}" />
 											<f:selectItem itemValue="3" itemLabel="#{item.c}" />
