@@ -164,21 +164,12 @@
 														<h:panelGroup
 															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d eq ''}">
 															<h:selectOneRadio value="#{mquestion.myAnswer}"
-																layout="#{mquestion.layoutStyle}"
+																style="width:75%;" layout="#{mquestion.layoutStyle}"
 																class="#{mquestion.radioClass}">
 
 																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
 																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
 																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
-															</h:selectOneRadio>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c eq '' and mquestion.d eq ''}">
-															<h:selectOneRadio value="#{mquestion.myAnswer}"
-																layout="#{mquestion.layoutStyle}"
-																class="#{mquestion.radioClass}">
-																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
-																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
 															</h:selectOneRadio>
 														</h:panelGroup>
 
