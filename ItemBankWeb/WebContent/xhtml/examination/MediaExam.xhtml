@@ -79,22 +79,23 @@
 							<c:choose>
 								<c:when test="#{examBean.mediaModel ne null}">
 									<c:when test="#{examBean.mediaModel.mediaPath ne null}">
-										<div class="form-submit1">
-											<h:commandButton id="btnGetMedia" value="开始"
+										<div style="witdh: 100%;">
+											<span id="mediaMsg" style="color: #3382C9;"></span> <img
+												id="loadImg" src="" />
+										</div>
+										<div style="padding-right: 20px; float: left;">
+											<h:commandLink id="btnGetMedia"
 												onclick="return cancelToken(this)">
 												<f:ajax event="click" execute="@form" render="audioWrapper "
 													listener="#{examBean.getMedia}" onevent="getMediaCallBack"
 													onerror="getMediaFail" />
-											</h:commandButton>
-											<span id="mediaMsg"
-												style="padding-left: 20px; color: #3382C9;"></span> <img
-												id="loadImg" src="" />
+												<h2 class="glyphicon glyphicon-expand"></h2>
+											</h:commandLink>
 										</div>
-
 										<h:panelGroup id="audioWrapper">
 											<!-- 显示音频 -->
 											<div class="audio_wrap"
-												style="display:#{examBean.mediaReady};">
+												style="float:right;display:#{examBean.mediaReady};">
 												<div class="music_control">
 													<audio id="listen" controls="controls"
 														autobuffer="autobuffer"
@@ -148,7 +149,8 @@
 													width="100%">
 													<h:column>
 													#{mquestion.context}
-													<!-- 文字 -->
+													<hr />
+														<!-- 文字 -->
 														<h:panelGroup
 															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
 															<h:selectOneRadio value="#{mquestion.myAnswer}"
