@@ -154,21 +154,15 @@
 														<h:outputText value="#{mquestion.context}"></h:outputText>
 														<!-- 图片 -->
 														<c:if test="#{mquestion.contextImgCode !=''}">
-															<table align="center">
-																<tr>
-																	<td align="center">
-																		<div class="gallery-bottom">
-																			<div class="col-md-3 gallery-grid">
-																				<a class="example-image-link"
-																					href="#{mquestion.contextImgCode}"
-																					data-lightbox="example-set"><img
-																					class="example-image"
-																					src="#{mquestion.contextImgCode}" alt="" /></a>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-															</table>
+                                                          <div class="gallery-bottom">
+                                                              <div class="col-md-3 gallery-grid">
+                                                                  <a class="example-image-link"
+                                                                      href="#{mquestion.contextImgCode}"
+                                                                      data-lightbox="example-set"><img
+                                                                      class="example-image"
+                                                                      src="#{mquestion.contextImgCode}" alt="" /></a>
+                                                              </div>
+                                                          </div>
 														</c:if>
 														<hr />
 														<h:panelGroup
