@@ -596,6 +596,7 @@ public class ExamBean extends BaseController {
             examResultBean.setSubject(subject);
             examResultBean.setSubjectList(subjectList);
             examResultBean.setGraphicImage(graphicImage);
+            examResultBean.setResume(false);
             return examResultBean.init();
         } catch (Exception e) {
             processForException(logger, e);
