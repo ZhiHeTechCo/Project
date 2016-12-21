@@ -20,7 +20,7 @@ import zh.co.common.prop.PropertiesUtils;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.MediaModel;
-import zh.co.item.bank.model.entity.TbQuestionStructure;
+import zh.co.item.bank.model.entity.MediaQuestionStructure;
 
 /**
  * <p>[概 要]string process utilities</p>
@@ -935,10 +935,10 @@ public final class CmnStringUtils {
      * @param questions
      * @return
      */
-    public static void selectionLayoutSet(List<TbQuestionStructure> structures) {
+    public static void selectionLayoutSet(List<MediaQuestionStructure> structures) {
 
         if (structures != null && structures.size() > 0) {
-            for (TbQuestionStructure item : structures) {
+            for (MediaQuestionStructure item : structures) {
                 if (item.getQuestion() != null && item.getQuestion().size() > 0) {
                     List<MediaModel> questions = item.getQuestion();
                     if (questions != null && questions.size() > 0) {

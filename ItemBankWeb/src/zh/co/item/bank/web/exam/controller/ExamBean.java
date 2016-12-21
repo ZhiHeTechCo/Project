@@ -31,7 +31,7 @@ import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.MediaModel;
-import zh.co.item.bank.model.entity.TbQuestionStructure;
+import zh.co.item.bank.model.entity.MediaQuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
@@ -104,7 +104,7 @@ public class ExamBean extends BaseController {
 
     private String mediaReady;
     // 听力试题
-    List<TbQuestionStructure> mediaQuestions;
+    List<MediaQuestionStructure> mediaQuestions;
 
     private String source;
 
@@ -240,7 +240,7 @@ public class ExamBean extends BaseController {
     private void selectForMediaQuestions() throws IOException {
         // 初始化
         mediaModel = null;
-        mediaQuestions = new ArrayList<TbQuestionStructure>();
+        mediaQuestions = new ArrayList<MediaQuestionStructure>();
         // 获取ClassifyId
         List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
         if (classifyIds == null || classifyIds.size() == 0) {
@@ -278,7 +278,7 @@ public class ExamBean extends BaseController {
             if (source != null && classifyBean != null) {
                 // 初始化
                 mediaModel = null;
-                mediaQuestions = new ArrayList<TbQuestionStructure>();
+                mediaQuestions = new ArrayList<MediaQuestionStructure>();
 
                 Map<String, Object> map = new HashMap<String, Object>();
                 // 获取ClassifyId
@@ -332,7 +332,7 @@ public class ExamBean extends BaseController {
         // 更新听力记录表
         List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
         List<ExamModel> examCollections = new ArrayList<ExamModel>();
-        for (TbQuestionStructure model : mediaQuestions) {
+        for (MediaQuestionStructure model : mediaQuestions) {
             List<MediaModel> questions = model.getQuestion();
             // 考试模式需登录考试表
             for (MediaModel question : questions) {
@@ -793,11 +793,11 @@ public class ExamBean extends BaseController {
         this.mediaModel = mediaModel;
     }
 
-    public List<TbQuestionStructure> getMediaQuestions() {
+    public List<MediaQuestionStructure> getMediaQuestions() {
         return mediaQuestions;
     }
 
-    public void setMediaQuestions(List<TbQuestionStructure> mediaQuestions) {
+    public void setMediaQuestions(List<MediaQuestionStructure> mediaQuestions) {
         this.mediaQuestions = mediaQuestions;
     }
 

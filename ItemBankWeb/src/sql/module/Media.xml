@@ -55,7 +55,7 @@
         order by id
     </select>
     
-    <resultMap id="mediaQuestionsResult" type="zh.co.item.bank.model.entity.TbQuestionStructure">  
+    <resultMap id="mediaQuestionsResult" type="zh.co.item.bank.model.entity.MediaQuestionStructure">  
       <result property="title" column="title"/>
       <result property="classifyId" column="classify_id"/>
       <collection property="question" ofType="zh.co.item.bank.model.entity.MediaModel" >

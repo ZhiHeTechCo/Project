@@ -10,7 +10,7 @@ import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.MediaModel;
-import zh.co.item.bank.model.entity.TbQuestionStructure;
+import zh.co.item.bank.model.entity.MediaQuestionStructure;
 import zh.co.item.bank.web.exam.dao.MediaDao;
 
 /**
@@ -80,7 +80,7 @@ public class MediaService {
      * @param map
      * @return
      */
-    public List<TbQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
+    public List<MediaQuestionStructure> selectMediaQuestions(Map<String, Object> map) {
         return mediaDao.selectMediaQuestions(map);
     }
 

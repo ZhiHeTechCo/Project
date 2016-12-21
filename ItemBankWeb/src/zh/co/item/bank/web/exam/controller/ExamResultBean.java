@@ -29,7 +29,7 @@ import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.MediaModel;
-import zh.co.item.bank.model.entity.TbQuestionStructure;
+import zh.co.item.bank.model.entity.MediaQuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
@@ -81,7 +81,7 @@ public class ExamResultBean extends BaseController {
 
     /** 听力 */
     // 听力试题
-    private List<TbQuestionStructure> mediaQuestions;
+    private List<MediaQuestionStructure> mediaQuestions;
     // 音频
     private MediaModel mediaModel;
 
@@ -499,11 +499,11 @@ public class ExamResultBean extends BaseController {
         this.graphicImage = graphicImage;
     }
 
-    public List<TbQuestionStructure> getMediaQuestions() {
+    public List<MediaQuestionStructure> getMediaQuestions() {
         return mediaQuestions;
     }
 
-    public void setMediaQuestions(List<TbQuestionStructure> mediaQuestions) {
+    public void setMediaQuestions(List<MediaQuestionStructure> mediaQuestions) {
         this.mediaQuestions = mediaQuestions;
     }
 
