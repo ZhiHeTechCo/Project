@@ -149,75 +149,176 @@
 													rendered="true" value="#{item.question}" var="mquestion"
 													width="100%">
 													<h:column>
-				                                        #{mquestion.context}
+														<h:outputText value="#{mquestion.context}"></h:outputText>
 														<hr />
 														<!-- 文字 -->
-														<div class="#{mquestion.divWidth}">
-															<h:panelGroup rendered="#{mquestion.answer eq '1'}">
-																<span class="glyphicon glyphicon-ok"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '1'}">
-																<span class="glyphicon glyphicon-remove"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne '1' and mquestion.answer ne '1'}">
-																<span style="color: #FFFFFF;"
-																	class="glyphicon glyphicon-chevron-right"></span>
-															</h:panelGroup>
-															A:
-															<h:outputText value="#{mquestion.a}" />
-														</div>
-														<div class="#{mquestion.divWidth}">
-															<h:panelGroup rendered="#{mquestion.answer eq '2'}">
-																<span class="glyphicon glyphicon-ok"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '2'}">
-																<span class="glyphicon glyphicon-remove"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne '2' and mquestion.answer ne '2'}">
-																<span style="color: #FFFFFF;"
-																	class="glyphicon glyphicon-chevron-right"></span>
-															</h:panelGroup>
-															B:
-															<h:outputText value="#{mquestion.b}" />
-														</div>
-														<div class="#{mquestion.divWidth}">
-															<h:panelGroup rendered="#{mquestion.answer eq '3'}">
-																<span class="glyphicon glyphicon-ok"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '3'}">
-																<span class="glyphicon glyphicon-remove"></span>
-															</h:panelGroup>
-															<h:panelGroup
-																rendered="#{mquestion.myAnswer ne '3' and mquestion.answer ne '3'}">
-																<span style="color: #FFFFFF;"
-																	class="glyphicon glyphicon-chevron-right"></span>
-															</h:panelGroup>
-															C:
-															<h:outputText value="#{mquestion.c}" />
-														</div>
-														<div class="#{mquestion.divWidth}">
-															<h:panelGroup rendered="#{mquestion.d ne ''}">
-																<h:panelGroup rendered="#{mquestion.answer eq '4'}">
-																	<span class="glyphicon glyphicon-ok"></span>
-																</h:panelGroup>
-																<h:panelGroup
-																	rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '4'}">
-																	<span class="glyphicon glyphicon-remove"></span>
-																</h:panelGroup>
-																<h:panelGroup
-																	rendered="#{mquestion.myAnswer ne '4' and mquestion.answer ne '4'}">
-																	<span style="color: #FFFFFF;"
-																		class="glyphicon glyphicon-chevron-right"></span>
-																</h:panelGroup>
-																D:
-																<h:outputText value="#{mquestion.d}" />
-															</h:panelGroup>
-														</div>
+														<h:panelGroup
+															rendered="#{mquestion.radioClass eq 'radioTable2'}">
+															<div style="witdh: 5%; float: left;">
+																<div
+																	style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
+																	<h:panelGroup rendered="#{mquestion.answer eq '1'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '1'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '1' and mquestion.answer ne '1'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="padding-bottom: 10px; width: 100%">
+																	<h:panelGroup rendered="#{mquestion.answer eq '2'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '2'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '2' and mquestion.answer ne '2'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="padding-bottom: 10px; width: 100%">
+																	<h:panelGroup rendered="#{mquestion.answer eq '3'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '3'}">
+																		<span class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '3' and mquestion.answer ne '3'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="padding-bottom: 10px; width: 100%">
+																	<h:panelGroup rendered="#{mquestion.answer eq '4'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '4'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '4' and mquestion.answer ne '4'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+															</div>
+															<div style="float: left;">
+																<h:selectOneRadio value="#{mquestion.myAnswer}"
+																	layout="#{mquestion.layoutStyle}"
+																	class="#{mquestion.radioClass}" readonly="true"
+																	disabled="true">
+																	<f:selectItem itemValue="1"
+																		itemLabel="  A：#{mquestion.a}" />
+																	<f:selectItem itemValue="2"
+																		itemLabel="  B：#{mquestion.b}" />
+																	<f:selectItem itemValue="3"
+																		itemLabel="  C：#{mquestion.c}" />
+																	<f:selectItem itemValue="4"
+																		itemLabel="  D：#{mquestion.d}" />
+																</h:selectOneRadio>
+															</div>
+														</h:panelGroup>
+														<h:panelGroup
+															rendered="#{mquestion.radioClass eq 'radioTable1'}">
+															<div style="witdh: 100%;">
+																<div style="width: 25%; margin-top: 5px; float: left;">
+																	<h:panelGroup rendered="#{mquestion.answer eq '1'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '1'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '1' and mquestion.answer ne '1'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="width: 25%; margin-top: 5px; float: left;">
+																	<h:panelGroup rendered="#{mquestion.answer eq '2'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '2'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '2' and mquestion.answer ne '2'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="width: 25%; margin-top: 5px; float: left;">
+																	<h:panelGroup rendered="#{mquestion.answer eq '3'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '3'}">
+																		<span class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '3' and mquestion.answer ne '3'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+																<div style="width: 25%; margin-top: 5px; float: left;">
+																	<h:panelGroup rendered="#{mquestion.answer eq '4'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-ok"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne mquestion.answer and mquestion.myAnswer eq '4'}">
+																		<span style="margin-top: 4px;"
+																			class="glyphicon glyphicon-remove"></span>
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{mquestion.myAnswer ne '4' and mquestion.answer ne '4'}">
+																		<span style="margin-top: 4px; color: #FFFFFF;"
+																			class="glyphicon glyphicon-chevron-right"></span>
+																	</h:panelGroup>
+																</div>
+															</div>
+															<div style="float: left; width: 100%;">
+																<h:selectOneRadio value="#{mquestion.myAnswer}"
+																	layout="#{mquestion.layoutStyle}"
+																	class="#{mquestion.radioClass}" readonly="true"
+																	disabled="true">
+																	<f:selectItem itemValue="1"
+																		itemLabel="  A：#{mquestion.a}" />
+																	<f:selectItem itemValue="2"
+																		itemLabel="  B：#{mquestion.b}" />
+																	<f:selectItem itemValue="3"
+																		itemLabel="  C：#{mquestion.c}" />
+																	<f:selectItem itemValue="4"
+																		itemLabel="  D：#{mquestion.d}" />
+																</h:selectOneRadio>
+															</div>
+														</h:panelGroup>
 														<!-- 图片 -->
 														<c:if test="#{mquestion.contextImgCode !=''}">
 															<table align="center">
@@ -247,7 +348,7 @@
 								<div class="form-submit1">
 									<h:commandButton value="查看考试成绩" class="button1"
 										action="#{examResultBean.goBackToExamResult}"
-										id="goBackToExamResultBtn" style="margin-right: 5px;"/>
+										id="goBackToExamResultBtn" style="margin-right: 5px;" />
 								</div>
 							</c:if>
 							<div class="form-submit1">
