@@ -315,7 +315,11 @@ public class ExamBean extends BaseController {
     public void getMedia() {
         try {
             mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-            this.mediaReady = "block";
+            if(StringUtils.isEmpty(mediaModel.getMediaPath())) {
+            	this.mediaReady = "none";
+            } else {
+            	this.mediaReady = "block";
+            }
         } catch (IOException e) {
             processForException(logger, e);
         }
