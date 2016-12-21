@@ -21,6 +21,9 @@ public class MediaModel extends TbMediaQuestionBean {
 
     // 听力音频路径
     private String mediaPath;
+    
+    // 听力音频base64
+    private String media;
 
     // 用户选择答案
     private String myAnswer;
@@ -175,5 +178,13 @@ public class MediaModel extends TbMediaQuestionBean {
     public List<String> getContextList() {
         return CmnStringUtils.getSubjectList(this.getContext());
     }
+
+	public String getMedia() {
+		return media;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
+	}
 
 }

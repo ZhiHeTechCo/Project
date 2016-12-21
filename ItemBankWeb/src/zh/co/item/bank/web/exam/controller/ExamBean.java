@@ -314,8 +314,8 @@ public class ExamBean extends BaseController {
 
     public void getMedia() {
         try {
-            mediaModel.setMediaPath(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-            if(StringUtils.isEmpty(mediaModel.getMediaPath())) {
+            mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+            if(StringUtils.isEmpty(mediaModel.getMedia())) {
             	this.mediaReady = "none";
             } else {
             	this.mediaReady = "block";
@@ -379,6 +379,8 @@ public class ExamBean extends BaseController {
         // 去结果一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
         examResultBean.setMediaQuestions(mediaQuestions);
+        mediaModel.setMedia(SystemConstants.EMPTY);
+        this.mediaReady = "none";
         examResultBean.setMediaModel(mediaModel);
         return examResultBean.mediaReport();
     }
