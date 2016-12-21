@@ -148,33 +148,8 @@
 													rendered="true" value="#{item.question}" var="mquestion"
 													width="100%">
 													<h:column>
-													#{mquestion.context}
-													<hr />
 														<!-- 文字 -->
-														<h:panelGroup
-															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
-															<h:selectOneRadio value="#{mquestion.myAnswer}"
-																layout="#{mquestion.layoutStyle}"
-																class="#{mquestion.radioClass}">
-
-																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
-																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
-																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
-																<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
-															</h:selectOneRadio>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d eq ''}">
-															<h:selectOneRadio value="#{mquestion.myAnswer}"
-																style="width:75%;" layout="#{mquestion.layoutStyle}"
-																class="#{mquestion.radioClass}">
-
-																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
-																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
-																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
-															</h:selectOneRadio>
-														</h:panelGroup>
-
+														<h:outputText value="#{mquestion.context}"></h:outputText>
 														<!-- 图片 -->
 														<h:panelGroup rendered="#{mquestion.contextImgCode !=''}">
 															<table align="center">
@@ -192,6 +167,28 @@
 																	</td>
 																</tr>
 															</table>
+														</h:panelGroup>
+														<hr />
+														<h:panelGroup
+															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
+															<h:selectOneRadio value="#{mquestion.myAnswer}"
+																layout="#{mquestion.layoutStyle}"
+																class="#{mquestion.radioClass}">
+																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+																<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+															</h:selectOneRadio>
+														</h:panelGroup>
+														<h:panelGroup
+															rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d eq ''}">
+															<h:selectOneRadio value="#{mquestion.myAnswer}"
+																style="width:75%;" layout="#{mquestion.layoutStyle}"
+																class="#{mquestion.radioClass}">
+																<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+															</h:selectOneRadio>
 														</h:panelGroup>
 													</h:column>
 												</h:dataTable>

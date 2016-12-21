@@ -80,22 +80,23 @@
 							<c:choose>
 								<c:when test="#{examBean.mediaModel ne null}">
 									<c:when test="#{examBean.mediaModel.mediaPath ne null}">
-										<div class="form-submit1">
-											<h:commandButton id="btnGetMedia" value="开始"
+										<div style="witdh: 100%;">
+											<span id="mediaMsg" style="color: #3382C9;"></span> <img
+												id="loadImg" src="" />
+										</div>
+										<div style="padding-right: 20px; float: left;">
+											<h:commandLink id="btnGetMedia"
 												onclick="return cancelToken(this)">
 												<f:ajax event="click" execute="@form" render="audioWrapper "
 													listener="#{examBean.getMedia}" onevent="getMediaCallBack"
 													onerror="getMediaFail" />
-											</h:commandButton>
-											<span id="mediaMsg"
-												style="padding-left: 20px; color: #3382C9;"></span> <img
-												id="loadImg" src="" />
+												<h2 class="glyphicon glyphicon-expand"></h2>
+											</h:commandLink>
 										</div>
-
 										<h:panelGroup id="audioWrapper">
 											<!-- 显示音频 -->
 											<div class="audio_wrap"
-												style="display:#{examBean.mediaReady};">
+												style="float:right;display:#{examBean.mediaReady};">
 												<div class="music_control">
 													<audio id="listen" controls="controls"
 														autobuffer="autobuffer"
@@ -149,9 +150,27 @@
 													rendered="true" value="#{item.question}" var="mquestion"
 													width="100%">
 													<h:column>
-														<h:outputText value="#{mquestion.context}"></h:outputText>
-														<hr />
 														<!-- 文字 -->
+														<h:outputText value="#{mquestion.context}"></h:outputText>
+														<!-- 图片 -->
+														<c:if test="#{mquestion.contextImgCode !=''}">
+															<table align="center">
+																<tr>
+																	<td align="center">
+																		<div class="gallery-bottom">
+																			<div class="col-md-3 gallery-grid">
+																				<a class="example-image-link"
+																					href="#{mquestion.contextImgCode}"
+																					data-lightbox="example-set"><img
+																					class="example-image"
+																					src="#{mquestion.contextImgCode}" alt="" /></a>
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+															</table>
+														</c:if>
+														<hr />
 														<h:panelGroup
 															rendered="#{mquestion.radioClass eq 'radioTable2'}">
 															<div style="witdh: 5%; float: left;">
@@ -221,19 +240,27 @@
 																</div>
 															</div>
 															<div style="float: left;">
-																<h:selectOneRadio value="#{mquestion.myAnswer}"
-																	layout="#{mquestion.layoutStyle}"
-																	class="#{mquestion.radioClass}" readonly="true"
-																	disabled="true">
-																	<f:selectItem itemValue="1"
-																		itemLabel="  A：#{mquestion.a}" />
-																	<f:selectItem itemValue="2"
-																		itemLabel="  B：#{mquestion.b}" />
-																	<f:selectItem itemValue="3"
-																		itemLabel="  C：#{mquestion.c}" />
-																	<f:selectItem itemValue="4"
-																		itemLabel="  D：#{mquestion.d}" />
-																</h:selectOneRadio>
+																<h:panelGroup
+																	rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
+																	<h:selectOneRadio value="#{mquestion.myAnswer}"
+																		layout="#{mquestion.layoutStyle}"
+																		class="#{mquestion.radioClass}">
+																		<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																		<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																		<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+																		<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+																	</h:selectOneRadio>
+																</h:panelGroup>
+																<h:panelGroup
+																	rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d eq ''}">
+																	<h:selectOneRadio value="#{mquestion.myAnswer}"
+																		style="width:75%;" layout="#{mquestion.layoutStyle}"
+																		class="#{mquestion.radioClass}">
+																		<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																		<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																		<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+																	</h:selectOneRadio>
+																</h:panelGroup>
 															</div>
 														</h:panelGroup>
 														<h:panelGroup
@@ -304,39 +331,29 @@
 																</div>
 															</div>
 															<div style="float: left; width: 100%;">
-																<h:selectOneRadio value="#{mquestion.myAnswer}"
-																	layout="#{mquestion.layoutStyle}"
-																	class="#{mquestion.radioClass}" readonly="true"
-																	disabled="true">
-																	<f:selectItem itemValue="1"
-																		itemLabel="  A：#{mquestion.a}" />
-																	<f:selectItem itemValue="2"
-																		itemLabel="  B：#{mquestion.b}" />
-																	<f:selectItem itemValue="3"
-																		itemLabel="  C：#{mquestion.c}" />
-																	<f:selectItem itemValue="4"
-																		itemLabel="  D：#{mquestion.d}" />
-																</h:selectOneRadio>
+																<h:panelGroup
+																	rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
+																	<h:selectOneRadio value="#{mquestion.myAnswer}"
+																		layout="#{mquestion.layoutStyle}"
+																		class="#{mquestion.radioClass}">
+																		<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																		<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																		<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+																		<f:selectItem itemValue="4" itemLabel="#{mquestion.d}" />
+																	</h:selectOneRadio>
+																</h:panelGroup>
+																<h:panelGroup
+																	rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d eq ''}">
+																	<h:selectOneRadio value="#{mquestion.myAnswer}"
+																		style="width:75%;" layout="#{mquestion.layoutStyle}"
+																		class="#{mquestion.radioClass}">
+																		<f:selectItem itemValue="1" itemLabel="#{mquestion.a}" />
+																		<f:selectItem itemValue="2" itemLabel="#{mquestion.b}" />
+																		<f:selectItem itemValue="3" itemLabel="#{mquestion.c}" />
+																	</h:selectOneRadio>
+																</h:panelGroup>
 															</div>
 														</h:panelGroup>
-														<!-- 图片 -->
-														<c:if test="#{mquestion.contextImgCode !=''}">
-															<table align="center">
-																<tr>
-																	<td align="center">
-																		<div class="gallery-bottom">
-																			<div class="col-md-3 gallery-grid">
-																				<a class="example-image-link"
-																					href="#{mquestion.contextImgCode}"
-																					data-lightbox="example-set"><img
-																					class="example-image"
-																					src="#{mquestion.contextImgCode}" alt="" /></a>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-															</table>
-														</c:if>
 													</h:column>
 												</h:dataTable>
 											</h:column>
