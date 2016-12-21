@@ -72,6 +72,9 @@ public class SignInBean extends BaseController {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"密码"});
         	}
         	UserModel loginUserInfo = userService.login(userInfo);
+        	if(loginUserInfo == null) {
+        		throw new CmnBizException(MessageId.ITBK_E_0002);
+        	}
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, loginUserInfo);
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(loginUserInfo.getId()));
     		logger.log(MessageId.ITBK_I_0003);

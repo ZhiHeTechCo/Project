@@ -34,7 +34,7 @@ public final class CmnStringUtils {
     /**
      * 正则表达式：验证用户名
      */
-    public static final String REGEX_USERNAME = "^[A-Za-z0-9_]$";
+    public static final String REGEX_USERNAME = "^[A-Za-z0-9_]*$";
 
     /**
      * 正则表达式：验证用户名

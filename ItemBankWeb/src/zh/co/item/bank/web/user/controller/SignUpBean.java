@@ -17,6 +17,7 @@ import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.web.user.service.UserService;
@@ -100,7 +101,8 @@ public class SignUpBean extends BaseController {
             int count = userService.InsertUserInfo(userInfo);
             //注册成功，跳转到登录界面
             if(count > 0) {
-            	return SystemConstants.PAGE_ITBK_USER_002;
+            	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+                return signInBean.init();
             }
 
         } catch (Exception e) {
