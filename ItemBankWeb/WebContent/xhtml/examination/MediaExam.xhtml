@@ -67,6 +67,7 @@
 				<div class="typrography">
 					<h2
 						style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力部分</h2>
+					<h3 style="text-align: center;">(#{examBean.mediaModel.source})</h3>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -139,6 +140,10 @@
     								loadSound();
     								</script>
 										</h:panelGroup>
+										<div class="clearfix"></div>
+										<h5>
+											<span class="glyphicon glyphicon-info-sign"></span> 音频加载大约需要30秒的时间，请耐心等待。
+										</h5>
 										<!-- 显示大题目 -->
 										<h:dataTable id="title" rendered="true"
 											value="#{examBean.mediaQuestions}" var="item" width="100%">
@@ -152,15 +157,15 @@
 														<h:outputText value="#{mquestion.context}"></h:outputText>
 														<!-- 图片 -->
 														<h:panelGroup rendered="#{mquestion.contextImgCode !=''}">
-                                                          <div class="gallery-bottom">
-                                                              <div class="col-md-3 gallery-grid">
-                                                                  <a class="example-image-link"
-                                                                      href="#{mquestion.contextImgCode}"
-                                                                      data-lightbox="example-set"><img
-                                                                      class="example-image"
-                                                                      src="#{mquestion.contextImgCode}" alt="" /></a>
-                                                              </div>
-                                                          </div>
+															<div class="gallery-bottom">
+																<div class="col-md-3 gallery-grid">
+																	<a class="example-image-link"
+																		href="#{mquestion.contextImgCode}"
+																		data-lightbox="example-set"><img
+																		class="example-image"
+																		src="#{mquestion.contextImgCode}" alt="" /></a>
+																</div>
+															</div>
 														</h:panelGroup>
 														<hr />
 														<h:panelGroup
