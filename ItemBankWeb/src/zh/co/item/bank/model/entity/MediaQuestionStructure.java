@@ -4,7 +4,7 @@ import java.util.List;
 
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 
-public class TbQuestionStructure extends TbQuestionStructureBean {
+public class MediaQuestionStructure extends TbQuestionStructureBean {
 
     private List<MediaModel> question;
 
