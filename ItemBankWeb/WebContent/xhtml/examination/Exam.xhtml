@@ -78,25 +78,13 @@
                                           <hr />
 										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
 											value="#{item.myAnswer}" />
-										<c:if test="#{examBean.classifyBean.examType ne '5'}">
-
-											<h:selectOneRadio value="#{item.myAnswer}"
-												layout="#{item.layoutStyle}" class="#{item.radioClass}">
-												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
-												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
-												<f:selectItem itemValue="3" itemLabel="#{item.c}" />
-												<f:selectItem itemValue="4" itemLabel="#{item.d}" />
-											</h:selectOneRadio>
-										</c:if>
-										<c:if test="#{examBean.classifyBean.examType eq '5'}">
-											<h:selectOneRadio value="#{item.myAnswer}"
-												layout="pageDirection" class="radioTable2">
-												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
-												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
-												<f:selectItem itemValue="3" itemLabel="#{item.c}" />
-												<f:selectItem itemValue="4" itemLabel="#{item.d}" />
-											</h:selectOneRadio>
-										</c:if>
+										<h:selectOneRadio value="#{item.myAnswer}"
+											layout="#{item.layoutStyle}" class="#{item.radioClass}">
+											<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+											<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+											<f:selectItem itemValue="3" itemLabel="#{item.c}" />
+											<f:selectItem itemValue="4" itemLabel="#{item.d}" />
+										</h:selectOneRadio>
 									</h:column>
 								</h:dataTable>
 								<c:if test="#{examBean.status == null}">
@@ -137,8 +125,9 @@
 							</c:if>
 							<c:if test="#{examBean.title == ''}">
 								<div class="form-submit1">
-									<h:commandButton value="我的错题" class="button1" style="margin-right: 5px;"
-										action="#{examBean.doResume}" id="doResumeBtn" />
+									<h:commandButton value="我的错题" class="button1"
+										style="margin-right: 5px;" action="#{examBean.doResume}"
+										id="doResumeBtn" />
 								</div>
 								<div class="form-submit1">
 									<h:commandButton value="其他题型" class="button1"
