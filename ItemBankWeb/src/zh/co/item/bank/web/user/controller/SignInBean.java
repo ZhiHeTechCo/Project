@@ -36,7 +36,7 @@ public class SignInBean extends BaseController {
     
     private TuUserBean userInfo;
     
-    private Object fromPageId;
+    private String fromPageId;
 
     
     public String getPageId() {
@@ -48,7 +48,12 @@ public class SignInBean extends BaseController {
      * @return
      */
     public String init() {
-    	fromPageId = WebUtils.getSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
+    	Object from = WebUtils.getSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
+    	if(from == null) {
+    		fromPageId = SystemConstants.EMPTY;
+    	}else {
+    		fromPageId = from.toString();
+    	}
     	pushPathHistory("signInBean");
     	userInfo = new TuUserBean();
     	userInfo.setName("用户名");
