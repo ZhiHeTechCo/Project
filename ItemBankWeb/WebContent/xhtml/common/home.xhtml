@@ -19,7 +19,20 @@
                 <div class="item-pic">
                   <h:graphicImage value="../../resources/images/sea.jpg" alt="" />
                   <div class="item-text text-center">
-                    <h5 class="s-heading">在线题库</h5>
+                    <h5 class="s-heading">
+                      <c:choose>
+                          <c:when test="#{session.getAttribute('session-user-id') != null}">
+                            <h:commandLink value="在线题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="examClassifyBean"></f:param>
+                            </h:commandLink>
+                          </c:when>
+                          <c:otherwise>
+                            <h:commandLink value="在线题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{examClassifyBean.init}">
+                              <f:param name='pageController' value="signInBean"></f:param>
+                            </h:commandLink>
+                          </c:otherwise>
+                      </c:choose>
+                    </h5>
                     <h4 class="s-para">在线试题</h4>
                     <h4 class="s-para">微信随时做</h4>
                   </div>
@@ -31,7 +44,20 @@
                 <div class="item-pic">
                   <h:graphicImage value="../../resources/images/tower.jpg" alt="" />
                   <div class="item-text text-center">
-                    <h5 class="s-heading">错题库</h5>
+                    <h5 class="s-heading">
+                      <c:choose>
+                          <c:when test="#{session.getAttribute('session-user-id') != null}">
+                            <h:commandLink value="错题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="resumeBean"></f:param>
+                            </h:commandLink>
+                          </c:when>
+                          <c:otherwise>
+                            <h:commandLink value="错题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{resumeBean.init}">
+                              <f:param name='pageController' value="signInBean"></f:param>
+                            </h:commandLink>
+                          </c:otherwise>
+                      </c:choose>
+                    </h5>
                     <h4 class="s-para">个人定制</h4>
                     <h4 class="s-para">记忆曲线推送错题</h4>
                   </div>
@@ -43,7 +69,20 @@
                 <div class="item-pic">
                   <img src="${request.contextPath}/resources/images/house.jpg" alt="" />
                   <div class="item-text text-center">
-                    <h5 class="s-heading">考试模式</h5>
+                    <h5 class="s-heading">
+                      <c:choose>
+                          <c:when test="#{session.getAttribute('session-user-id') != null}">
+                            <h:commandLink value="考试模式" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="examClassifyBean"></f:param>
+                            </h:commandLink>
+                          </c:when>
+                          <c:otherwise>
+                            <h:commandLink value="考试模式" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{examClassifyBean.init}">
+                              <f:param name='pageController' value="signInBean"></f:param>
+                            </h:commandLink>
+                          </c:otherwise>
+                      </c:choose>
+                    </h5>
                     <h4 class="s-para">一键开考</h4>
                     <h4 class="s-para">即时看分</h4>
                   </div>
@@ -55,7 +94,11 @@
                 <div class="item-pic">
                   <h:graphicImage value="../../resources/images/roma.jpg" alt="" />
                   <div class="item-text text-center">
-                    <h5 class="s-heading">留言板</h5>
+                    <h5 class="s-heading">
+                      <h:commandLink value="留言板" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                        <f:param name='pageController' value="messageBean"></f:param>
+                      </h:commandLink>
+                    </h5>
                     <h4 class="s-para">聆听你的声音</h4>
                   </div>
                 </div>
@@ -78,7 +121,11 @@
                 <div class="item-pic">
                   <img src="${request.contextPath}/resources/images/tree.jpg" alt="" />
                   <div class="item-text text-center">
-                    <h5 class="s-heading">论坛</h5>
+                    <h5 class="s-heading">
+                      <h:commandLink value="论坛" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                        <f:param name='pageController' value="forumController"></f:param>
+                      </h:commandLink>
+                    </h5>
                     <h4 class="s-para">玩转积分</h4>
                     <h4 class="s-para">(尽请期待...)</h4>
                   </div>
