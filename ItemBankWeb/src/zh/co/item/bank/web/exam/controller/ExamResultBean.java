@@ -19,6 +19,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
@@ -186,6 +187,8 @@ public class ExamResultBean extends BaseController {
             }
             reasonList = new ArrayList<String>();
             comment = null;
+            subject = null;
+            graphicImage = null;
 
             // 获取用户信息
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
@@ -216,7 +219,18 @@ public class ExamResultBean extends BaseController {
                 question = examService.selectReportDetailByQuestionId(map);
             }
             if (question != null) {
-                prepareData();
+                // 取大题干
+                Integer fatherId = question.getFatherId();
+                if (fatherId != null) {
+                    // 特殊试题检索
+                    List<ExamModel> list = examService.selectQuestionByFatherId(fatherId);
+                    // 取大题
+                    subject = list.get(0).getSubject();
+                    graphicImage = CmnStringUtils.getGraphicImage(list.get(0).getImg());
+
+                    prepareData(subject);
+                }
+
             }
 
         } catch (Exception e) {
@@ -361,12 +375,30 @@ public class ExamResultBean extends BaseController {
     }
 
     /**
-     * 共通：画面序号,折行
+     * [听力]结果一览（init）
+     * 
+     * @return
+     */
+    public String mediaReport() {
+        return SystemConstants.PAGE_ITBK_EXAM_008;
+    }
+
+    /**
+     * [听力][考试模式]返回考试结果一览
+     * 
+     * @return
+     */
+    public String goBackToExamResult() {
+        return examReport(mediaModel.getSource());
+    }
+
+    /**
+     * [共通]画面序号,折行
      * 
      * @param subject 题干
      */
-    private void prepareData() {
-
+    private void prepareData(String subject) {
+        // 画面序号和显示设置
         if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                 .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
             question.setLayoutStyle("pageDirection");
@@ -387,24 +419,8 @@ public class ExamResultBean extends BaseController {
         } else {
             question.setRadioClass("radioTable2");
         }
-    }
-
-    /**
-     * [听力]结果一览（init）
-     * 
-     * @return
-     */
-    public String mediaReport() {
-        return SystemConstants.PAGE_ITBK_EXAM_008;
-    }
-
-    /**
-     * [听力][考试模式]返回考试结果一览
-     * 
-     * @return
-     */
-    public String goBackToExamResult() {
-        return examReport(mediaModel.getSource());
+        // 折行
+        subjectList = CmnStringUtils.getSubjectList(subject);
     }
 
     public ExamService getExamService() {
