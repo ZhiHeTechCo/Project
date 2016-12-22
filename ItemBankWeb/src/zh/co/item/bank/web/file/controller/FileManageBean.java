@@ -66,7 +66,7 @@ public class FileManageBean extends BaseController {
      */
     public String init() {
     	pushPathHistory("fileManageBean");
-    	if("90".equals(WebUtils.getLoginUserInfo().getRole())) {
+    	if(SystemConstants.ROLE_ADMIN.equals(WebUtils.getLoginUserInfo().getRole())) {
     		adminFlag = SystemConstants.FLAG_YES;
     	} else {
     		adminFlag = SystemConstants.FLAG_NO;

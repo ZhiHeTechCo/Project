@@ -70,12 +70,6 @@ public class ExamClassifyBean extends BaseController {
     public String init() {
         try {
             pushPathHistory("examClassifyBean");
-            exams = examService.getExams();
-            examTypes = examService.getExamTypes();
-            jlptLevels = examService.getJlptLevels();
-            jtestLevels = examService.getJtestLevels();
-
-            classifyBean = new TbQuestionClassifyBean();
 
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
@@ -83,6 +77,24 @@ public class ExamClassifyBean extends BaseController {
             	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
                 return signInBean.init();
             }
+
+            
+            exams = examService.getExams();
+            examTypes = examService.getExamTypes();
+            
+            if(SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
+            	for(TsCodeBean bean : examTypes) {
+            		if(SystemConstants.EXAM_TYPE_LISTION.equals(bean.getKey())) {
+            			examTypes.remove(bean);
+            			break;
+            		}
+            	}
+            }
+            
+            jlptLevels = examService.getJlptLevels();
+            jtestLevels = examService.getJtestLevels();
+
+            classifyBean = new TbQuestionClassifyBean();
             // 语言信息为空，则智能推题不显示。
             showExamFlag = StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())
                     ? "" : "true";

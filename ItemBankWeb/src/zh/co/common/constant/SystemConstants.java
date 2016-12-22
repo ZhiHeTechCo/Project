@@ -44,6 +44,18 @@ public class SystemConstants {
     public static final String SEMIKOMA = ";";
     /** 空串 */
     public static final String EMPTY = "";
+    
+    /** 管理员权限 */
+    public static final String ROLE_ADMIN = "90";
+    
+    /** 普通用户权限 */
+    public static final String ROLE_NORMAL = "0";
+    
+    /** LV1权限 */
+    public static final String ROLE_LV1 = "1";
+    
+    /** 题型种类 听力 */
+    public static final String EXAM_TYPE_LISTION = "6";
 
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/
