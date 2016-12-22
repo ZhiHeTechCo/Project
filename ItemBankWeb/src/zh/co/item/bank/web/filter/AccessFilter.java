@@ -148,9 +148,6 @@ public class AccessFilter implements Filter {
         	if(!SystemConstants.AGENT_FLAG.equals(agentFlag)) {
         		if (URI.endsWith("/index.xhtml") 
         				|| URI.endsWith("/home.xhtml")
-        				|| URI.endsWith("/signIn.xhtml")
-        				|| URI.endsWith("ExamClassify.xhtml") 
-        				|| URI.endsWith("Resume.xhtml")
         				|| URI.endsWith(path + "/")) {
                     
                     session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
@@ -160,7 +157,7 @@ public class AccessFilter implements Filter {
                     String newToken = this.generateTokenId();
                     logger.debug("index reset Token as :" + newToken);
                     session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);*/
-                } else {
+                } else if( !URI.endsWith("/signIn.xhtml")){
                 	response.sendRedirect(path + "/xhtml/common/index.xhtml");
                     return;
                 }
