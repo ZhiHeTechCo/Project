@@ -617,15 +617,15 @@
 							<h:inputTextarea style="width: 100%" id="myResponse"
 								value="#{forumController.myResponse}" />
 							<div class="form-button1" style="margin-top: 30px;">
-								<input type="button" id="checkinputbutton" value="提交回答"
+								<input type="button" id="checkinputbutton" value="提交"
 									onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输入您的回答再提交!'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
-								<h:commandButton value="提交回答" id="responseQuestion"
+								<h:commandButton value="提交" id="responseQuestion"
 									style="display: none;"
 									action="#{forumController.responseQuestion}">
 								</h:commandButton>
 							</div>
 							<div class="form-submit1" style="margin-top: 30px;">
-								<h:commandButton value="返回论坛" action="#{forumController.init}" />
+								<h:commandButton value="返回" action="#{forumController.init}" />
 							</div>
 						</c:if>
 					</div>
