@@ -70,7 +70,7 @@
           <if test="fileName != null" >
             and file_name = #{fileName,jdbcType=VARCHAR}
           </if>
-          <if test="reviewFlag != null" >
+          <if test="reviewFlag != null and reviewFlag != ''" >
             and review_flag = #{reviewFlag,jdbcType=CHAR}
           </if>
     </select>
