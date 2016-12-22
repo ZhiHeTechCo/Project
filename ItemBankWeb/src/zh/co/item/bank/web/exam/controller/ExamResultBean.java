@@ -165,6 +165,7 @@ public class ExamResultBean extends BaseController {
         ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
         // 设置为听力
         classifyBean.setExamType("6");
+        examBean.setStatus("ing");
         examBean.setClassifyBean(classifyBean);
         return examBean.mediaOfExam(questions.get(0).getSource());
     }
