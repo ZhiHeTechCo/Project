@@ -428,9 +428,9 @@ public abstract class BaseController {
      */
     protected boolean checkuser(UserModel userInfo) {
         if (userInfo == null) {
-            logger.log(MessageId.COMMON_E_0009);
+/*            logger.log(MessageId.COMMON_E_0009);
             CmnBizException ex = new CmnBizException(MessageId.COMMON_E_0009);
-            processForException(logger, ex);
+            processForException(logger, ex);*/
             return false;
         }
         return true;

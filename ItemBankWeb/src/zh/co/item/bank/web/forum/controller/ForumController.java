@@ -77,10 +77,13 @@ public class ForumController extends BaseController {
      */
     public String init() {
         try {
+        	
+        	pushPathHistory("forumController");
+        	
             if ("true".equals(justShowMine)) {
                 return showAllMyQuestion();
             }
-            pushPathHistory("forumController");
+            
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0018), MESSAGE_LEVEL_INFO);

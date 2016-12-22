@@ -21,18 +21,9 @@
                   <h:graphicImage value="../../resources/images/sea.jpg" alt="" />
                   <div class="item-text text-center">
                     <h5 class="s-heading">
-                      <c:choose>
-                          <c:when test="#{session.getAttribute('session-user-id') != null}">
-                            <h:commandLink value="在线题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
-                              <f:param name='pageController' value="examClassifyBean"></f:param>
-                            </h:commandLink>
-                          </c:when>
-                          <c:otherwise>
-                            <h:commandLink value="在线题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{examClassifyBean.init}">
-                              <f:param name='pageController' value="signInBean"></f:param>
-                            </h:commandLink>
-                          </c:otherwise>
-                      </c:choose>
+                      <h:commandLink value="在线题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                        <f:param name='pageController' value="examClassifyBean"></f:param>
+                      </h:commandLink>
                     </h5>
                     <h4 class="s-para">在线试题</h4>
                     <h4 class="s-para">微信随时做</h4>
@@ -46,18 +37,9 @@
                   <h:graphicImage value="../../resources/images/tower.jpg" alt="" />
                   <div class="item-text text-center">
                     <h5 class="s-heading">
-                      <c:choose>
-                          <c:when test="#{session.getAttribute('session-user-id') != null}">
-                            <h:commandLink value="错题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
-                              <f:param name='pageController' value="resumeBean"></f:param>
-                            </h:commandLink>
-                          </c:when>
-                          <c:otherwise>
-                            <h:commandLink value="错题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{resumeBean.init}">
-                              <f:param name='pageController' value="signInBean"></f:param>
-                            </h:commandLink>
-                          </c:otherwise>
-                      </c:choose>
+                      <h:commandLink value="错题库" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                        <f:param name='pageController' value="resumeBean"></f:param>
+                      </h:commandLink>
                     </h5>
                     <h4 class="s-para">个人定制</h4>
                     <h4 class="s-para">记忆曲线推送错题</h4>
@@ -71,18 +53,9 @@
                   <img src="${request.contextPath}/resources/images/house.jpg" alt="" />
                   <div class="item-text text-center">
                     <h5 class="s-heading">
-                      <c:choose>
-                          <c:when test="#{session.getAttribute('session-user-id') != null}">
-                            <h:commandLink value="考试模式" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
-                              <f:param name='pageController' value="examClassifyBean"></f:param>
-                            </h:commandLink>
-                          </c:when>
-                          <c:otherwise>
-                            <h:commandLink value="考试模式" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();" actionListener="#{examClassifyBean.init}">
-                              <f:param name='pageController' value="signInBean"></f:param>
-                            </h:commandLink>
-                          </c:otherwise>
-                      </c:choose>
+                      <h:commandLink value="考试模式" action="#{pageTopController.pageNavigator}" onclick="return buttonDisable();">
+                        <f:param name='pageController' value="examClassifyBean"></f:param>
+                      </h:commandLink>
                     </h5>
                     <h4 class="s-para">一键开考</h4>
                     <h4 class="s-para">即时看分</h4>

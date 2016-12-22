@@ -23,6 +23,7 @@ import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
+import zh.co.item.bank.web.user.controller.SignInBean;
 
 /**
  * 试题类型选择画面
@@ -79,7 +80,8 @@ public class ExamClassifyBean extends BaseController {
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 // 跳转至登录画面
-                return SystemConstants.PAGE_ITBK_USER_002;
+            	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+                return signInBean.init();
             }
             // 语言信息为空，则智能推题不显示。
             showExamFlag = StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())

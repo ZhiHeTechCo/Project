@@ -26,6 +26,7 @@ import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.exam.service.ResumeService;
+import zh.co.item.bank.web.user.controller.SignInBean;
 
 /**
  * 试题类型选择画面
@@ -74,13 +75,16 @@ public class ResumeBean extends BaseController {
      */
     public String init() {
         try {
+        	pushPathHistory("resumeBean");
+        	
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 // 跳转至登录画面
-                return SystemConstants.PAGE_ITBK_USER_002;
+            	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+                return signInBean.init();
             }
 
-            pushPathHistory("resumeBean");
+            
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
