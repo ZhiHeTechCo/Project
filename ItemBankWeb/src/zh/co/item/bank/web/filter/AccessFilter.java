@@ -20,6 +20,8 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.model.entity.UserModel;
+import zh.co.item.bank.web.user.controller.SignInBean;
 
 /**
  * <p>[概要] AccessFilter.</p>
@@ -121,6 +123,7 @@ public class AccessFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) arg1;
         HttpSession session = request.getSession();
         WebUtils.setSessionContext(session);
+        
 
         String URI = request.getRequestURI();
         String URL = request.getRequestURL().toString();
@@ -143,15 +146,20 @@ public class AccessFilter implements Filter {
         Object agentFlag = WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT);
         if ("GET".equals(method)) {
         	if(!SystemConstants.AGENT_FLAG.equals(agentFlag)) {
-        		if (URI.endsWith(path + "/xhtml/common/index.xhtml") || URI.endsWith(path + "/")) {
+        		if (URI.endsWith("/index.xhtml") 
+        				|| URI.endsWith("/home.xhtml")
+        				|| URI.endsWith("/signIn.xhtml")
+        				|| URI.endsWith("ExamClassify.xhtml") 
+        				|| URI.endsWith("Resume.xhtml")
+        				|| URI.endsWith(path + "/")) {
                     
                     session.removeAttribute(WebUtils.SESSION_PATH_HISTORY);
                     session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_ID);
                     session.removeAttribute(WebUtils.SESSION_CURRENT_PAGE_TITLE);
-                    session.removeAttribute(WebUtils.SESSION_PAGE_TOKEN);
+                    /*session.removeAttribute(WebUtils.SESSION_PAGE_TOKEN);
                     String newToken = this.generateTokenId();
                     logger.debug("index reset Token as :" + newToken);
-                    session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
+                    session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);*/
                 } else {
                 	response.sendRedirect(path + "/xhtml/common/index.xhtml");
                     return;
@@ -159,8 +167,23 @@ public class AccessFilter implements Filter {
         	}
         	
         }
-        /*else {
-            String tokenValidator = request.getParameter("tokenValidator");
+        else {
+        	UserModel userInfo =  WebUtils.getLoginUserInfo();
+        	if(userInfo == null) {
+        		if (!URI.endsWith("/index.xhtml") 
+        				&& !URI.endsWith("/home.xhtml")
+        				&& !URI.endsWith("/signIn.xhtml")
+        				&& !URI.endsWith("/signUp.xhtml") 
+        				&& !URI.endsWith("/Forum.xhtml")
+        				&& !URI.endsWith("/ForumQuestionDetail.xhtml")
+        				&& !URI.endsWith("/contact.xhtml")) {
+	        		SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+	                signInBean.init();
+	        		response.sendRedirect(path + "/xhtml/user/signIn.xhtml");
+	                return;
+        		}
+        	}
+/*            String tokenValidator = request.getParameter("tokenValidator");
             String pageToken = request.getParameter("pageToken");
             if ("1".equals(tokenValidator)) {
                 String sessionPageToken = (String) session.getAttribute(WebUtils.SESSION_PAGE_TOKEN);
@@ -178,9 +201,9 @@ public class AccessFilter implements Filter {
                     logger.debug("reset Token as :" + newToken);
                     session.setAttribute(WebUtils.SESSION_PAGE_TOKEN, newToken);
                 }
-            }
+            }*/
         }
-*/
+
         chain.doFilter(arg0, arg1);
         WebUtils.removeSessionContext();
         // HTTP 1.1
