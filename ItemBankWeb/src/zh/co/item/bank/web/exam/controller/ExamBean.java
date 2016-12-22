@@ -315,10 +315,10 @@ public class ExamBean extends BaseController {
     public void getMedia() {
         try {
             mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-            if(StringUtils.isEmpty(mediaModel.getMedia())) {
-            	this.mediaReady = "none";
+            if (StringUtils.isEmpty(mediaModel.getMedia())) {
+                this.mediaReady = "none";
             } else {
-            	this.mediaReady = "block";
+                this.mediaReady = "block";
             }
         } catch (IOException e) {
             processForException(logger, e);
@@ -473,19 +473,6 @@ public class ExamBean extends BaseController {
                 return SystemConstants.PAGE_ITBK_EXAM_002;
             }
             if ("ing".equals(status)) {
-//              // 听力
-//              // 获取音频
-//              String source = questions.get(0).getSource();
-//              mediaModel = mediaService.selectMediaBySource(source);
-//              if (mediaModel != null) {
-//                  // 获取大题目
-//                  map.put("mediaId", mediaModel.getId());
-//                  mediaQuestions = mediaService.selectMediaQuestions(map);
-//                  // 画面序号和显示设置
-//                  CmnStringUtils.selectionLayoutSet(mediaQuestions);
-//                  // 跳转至听力画面
-//                  return SystemConstants.PAGE_ITBK_EXAM_007;
-//              }
 
                 status = "end";
                 // 删除中途退出表
@@ -661,6 +648,10 @@ public class ExamBean extends BaseController {
      * @return
      */
     public String doSaveAndExist() {
+        // 在最后一道大题点击保存退出
+        if (safeList.size() == 1) {
+            return doNext();
+        }
         status = "exist";
         doSubmit();
         saveDropoutInfo();
@@ -668,6 +659,8 @@ public class ExamBean extends BaseController {
         doclear();
         // 跳转至成绩一览画面
         ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        // 中途退出不显示听力
+        examResultBean.setMediaQuestions(new ArrayList<MediaQuestionStructure>());
         return examResultBean.examReport(source);
     }
 
