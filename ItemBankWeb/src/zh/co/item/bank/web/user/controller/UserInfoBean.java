@@ -108,6 +108,14 @@ public class UserInfoBean extends BaseController {
         		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"由汉字、字母、数字或下划线组成的昵称"});
         	}
         	
+        	if(StringUtils.isNotEmpty(userInfo.getEmail()) && (!CmnStringUtils.isMail(userInfo.getEmail()))) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"正确的邮箱格式"});
+        	}
+        	
+        	if(StringUtils.isNotEmpty(userInfo.getTelephone()) && (!CmnStringUtils.isPhoneNumber(userInfo.getTelephone()))) {
+        		throw new CmnBizException(MessageId.ITBK_E_0007, new Object[]{"正确的手机号格式"});
+        	}
+        	
         	if(StringUtils.isNotEmpty(userInfo.getBirthdayEx())) {
         		SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
         		userInfo.setBirthday(sdf.parse(userInfo.getBirthdayEx()));
