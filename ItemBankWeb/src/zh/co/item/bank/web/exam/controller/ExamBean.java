@@ -370,10 +370,14 @@ public class ExamBean extends BaseController {
             }
         }
         mediaService.insertMediaCollections(list);
+        // 听力显示控制
+        String examFlag = "true";
         // 批量登录考试做题记录表
         if (StringUtils.isNotEmpty(status) && examCollections.size() != 0) {
             examCollectionService.insertExamCollection(examCollections);
             status = null;
+        } else {
+            examFlag = null;
         }
 
         // 去结果一览画面
@@ -382,6 +386,7 @@ public class ExamBean extends BaseController {
         mediaModel.setMedia(SystemConstants.EMPTY);
         this.mediaReady = "none";
         examResultBean.setMediaModel(mediaModel);
+        examResultBean.setExamFlag(examFlag);
         return examResultBean.mediaReport();
     }
 
