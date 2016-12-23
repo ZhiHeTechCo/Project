@@ -617,7 +617,7 @@
 							<h:inputTextarea style="width: 100%" id="myResponse"
 								value="#{forumController.myResponse}" />
 							<div class="form-button1" style="margin-top: 30px;">
-								<input type="button" id="checkinputbutton" value="提交"
+								<input type="button" id="checkinputbutton" value="提交" style="margin-right: 5px;"
 									onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输入您的回答再提交!'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
 								<h:commandButton value="提交" id="responseQuestion"
 									style="display: none;"
