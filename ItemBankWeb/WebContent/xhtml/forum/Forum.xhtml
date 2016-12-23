@@ -6,7 +6,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml"
+	xmlns:component="http://java.sun.com/jsf/composite/component">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
@@ -45,22 +46,34 @@
 									</h5>
 								</c:if>
 							</div>
-							<h:dataTable class="searchTable table-striped" rendered="true"
-								value="#{forumController.forumModels}" var="item">
-								<h:column>
-									<td><h4>
-											<h:outputText value="#{item.rowNo}"></h:outputText>
-										</h4></td>
-									<td colspan="4" class="list-group list-group-alternate"><h:commandLink
-											action="#{forumController.showQuestionDetail}"
-											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
-											class="list-group-item">
-											<f:param name="questionId" value="#{item.questionId}"></f:param>
+							<div style="clear: both"></div>
+							<!-- 分页 -->
+							<div style="text-align: center; float: center; width: 100%;">
+								<h:panelGroup id="search_result_paginator" layout="block">
+									<component:paginator form="forumForm"
+										paginator="#{forumController.paginator}" />
+								</h:panelGroup>
+								<span class="tcdPageCode"></span>
+							</div>
+							<br />
+							<h:panelGroup id="search_result_data" layout="block">
+								<h:dataTable class="searchTable table-striped" rendered="true"
+									value="#{forumController.paginator.model}" var="item">
+									<h:column>
+										<td><h4>
+												<h:outputText value="#{item.rowNo}"></h:outputText>
+											</h4></td>
+										<td colspan="4" class="list-group list-group-alternate"><h:commandLink
+												action="#{forumController.showQuestionDetail}"
+												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
+												class="list-group-item">
+												<f:param name="questionId" value="#{item.questionId}"></f:param>
 											#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
-									<td><h:outputText value="#{item.statusName}" /></td>
-								</h:column>
-							</h:dataTable>
+										<td><h:outputText value="#{item.statusName}" /></td>
+									</h:column>
+								</h:dataTable>
+							</h:panelGroup>
 						</div>
 					</div>
 				</div>

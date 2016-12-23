@@ -23,6 +23,8 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.PaginatorLogger;
+import zh.co.item.bank.model.entity.RepeatPaginator;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.forum.service.ForumService;
 import zh.co.item.bank.web.user.service.UserService;
@@ -44,6 +46,11 @@ public class ForumController extends BaseController {
 
     @Inject
     private UserService userService;
+    
+    //分页
+    private RepeatPaginator paginator; 
+
+    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页","向后翻页", "指定页"); 
 
     /** --共通变量-- */
     // 当前用户信息
@@ -90,6 +97,7 @@ public class ForumController extends BaseController {
             }
 
             forumModels = forumService.selectForumForAll();
+            paginator = new RepeatPaginator(forumModels, paginatorLogger);
             justShowMine = "false";
 
         } catch (Exception e) {
@@ -123,6 +131,7 @@ public class ForumController extends BaseController {
 
             justShowMine = "true";
             forumModels = forumService.selectForumByAsker(userInfo.getId());
+            paginator = new RepeatPaginator(forumModels, paginatorLogger);
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -295,6 +304,14 @@ public class ForumController extends BaseController {
             }
         }
         askers = tmp;
+    }
+
+    public RepeatPaginator getPaginator() {
+        return paginator;
+    }
+
+    public void setPaginator(RepeatPaginator paginator) {
+        this.paginator = paginator;
     }
 
     public Map<Integer, String> getUserName() {

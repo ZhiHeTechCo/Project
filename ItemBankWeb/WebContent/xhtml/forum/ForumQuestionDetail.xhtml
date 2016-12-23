@@ -23,6 +23,9 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
+							<h4 style="color: orange;">
+								请解释为什么这题选项#{forumController.forumModel.answer}是正确的，谢谢！
+							</h4>
 							<h5 style="color: #6682C9;">
 								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumController.askers}
 								标记了这道题。
@@ -624,10 +627,10 @@
 									action="#{forumController.responseQuestion}">
 								</h:commandButton>
 							</div>
-							<div class="form-submit1" style="margin-top: 30px;">
-								<h:commandButton value="返回" action="#{forumController.init}" />
-							</div>
 						</c:if>
+						<div class="form-submit1" style="margin-top: 30px;">
+							<h:commandButton value="返回" action="#{forumController.init}" />
+						</div>
 					</div>
 				</div>
 			</h:form>
