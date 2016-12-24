@@ -184,48 +184,8 @@
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '6'}">
-									<h4>听力：（正确率#{type.percentage}）</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '6'}">
-										<div style="float: left;">
-											<div class="report" style="background: #DDDDDD;">
-												<b>#{item.rowNo}</b>
-											</div>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div
-													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div
-													style="width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
 							<br />
-							<c:if test="#{examResultBean.mediaQuestions eq null}">
-								<h4>
-									-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
-								</h4>
-								<h5>
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
-								</h5>
-								<h5>
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;建议在Wifi环境下使用。
-								</h5>
-								<h3>
-									<h:commandLink action="#{examResultBean.toMediaExam}">
-										<span class="glyphicon glyphicon-headphones"></span>
-									</h:commandLink>
-								</h3>
-							</c:if>
+							<h4>-- 听力部分将在2017年元旦后上线，尽请期待 --</h4>
 						</div>
 						<hr />
 						<div class="form-submit1">
