@@ -2,7 +2,6 @@ package zh.co.item.bank.web.user.controller;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -97,13 +95,8 @@ public class OAuthServlet extends HttpServlet {
 		        BaseController pageController = (BaseController) SpringAppContextManager.getBean(controller);
 		        if(pageController != null && WebUtils.getLoginUserInfo() != null) {
 			        pageController.init();
-			        if("examClassifyBean".equals(controller)) {
-			        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/ExamClassify.xhtml");
-			        } else if("resumeBean".equals(controller)) {
-			        	response.sendRedirect(request.getContextPath() + "/xhtml/examination/Resume.xhtml");
-			        } else {
-			        	response.sendRedirect(request.getContextPath() + "/xhtml/common/home.xhtml");
-			        }
+			        response.sendRedirect(request.getContextPath() + WebUtils.controllerAndPageMap.get(controller));
+
 		        } else {
 		        	response.sendRedirect(request.getContextPath() + "/xhtml/common/index.xhtml");
 		        }

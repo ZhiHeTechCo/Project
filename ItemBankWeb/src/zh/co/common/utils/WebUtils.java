@@ -70,6 +70,13 @@ public class WebUtils {
     
     public static final String SESSION_USER_AGENT = "session-user-agent";
     
+    public final static Map<String, String> controllerAndPageMap = new HashMap<String, String>();
+    static {
+    	controllerAndPageMap.put("examClassifyBean", "/xhtml/examination/ExamClassify.xhtml");
+    	controllerAndPageMap.put("resumeBean", "/xhtml/examination/Resume.xhtml");
+    	controllerAndPageMap.put("forumController", "/xhtml/forum/Forum.xhtml");
+    }
+    
     
     private static final ThreadLocal sessionContext = new ThreadLocal();
     
