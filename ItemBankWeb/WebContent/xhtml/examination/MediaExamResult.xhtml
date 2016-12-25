@@ -66,9 +66,9 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="mediaExamForm">
 				<div class="typrography">
-                    <h2
-                        style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力结果一览</h2>
-                    <h3 style="text-align: center;">(#{examBean.mediaModel.source})</h3>
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力结果一览</h2>
+					<h3 style="text-align: center;">(#{examBean.mediaModel.source})</h3>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -81,7 +81,7 @@
 							<c:choose>
 								<c:when test="#{examBean.mediaModel ne null}">
 									<c:when test="#{examBean.mediaModel.mediaPath ne null}">
-										<div style="witdh: 100%;">
+										<div style="width: 100%;">
 											<span id="mediaMsg" style="color: #3382C9;"></span> <img
 												id="loadImg" src="" />
 										</div>
@@ -100,8 +100,7 @@
 												style="float:right;display:#{examBean.mediaReady};">
 												<div class="music_control">
 													<audio id="listen" controls="controls"
-														autobuffer="autobuffer"
-														src="#{examBean.mediaModel.media}"></audio>
+														autobuffer="autobuffer" src="#{examBean.mediaModel.media}"></audio>
 												</div>
 											</div>
 
@@ -155,21 +154,21 @@
 														<h:outputText value="#{mquestion.context}"></h:outputText>
 														<!-- 图片 -->
 														<c:if test="#{mquestion.contextImgCode !=''}">
-                                                          <div class="gallery-bottom">
-                                                              <div class="col-md-3 gallery-grid">
-                                                                  <a class="example-image-link"
-                                                                      href="#{mquestion.contextImgCode}"
-                                                                      data-lightbox="example-set"><img
-                                                                      class="example-image"
-                                                                      src="#{mquestion.contextImgCode}" alt="" /></a>
-                                                              </div>
-                                                          </div>
-														  <div class="clearfix"></div>
+															<div class="gallery-bottom">
+																<div class="col-md-3 gallery-grid">
+																	<a class="example-image-link"
+																		href="#{mquestion.contextImgCode}"
+																		data-lightbox="example-set"><img
+																		class="example-image"
+																		src="#{mquestion.contextImgCode}" alt="" /></a>
+																</div>
+															</div>
+															<div class="clearfix"></div>
 														</c:if>
 														<hr />
 														<h:panelGroup
 															rendered="#{mquestion.radioClass eq 'radioTable2'}">
-															<div style="witdh: 5%; float: left;">
+															<div style="width: 5%; float: left;">
 																<div
 																	style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
 																	<h:panelGroup rendered="#{mquestion.answer eq '1'}">
@@ -235,7 +234,7 @@
 																	</h:panelGroup>
 																</div>
 															</div>
-															<div style="float: left;">
+															<div style="float: left; width: 95%;">
 																<h:panelGroup
 																	rendered="#{mquestion.a ne '' and mquestion.b ne '' and mquestion.c ne '' and mquestion.d ne ''}">
 																	<h:selectOneRadio value="#{mquestion.myAnswer}"
@@ -261,7 +260,7 @@
 														</h:panelGroup>
 														<h:panelGroup
 															rendered="#{mquestion.radioClass eq 'radioTable1'}">
-															<div style="witdh: 100%;">
+															<div style="width: 100%;">
 																<div style="width: 25%; margin-top: 5px; float: left;">
 																	<h:panelGroup rendered="#{mquestion.answer eq '1'}">
 																		<span style="margin-top: 4px;"
