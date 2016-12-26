@@ -63,7 +63,7 @@ public class ExamClassifyBean extends BaseController {
     }
 
     /**
-     * initial
+     * 1.初始化
      * 
      * @return
      */
@@ -74,27 +74,34 @@ public class ExamClassifyBean extends BaseController {
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 // 跳转至登录画面
-            	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+                SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
                 return signInBean.init();
             }
 
-            
+            // a.画面显示
+            // 获取考试类别
             exams = examService.getExams();
+            // 获取试题种别
             examTypes = examService.getExamTypes();
-            
-            if(SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
-            	for(TsCodeBean bean : examTypes) {
-            		if(SystemConstants.EXAM_TYPE_LISTION.equals(bean.getKey())) {
-            			examTypes.remove(bean);
-            			break;
-            		}
-            	}
+
+            if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
+                for (TsCodeBean bean : examTypes) {
+                    if (SystemConstants.EXAM_TYPE_LISTION.equals(bean.getKey())) {
+                        examTypes.remove(bean);
+                        break;
+                    }
+                }
             }
-            
+
+            // 获取JLPT等级
             jlptLevels = examService.getJlptLevels();
+            // 获取JTEST等级
             jtestLevels = examService.getJtestLevels();
 
+            // b.初始化Bean
             classifyBean = new TbQuestionClassifyBean();
+
+            // c.智能推题
             // 语言信息为空，则智能推题不显示。
             showExamFlag = StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())
                     ? "" : "true";
@@ -107,14 +114,7 @@ public class ExamClassifyBean extends BaseController {
     }
 
     /**
-     * 考题种别变更，刷新考试级别
-     */
-    public void changExamType() {
-        logger.debug("题种别变更，刷新考试级别");
-    }
-
-    /**
-     * Classify选题
+     * 2.Classify选题
      * 
      * @return
      */
@@ -128,6 +128,7 @@ public class ExamClassifyBean extends BaseController {
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
+            // a.用户选择check
             if (StringUtils.isEmpty(classifyBean.getExam()) && StringUtils.isEmpty(classifyBean.getExamType())
                     && StringUtils.isEmpty(classifyBean.getJlptLevel())
                     && StringUtils.isEmpty(classifyBean.getJtestLevel())) {
@@ -136,6 +137,7 @@ public class ExamClassifyBean extends BaseController {
                 throw ex;
             }
 
+            // b.跳转至【试题库】画面
             return toExam();
 
         } catch (CmnBizException ex) {
@@ -147,7 +149,7 @@ public class ExamClassifyBean extends BaseController {
     }
 
     /**
-     * 智能推题
+     * 3.智能推题
      * 
      * @return
      */
@@ -166,6 +168,8 @@ public class ExamClassifyBean extends BaseController {
                 throw ex;
             }
 
+            // a.跳转至【试题库】画面
+            // 用户选择设为空
             classifyBean = null;
             return toExam();
 
@@ -177,31 +181,36 @@ public class ExamClassifyBean extends BaseController {
     }
 
     /**
-     * 考试模式
+     * 3.考试模式
      * 
      * @return
      */
     public String examSearch() {
         try {
+            // a.用户选择check
             if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
                     && StringUtils.isEmpty(classifyBean.getJtestLevel()))) {
                 logger.log(MessageId.ITBK_E_0006);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
                 throw ex;
             }
+
+            // b.跳转至【考试题库】画面
+            ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
+            examBean.setClassifyBean(classifyBean);
+            examBean.setYear(null);
+            examBean.setSafeList(new CopyOnWriteArrayList<ExamModel>());
+            return examBean.examSearch();
+
         } catch (Exception e) {
             processForException(logger, e);
-            return SystemConstants.PAGE_ITBK_EXAM_001;
         }
-        ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
-        examBean.setClassifyBean(classifyBean);
-        examBean.setYear(null);
-        examBean.setSafeList(new CopyOnWriteArrayList<ExamModel>());
-        return examBean.examSearch();
+        // 留在当前画面
+        return SystemConstants.PAGE_ITBK_EXAM_001;
     }
 
     /**
-     * 跳转至[试题库]画面
+     * [共通]跳转至[试题库]画面
      * 
      * @return
      */
@@ -210,6 +219,14 @@ public class ExamClassifyBean extends BaseController {
         examBean.setClassifyBean(classifyBean);
 
         return examBean.init();
+    }
+
+
+    /**
+     * [Ajax]考题种别变更，刷新考试级别 TODO 是否使用？
+     */
+    public void changExamType() {
+        logger.debug("题种别变更，刷新考试级别");
     }
 
     public List<TsCodeBean> getExams() {
