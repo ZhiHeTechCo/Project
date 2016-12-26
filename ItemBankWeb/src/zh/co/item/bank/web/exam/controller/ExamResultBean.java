@@ -162,7 +162,7 @@ public class ExamResultBean extends BaseController {
      * @return
      */
     public String toMediaExam() {
-        ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+        ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
         // 设置为听力
         classifyBean.setExamType("6");
         examBean.setStatus("ing");
@@ -358,7 +358,7 @@ public class ExamResultBean extends BaseController {
             return resumeBean.init();
 
         } else {
-            ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+            ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
             examBean.setClassifyBean(classifyBean);
             examBean.setQuestions(null);
             return examBean.init();

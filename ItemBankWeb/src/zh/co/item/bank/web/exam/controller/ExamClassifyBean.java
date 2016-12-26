@@ -193,7 +193,7 @@ public class ExamClassifyBean extends BaseController {
             processForException(logger, e);
             return SystemConstants.PAGE_ITBK_EXAM_001;
         }
-        ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+        ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
         examBean.setClassifyBean(classifyBean);
         examBean.setYear(null);
         examBean.setSafeList(new CopyOnWriteArrayList<ExamModel>());
@@ -206,7 +206,7 @@ public class ExamClassifyBean extends BaseController {
      * @return
      */
     private String toExam() {
-        ExamBean examBean = (ExamBean) SpringAppContextManager.getBean("examBean");
+        ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
         examBean.setClassifyBean(classifyBean);
 
         return examBean.init();

@@ -47,7 +47,7 @@ import zh.co.item.bank.web.exam.service.MediaService;
  */
 @Named("examBean")
 @Scope("session")
-public class ExamBean extends BaseController {
+public class ExamController extends BaseController {
 
     private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
 
