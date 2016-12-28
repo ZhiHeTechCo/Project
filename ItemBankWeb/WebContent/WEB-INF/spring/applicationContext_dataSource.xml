@@ -11,13 +11,10 @@
 		 http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     
-    
-	<!-- 数据库配置文件位置 classpath:resource/jdbc.properties-->
-	<context:property-placeholder location="config/jdbc.properties" />
 	
 	<!-- 配置dbcp数据源 -->
     <bean id="dataSource" class="zh.co.common.ibatis.NameBasedRoutingDataSource">
-        <property name="dataSourceConfigLocation" value="config/jdbc.properties" />
+        <property name="dataSourceConfigLocation" value="/jdbc.conf" />
     </bean>
     
     <!-- 配置mybitas SqlSessionFactoryBean -->  

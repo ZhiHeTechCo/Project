@@ -23,7 +23,7 @@ public class ResourceUtils {
      * @return message content in application resources
      */
     public static String getMessage(String messageId) {
-        String path = PropertiesUtils.baseDir() + "config/message.properties";
+        String path = PropertiesUtils.baseDir() + "/message.properties";
         return PropertiesManager.getInstance().getConfValue(path, messageId);
     }
 

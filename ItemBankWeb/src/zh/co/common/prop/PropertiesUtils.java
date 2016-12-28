@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import zh.co.common.constant.SystemConstants;
 import zh.co.common.exception.CmnSysException;
 
 /**
@@ -63,7 +64,9 @@ public final class PropertiesUtils {
     }
     
     public static String baseDir() {
-        return  System.getProperty("web.root");
+    	return PropertiesManager.getInstance().getPropValue(
+    			SystemConstants.PROPERTIES_FILE,
+    			SystemConstants.CONFIG_DIR);
     }
     
     /**
@@ -101,7 +104,7 @@ public final class PropertiesUtils {
     
     public String getSgValue(String key){
         //return this.getValue("application.properties", key);
-        return this.getValueFromAbsoluteFile(baseDir() + "config/application.properties", key);
+        return this.getValueFromAbsoluteFile(baseDir() + "/application.properties", key);
     }
     
     private String convertPropertyValue(String value) {
@@ -180,7 +183,7 @@ public final class PropertiesUtils {
      * @return
      */
     public String getPageTitle(String pageId){
-        return this.getValueFromAbsoluteFile(baseDir() + "config/page_title.conf", pageId);
+        return this.getValueFromAbsoluteFile(baseDir() + "/page_title.conf", pageId);
     }
     
     /**
