@@ -1,6 +1,5 @@
 package zh.co.item.bank.web.exam.controller;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -27,17 +24,13 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
-import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.MediaModel;
-import zh.co.item.bank.model.entity.MediaQuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamDropoutService;
 import zh.co.item.bank.web.exam.service.ExamService;
-import zh.co.item.bank.web.exam.service.MediaService;
 
 /**
  * 考试画面
@@ -63,63 +56,53 @@ public class ExamController extends BaseController {
     @Inject
     private ExamDropoutService examDropoutService;
 
-    @Inject
-    private MediaService mediaService;
-
-    /** 试题 */
+    /** 初始化变量 */
+    // 试题
     private List<ExamModel> questions;
 
-    /** 题型种别 */
     private TbQuestionClassifyBean classifyBean;
 
-    /** 题目 */
     private String title;
 
-    /** 大题干 */
     private String subject;
 
-    /** 大题干List */
     private List<String> subjectList;
 
-    /** 图片 */
     private String graphicImage;
 
     /** --共通变量-- */
     // 用户信息
     private UserModel userInfo;
 
+    // 当前试题
+    private String source;
+
     /** --考试模式用变量-- */
     // 试题结构
     CopyOnWriteArrayList<ExamModel> safeList;
+
     // 考试进行状态
     private String status;
+
     // 考卷年
     String year = null;
+
     // 开始做题时间
     Date startTime = null;
-
-    /** --听力模式用变量-- */
-    // 音频
-    MediaModel mediaModel;
-
-    private String mediaReady;
-    // 听力试题
-    List<MediaQuestionStructure> mediaQuestions;
-
-    private String source;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_002;
     }
 
     /**
-     * initial
+     * 1.做题画面初始化
      * 
      * @return
      */
     public String init() {
         try {
             pushPathHistory("examBean");
+            // a.对象初始化
             userInfo = WebUtils.getLoginUserInfo();
 
             title = "";
@@ -127,10 +110,12 @@ public class ExamController extends BaseController {
             subject = "";
             graphicImage = "";
             status = null;
-            this.mediaReady = "none";
+            questions = new ArrayList<ExamModel>();
+
+            // b.检索试题
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            // 智能选题
+            // b-1.智能选题
             if (classifyBean == null) {
                 if (!StringUtils.isEmpty(userInfo.getJlptLevel())) {
                     map.put("jlptLevel", userInfo.getJlptLevel());
@@ -141,7 +126,7 @@ public class ExamController extends BaseController {
                 questions = examService.smartSearch(map);
 
             } else {
-                // 题型选题
+                // b-2.题型选题
                 if (StringUtils.isNotEmpty(classifyBean.getExam())) {
                     map.put("exam", classifyBean.getExam());
                 }
@@ -171,27 +156,14 @@ public class ExamController extends BaseController {
                         questions = examService.classifySearch(classifyBean, map);
                     }
 
-                    // 选择了听力
-                } else if ("6".equals(classifyBean.getExamType())) {
-                    selectForMediaQuestions();
-                    if (mediaQuestions == null || mediaQuestions.size() == 0) {
-                        // 题库已空
-                        logger.log(MessageId.ITBK_I_0010);
-                        CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
-                        throw ex;
-                    }
-                    // 画面序号和显示设置
-                    CmnStringUtils.selectionLayoutSet(mediaQuestions);
-                    return SystemConstants.PAGE_ITBK_EXAM_007;
-
                     // 正常条件检索
                 } else {
                     questions = examService.classifySearch(classifyBean, map);
                 }
             }
 
+            // 题库已空
             if (questions == null || questions.size() == 0) {
-                // 题库已空
                 logger.log(MessageId.ITBK_I_0010);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                 throw ex;
@@ -228,213 +200,47 @@ public class ExamController extends BaseController {
             processForException(logger, e);
         }
 
-        return SystemConstants.PAGE_ITBK_EXAM_002;
+        return getPageId();
+
     }
 
     /**
-     * 检索听力试题
-     * 
-     * @return
-     * @throws IOException
-     */
-    private void selectForMediaQuestions() throws IOException {
-        // 初始化
-        mediaModel = null;
-        mediaQuestions = new ArrayList<MediaQuestionStructure>();
-        // 获取ClassifyId
-        List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
-        if (classifyIds == null || classifyIds.size() == 0) {
-            return;
-        }
-
-        // 获取音频
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("userId", userInfo.getId());
-        for (Integer classifyId : classifyIds) {
-            map.put("classifyId", classifyId);
-            mediaModel = mediaService.getMedia(map);
-            if (mediaModel == null) {
-                continue;
-            } else {
-
-                break;
-            }
-        }
-        if (mediaModel == null) {
-            return;
-        }
-        // 获取大题目
-        map.put("mediaId", mediaModel.getId());
-        mediaQuestions = mediaService.selectMediaQuestions(map);
-    }
-
-    /**
-     * 【考试模式】听力部分
-     * 
-     * @return
-     */
-    public String mediaOfExam(String source) {
-        try {
-            if (source != null && classifyBean != null) {
-                // 初始化
-                mediaModel = null;
-                mediaQuestions = new ArrayList<MediaQuestionStructure>();
-
-                Map<String, Object> map = new HashMap<String, Object>();
-                // 获取ClassifyId
-                List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
-                if (classifyIds.size() != 0) {
-                    // 此处只会检索到一件
-                    map.put("classifyId", classifyIds.get(0));
-
-                    // 获取音频
-                    mediaModel = mediaService.selectMediaBySource(source);
-                    if (mediaModel != null) {
-                        // 获取大题目
-                        map.put("mediaId", mediaModel.getId());
-                        mediaQuestions = mediaService.selectMediaQuestions(map);
-                    }
-                }
-                if (mediaQuestions == null || mediaQuestions.size() == 0) {
-                    // 题库已空
-                    logger.log(MessageId.ITBK_E_0009);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0009);
-                    throw ex;
-                }
-                // 画面序号和显示设置
-                CmnStringUtils.selectionLayoutSet(mediaQuestions);
-                // 转至听力
-                return SystemConstants.PAGE_ITBK_EXAM_007;
-            }
-        } catch (Exception e) {
-            processForException(logger, e);
-        }
-        return SystemConstants.PAGE_ITBK_EXAM_006;
-    }
-
-    public void getMedia() {
-        try {
-            mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-            if (StringUtils.isEmpty(mediaModel.getMedia())) {
-                this.mediaReady = "none";
-            } else {
-                this.mediaReady = "block";
-            }
-        } catch (IOException e) {
-            processForException(logger, e);
-        }
-    }
-
-    /**
-     * 听力提交
-     * 
-     * @return
-     */
-    public String submitMedia() {
-        // 中途退出保存（暂不支持）TODO
-
-        // 更新听力记录表
-        List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
-        List<ExamModel> examCollections = new ArrayList<ExamModel>();
-        for (MediaQuestionStructure model : mediaQuestions) {
-            List<MediaModel> questions = model.getQuestion();
-            // 考试模式需登录考试表
-            for (MediaModel question : questions) {
-                if (question != null) {
-                    TbMediaCollectionBean collection = new TbMediaCollectionBean();
-                    ExamModel examModel = new ExamModel();
-                    // 音频ID
-                    collection.setMediaId(question.getMediaId());
-                    // 用户ID
-                    collection.setUserId(userInfo.getId());
-                    examModel.setUserId(userInfo.getId());
-                    // 试题ID
-                    collection.setQuestionId(question.getNo());
-                    examModel.setNo(question.getNo());
-                    // 状态1：已完成
-                    collection.setStatus("1");
-                    // 用户答案
-                    collection.setMyAnswer(question.getMyAnswer());
-                    examModel.setMyAnswer(question.getMyAnswer());
-                    // 正确答案
-                    examModel.setAnswer(question.getAnswer());
-                    // 试题来源
-                    examModel.setSource(mediaModel.getSource());
-                    // StructureId
-                    examModel.setStructureId(question.getStructureId());
-                    // 题型种别[6:听力]
-                    examModel.setExamType("6");
-                    list.add(collection);
-                    examCollections.add(examModel);
-                }
-            }
-        }
-        mediaService.insertMediaCollections(list);
-        // 听力显示控制
-        String examFlag = "true";
-        // 批量登录考试做题记录表
-        if (StringUtils.isNotEmpty(status) && examCollections.size() != 0) {
-            examCollectionService.insertExamCollection(examCollections);
-            status = null;
-        } else {
-            examFlag = null;
-        }
-
-        // 去结果一览画面
-        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-        examResultBean.setMediaQuestions(mediaQuestions);
-        mediaModel.setMedia(SystemConstants.EMPTY);
-        this.mediaReady = "none";
-        examResultBean.setMediaModel(mediaModel);
-        examResultBean.setExamFlag(examFlag);
-        return examResultBean.mediaReport();
-    }
-
-    /**
-     * 听力退出·返回试题选择
-     * 
-     * @return
-     */
-    public String goBackToClassify() {
-
-        // 返回试题一览画面
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
-    }
-
-    /**
-     * 考试模式
+     * 2.考试模式（开始考试按钮按下）
      * 
      * @return
      */
     public String examSearch() {
         try {
-            // 初始化变量
+            pushPathHistory("examBean");
+            // a.初始化变量
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
             graphicImage = "";
+
             if (!"ing".equals(status)) {
                 status = "";
             }
+            // 记录考试开始时间
             if (startTime == null) {
                 startTime = new Date();
             }
             if (userInfo == null) {
                 userInfo = WebUtils.getLoginUserInfo();
             }
-            this.mediaReady = "none";
+
+            // b.检索试题
             // 检索用Map
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
             // J.TEST，JLPT区分，order By控制
             map.put("exam", classifyBean.getExam());
 
-            // 检测是否有中途退出的试题存在
+            // b-1.检测是否有中途退出的试题存在
             if (year == null) {
                 year = examDropoutService.getYear(getExamDropoutBean());
             }
-            // 获得试题结构(一次考试只获取一次)(听力大题目不检索)
+            // b-2.获得试题结构(一次考试只获取一次)(听力大题目不检索)
             if (safeList == null || safeList.size() == 0) {
                 List<ExamModel> examStructure = examService.getStructure(classifyBean);
                 safeList.addAll(examStructure);
@@ -453,6 +259,7 @@ public class ExamController extends BaseController {
                 }
                 // TODO 添加年限选择后废弃
                 map.put("year", year);
+                // b-3.检索指定年限试题
                 questions = examService.getTestQuestion(map);
 
                 // 当前大题已做完
@@ -471,24 +278,25 @@ public class ExamController extends BaseController {
                     subject = questions.get(0).getSubject();
                     graphicImage = CmnStringUtils.getGraphicImage(questions.get(0).getImg());
                 }
-                // 画面序号 折行
+                // 画面序号、折行
                 prepareData(subject);
                 title = model.getTitle();
 
-                return SystemConstants.PAGE_ITBK_EXAM_002;
+                return getPageId();
             }
+            // c.考试结束
             if ("ing".equals(status)) {
 
-                status = "end";
-                // 删除中途退出表
+                // c-1.删除中途退出表
                 examDropoutService.deleteExamDropout(getExamDropoutBean());
                 doclear();
-                // 考试完成，显示成绩
-                ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-                examResultBean.setClassifyBean(classifyBean);
-                examResultBean.setMediaQuestions(null);
-                return examResultBean.examReport(source);
+                // c-2.显示成绩
+                ExamReportController examReportController = (ExamReportController) SpringAppContextManager
+                        .getBean("examReportController");
+                examReportController.setClassifyBean(classifyBean);
+                return examReportController.init(source);
             } else {
+                // 未检索到指定试题
                 logger.log(MessageId.ITBK_I_0015);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
                 throw ex;
@@ -496,37 +304,25 @@ public class ExamController extends BaseController {
 
         } catch (CmnBizException ex) {
             processForException(logger, ex);
+            // 返回题型选择
             ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
             return classifyBean.init();
 
         } catch (Exception e) {
             processForException(logger, e);
         }
-        return SystemConstants.PAGE_ITBK_EXAM_002;
+        return getPageId();
     }
 
     /**
-     * 画面序号,折行
-     * 
-     * @param subject 题干
-     */
-    private void prepareData(String subject) {
-        // 画面序号和显示设置
-        questions = CmnStringUtils.answerLayoutSet(questions);
-        // 折行
-        subjectList = CmnStringUtils.getSubjectList(subject);
-    }
-
-    /**
-     * [确认]按钮点下
+     * 3.[确认]按钮点下
      * 
      * @return
      */
     public String doSubmit() {
         try {
-            if (!checkuser(userInfo)) {
-                return SystemConstants.PAGE_ITBK_USER_002;
-            }
+
+            // a.做题结果登录
             // 批量登录数据用
             List<TbCollectionBean> collections = new ArrayList<TbCollectionBean>();
             List<ExamModel> examCollections = new ArrayList<ExamModel>();
@@ -534,6 +330,7 @@ public class ExamController extends BaseController {
 
                 ExamModel examModel = (ExamModel) questions.get(i);
                 examModel.setUserId(userInfo.getId());
+                // a-1.取当前用户当前题目做题记录
                 TbCollectionBean collection = collectionService.selectCollectionForOne(examModel);
 
                 // 用户ID
@@ -569,23 +366,23 @@ public class ExamController extends BaseController {
                     examCollections.add(examModel);
                 }
             }
-            // 批量登录做题记录表
+            // a-1.批量登录做题记录表
             if (collections.size() != 0) {
                 collectionService.insertCollections(collections);
             }
-            // 批量登录考试做题记录表
+            // a-2.批量登录考试做题记录表
             if (examCollections.size() != 0) {
                 examCollectionService.insertExamCollection(examCollections);
             }
 
+            // b.考试继续
             if ("ing".equals(status) || "exist".equals(status)) {
-                // 考试继续
                 return null;
             }
+            // c.考试结束
             // 跳转至[结果一览]画面
             ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
             examResultBean.setQuestions(questions);
-            examResultBean.setClassifyBean(classifyBean);
             examResultBean.setTitle(title);
             examResultBean.setSubject(subject);
             examResultBean.setSubjectList(subjectList);
@@ -599,17 +396,18 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * [我的错题]按下
+     * 4.[我的错题]按下
      * 
      * @return
      */
     public String doResume() {
+        // 跳转至错题库
         ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
         return resumeBean.init();
     }
 
     /**
-     * [下一题]按下
+     * 5.[下一题]按下
      * 
      * @return
      */
@@ -617,9 +415,10 @@ public class ExamController extends BaseController {
         try {
             // 考试进行中
             status = "ing";
+            // a.保存当前做题记录
             doSubmit();
 
-            // 继续下一道题
+            // b.继续下一道题
             return examSearch();
         } catch (Exception e) {
             processForException(logger, e);
@@ -628,27 +427,24 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * [直接退出]按下
+     * 6.[直接退出]按下
      * 
      * @return
      */
     public String doExist() {
-        // 清空本次做题记录
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-                .getRequest();
-        String source = request.getParameter("source");
+        // a.清空本次做题记录
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("source", source);
+        map.put("source", questions.get(0).getSource());
         map.put("startTime", startTime);
         examService.deleteExamCollectionBySource(map);
         doclear();
-        // 跳转至试题选择
+        // b.跳转至试题选择
         ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
         return examClassifyBean.init();
     }
 
     /**
-     * [保存退出]按下
+     * 7.[保存退出]按下
      * 
      * @return
      */
@@ -663,16 +459,20 @@ public class ExamController extends BaseController {
         String source = questions.get(0).getSource();
         doclear();
         // 跳转至成绩一览画面
-        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
+        ExamReportController examReportController = (ExamReportController) SpringAppContextManager
+                .getBean("examReportController");
         // 中途退出不显示听力
-        examResultBean.setMediaQuestions(new ArrayList<MediaQuestionStructure>());
-        return examResultBean.examReport(source);
+        examReportController.setMediaFlag("false");
+        return examReportController.init(source);
     }
 
     /**
-     * 数据清除
+     * 8.数据清除
      */
     private void doclear() {
+        title = null;
+        subject = null;
+        subjectList = null;
         status = null;
         year = null;
         safeList.clear();
@@ -702,20 +502,16 @@ public class ExamController extends BaseController {
         return bean;
     }
 
-    public ExamService getExamService() {
-        return examService;
-    }
-
-    public void setExamService(ExamService examService) {
-        this.examService = examService;
-    }
-
-    public CollectionService getCollectionService() {
-        return collectionService;
-    }
-
-    public void setCollectionService(CollectionService collectionService) {
-        this.collectionService = collectionService;
+    /**
+     * 画面序号,折行
+     * 
+     * @param subject 题干
+     */
+    private void prepareData(String subject) {
+        // 画面序号和显示设置
+        questions = CmnStringUtils.answerLayoutSet(questions);
+        // 折行
+        subjectList = CmnStringUtils.getSubjectList(subject);
     }
 
     public List<ExamModel> getQuestions() {
@@ -750,28 +546,12 @@ public class ExamController extends BaseController {
         this.subject = subject;
     }
 
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
     public List<String> getSubjectList() {
         return subjectList;
     }
 
     public void setSubjectList(List<String> subjectList) {
         this.subjectList = subjectList;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getGraphicImage() {
@@ -782,6 +562,14 @@ public class ExamController extends BaseController {
         this.graphicImage = graphicImage;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public CopyOnWriteArrayList<ExamModel> getSafeList() {
         return safeList;
     }
@@ -790,28 +578,28 @@ public class ExamController extends BaseController {
         this.safeList = safeList;
     }
 
-    public MediaModel getMediaModel() {
-        return mediaModel;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMediaModel(MediaModel mediaModel) {
-        this.mediaModel = mediaModel;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public List<MediaQuestionStructure> getMediaQuestions() {
-        return mediaQuestions;
+    public String getYear() {
+        return year;
     }
 
-    public void setMediaQuestions(List<MediaQuestionStructure> mediaQuestions) {
-        this.mediaQuestions = mediaQuestions;
+    public void setYear(String year) {
+        this.year = year;
     }
 
-    public String getMediaReady() {
-        return mediaReady;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setMediaReady(String mediaReady) {
-        this.mediaReady = mediaReady;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
 }

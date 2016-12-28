@@ -121,10 +121,6 @@ public class ExamClassifyBean extends BaseController {
     public String classifySearch() {
 
         try {
-            if (!checkuser(userInfo)) {
-                // 跳转至登录画面
-                return SystemConstants.PAGE_ITBK_USER_002;
-            }
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
@@ -137,11 +133,18 @@ public class ExamClassifyBean extends BaseController {
                 throw ex;
             }
 
-            // b.跳转至【试题库】画面
-            return toExam();
+            // b.画面跳转
+            if ("6".equals(classifyBean.getExamType())) {
+                // 跳转至听力画面
+                MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
+                        .getBean("mediaExamController");
+                return mediaExamController.init();
 
-        } catch (CmnBizException ex) {
-            processForException(logger, ex);
+            } else {
+                // 跳转至【试题库】画面
+                return toExam();
+            }
+
         } catch (Exception e) {
             processForException(logger, e);
         }
@@ -155,11 +158,6 @@ public class ExamClassifyBean extends BaseController {
      */
     public String smartSearch() {
         try {
-
-            if (!checkuser(userInfo)) {
-                // 跳转至登录画面
-                return SystemConstants.PAGE_ITBK_USER_002;
-            }
 
             // 用户信息中不包含日语等级
             if (StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())) {
@@ -220,7 +218,6 @@ public class ExamClassifyBean extends BaseController {
 
         return examBean.init();
     }
-
 
     /**
      * [Ajax]考题种别变更，刷新考试级别 TODO 是否使用？

@@ -64,11 +64,11 @@
          }
         </script>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="mediaExamForm">
+			<h:form id="mediaExamResultForm">
 				<div class="typrography">
 					<h2
 						style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力结果一览</h2>
-					<h3 style="text-align: center;">(#{examBean.mediaModel.source})</h3>
+					<h3 style="text-align: center;">(#{mediaExamController.mediaModel.source})</h3>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -79,8 +79,8 @@
 									escape="false" />
 							</h:panelGroup>
 							<c:choose>
-								<c:when test="#{examBean.mediaModel ne null}">
-									<c:when test="#{examBean.mediaModel.mediaPath ne null}">
+								<c:when test="#{mediaExamController.mediaModel ne null}">
+									<c:when test="#{mediaExamController.mediaModel.mediaPath ne null}">
 										<div style="width: 100%;">
 											<span id="mediaMsg" style="color: #3382C9;"></span> <img
 												id="loadImg" src="" />
@@ -89,7 +89,7 @@
 											<h:commandLink id="btnGetMedia"
 												onclick="return cancelToken(this)">
 												<f:ajax event="click" execute="@form" render="audioWrapper "
-													listener="#{examBean.getMedia}" onevent="getMediaCallBack"
+													listener="#{mediaExamController.getMedia}" onevent="getMediaCallBack"
 													onerror="getMediaFail" />
 												<h2 class="glyphicon glyphicon-expand"></h2>
 											</h:commandLink>
@@ -97,10 +97,10 @@
 										<h:panelGroup id="audioWrapper">
 											<!-- 显示音频 -->
 											<div class="audio_wrap"
-												style="float:right;display:#{examBean.mediaReady};">
+												style="float:right;display:#{mediaExamController.mediaReady};">
 												<div class="music_control">
 													<audio id="listen" controls="controls"
-														autobuffer="autobuffer" src="#{examBean.mediaModel.media}"></audio>
+														autobuffer="autobuffer" src="#{mediaExamController.mediaModel.media}"></audio>
 												</div>
 											</div>
 
@@ -142,7 +142,7 @@
 										</h:panelGroup>
 										<!-- 显示大题目 -->
 										<h:dataTable id="title" rendered="true"
-											value="#{examResultBean.mediaQuestions}" var="item"
+											value="#{mediaExamController.mediaQuestions}" var="item"
 											width="100%">
 											<h:column>
 												<h4>#{item.title}</h4>
@@ -356,16 +356,16 @@
 									</c:when>
 								</c:when>
 							</c:choose>
-							<c:if test="#{examResultBean.examFlag eq 'true'}">
+							<c:if test="#{mediaExamController.examFlag eq 'true'}">
 								<div class="form-submit1">
 									<h:commandButton value="查看考试成绩" class="button1"
-										action="#{examResultBean.goBackToExamResult}"
+										action="#{mediaExamController.goBackToExamResult}"
 										id="goBackToExamResultBtn" style="margin-right: 5px;" />
 								</div>
 							</c:if>
 							<div class="form-submit1">
 								<h:commandButton value="返回试题选择" class="button1"
-									action="#{examResultBean.goBackToClassify}"
+									action="#{mediaExamController.goBackToClassify}"
 									id="goBackToClassifyBtn" />
 							</div>
 						</div>

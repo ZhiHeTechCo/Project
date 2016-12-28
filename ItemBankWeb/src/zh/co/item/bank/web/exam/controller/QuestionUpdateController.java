@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
+import bsh.StringUtil;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -93,16 +94,16 @@ public class QuestionUpdateController extends BaseController {
     public String doUpdate() {
         try {
             TbQuestionClassifyBean classifyBean = new TbQuestionClassifyBean();
-            if (!question.getExam().isEmpty()) {
+            if (StringUtils.isNotEmpty(question.getExam())) {
                 classifyBean.setExam(question.getExam());
             }
-            if (!question.getExamType().isEmpty()) {
+            if (StringUtils.isNotEmpty(question.getExamType())) {
                 classifyBean.setExamType(question.getExamType());
             }
-            if (!question.getJlptLevel().isEmpty()) {
+            if (StringUtils.isNotEmpty(question.getJlptLevel())) {
                 classifyBean.setJlptLevel(question.getJlptLevel());
             }
-            if (!question.getJtestLevel().isEmpty()) {
+            if (StringUtils.isNotEmpty(question.getJtestLevel())) {
                 classifyBean.setJtestLevel(question.getJtestLevel());
             }
             // 取ClassifyId
@@ -123,18 +124,19 @@ public class QuestionUpdateController extends BaseController {
     }
 
     /**
-     * [试题详细]返回结果一览画面
+     * [试题更正]返回结果一览画面
      * 
      * @return
      */
     public String goBackToResult() {
-        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
         // 前画面为考试结果一览
         if (StringUtils.isNotEmpty(examFlag)) {
-            examFlag = null;
-            return examResultBean.examReport(question.getSource());
+            ExamReportController examReportController = (ExamReportController) SpringAppContextManager
+                    .getBean("examReportController");
+            return examReportController.init(question.getSource());
         }
         // 做题结果一览
+        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
         return examResultBean.init();
     }
 

@@ -28,19 +28,19 @@
 								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。（听力不支持查看详细，请在做完后直接确认。）
 							</h5>
 							<h4 style="text-align: center;">
-								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examResultBean.questions.get(0).source}&nbsp;&nbsp;
+								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp;
 								<span class="glyphicon glyphicon-screenshot" />
 							</h4>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
+							<c:forEach var="type" items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '1'}">
 									<h4>文字：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
 							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
+							<c:forEach var="item" items="#{examReportController.questions}">
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '1'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
+											<h:commandLink action="#{examReportController.showDetail}"
 												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
 												class="list-group-item">
 												<f:param name="questionId" value="#{item.no}"></f:param>
@@ -60,16 +60,16 @@
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
+							<c:forEach var="type" items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '2'}">
 									<h4>词汇：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
 							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
+							<c:forEach var="item" items="#{examReportController.questions}">
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '2'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
+											<h:commandLink action="#{examReportController.showDetail}"
 												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
 												class="list-group-item">
 												<f:param name="questionId" value="#{item.no}"></f:param>
@@ -91,16 +91,16 @@
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
+							<c:forEach var="type" items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '3'}">
 									<h4>文法：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
 							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
+							<c:forEach var="item" items="#{examReportController.questions}">
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '3'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
+											<h:commandLink action="#{examReportController.showDetail}"
 												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
 												class="list-group-item">
 												<f:param name="questionId" value="#{item.no}"></f:param>
@@ -122,16 +122,16 @@
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
+							<c:forEach var="type" items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '4'}">
 									<h4>记述：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
 							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
+							<c:forEach var="item" items="#{examReportController.questions}">
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '4'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
+											<h:commandLink action="#{examReportController.showDetail}"
 												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
 												class="list-group-item">
 												<f:param name="questionId" value="#{item.no}"></f:param>
@@ -153,16 +153,16 @@
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examResultBean.reportModels}">
+							<c:forEach var="type" items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '5'}">
 									<h4>阅读：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
 							</c:forEach>
-							<c:forEach var="item" items="#{examResultBean.questions}">
+							<c:forEach var="item" items="#{examReportController.questions}">
 								<h:column>
 									<h:panelGroup rendered="#{item.examType eq '5'}">
 										<div style="float: left;">
-											<h:commandLink action="#{examResultBean.showDetail}"
+											<h:commandLink action="#{examReportController.showDetail}"
 												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
 												class="list-group-item">
 												<f:param name="questionId" value="#{item.no}"></f:param>
@@ -190,7 +190,7 @@
 						<hr />
 						<div class="form-submit1">
 							<h:commandButton value="返回题型选择" class="button1"
-								action="#{examResultBean.goBackToClassify}" id="goBackToExamBtn">
+								action="#{examReportController.goBackToClassify}" id="goBackToExamBtn">
 							</h:commandButton>
 						</div>
 					</div>

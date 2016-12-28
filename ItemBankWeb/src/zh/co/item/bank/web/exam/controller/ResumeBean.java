@@ -151,9 +151,6 @@ public class ResumeBean extends BaseController {
      */
     public String doResumeSubmit() {
         try {
-            if (!checkuser(userInfo)) {
-                return SystemConstants.PAGE_ITBK_USER_002;
-            }
 
             for (int i = 0; i < questions.size(); i++) {
                 // 取当前用户的错题记录
@@ -207,6 +204,7 @@ public class ResumeBean extends BaseController {
             examResultBean.setQuestions(questions);
             examResultBean.setSubject(subject);
             examResultBean.setSubjectList(subjectList);
+            examResultBean.setTitle(title);
             examResultBean.setGraphicImage(graphicImage);
             examResultBean.setResume(true);
             return examResultBean.init();
