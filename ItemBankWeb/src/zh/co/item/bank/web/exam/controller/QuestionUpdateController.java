@@ -9,7 +9,6 @@ import javax.inject.Named;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
-import bsh.StringUtil;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
@@ -65,18 +64,19 @@ public class QuestionUpdateController extends BaseController {
     }
 
     /**
-     * initial
+     * 1.画面初始化
      * 
      * @return
      */
     public String init() {
         try {
             pushPathHistory("questionInsertController");
+            // a.画面显示项目取得
             exams = examService.getExams();
             examTypes = examService.getExamTypes();
             jlptLevels = examService.getJlptLevels();
             jtestLevels = examService.getJtestLevels();
-
+            // 大题目
             structures = questionService.getStructures();
 
         } catch (Exception e) {
@@ -87,12 +87,13 @@ public class QuestionUpdateController extends BaseController {
     }
 
     /**
-     * [提交]按钮按下
+     * 2.[提交]按钮按下
      * 
      * @return
      */
     public String doUpdate() {
         try {
+            // a.取ClassifyId
             TbQuestionClassifyBean classifyBean = new TbQuestionClassifyBean();
             if (StringUtils.isNotEmpty(question.getExam())) {
                 classifyBean.setExam(question.getExam());
@@ -106,7 +107,6 @@ public class QuestionUpdateController extends BaseController {
             if (StringUtils.isNotEmpty(question.getJtestLevel())) {
                 classifyBean.setJtestLevel(question.getJtestLevel());
             }
-            // 取ClassifyId
             Integer classifyId = examService.getClassifyId(classifyBean);
             if (classifyId == null) {
                 logger.log(MessageId.COMMON_Q_0001);
@@ -114,7 +114,7 @@ public class QuestionUpdateController extends BaseController {
                 throw ex;
             }
             question.setClassifyId(classifyId);
-            // 登录试题表
+            // b.登录试题表
             questionService.updateQuestion(question);
 
         } catch (Exception e) {
@@ -124,7 +124,7 @@ public class QuestionUpdateController extends BaseController {
     }
 
     /**
-     * [试题更正]返回结果一览画面
+     * 3.[试题更正]返回结果一览画面
      * 
      * @return
      */
