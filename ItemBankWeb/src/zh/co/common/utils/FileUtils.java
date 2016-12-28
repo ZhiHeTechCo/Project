@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
@@ -82,43 +79,6 @@ public class FileUtils {
     public static String fileName(String filePath) {
         String[] pathElements = filePath.split("[\\\\/]");
         return pathElements[pathElements.length - 1];
-    }
-
-    /**
-     * Generate response for file downloading.
-     *
-     * @param fileName
-     *            file name
-     * @param fullPath
-     *            file full path
-     * @return
-     */
-    public static Response buildResponse(String fileName, String fullPath,
-            String userAgent) {
-        if (fullPath == null) {
-            logger.log(MessageId.COMMON_E_0002,
-                    new String[] { fullPath });
-            throw new CmnSysException(MessageId.COMMON_E_0002,
-                    new String[] { fullPath });
-        }
-
-        InputStream in = null;
-        try {
-            in = new BufferedInputStream(new FileInputStream(fullPath));
-        } catch (FileNotFoundException e) {
-            logger.log(MessageId.COMMON_E_0002,
-                    new String[] { fullPath });
-            throw new CmnSysException(MessageId.COMMON_E_0002,
-                    new String[] { fullPath });
-        }
-
-        ResponseBuilder builder = null;
-        builder = Response.ok(in);
-        builder.header("Content-Disposition",
-                "attachment; filename=" + encodeFileName(fileName, userAgent))
-                .header("Content-Length", new File(fullPath).length());
-
-        return builder.build();
     }
 
     public static String encodeFileName(String fileName, String userAgent) {
