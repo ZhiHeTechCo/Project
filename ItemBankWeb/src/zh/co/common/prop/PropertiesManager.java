@@ -103,6 +103,7 @@ public class PropertiesManager {
     
     public Properties getClassPathProperties(String pathName) {
     	if (!classpathPropertiesCache.containsKey(pathName)) {
+    		logger.debug(pathName);
             PropertiesFileInfo propsFile = loadPropertiesFile(pathName);
             classpathPropertiesCache.put(pathName, propsFile);
         }

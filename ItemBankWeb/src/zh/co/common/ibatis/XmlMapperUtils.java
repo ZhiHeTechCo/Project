@@ -74,8 +74,12 @@ public class XmlMapperUtils {
 		freemarker.template.Configuration cfg = new freemarker.template.Configuration();
 		cfg.setClassForTemplateLoading(XmlMapperUtils.class, "");
 		cfg.setDefaultEncoding("UTF-8");
-		String templateName = "count_sql.ftl";
+		String templateName = XmlMapperUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath() + SystemConstants.COUNT_SQL_FILE;
+
 		try {
+			if(templateName.startsWith("/")) {
+				templateName = templateName.substring(1);
+			}
 			countSqlTemplate = cfg.getTemplate(templateName);
 		} catch (IOException e) {
 			logger.log(MessageId.COMMON_E_0002,

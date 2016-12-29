@@ -63,7 +63,7 @@ public final class PropertiesUtils {
         return instance;
     }
     
-    public static String baseDir() {
+    public static String configDir() {
     	return PropertiesManager.getInstance().getPropValue(
     			SystemConstants.PROPERTIES_FILE,
     			SystemConstants.CONFIG_DIR);
@@ -104,7 +104,7 @@ public final class PropertiesUtils {
     
     public String getSgValue(String key){
         //return this.getValue("application.properties", key);
-        return this.getValueFromAbsoluteFile(baseDir() + "/application.properties", key);
+        return this.getValueFromAbsoluteFile(configDir() + "/application.properties", key);
     }
     
     private String convertPropertyValue(String value) {
@@ -183,7 +183,7 @@ public final class PropertiesUtils {
      * @return
      */
     public String getPageTitle(String pageId){
-        return this.getValueFromAbsoluteFile(baseDir() + "/page_title.conf", pageId);
+        return this.getValueFromAbsoluteFile(configDir() + "/page_title.conf", pageId);
     }
     
     /**

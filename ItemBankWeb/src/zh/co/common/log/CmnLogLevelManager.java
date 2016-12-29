@@ -71,7 +71,7 @@ public final class CmnLogLevelManager {
     private static void init() {
         InputStream is = null;
 
-        String pathname = PropertiesUtils.baseDir() + "/LogLevelProperties.conf";
+        String pathname = PropertiesUtils.configDir() + "/LogLevelProperties.conf";
         try {
             is = new FileInputStream(pathname);
             messageLogLevels.load(is);

@@ -44,11 +44,11 @@ public class CmnLogger {
     private static ResourceBundle logMessages;
 
 	static {
-		initResource(PropertiesUtils.baseDir() + "/message.properties");
+		initResource(PropertiesUtils.configDir() + "/message.properties");
 	}
 
 	public static void initLog4jConfig() {
-		initConfig(PropertiesUtils.baseDir() + "/log4j.xml");
+		initConfig(PropertiesUtils.configDir() + "/log4j.xml");
 	}
     
 	public static void initScopedConfig() {

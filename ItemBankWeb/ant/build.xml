@@ -46,38 +46,45 @@
   
     <!--打成WAR包-->  
     <target name="generwar" depends="compile">  
-        <echo message="打成WAR" />  
-        <mkdir dir="${build}/${ant.project.name}.war" />  
+        <echo message="拷贝资源文件" />  
         
-        <copy todir="${build}/${ant.project.name}.war/META-INF" overwrite="true">  
+        <copy todir="${build}/META-INF" overwrite="true">  
             <fileset dir="${webApp}/META-INF"></fileset>  
         </copy> 
         
-        <copy todir="${build}/${ant.project.name}.war/resources" overwrite="true">  
+        <copy todir="${build}/resources" overwrite="true">  
             <fileset dir="${webApp}/resources"></fileset>  
         </copy> 
          
-        <copy todir="${build}/${ant.project.name}.war/xhtml" overwrite="true">  
+        <copy todir="${build}/xhtml" overwrite="true">  
             <fileset dir="${webApp}/xhtml"></fileset>  
         </copy>  
         
-        <copy todir="${build}/${ant.project.name}.war/WEB-INF/classes" overwrite="true">  
+        <copy todir="${build}/WEB-INF/classes" overwrite="true">  
             <fileset dir="${build.class}" /> 
         </copy>
+    	
+        <copy todir="${build}/WEB-INF/classes" overwrite="true">  
+            <fileset file="${src}/system.properties" /> 
+        </copy>
+    	
         <delete dir="${build.class}" /> 
         
-        <copy todir="${build}/${ant.project.name}.war/WEB-INF/classes/sql" overwrite="true">  
+        <copy todir="${build}/WEB-INF/classes/sql" overwrite="true">  
             <fileset dir="${src}/sql" /> 
         </copy>       
-        <copy todir="${build}/${ant.project.name}.war/WEB-INF" overwrite="true">  
+        <copy todir="${build}/WEB-INF" overwrite="true">  
             <fileset dir="${webApp}/WEB-INF" /> 
         </copy> 
-        <copy todir="${build}/${ant.project.name}.war" overwrite="true">  
+        <copy todir="${build}" overwrite="true">  
             <fileset file="${webApp}/favicon.ico" /> 
         </copy> 
-        <copy todir="${build}/${ant.project.name}.war" overwrite="true">  
+        <copy todir="${build}" overwrite="true">  
             <fileset file="${webApp}/MP_verify_gOwPe79aer4IJXoK.txt" /> 
         </copy> 
+    	
+    	<echo message="打成WAR，直接布署到服务器" /> 
+    	<war destfile="${webserver}/${ant.project.name}.war" basedir="${build}"></war>
     </target>  
   
     <target name="replace_sys_params" depends="generwar">
@@ -85,18 +92,10 @@
           <fileset file="${deploy.sysconf.dir}/jdbc.conf" />
       </replace>
     </target>
-    
-    <!--把WAR放到一个指定目录，这里是直接布署到TOMCAT服务器-->  
-    <target name="fabu" depends="replace_sys_params" description="发布">  
-        <copy todir="${webserver}" overwrite="true">  
-           <fileset dir="${build}"></fileset>  
-        </copy>  
-    </target>  
-  
 
   
     <!--把打好的WAR删除-->  
-    <target name="deleteWar" depends="fabu" description="删除服务器上的war">  
+    <target name="deleteWar" depends="replace_sys_params" description="删除服务器上的war">  
         <delete dir="${build}" />  
     </target>  
 </project>

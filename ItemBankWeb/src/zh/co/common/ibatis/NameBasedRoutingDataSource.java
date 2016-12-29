@@ -38,7 +38,7 @@ public class NameBasedRoutingDataSource extends AbstractRoutingDataSource {
 		Properties properties = new Properties();
 	    FileInputStream inputStream = null;
 		try {
-			inputStream = new FileInputStream(PropertiesUtils.baseDir() + dataSourceConfigLocation);
+			inputStream = new FileInputStream(PropertiesUtils.configDir() + dataSourceConfigLocation);
 			properties.load(inputStream);
 			
 		} catch (FileNotFoundException e) {
