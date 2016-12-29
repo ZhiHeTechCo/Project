@@ -481,6 +481,16 @@ public class ExamController extends BaseController {
     }
 
     /**
+     * 9.返回【试题选择】画面
+     * 
+     * @return
+     */
+    public String goBackToClassify() {
+        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        return examClassifyBean.init();
+    }
+
+    /**
      * 中途退出信息保存（添加year选择后废弃）TODO
      */
     private void saveDropoutInfo() {
