@@ -136,8 +136,8 @@ public class QuestionUpdateController extends BaseController {
             return examReportController.init(question.getSource());
         }
         // 做题结果一览
-        ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-        return examResultBean.init();
+        ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
+        return examResultController.init();
     }
 
     public List<TsCodeBean> getExams() {

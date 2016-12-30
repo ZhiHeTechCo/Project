@@ -19,9 +19,9 @@ import zh.co.item.bank.model.entity.ExamModel;
  * @author gaoya
  *
  */
-@Named("examResultBean")
+@Named("examResultController")
 @Scope("session")
-public class ExamResultBean extends BaseController {
+public class ExamResultController extends BaseController {
     private final CmnLogger logger = CmnLogger.getLogger(getClass());
 
     /** 画面初始化变量 */
@@ -47,7 +47,7 @@ public class ExamResultBean extends BaseController {
      */
     public String init() {
         try {
-            pushPathHistory("examResultBean");
+            pushPathHistory("examResultController");
             if (questions == null) {
                 logger.log(MessageId.COMMON_E_0001);
             }
@@ -67,7 +67,6 @@ public class ExamResultBean extends BaseController {
             ExamDetailController examDetailController = (ExamDetailController) SpringAppContextManager
                     .getBean("questionDetail");
             examDetailController.setResume(isResume);
-//            examDetailController.setExamFlag("false");
             return examDetailController.init();
 
         } catch (Exception e) {

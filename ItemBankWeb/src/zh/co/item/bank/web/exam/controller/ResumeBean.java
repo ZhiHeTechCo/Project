@@ -200,14 +200,14 @@ public class ResumeBean extends BaseController {
                 collectionService.updateCollection(collection);
             }
 
-            ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-            examResultBean.setQuestions(questions);
-            examResultBean.setSubject(subject);
-            examResultBean.setSubjectList(subjectList);
-            examResultBean.setTitle(title);
-            examResultBean.setGraphicImage(graphicImage);
-            examResultBean.setResume(true);
-            return examResultBean.init();
+            ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
+            examResultController.setQuestions(questions);
+            examResultController.setSubject(subject);
+            examResultController.setSubjectList(subjectList);
+            examResultController.setTitle(title);
+            examResultController.setGraphicImage(graphicImage);
+            examResultController.setResume(true);
+            return examResultController.init();
 
         } catch (Exception e) {
             processForException(logger, e);

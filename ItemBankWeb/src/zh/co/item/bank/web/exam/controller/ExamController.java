@@ -382,14 +382,14 @@ public class ExamController extends BaseController {
             }
             // c.考试结束
             // 跳转至[结果一览]画面
-            ExamResultBean examResultBean = (ExamResultBean) SpringAppContextManager.getBean("examResultBean");
-            examResultBean.setQuestions(questions);
-            examResultBean.setTitle(title);
-            examResultBean.setSubject(subject);
-            examResultBean.setSubjectList(subjectList);
-            examResultBean.setGraphicImage(graphicImage);
-            examResultBean.setResume(false);
-            return examResultBean.init();
+            ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
+            examResultController.setQuestions(questions);
+            examResultController.setTitle(title);
+            examResultController.setSubject(subject);
+            examResultController.setSubjectList(subjectList);
+            examResultController.setGraphicImage(graphicImage);
+            examResultController.setResume(false);
+            return examResultController.init();
         } catch (Exception e) {
             processForException(logger, e);
         }

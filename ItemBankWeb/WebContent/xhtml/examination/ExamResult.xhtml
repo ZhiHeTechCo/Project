@@ -27,30 +27,30 @@
 								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。
 							</h5>
 							<h4>
-								<b><h:outputText value="#{examResultBean.title}"></h:outputText></b>
+								<b><h:outputText value="#{examResultController.title}"></h:outputText></b>
 							</h4>
-							<c:if test="#{examResultBean.subject !=''}">
+							<c:if test="#{examResultController.subject !=''}">
 								<table class="table table-bordered">
 									<tr>
 										<td align="center"><h4>问题</h4></td>
 									</tr>
 									<tr>
-										<td><ui:repeat value="#{examResultBean.subjectList}"
+										<td><ui:repeat value="#{examResultController.subjectList}"
 												var="stringItem">
 												<h:outputText value="#{stringItem}" />
 												<br />
 											</ui:repeat></td>
 									</tr>
-									<c:if test="#{examResultBean.graphicImage !=''}">
+									<c:if test="#{examResultController.graphicImage !=''}">
 										<tr>
 											<td align="center">
 												<div class="gallery-bottom">
 													<div class="col-md-3 gallery-grid">
 														<a class="example-image-link"
-															href="#{examResultBean.graphicImage}"
+															href="#{examResultController.graphicImage}"
 															data-lightbox="example-set"><img
 															class="example-image"
-															src="#{examResultBean.graphicImage}" alt="" /></a>
+															src="#{examResultController.graphicImage}" alt="" /></a>
 													</div>
 												</div>
 											</td>
@@ -59,13 +59,13 @@
 								</table>
 							</c:if>
 							<h:dataTable class="table table-bordered" rendered="true"
-								value="#{examResultBean.questions}" var="item">
+								value="#{examResultController.questions}" var="item">
 								<h:column>
 									<h4>
 										<h:outputText value="#{item.rowNo}"></h:outputText>
 									</h4>
 									<td class="list-group list-group-alternate"><h:commandLink
-											action="#{examResultBean.showDetail}"
+											action="#{examResultController.showDetail}"
 											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
 											class="list-group-item">
 											<f:param name="questionId" value="#{item.no}"></f:param>
@@ -270,7 +270,7 @@
 							</h:dataTable>
 							<div class="form-submit1">
 								<h:commandButton value="继续做题" class="button1"
-									action="#{examResultBean.goBackToExam}" id="goBackToExamBtn">
+									action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
 								</h:commandButton>
 							</div>
 						</div>
