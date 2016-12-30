@@ -293,6 +293,7 @@ public class ExamController extends BaseController {
                 // c-2.显示成绩
                 ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                         .getBean("examReportController");
+                examReportController.setMediaFlag("true");
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             } else {
