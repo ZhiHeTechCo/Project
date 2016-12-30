@@ -1,6 +1,5 @@
 package zh.co.item.bank.web.exam.controller;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,13 +21,11 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
-import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamDropoutService;
 import zh.co.item.bank.web.exam.service.ExamService;
 
@@ -49,9 +46,6 @@ public class ExamController extends BaseController {
 
     @Inject
     private CollectionService collectionService;
-
-    @Inject
-    private ExamCollectionService examCollectionService;
 
     @Inject
     private ExamDropoutService examDropoutService;
@@ -324,57 +318,7 @@ public class ExamController extends BaseController {
         try {
 
             // a.做题结果登录
-            // 批量登录数据用
-            List<TbCollectionBean> collections = new ArrayList<TbCollectionBean>();
-            List<ExamModel> examCollections = new ArrayList<ExamModel>();
-            for (int i = 0; i < questions.size(); i++) {
-
-                ExamModel examModel = (ExamModel) questions.get(i);
-                examModel.setUserId(userInfo.getId());
-                // a-1.取当前用户当前题目做题记录
-                TbCollectionBean collection = collectionService.selectCollectionForOne(examModel);
-
-                // 用户ID
-                collection.setId(userInfo.getId());
-
-                // 试题ID
-                collection.setQuestionId(Integer.valueOf(examModel.getNo()));
-
-                // 第几次做
-                short count = collection.getCount() == null ? 0 : collection.getCount();
-                count = (short) (count + 1);
-                collection.setCount(count);
-
-                // resultX
-                String param = "setResult" + count;
-
-                Method method = collection.getClass().getMethod(param, new Class[] { String.class });
-                String choice = StringUtils.isEmpty(examModel.getMyAnswer()) ? "" : examModel.getMyAnswer();
-                method.invoke(collection, new Object[] { choice });
-                if (examModel.getAnswer().equals(choice)) {
-                    collection.setFinish("1");
-                } else {
-                    collection.setFinish("0");
-                }
-                // 错题表登录·更新
-                if (count == 1) {
-                    collections.add(collection);
-                } else {
-                    collectionService.updateCollection(collection);
-                }
-                // 考试记录表登录
-                if ("ing".equals(status) || "exist".equals(status)) {
-                    examCollections.add(examModel);
-                }
-            }
-            // a-1.批量登录做题记录表
-            if (collections.size() != 0) {
-                collectionService.insertCollections(collections);
-            }
-            // a-2.批量登录考试做题记录表
-            if (examCollections.size() != 0) {
-                examCollectionService.insertExamCollection(examCollections);
-            }
+            collectionService.insertCollections(questions, userInfo, status);
 
             // b.考试继续
             if ("ing".equals(status) || "exist".equals(status)) {
