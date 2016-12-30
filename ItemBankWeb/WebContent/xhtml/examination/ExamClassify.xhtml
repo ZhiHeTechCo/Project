@@ -50,42 +50,42 @@
 								<tr>
 									<td><h4>考题种别：</h4></td>
 									<td><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.exam}"
+											value="#{examClassifyController.classifyBean.exam}"
 											style="width: 150px" onchange="return cancelToken(this, 1)">
-											<f:selectItems value="#{examClassifyBean.exams}" var="entry"
+											<f:selectItems value="#{examClassifyController.exams}" var="entry"
 												itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 											<f:ajax event="change" execute="@this"
 												render="levelLableWrapper levelWrapper"
-												listener="#{examClassifyBean.changExamType}"
+												listener="#{examClassifyController.changExamType}"
 												onevent="changExamTypeChangeCallBack" />
 										</h:selectOneRadio></td>
 								</tr>
 								<tr>
 									<td><h:panelGroup id="levelLableWrapper">
 											<c:if
-												test="#{examClassifyBean.classifyBean.exam=='1' ||  examClassifyBean.classifyBean.exam =='2'}">
+												test="#{examClassifyController.classifyBean.exam=='1' ||  examClassifyController.classifyBean.exam =='2'}">
 												<h4>考试级别：</h4>
 											</c:if>
 										</h:panelGroup></td>
 									<td class="to">
                                       <h:panelGroup id="levelWrapper">
 											<c:choose>
-												<c:when test="#{examClassifyBean.classifyBean.exam eq '1'}">
+												<c:when test="#{examClassifyController.classifyBean.exam eq '1'}">
 													<h:selectOneMenu
-														value="#{examClassifyBean.classifyBean.jlptLevel}"
+														value="#{examClassifyController.classifyBean.jlptLevel}"
 														style="width: 50%;">
 														<f:selectItem itemValue="" itemLabel="" />
-														<f:selectItems value="#{examClassifyBean.jlptLevels}"
+														<f:selectItems value="#{examClassifyController.jlptLevels}"
 															var="entry" itemValue="#{entry.key}"
 															itemLabel="#{entry.value}" />
 													</h:selectOneMenu>
 												</c:when>
-												<c:when test="#{examClassifyBean.classifyBean.exam eq '2'}">
+												<c:when test="#{examClassifyController.classifyBean.exam eq '2'}">
 													<h:selectOneMenu
-														value="#{examClassifyBean.classifyBean.jtestLevel}"
+														value="#{examClassifyController.classifyBean.jtestLevel}"
 														style="width: 50%;">
 														<f:selectItem itemValue="" itemLabel="" />
-														<f:selectItems value="#{examClassifyBean.jtestLevels}"
+														<f:selectItems value="#{examClassifyController.jtestLevels}"
 															var="entry" itemValue="#{entry.key}"
 															itemLabel="#{entry.value}" />
 													</h:selectOneMenu>
@@ -97,9 +97,9 @@
 								<tr>
 									<td><h4>考试类别：</h4></td>
 									<td><h:selectOneRadio
-											value="#{examClassifyBean.classifyBean.examType}"
+											value="#{examClassifyController.classifyBean.examType}"
 											style="width: 150px">
-											<f:selectItems value="#{examClassifyBean.examTypes}"
+											<f:selectItems value="#{examClassifyController.examTypes}"
 												var="entry" itemValue="#{entry.key}"
 												itemLabel="#{entry.value}" />
 										</h:selectOneRadio></td>
@@ -109,19 +109,19 @@
 										<div class="form-submit1">
 											<h:commandButton value="开始做题" class="button1"
 												style="margin-right: 5px;margin-top: 5px;"
-												action="#{examClassifyBean.classifySearch}"
+												action="#{examClassifyController.classifySearch}"
 												id="classifySearchBtn" />
 										</div>
 									</td>
 									<td><div class="form-submit1">
 											<h:commandButton value="开始考试" class="button1"
 												style="margin-top: 5px;"
-												action="#{examClassifyBean.examSearch}" id="examSearchBtn" />
+												action="#{examClassifyController.examSearch}" id="examSearchBtn" />
 										</div></td>
 								</tr>
 							</table>
 
-							<c:if test="#{examClassifyBean.showExamFlag ne ''}">
+							<c:if test="#{examClassifyController.showExamFlag ne ''}">
 								<table class="to" style="margin-top: 50px; margin-bottom: 50px;">
 									<tr>
 										<td><h5 style="color: #3382C9;">
@@ -131,7 +131,7 @@
 									<tr>
 										<td><div class="form-submit1">
 												<h:commandButton value="智能推题" class="button1"
-													action="#{examClassifyBean.smartSearch}"
+													action="#{examClassifyController.smartSearch}"
 													id="smartSearchBtn" />
 											</div></td>
 									</tr>
@@ -147,7 +147,7 @@
 								<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
 							</p>
 							<p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
-							<c:if test="#{examClassifyBean.showExamFlag ne ''}">
+							<c:if test="#{examClassifyController.showExamFlag ne ''}">
 								<p>
 									<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
 								</p>

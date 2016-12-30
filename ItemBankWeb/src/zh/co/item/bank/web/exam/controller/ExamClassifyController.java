@@ -31,9 +31,9 @@ import zh.co.item.bank.web.user.controller.SignInBean;
  * @author gaoya
  *
  */
-@Named("examClassifyBean")
+@Named("examClassifyController")
 @Scope("session")
-public class ExamClassifyBean extends BaseController {
+public class ExamClassifyController extends BaseController {
 
     private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
 
@@ -69,7 +69,7 @@ public class ExamClassifyBean extends BaseController {
      */
     public String init() {
         try {
-            pushPathHistory("examClassifyBean");
+            pushPathHistory("examClassifyController");
 
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {

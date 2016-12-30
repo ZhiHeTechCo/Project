@@ -82,8 +82,8 @@ public class ExamResultController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     /**

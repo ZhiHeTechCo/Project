@@ -101,7 +101,7 @@ public class ExamReportController extends BaseController {
             // 没有查询到当前考题的成绩
             if (questions == null || questions.size() == 0) {
                 // 去试题选择
-                ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+                ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
                 return classifyBean.init();
             }
 
@@ -151,8 +151,8 @@ public class ExamReportController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     public List<ExamModel> getQuestions() {

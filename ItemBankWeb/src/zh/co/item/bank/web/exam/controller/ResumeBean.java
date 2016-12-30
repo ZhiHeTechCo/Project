@@ -223,8 +223,8 @@ public class ResumeBean extends BaseController {
      * @return
      */
     public String toClassify() {
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     public List<ExamModel> getQuestions() {

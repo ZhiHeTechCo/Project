@@ -72,7 +72,7 @@ public class WebUtils {
     
     public final static Map<String, String> controllerAndPageMap = new HashMap<String, String>();
     static {
-    	controllerAndPageMap.put("examClassifyBean", "/xhtml/examination/ExamClassify.xhtml");
+    	controllerAndPageMap.put("examClassifyController", "/xhtml/examination/ExamClassify.xhtml");
     	controllerAndPageMap.put("resumeBean", "/xhtml/examination/Resume.xhtml");
     	controllerAndPageMap.put("forumController", "/xhtml/forum/Forum.xhtml");
     }

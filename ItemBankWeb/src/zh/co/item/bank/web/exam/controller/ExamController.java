@@ -306,7 +306,7 @@ public class ExamController extends BaseController {
         } catch (CmnBizException ex) {
             processForException(logger, ex);
             // 返回题型选择
-            ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
             return classifyBean.init();
 
         } catch (Exception e) {
@@ -440,8 +440,8 @@ public class ExamController extends BaseController {
         examService.deleteExamCollectionBySource(map);
         doclear();
         // b.跳转至试题选择
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     /**
@@ -487,8 +487,8 @@ public class ExamController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     /**

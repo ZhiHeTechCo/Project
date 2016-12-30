@@ -23,7 +23,7 @@ import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.UserModel;
-import zh.co.item.bank.web.exam.controller.ExamClassifyBean;
+import zh.co.item.bank.web.exam.controller.ExamClassifyController;
 import zh.co.item.bank.web.exam.controller.ResumeBean;
 import zh.co.item.bank.web.user.service.UserService;
 
@@ -151,7 +151,7 @@ public class UserInfoBean extends BaseController {
      * @return
      */
     public String toExam() {
-        ExamClassifyBean classifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
+        ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
         return classifyBean.init();
     }
 

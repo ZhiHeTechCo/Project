@@ -232,8 +232,8 @@ public class MediaExamController extends BaseController {
      */
     public String goBackToClassify() {
         // 返回试题一览画面
-        ExamClassifyBean examClassifyBean = (ExamClassifyBean) SpringAppContextManager.getBean("examClassifyBean");
-        return examClassifyBean.init();
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        return examClassifyController.init();
     }
 
     /**
