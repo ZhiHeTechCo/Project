@@ -71,7 +71,7 @@ public class MediaExamController extends BaseController {
     }
 
     /**
-     * 1.听力画面初始化
+     * 1.[非考试模式]听力画面初始化
      * 
      * @return
      */
@@ -80,6 +80,7 @@ public class MediaExamController extends BaseController {
             pushPathHistory("mediaExam");
             // a.对象初始化
             userInfo = WebUtils.getLoginUserInfo();
+            examFlag = null;
             mediaModel = null;
             mediaQuestions = new ArrayList<MediaQuestionStructure>();
             this.mediaReady = "none";
@@ -162,7 +163,8 @@ public class MediaExamController extends BaseController {
         try {
             pushPathHistory("mediaExam");
             if (source != null && classifyBean != null) {
-                // 初始化
+                // a.对象初始化
+                userInfo = WebUtils.getLoginUserInfo();
                 mediaModel = null;
                 examFlag = "true";
                 mediaQuestions = new ArrayList<MediaQuestionStructure>();
@@ -206,13 +208,20 @@ public class MediaExamController extends BaseController {
      * @return
      */
     public String submitMedia() {
+        try {
 
-        // a.登录听力做题记录表和考试做题记录表
-        mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel, examFlag);
+            // a.初始化
+            this.mediaReady = "none";
+            mediaModel.setMedia(SystemConstants.EMPTY);
 
-        // b.去结果一览画面
-        mediaModel.setMedia(SystemConstants.EMPTY);
-        this.mediaReady = "none";
+            // b.登录听力做题记录表和考试做题记录表
+            mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel, examFlag);
+
+        } catch (Exception e) {
+            processForException(logger, e);
+            return getPageId();
+        }
+        // c.去结果一览画面
         return SystemConstants.PAGE_ITBK_EXAM_008;
     }
 
@@ -228,13 +237,14 @@ public class MediaExamController extends BaseController {
     }
 
     /**
-     * 6.【考试模式】返回考试结果一览画面并显示结果
+     * 6.【考试模式】返回考试结果一览画面并显示结果（点击查看考试成绩）
      * 
      * @return
      */
     public String goBackToExamResult() {
         ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                 .getBean("examReportController");
+        examReportController.setMediaFlag("false");
         return examReportController.init(mediaModel.getSource());
     }
 
