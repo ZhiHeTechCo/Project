@@ -31,7 +31,8 @@
 								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp;
 								<span class="glyphicon glyphicon-screenshot" />
 							</h4>
-							<c:forEach var="type" items="#{examReportController.reportModels}">
+							<c:forEach var="type"
+								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '1'}">
 									<h4>文字：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
@@ -50,17 +51,18 @@
 												</div>
 											</h:commandLink>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF3333;">#{item.answer}</div>
+												<div class="report" style="background: #FF6666;">×</div>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">#{item.answer}</div>
+												<div class="report">○</div>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examReportController.reportModels}">
+							<c:forEach var="type"
+								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '2'}">
 									<h4>词汇：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
@@ -79,19 +81,18 @@
 												</div>
 											</h:commandLink>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div
-													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report" style="background: #FF6666;">×</div>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div
-													style="width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report">○</div>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examReportController.reportModels}">
+							<c:forEach var="type"
+								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '3'}">
 									<h4>文法：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
@@ -110,19 +111,18 @@
 												</div>
 											</h:commandLink>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div
-													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report" style="background: #FF6666;">×</div>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div
-													style="width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report">○</div>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examReportController.reportModels}">
+							<c:forEach var="type"
+								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '4'}">
 									<h4>记述：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
@@ -141,19 +141,18 @@
 												</div>
 											</h:commandLink>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div
-													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report" style="background: #FF6666;">×</div>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div
-													style="width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report">○</div>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
 								</h:column>
 							</c:forEach>
 							<div class="clearfix"></div>
-							<c:forEach var="type" items="#{examReportController.reportModels}">
+							<c:forEach var="type"
+								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '5'}">
 									<h4>阅读：（正确率#{type.percentage}）</h4>
 								</h:panelGroup>
@@ -172,12 +171,10 @@
 												</div>
 											</h:commandLink>
 											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div
-													style="background: #FF3333; width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report" style="background: #FF6666;">×</div>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div
-													style="width: 30px; height: 30px; text-align: center; border: 1px solid #999;">#{item.answer}</div>
+												<div class="report">○</div>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
@@ -190,7 +187,8 @@
 						<hr />
 						<div class="form-submit1">
 							<h:commandButton value="返回题型选择" class="button1"
-								action="#{examReportController.goBackToClassify}" id="goBackToExamBtn">
+								action="#{examReportController.goBackToClassify}"
+								id="goBackToExamBtn">
 							</h:commandButton>
 						</div>
 					</div>

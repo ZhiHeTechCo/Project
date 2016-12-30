@@ -64,7 +64,7 @@
 									<h4>
 										<h:outputText value="#{item.rowNo}"></h:outputText>
 									</h4>
-									<td colspan="4" class="list-group list-group-alternate"><h:commandLink
+									<td class="list-group list-group-alternate"><h:commandLink
 											action="#{examResultBean.showDetail}"
 											style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
 											class="list-group-item">
@@ -76,167 +76,195 @@
 									</h:commandLink></td>
 									<tr>
 										<td><h4>选项</h4></td>
-										<td><h:panelGroup
-												rendered="#{item.radioClass eq 'radioTable2'}">
+										<td>
+											<!-- 选择题时 --> <h:panelGroup rendered="#{item.a ne ''}">
+												<h:panelGroup rendered="#{item.radioClass eq 'radioTable2'}">
+													<div style="width: 5%; float: left;">
+														<div
+															style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
+															<h:panelGroup rendered="#{item.answer eq '1'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '1'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '1' and item.answer ne '1'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="padding-bottom: 10px; width: 100%">
+															<h:panelGroup rendered="#{item.answer eq '2'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '2'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '2' and item.answer ne '2'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="padding-bottom: 10px; width: 100%">
+															<h:panelGroup rendered="#{item.answer eq '3'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '3'}">
+																<span class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '3' and item.answer ne '3'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="padding-bottom: 10px; width: 100%">
+															<h:panelGroup rendered="#{item.answer eq '4'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '4'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '4' and item.answer ne '4'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+													</div>
+													<div style="float: left; width: 95%;">
+														<h:selectOneRadio value="#{item.myAnswer}"
+															layout="#{item.layoutStyle}" class="#{item.radioClass}"
+															readonly="true" disabled="true">
+															<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+															<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+															<f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+															<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+														</h:selectOneRadio>
+													</div>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.radioClass eq 'radioTable1'}">
+													<div style="width: 100%;">
+														<div style="width: 25%; margin-top: 5px; float: left;">
+															<h:panelGroup rendered="#{item.answer eq '1'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '1'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '1' and item.answer ne '1'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="width: 25%; margin-top: 5px; float: left;">
+															<h:panelGroup rendered="#{item.answer eq '2'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '2'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '2' and item.answer ne '2'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="width: 25%; margin-top: 5px; float: left;">
+															<h:panelGroup rendered="#{item.answer eq '3'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '3'}">
+																<span class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '3' and item.answer ne '3'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+														<div style="width: 25%; margin-top: 5px; float: left;">
+															<h:panelGroup rendered="#{item.answer eq '4'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-ok"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '4'}">
+																<span style="margin-top: 4px;"
+																	class="glyphicon glyphicon-remove"></span>
+															</h:panelGroup>
+															<h:panelGroup
+																rendered="#{item.myAnswer ne '4' and item.answer ne '4'}">
+																<span style="margin-top: 4px; color: #FFFFFF;"
+																	class="glyphicon glyphicon-chevron-right"></span>
+															</h:panelGroup>
+														</div>
+													</div>
+													<div style="float: left; width: 100%;">
+														<h:selectOneRadio value="#{item.myAnswer}"
+															layout="#{item.layoutStyle}" class="#{item.radioClass}"
+															readonly="true" disabled="true">
+															<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+															<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+															<f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+															<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+														</h:selectOneRadio>
+													</div>
+												</h:panelGroup>
+											</h:panelGroup> <!-- 非选择题 --> <h:panelGroup rendered="#{item.a eq ''}">
 												<div style="width: 5%; float: left;">
 													<div
 														style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
-														<h:panelGroup rendered="#{item.answer eq '1'}">
+														<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
 															<span style="margin-top: 4px;"
 																class="glyphicon glyphicon-ok"></span>
 														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '1'}">
+														<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
 															<span style="margin-top: 4px;"
 																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '1' and item.answer ne '1'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="padding-bottom: 10px; width: 100%">
-														<h:panelGroup rendered="#{item.answer eq '2'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '2'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '2' and item.answer ne '2'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="padding-bottom: 10px; width: 100%">
-														<h:panelGroup rendered="#{item.answer eq '3'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '3'}">
-															<span class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '3' and item.answer ne '3'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="padding-bottom: 10px; width: 100%">
-														<h:panelGroup rendered="#{item.answer eq '4'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '4'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '4' and item.answer ne '4'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
 														</h:panelGroup>
 													</div>
 												</div>
 												<div style="float: left; width: 95%;">
-													<h:selectOneRadio value="#{item.myAnswer}"
-														layout="#{item.layoutStyle}" class="#{item.radioClass}"
-														readonly="true" disabled="true">
-														<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-														<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-														<f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
-														<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-													</h:selectOneRadio>
+													<h:inputText value="#{item.myAnswer}" readonly="true" />
 												</div>
-											</h:panelGroup> <h:panelGroup rendered="#{item.radioClass eq 'radioTable1'}">
-												<div style="width: 100%;">
-													<div style="width: 25%; margin-top: 5px; float: left;">
-														<h:panelGroup rendered="#{item.answer eq '1'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '1'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '1' and item.answer ne '1'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="width: 25%; margin-top: 5px; float: left;">
-														<h:panelGroup rendered="#{item.answer eq '2'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '2'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '2' and item.answer ne '2'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="width: 25%; margin-top: 5px; float: left;">
-														<h:panelGroup rendered="#{item.answer eq '3'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '3'}">
-															<span class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '3' and item.answer ne '3'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-													<div style="width: 25%; margin-top: 5px; float: left;">
-														<h:panelGroup rendered="#{item.answer eq '4'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-ok"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne item.answer and item.myAnswer eq '4'}">
-															<span style="margin-top: 4px;"
-																class="glyphicon glyphicon-remove"></span>
-														</h:panelGroup>
-														<h:panelGroup
-															rendered="#{item.myAnswer ne '4' and item.answer ne '4'}">
-															<span style="margin-top: 4px; color: #FFFFFF;"
-																class="glyphicon glyphicon-chevron-right"></span>
-														</h:panelGroup>
-													</div>
-												</div>
-												<div style="float: left; width: 100%;">
-													<h:selectOneRadio value="#{item.myAnswer}"
-														layout="#{item.layoutStyle}" class="#{item.radioClass}"
-														readonly="true" disabled="true">
-														<f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-														<f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-														<f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
-														<f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-													</h:selectOneRadio>
-												</div>
-											</h:panelGroup></td>
+											</h:panelGroup>
+										</td>
 									</tr>
 									<tr>
-										<td><h4>解析</h4></td>
-										<td colspan="4"><h:panelGroup
-												rendered="#{item.analysis eq null}">暂无</h:panelGroup> <h:outputText
-												value="#{item.analysis}"></h:outputText></td>
+										<h:panelGroup rendered="#{item.a ne ''}">
+											<td>
+												<h4>解析</h4>
+											</td>
+											<td><h:panelGroup rendered="#{item.analysis eq null}">暂无</h:panelGroup>
+												<h:outputText value="#{item.analysis}" /></td>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.a eq ''}">
+											<td><h4>正解</h4></td>
+											<td><h:outputText value="#{item.answer}" /></td>
+										</h:panelGroup>
 									</tr>
 								</h:column>
 							</h:dataTable>

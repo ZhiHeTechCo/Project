@@ -80,58 +80,75 @@
 										</ins> <h:outputText value="#{questionDetail.question.contextAfter}" />
 									</td>
 								</tr>
-								<tr>
-									<td width="20%"><h4>选项</h4></td>
-									<td width="80%"><h:selectOneRadio
-											value="#{questionDetail.question.answer}"
-											layout="#{questionDetail.question.layoutStyle}"
-											class="#{questionDetail.question.radioClass}" readonly="true"
-											disabled="true">
-											<f:selectItem itemValue="1"
-												itemLabel="  A：#{questionDetail.question.a}" />
-											<f:selectItem itemValue="2"
-												itemLabel="  B：#{questionDetail.question.b}" />
-											<f:selectItem itemValue="3"
-												itemLabel="  C：#{questionDetail.question.c}" />
-											<f:selectItem itemValue="4"
-												itemLabel="  D：#{questionDetail.question.d}" />
-										</h:selectOneRadio></td>
-								</tr>
-								<c:if test="#{questionDetail.examFlag eq 'true'}">
+								<c:if test="#{questionDetail.question.a ne ''}">
 									<tr>
-										<td width="20%"><h4>您的选择</h4></td>
-										<c:if test="#{questionDetail.question.myAnswer eq '1'}">
-											<td colspan="4">A</td>
-										</c:if>
-										<c:if test="#{questionDetail.question.myAnswer eq '2'}">
-											<td colspan="4">B</td>
-										</c:if>
-										<c:if test="#{questionDetail.question.myAnswer eq '3'}">
-											<td colspan="4">C</td>
-										</c:if>
-										<c:if test="#{questionDetail.question.myAnswer eq '4'}">
-											<td colspan="4">D</td>
-										</c:if>
-										<c:if
-											test="#{questionDetail.question.myAnswer eq null || questionDetail.question.myAnswer eq ''}">
-											<td colspan="4">未选择</td>
-										</c:if>
+										<td width="20%"><h4>选项</h4></td>
+										<td width="80%"><h:selectOneRadio
+												value="#{questionDetail.question.answer}"
+												layout="#{questionDetail.question.layoutStyle}"
+												class="#{questionDetail.question.radioClass}"
+												readonly="true" disabled="true">
+												<f:selectItem itemValue="1"
+													itemLabel="  A：#{questionDetail.question.a}" />
+												<f:selectItem itemValue="2"
+													itemLabel="  B：#{questionDetail.question.b}" />
+												<f:selectItem itemValue="3"
+													itemLabel="  C：#{questionDetail.question.c}" />
+												<f:selectItem itemValue="4"
+													itemLabel="  D：#{questionDetail.question.d}" />
+											</h:selectOneRadio></td>
+									</tr>
+									<c:if test="#{questionDetail.examFlag eq 'true'}">
+										<tr>
+											<td width="20%"><h4>您的选择</h4></td>
+											<c:if test="#{questionDetail.question.myAnswer eq '1'}">
+												<td>A</td>
+											</c:if>
+											<c:if test="#{questionDetail.question.myAnswer eq '2'}">
+												<td>B</td>
+											</c:if>
+											<c:if test="#{questionDetail.question.myAnswer eq '3'}">
+												<td>C</td>
+											</c:if>
+											<c:if test="#{questionDetail.question.myAnswer eq '4'}">
+												<td>D</td>
+											</c:if>
+											<c:if
+												test="#{questionDetail.question.myAnswer eq null || questionDetail.question.myAnswer eq ''}">
+												<td>未选择</td>
+											</c:if>
+										</tr>
+									</c:if>
+								</c:if>
+								<c:if
+									test="#{questionDetail.examFlag eq 'true' and questionDetail.question.a eq '' and questionDetail.question.myAnswer ne ''}">
+									<tr>
+										<td width="20%"><h4>您的答案</h4></td>
+										<td>#{questionDetail.question.myAnswer}</td>
+									</tr>
+								</c:if>
+								<c:if test="#{questionDetail.question.a eq ''}">
+									<tr>
+										<td width="20%"><h4>正解</h4></td>
+										<td>#{questionDetail.question.answer}</td>
+									</tr>
+								</c:if>
+								<c:if test="#{questionDetail.question.a ne ''}">
+									<tr>
+										<td width="20%"><h4>解析</h4></td>
+										<td><c:if
+												test="#{questionDetail.question.analysis eq null}">暂无</c:if>
+											<h:outputText value="#{questionDetail.question.analysis}" /></td>
 									</tr>
 								</c:if>
 								<tr>
-									<td width="20%"><h4>解析</h4></td>
-									<td colspan="4"><c:if
-											test="#{questionDetail.question.analysis eq null}">暂无</c:if>
-										<h:outputText value="#{questionDetail.question.analysis}" /></td>
-								</tr>
-								<tr>
 									<td><h4>试题种别</h4></td>
-									<td colspan="4"><h:outputText
+									<td><h:outputText
 											value="#{questionDetail.question.examTypeName}" /></td>
 								</tr>
 								<tr>
 									<td><h4>试题出处</h4></td>
-									<td colspan="4"><h:outputText
+									<td><h:outputText
 											value="#{questionDetail.question.source}" /></td>
 								</tr>
 							</table>
@@ -187,7 +204,7 @@
 											<td><h4>其他：</h4></td>
 											<td>
 												<div style="width: 100%;">
-													<h:inputText value="#{questionDetail.comment}" id="comment"/>
+													<h:inputText value="#{questionDetail.comment}" id="comment" />
 												</div>
 											</td>
 										</tr>

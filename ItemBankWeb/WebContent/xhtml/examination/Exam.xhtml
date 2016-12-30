@@ -75,16 +75,19 @@
 											<h:outputText value="#{stringItem}" />
 										</ui:repeat>
 										<ins>#{item.contextKey}</ins>#{item.contextAfter}
-                                          <hr />
-										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-											value="#{item.myAnswer}" />
-										<h:selectOneRadio value="#{item.myAnswer}"
-											layout="#{item.layoutStyle}" class="#{item.radioClass}">
-											<f:selectItem itemValue="1" itemLabel="#{item.a}" />
-											<f:selectItem itemValue="2" itemLabel="#{item.b}" />
-											<f:selectItem itemValue="3" itemLabel="#{item.c}" />
-											<f:selectItem itemValue="4" itemLabel="#{item.d}" />
-										</h:selectOneRadio>
+                                        <hr />
+										<h:panelGroup rendered="#{item.a ne ''}">
+											<h:selectOneRadio value="#{item.myAnswer}"
+												layout="#{item.layoutStyle}" class="#{item.radioClass}">
+												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
+												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
+												<f:selectItem itemValue="3" itemLabel="#{item.c}" />
+												<f:selectItem itemValue="4" itemLabel="#{item.d}" />
+											</h:selectOneRadio>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.a eq ''}">
+											<h:inputText value="#{item.myAnswer}" maxlength="6"/>
+										</h:panelGroup>
 									</h:column>
 								</h:dataTable>
 								<c:if test="#{examBean.status == null}">
