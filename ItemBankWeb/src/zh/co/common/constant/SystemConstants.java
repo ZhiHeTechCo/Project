@@ -79,7 +79,7 @@ public class SystemConstants {
     public static final String PROPERTIES_FILE = "/system.properties";
     
     /** count sql文件路径 */
-    public static final String COUNT_SQL_FILE = "/count_sql.ftl";
+    public static final String COUNT_SQL_FILE = "count_sql.ftl";
 
     /**---------------------画面ID------------------------------
     /**系统index画面*/

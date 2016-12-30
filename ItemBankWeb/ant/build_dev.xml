@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ItemBankWeb" default="deleteWar" basedir="..">  
+    <property name="build" value="${basedir}/build" />  
+    <property name="build.class" value="${build}/classes" />  
+    <property name="src" value="${basedir}/src" />  
+    <property name="webApp" value="${basedir}/WebContent" />  
+
+
+  
+    <!--创建一个临时目录-->  
+    <target name="init" description="创建目录">  
+        <property name="deploy.sysconf.dir" value="/opt/zh/sysconf" />
+        <copy todir="${deploy.sysconf.dir}" overwrite="true">
+            <fileset dir="${webApp}/config">
+            </fileset>
+        </copy>
+    </target>  
+  
+    <target name="replace_sys_params" depends="init">
+      <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
+          <fileset file="${deploy.sysconf.dir}/jdbc.conf" />
+      </replace>
+    </target>
+
+  
+    <!--把打好的WAR删除-->  
+    <target name="deleteWar" depends="replace_sys_params" description="删除服务器上的war">  
+        <delete dir="${build}" />  
+    </target>  
+</project>

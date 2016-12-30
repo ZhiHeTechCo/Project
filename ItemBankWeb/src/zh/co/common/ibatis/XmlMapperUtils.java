@@ -74,7 +74,7 @@ public class XmlMapperUtils {
 		freemarker.template.Configuration cfg = new freemarker.template.Configuration();
 		cfg.setClassForTemplateLoading(XmlMapperUtils.class, "");
 		cfg.setDefaultEncoding("UTF-8");
-		String templateName = XmlMapperUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath() + SystemConstants.COUNT_SQL_FILE;
+		String templateName = SystemConstants.COUNT_SQL_FILE;
 
 		try {
 			if(templateName.startsWith("/")) {
