@@ -26,7 +26,6 @@ import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
 import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.exam.service.ResumeService;
-import zh.co.item.bank.web.user.controller.SignInBean;
 
 /**
  * 试题类型选择画面
@@ -58,10 +57,10 @@ public class ResumeBean extends BaseController {
     private String title;
 
     private String subject;
-    
+
     /** 大题干List */
     private List<String> subjectList;
-    
+
     private String graphicImage;
 
     public String getPageId() {
@@ -69,31 +68,27 @@ public class ResumeBean extends BaseController {
     }
 
     /**
-     * initial
+     * 1.初始化
      * 
      * @return
      */
     public String init() {
         try {
-        	pushPathHistory("resumeBean");
-        	
-            userInfo = (UserModel) WebUtils.getLoginUserInfo();
-            if (!checkuser(userInfo)) {
-                // 跳转至登录画面
-            	SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
-                return signInBean.init();
-            }
+            pushPathHistory("resumeBean");
 
-            
+            // a.对象初始化
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
             title = "";
             subjectList = new ArrayList<String>();
             subject = "";
             graphicImage = "";
-            // 检索符合记忆曲线的错题，取第一件
+
+            // b.检索错题
+            // b-1.检索符合记忆曲线的错题，取第一件
             Integer userId = userInfo.getId();
             questions = resumeService.selectQuestionForError(userId);
 
-            // 未检索到符合记忆曲线的题，则检索该用户所有错题，取第一件
+            // b-2.未检索到符合记忆曲线的题，则检索该用户所有错题，取第一件
             if (questions.size() == 0) {
                 questions = resumeService.selectQuestionForErrorAll(userId);
                 // 当前用户没有错题，则报错
@@ -116,11 +111,11 @@ public class ResumeBean extends BaseController {
             processForException(logger, e);
         }
 
-        return SystemConstants.PAGE_ITBK_EXAM_005;
+        return getPageId();
     }
 
     /**
-     * 判断fatherId生成试题
+     * 1-b-2.判断fatherId生成试题
      * 
      * @param examModel
      */
@@ -145,7 +140,7 @@ public class ResumeBean extends BaseController {
     }
 
     /**
-     * [确认]按钮点下
+     * 2.[确认]按钮点下
      * 
      * @return
      */
@@ -153,7 +148,7 @@ public class ResumeBean extends BaseController {
         try {
 
             for (int i = 0; i < questions.size(); i++) {
-                // 取当前用户的错题记录
+                // a.取当前用户的错题记录
                 ExamModel examModel = (ExamModel) questions.get(i);
                 examModel.setUserId(userInfo.getId());
 
@@ -194,13 +189,16 @@ public class ResumeBean extends BaseController {
                     finish = flag ? "1" : "2";
                 }
 
+                // 是否完成
                 collection.setFinish(finish);
 
-                // 更新做题记录
+                // b.更新做题记录
                 collectionService.updateCollection(collection);
             }
 
-            ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
+            // c.去结果一览画面
+            ExamResultController examResultController = (ExamResultController) SpringAppContextManager
+                    .getBean("examResultController");
             examResultController.setQuestions(questions);
             examResultController.setSubject(subject);
             examResultController.setSubjectList(subjectList);
@@ -211,19 +209,20 @@ public class ResumeBean extends BaseController {
 
         } catch (Exception e) {
             processForException(logger, e);
-            // 留在本画面
             tableShow = null;
         }
-        return SystemConstants.PAGE_ITBK_EXAM_005;
+        // 留在本画面
+        return getPageId();
     }
 
     /**
-     * [去做题]按钮按下
+     * 3.[去做题]按钮按下
      * 
      * @return
      */
     public String toClassify() {
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
     }
 
@@ -259,20 +258,20 @@ public class ResumeBean extends BaseController {
         this.subject = subject;
     }
 
-	public List<String> getSubjectList() {
-		return subjectList;
-	}
+    public List<String> getSubjectList() {
+        return subjectList;
+    }
 
-	public void setSubjectList(List<String> subjectList) {
-		this.subjectList = subjectList;
-	}
+    public void setSubjectList(List<String> subjectList) {
+        this.subjectList = subjectList;
+    }
 
-	public String getGraphicImage() {
-		return graphicImage;
-	}
+    public String getGraphicImage() {
+        return graphicImage;
+    }
 
-	public void setGraphicImage(String graphicImage) {
-		this.graphicImage = graphicImage;
-	}
+    public void setGraphicImage(String graphicImage) {
+        this.graphicImage = graphicImage;
+    }
 
 }
