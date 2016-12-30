@@ -135,12 +135,14 @@ public class ExamClassifyBean extends BaseController {
 
             // b.画面跳转
             if ("6".equals(classifyBean.getExamType())) {
+                // b-1.选择听力
                 // 跳转至听力画面
                 MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
                         .getBean("mediaExamController");
                 return mediaExamController.init();
 
             } else {
+                // b-2.选择听力以外
                 // 跳转至【试题库】画面
                 return toExam();
             }
