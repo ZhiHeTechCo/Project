@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ItemBankWeb" default="deleteWar" basedir="..">  
+<project name="ItemBankWeb" default="replace_sys_params" basedir="..">  
     <property name="build" value="${basedir}/build" />  
     <property name="build.class" value="${build}/classes" />  
     <property name="src" value="${basedir}/src" />  
@@ -17,14 +17,11 @@
     </target>  
   
     <target name="replace_sys_params" depends="init">
-      <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
+      <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build_dev.properties">
           <fileset file="${deploy.sysconf.dir}/jdbc.conf" />
+      	  <fileset file="${src}/system.properties" /> 
+      	  <fileset file="${webApp}/WEB-INF/web.xml" /> 
       </replace>
     </target>
-
-  
-    <!--把打好的WAR删除-->  
-    <target name="deleteWar" depends="replace_sys_params" description="删除服务器上的war">  
-        <delete dir="${build}" />  
-    </target>  
+ 
 </project>

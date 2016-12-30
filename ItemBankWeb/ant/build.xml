@@ -68,14 +68,23 @@
             <fileset file="${src}/system.properties" /> 
         </copy>
     	
+    	<replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
+    	      <fileset file="${build}/WEB-INF/classes/system.properties" />
+    	</replace>
+    	
         <delete dir="${build.class}" /> 
         
         <copy todir="${build}/WEB-INF/classes/sql" overwrite="true">  
             <fileset dir="${src}/sql" /> 
-        </copy>       
+        </copy> 
+    	
         <copy todir="${build}/WEB-INF" overwrite="true">  
             <fileset dir="${webApp}/WEB-INF" /> 
         </copy> 
+        <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
+        	  <fileset file="${build}/WEB-INF/web.xml" /> 
+        </replace>
+    	
         <copy todir="${build}" overwrite="true">  
             <fileset file="${webApp}/favicon.ico" /> 
         </copy> 
