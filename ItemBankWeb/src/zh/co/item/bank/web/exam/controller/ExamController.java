@@ -35,7 +35,7 @@ import zh.co.item.bank.web.exam.service.ExamService;
  * @author gaoya
  *
  */
-@Named("examBean")
+@Named("examController")
 @Scope("session")
 public class ExamController extends BaseController {
 
@@ -95,7 +95,7 @@ public class ExamController extends BaseController {
      */
     public String init() {
         try {
-            pushPathHistory("examBean");
+            pushPathHistory("examController");
             // a.对象初始化
             userInfo = WebUtils.getLoginUserInfo();
 
@@ -205,7 +205,7 @@ public class ExamController extends BaseController {
      */
     public String examSearch() {
         try {
-            pushPathHistory("examBean");
+            pushPathHistory("examController");
             // a.初始化变量
             title = "";
             subjectList = new ArrayList<String>();

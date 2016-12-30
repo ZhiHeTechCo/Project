@@ -24,36 +24,36 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<c:if test="#{examBean.title != ''}">
-								<c:if test="#{examBean.graphicImage !=''}">
+							<c:if test="#{examController.title != ''}">
+								<c:if test="#{examController.graphicImage !=''}">
 									<h5 style="color: #3382C9;">
 										<span class="glyphicon glyphicon-info-sign"></span>点击图片可放大。
 									</h5>
 								</c:if>
 								<h4>
-									<b><h:outputText value="#{examBean.title}"></h:outputText></b>
+									<b><h:outputText value="#{examController.title}"></h:outputText></b>
 								</h4>
-								<c:if test="#{examBean.subject !=''}">
+								<c:if test="#{examController.subject !=''}">
 									<table class="table table-bordered">
 										<tr>
 											<td align="center"><h4>问题</h4></td>
 										</tr>
 										<tr>
-											<td><ui:repeat value="#{examBean.subjectList}"
+											<td><ui:repeat value="#{examController.subjectList}"
 													var="stringItem">
 													<h:outputText value="#{stringItem}" />
 													<br />
 												</ui:repeat></td>
 										</tr>
-										<c:if test="#{examBean.graphicImage !=''}">
+										<c:if test="#{examController.graphicImage !=''}">
 											<tr>
 												<td align="center">
 													<div class="gallery-bottom">
 														<div class="col-md-3 gallery-grid">
 															<a class="example-image-link"
-																href="#{examBean.graphicImage}"
+																href="#{examController.graphicImage}"
 																data-lightbox="example-set"><img
-																class="example-image" src="#{examBean.graphicImage}"
+																class="example-image" src="#{examController.graphicImage}"
 																alt="" /></a>
 														</div>
 													</div>
@@ -63,7 +63,7 @@
 									</table>
 								</c:if>
 								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{examBean.questions}" var="item"
+									rendered="true" value="#{examController.questions}" var="item"
 									width="100%">
 									<h:column>
 										<h4>
@@ -90,30 +90,30 @@
 										</h:panelGroup>
 									</h:column>
 								</h:dataTable>
-								<c:if test="#{examBean.status == null}">
+								<c:if test="#{examController.status == null}">
 									<div class="form-submit1">
 										<h:commandButton value="确认" class="button1"
-											action="#{examBean.doSubmit}" id="doSubmitBtn" />
+											action="#{examController.doSubmit}" id="doSubmitBtn" />
 									</div>
 								</c:if>
-								<c:if test="#{examBean.status != null}">
+								<c:if test="#{examController.status != null}">
 									<div class="form-submit1">
 										<h:commandButton value="下一题" class="button1"
-											style="margin-right: 5px;" action="#{examBean.doNext}"
+											style="margin-right: 5px;" action="#{examController.doNext}"
 											id="doNextBtn">
 											<f:param name="source"
-												value="#{examBean.questions.get(0).source}" />
+												value="#{examController.questions.get(0).source}" />
 										</h:commandButton>
 									</div>
 									<div class="form-submit1">
 										<h:commandButton value="保存退出" class="button1"
 											style="margin-right: 5px;"
-											action="#{examBean.doSaveAndExist}" id="doSaveAndExistBtn">
+											action="#{examController.doSaveAndExist}" id="doSaveAndExistBtn">
 										</h:commandButton>
 									</div>
 									<div class="form-submit1">
 										<h:commandButton value="直接退出" class="button1"
-											style="margin-right: 5px;" action="#{examBean.doExist}"
+											style="margin-right: 5px;" action="#{examController.doExist}"
 											id="doExistBtn">
 										</h:commandButton>
 									</div>
@@ -124,15 +124,15 @@
 									</h5>
 								</c:if>
 							</c:if>
-							<c:if test="#{examBean.title == ''}">
+							<c:if test="#{examController.title == ''}">
 								<div class="form-submit1">
 									<h:commandButton value="我的错题" class="button1"
-										style="margin-right: 5px;" action="#{examBean.doResume}"
+										style="margin-right: 5px;" action="#{examController.doResume}"
 										id="doResumeBtn" />
 								</div>
 								<div class="form-submit1">
 									<h:commandButton value="其他题型" class="button1"
-										action="#{examBean.goBackToClassify}" id="goBackToClassifyBtn" />
+										action="#{examController.goBackToClassify}" id="goBackToClassifyBtn" />
 								</div>
 							</c:if>
 						</div>

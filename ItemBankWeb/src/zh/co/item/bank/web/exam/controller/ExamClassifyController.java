@@ -196,11 +196,11 @@ public class ExamClassifyController extends BaseController {
             }
 
             // b.跳转至【考试题库】画面
-            ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
-            examBean.setClassifyBean(classifyBean);
-            examBean.setYear(null);
-            examBean.setSafeList(new CopyOnWriteArrayList<ExamModel>());
-            return examBean.examSearch();
+            ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
+            examController.setClassifyBean(classifyBean);
+            examController.setYear(null);
+            examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
+            return examController.examSearch();
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -215,10 +215,10 @@ public class ExamClassifyController extends BaseController {
      * @return
      */
     private String toExam() {
-        ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
-        examBean.setClassifyBean(classifyBean);
+        ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
+        examController.setClassifyBean(classifyBean);
 
-        return examBean.init();
+        return examController.init();
     }
 
     /**

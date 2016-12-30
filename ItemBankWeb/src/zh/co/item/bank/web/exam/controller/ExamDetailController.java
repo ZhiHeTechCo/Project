@@ -275,8 +275,8 @@ public class ExamDetailController extends BaseController {
             return resumeBean.init();
 
         } else {
-            ExamController examBean = (ExamController) SpringAppContextManager.getBean("examBean");
-            return examBean.init();
+            ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
+            return examController.init();
         }
     }
 
