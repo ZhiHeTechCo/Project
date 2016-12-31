@@ -99,6 +99,7 @@
     <target name="replace_sys_params" depends="generwar">
       <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
           <fileset file="${deploy.sysconf.dir}/jdbc.conf" />
+      	  <fileset file="${deploy.sysconf.dir}/application.properties" />
       </replace>
     </target>
 

@@ -821,9 +821,9 @@ public final class CmnStringUtils {
     public static String getMedia(String path) throws IOException {
 
         // 根据文件路径取得byte[]
-        String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + File.separator
-                + path;
-        File file = new File(filePath);
+        String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + path;
+        return filePath;
+/*        File file = new File(filePath);
         if (!file.exists()) {
             return SystemConstants.EMPTY;
         }
@@ -849,7 +849,7 @@ public final class CmnStringUtils {
             if (bos != null) {
                 bos.close();
             }
-        }
+        }*/
     }
 
     /**
