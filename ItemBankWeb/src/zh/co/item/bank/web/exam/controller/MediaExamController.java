@@ -143,10 +143,11 @@ public class MediaExamController extends BaseController {
      */
     public void getMedia() {
         try {
-            mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
-            if (StringUtils.isEmpty(mediaModel.getMedia())) {
+            
+            if (StringUtils.isEmpty(mediaModel.getMediaPath())) {
                 this.mediaReady = "none";
             } else {
+            	mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
                 this.mediaReady = "block";
             }
         } catch (IOException e) {

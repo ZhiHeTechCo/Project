@@ -19,6 +19,7 @@
     <target name="replace_sys_params" depends="init">
       <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build_dev.properties">
           <fileset file="${deploy.sysconf.dir}/jdbc.conf" />
+	      <fileset file="${deploy.sysconf.dir}/application.properties" />
       	  <fileset file="${src}/system.properties" /> 
       	  <fileset file="${webApp}/WEB-INF/web.xml" /> 
       </replace>
