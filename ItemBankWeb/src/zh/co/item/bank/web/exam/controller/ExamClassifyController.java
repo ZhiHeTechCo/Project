@@ -139,6 +139,7 @@ public class ExamClassifyController extends BaseController {
                 // 跳转至听力画面
                 MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
                         .getBean("mediaExamController");
+                mediaExamController.setClassifyBean(classifyBean);
                 return mediaExamController.init();
 
             } else {
