@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TsScore" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TsScoreBean" >
+    <id column="id" property="id" jdbcType="SMALLINT" />
+    <result column="classify_id" property="classifyId" jdbcType="CHAR" />
+    <result column="structure_id" property="structureId" jdbcType="CHAR" />
+    <result column="score" property="score" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, classify_id, structure_id, score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TsScoreBeanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_score
+    where id = #{id,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TsScoreBeanKey" >
+    delete from ts_score
+    where id = #{id,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TsScoreBean" >
+    insert into ts_score (id, classify_id, structure_id, 
+      score)
+    values (#{id,jdbcType=SMALLINT}, #{classifyId,jdbcType=CHAR}, #{structureId,jdbcType=CHAR}, 
+      #{score,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TsScoreBean" >
+    insert into ts_score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
+      <if test="structureId != null" >
+        structure_id,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=SMALLINT},
+      </if>
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=CHAR},
+      </if>
+      <if test="structureId != null" >
+        #{structureId,jdbcType=CHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TsScoreBean" >
+    update ts_score
+    <set >
+      <if test="classifyId != null" >
+        classify_id = #{classifyId,jdbcType=CHAR},
+      </if>
+      <if test="structureId != null" >
+        structure_id = #{structureId,jdbcType=CHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TsScoreBean" >
+    update ts_score
+    set classify_id = #{classifyId,jdbcType=CHAR},
+      structure_id = #{structureId,jdbcType=CHAR},
+      score = #{score,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+</mapper>
