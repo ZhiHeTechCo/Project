@@ -152,4 +152,7 @@ public class MessageId {
     
     /** 抱歉！试题报错失败，请稍候再试。  */
     public static final String ITBK_E_0010 = "ITBK_E_0010";
+    
+    /** 成绩单获取失败，请联系管理员。  */
+    public static final String ITBK_E_0011 = "ITBK_E_0011";
 }

@@ -7,6 +7,7 @@ import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.web.exam.controller.ScoreModel;
 
 @Named
 public class ExamCollectionDao extends BaseDao {
@@ -51,6 +52,16 @@ public class ExamCollectionDao extends BaseDao {
      */
     public ExamReportModel getPercentage(ExamReportModel model) {
         return (ExamReportModel) getIbatisTemplate().selectOne("ExamCollection.getPercentage", model);
+    }
+
+    /**
+     * J.TEST成绩单取得
+     * 
+     * @param param
+     * @return
+     */
+    public ScoreModel getMyScore(Map<String, Object> param) {
+        return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getMyScore", param);
     }
 
 }

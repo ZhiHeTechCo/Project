@@ -125,6 +125,8 @@ public class SystemConstants {
     public static final String PAGE_ITBK_EXAM_007 = "ITBK_EXAM_007";
     /** 听力结果一览 */
     public static final String PAGE_ITBK_EXAM_008 = "ITBK_EXAM_008";
+    /** JTEST成绩单 */
+    public static final String PAGE_ITBK_EXAM_009 = "ITBK_EXAM_009";
     /** 试题登录 */
     public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     /** 试题更新 */

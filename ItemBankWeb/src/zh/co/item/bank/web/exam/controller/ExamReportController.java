@@ -101,7 +101,8 @@ public class ExamReportController extends BaseController {
             // 没有查询到当前考题的成绩
             if (questions == null || questions.size() == 0) {
                 // 去试题选择
-                ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+                ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager
+                        .getBean("examClassifyController");
                 return classifyBean.init();
             }
 
@@ -151,8 +152,26 @@ public class ExamReportController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
+    }
+
+    /**
+     * 5.显示成绩单
+     * 
+     * @return
+     */
+    public String toShowScore() {
+        try {
+            ExamScoreController examScoreController = (ExamScoreController) SpringAppContextManager
+                    .getBean("examScoreController");
+            return examScoreController.init(questions.get(0).getSource());
+
+        } catch (Exception e) {
+            processForException(this.logger, e);
+        }
+        return getPageId();
     }
 
     public List<ExamModel> getQuestions() {
