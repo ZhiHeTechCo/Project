@@ -16,6 +16,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 
 /**
@@ -34,6 +35,8 @@ public class ExamScoreController extends BaseController {
     private ExamCollectionService examCollectionService;
 
     private List<ScoreModel> scoreModels;
+
+    private String width;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_009;
@@ -71,11 +74,17 @@ public class ExamScoreController extends BaseController {
                     scoreModels.add(scoreModel);
                 }
             }
-            // c-1.成绩单取得失败
+            // 成绩单取得失败
             if (scoreModels.size() == 0) {
                 logger.log(MessageId.ITBK_E_0011);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0011);
                 throw ex;
+            }
+            // 成绩单取得成功，设置宽度
+            if (WebUtils.judgeIsMoblie()) {
+                width = "100%";
+            } else {
+                width = "40%";
             }
 
         } catch (Exception e) {
@@ -101,6 +110,14 @@ public class ExamScoreController extends BaseController {
 
     public void setScoreModels(List<ScoreModel> scoreModels) {
         this.scoreModels = scoreModels;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
     }
 
 }
