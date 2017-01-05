@@ -1,22 +1,19 @@
 package zh.co.item.bank.db.entity;
 
 public class VbScoreBean {
-
     private Integer questionId;
 
-    private int myScore;
+    private Integer result;
 
-    // 分数
-    private int score;
+    private Long myScore;
 
-    // 结果（1：正确；0：错误）
-    private String result;
+    private Short score;
 
     private String source;
 
     private Integer structureId;
 
-    private Integer examType;
+    private String examType;
 
     public Integer getQuestionId() {
         return questionId;
@@ -26,28 +23,28 @@ public class VbScoreBean {
         this.questionId = questionId;
     }
 
-    public int getMyScore() {
-        return myScore;
-    }
-
-    public void setMyScore(int myScore) {
-        this.myScore = myScore;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public String getResult() {
+    public Integer getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Integer result) {
         this.result = result;
+    }
+
+    public Long getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(Long myScore) {
+        this.myScore = myScore;
+    }
+
+    public Short getScore() {
+        return score;
+    }
+
+    public void setScore(Short score) {
+        this.score = score;
     }
 
     public String getSource() {
@@ -55,7 +52,7 @@ public class VbScoreBean {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source == null ? null : source.trim();
     }
 
     public Integer getStructureId() {
@@ -66,12 +63,11 @@ public class VbScoreBean {
         this.structureId = structureId;
     }
 
-    public Integer getExamType() {
+    public String getExamType() {
         return examType;
     }
 
-    public void setExamType(Integer examType) {
-        this.examType = examType;
+    public void setExamType(String examType) {
+        this.examType = examType == null ? null : examType.trim();
     }
-
 }
