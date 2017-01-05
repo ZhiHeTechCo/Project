@@ -64,4 +64,14 @@ public class ExamCollectionDao extends BaseDao {
         return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getMyScore", param);
     }
 
+    /**
+     * 取读解总分
+     * 
+     * @param param
+     * @return
+     */
+    public ScoreModel getReadingTotal(Map<String, Object> param) {
+        return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getReadingTotal", param);
+    }
+
 }

@@ -28,9 +28,10 @@
 								<span class="glyphicon glyphicon-screenshot" />
 							</h4>
 							<div style="float: right;">(%)</div>
-							<div style="width: #{examScoreController.width}; margin-left: auto; margin-right: auto;">
+							<div
+								style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
 								<table class="table table-bordered">
-									<tr>
+									<tr style="border: 2px solid #ddd;">
 										<td>分野</td>
 										<td>得点</td>
 										<td>配点</td>
@@ -76,17 +77,36 @@
 													<td>#{item.level}</td>
 												</tr>
 											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
+												<tr>
+													<td>読解計</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq '6'}">
+												<tr>
+													<td>写真</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
 										</h:column>
 									</c:forEach>
 								</table>
 							</div>
 							<br />
 							<div>
-								<div style="width: #{examScoreController.width}; margin-left: auto; margin-right: auto;">
+								<div
+									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
 									<h5>注1:得点率と評価</h5>
 								</div>
 								<div
-									style="width: #{examScoreController.width}; border: 1px solid #ddd; margin-left: auto; margin-right: auto;">
+									style="margin-left: auto; margin-right: auto; border: 2px solid #ddd; width: #{examScoreController.width};">
 									<table class="to toTable" style="width: 100%;">
 										<tr>
 											<td style="padding-left: 8px; width: 30%;">93%以上</td>
@@ -135,17 +155,21 @@
 										</tr>
 									</table>
 								</div>
-								<div style="width: #{examScoreController.width}; margin-left: auto; margin-right: auto;">
+								<div
+									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
 									<h5>注2:合計点が４０%以上であっても、０点の分野があると、認定されません。</h5>
+								</div>
+								<div
+									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
+									<div class="form-submit1">
+										<h:commandButton value="返回前页" class="button1"
+											action="#{examScoreController.goBackToResult}"
+											id="goBackToResultBtn">
+										</h:commandButton>
+									</div>
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							<div class="form-submit1">
-								<h:commandButton value="返回前页" class="button1"
-									action="#{examScoreController.goBackToResult}"
-									id="goBackToResultBtn">
-								</h:commandButton>
-							</div>
 						</div>
 					</div>
 				</div>

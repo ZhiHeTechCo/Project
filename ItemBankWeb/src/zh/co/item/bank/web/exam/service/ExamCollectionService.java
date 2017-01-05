@@ -66,6 +66,28 @@ public class ExamCollectionService {
      */
     public ScoreModel getMyScore(Map<String, Object> param) {
         ScoreModel scoreModel = examCollectionDao.getMyScore(param);
+        setDetail(scoreModel);
+        return scoreModel;
+    }
+
+    /**
+     * 取读解总分
+     * 
+     * @param param
+     * @return
+     */
+    public ScoreModel getReadingTotal(Map<String, Object> param) {
+        ScoreModel scoreModel =examCollectionDao.getReadingTotal(param);
+        setDetail(scoreModel);
+        return scoreModel;
+    }
+
+    /**
+     * 设置成绩单部分信息
+     * 
+     * @param scoreModel
+     */
+    public void setDetail(ScoreModel scoreModel) {
         // c-1.得点率设置
         if (scoreModel.getTotalScore() != 0) {
             String tmp = String.valueOf(scoreModel.getMyTotalScore() / scoreModel.getTotalScore());
@@ -101,6 +123,5 @@ public class ExamCollectionService {
             // TODO
         }
         scoreModel.setLevel(level);
-        return scoreModel;
     }
 }

@@ -46,8 +46,14 @@
 
 	<select id="getMyScore" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.web.exam.controller.ScoreModel">
-		select sum(my_score) as my_total_score,sum(score) as total_score,a.question_id,a.result,a.source,a.structure_id,a.exam_type,a.score from vb_score a
+		select sum(my_score) as my_total_score,sum(score) as total_score,a.source,a.exam_type from vb_score a
 		where source=#{source,jdbcType=CHAR} and exam_type=#{examType,jdbcType=CHAR}
+	</select>
+
+	<select id="getReadingTotal" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.web.exam.controller.ScoreModel">
+		select sum(my_score) as my_total_score,sum(score) as total_score,a.source from vb_score a
+		where source=#{source,jdbcType=CHAR} and exam_type!="6";
 	</select>
 
 	<delete id="deleteBySource" parameterType="java.util.Map">
