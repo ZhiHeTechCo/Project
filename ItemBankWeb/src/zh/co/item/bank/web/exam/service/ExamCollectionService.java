@@ -68,7 +68,7 @@ public class ExamCollectionService {
         ScoreModel scoreModel = examCollectionDao.getMyScore(param);
         // c-1.得点率设置
         if (scoreModel.getTotalScore() != 0) {
-            String tmp = String.valueOf(scoreModel.getMyScore() / scoreModel.getTotalScore());
+            String tmp = String.valueOf(scoreModel.getMyTotalScore() / scoreModel.getTotalScore());
             if (tmp.length() > 4) {
                 tmp = tmp.substring(0, 4);
             }

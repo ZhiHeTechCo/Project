@@ -5,7 +5,7 @@ import zh.co.item.bank.db.entity.VbScoreBean;
 public class ScoreModel extends VbScoreBean {
 
     // 得点
-    private int myScore;
+    private int myTotalScore;
 
     // 配点
     private int totalScore;
@@ -16,12 +16,12 @@ public class ScoreModel extends VbScoreBean {
     // 评价
     private String level;
 
-    public int getMyScore() {
-        return myScore;
+    public int getMyTotalScore() {
+        return myTotalScore;
     }
 
-    public void setMyScore(int myScore) {
-        this.myScore = myScore;
+    public void setMyTotalScore(int myTotalScore) {
+        this.myTotalScore = myTotalScore;
     }
 
     public int getTotalScore() {

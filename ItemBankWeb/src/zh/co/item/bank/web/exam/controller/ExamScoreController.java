@@ -74,13 +74,13 @@ public class ExamScoreController extends BaseController {
                     scoreModels.add(scoreModel);
                 }
             }
-            // 成绩单取得失败
+            // c-1.成绩单取得失败
             if (scoreModels.size() == 0) {
                 logger.log(MessageId.ITBK_E_0011);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0011);
                 throw ex;
             }
-            // 成绩单取得成功，设置宽度
+            // c-2.成绩单取得成功，设置宽度
             if (WebUtils.judgeIsMoblie()) {
                 width = "100%";
             } else {
