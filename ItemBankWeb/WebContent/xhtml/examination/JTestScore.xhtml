@@ -27,115 +27,114 @@
 								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examScoreController.scoreModels.get(0).source}&nbsp;&nbsp;
 								<span class="glyphicon glyphicon-screenshot" />
 							</h4>
-							<c:forEach var="item" items="#{examScoreController.scoreModels}">
-								<h:column>
-									<td colspan="6"><div style="float: right;">(%)</div></td>
-									<tr>
-										<td>分野</td>
-										<td>得点</td>
-										<td>配点</td>
-										<td>得点率</td>
-										<td>評価</td>
-										<td><h:outputText
-												value="0 10 20 30 40 50 60 70 80 90 100" /></td>
-									</tr>
-									<h:panelGroup rendered="#{item.examType eq '3'}">
-										<tr>
-											<td>文法語彙</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.totalScore}</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.percentage}</td>
-											<td>#{item.level}</td>
-											<td>☆</td>
-										</tr>
-									</h:panelGroup>
-									<h:panelGroup rendered="#{item.examType eq '5'}">
-										<tr>
-											<td>読解</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.totalScore}</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.percentage}</td>
-											<td>#{item.level}</td>
-											<td>☆</td>
-										</tr>
-									</h:panelGroup>
-									<h:panelGroup rendered="#{item.examType eq '1'}">
-										<tr>
-											<td>漢字</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.totalScore}</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.percentage}</td>
-											<td>#{item.level}</td>
-											<td>☆</td>
-										</tr>
-									</h:panelGroup>
-									<h:panelGroup rendered="#{item.examType eq '4'}">
-										<tr>
-											<td>記述</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.totalScore}</td>
-											<td>#{item.myScore}</td>
-											<td>#{item.percentage}</td>
-											<td>#{item.level}</td>
-											<td>☆</td>
-										</tr>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
+							<div style="float: right;">(%)</div>
+							<table class="table table-bordered">
+								<tr>
+									<td>分野</td>
+									<td>得点</td>
+									<td>配点</td>
+									<td>得点率</td>
+									<td>評価</td>
+									<td><h:outputText value="0 10 20 30 40 50 60 70 80 90 100" /></td>
+								</tr>
+								<c:forEach var="item" items="#{examScoreController.scoreModels}">
+									<h:column>
+										<h:panelGroup rendered="#{item.examType eq '3'}">
+											<tr>
+												<td>文法語彙</td>
+												<td>#{item.myScore}</td>
+												<td>#{item.totalScore}</td>
+												<td>#{item.percentage}%</td>
+												<td>#{item.level}</td>
+												<td>☆</td>
+											</tr>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.examType eq '5'}">
+											<tr>
+												<td>読解</td>
+												<td>#{item.myScore}</td>
+												<td>#{item.totalScore}</td>
+												<td>#{item.percentage}%</td>
+												<td>#{item.level}</td>
+												<td>☆</td>
+											</tr>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.examType eq '1'}">
+											<tr>
+												<td>漢字</td>
+												<td>#{item.myScore}</td>
+												<td>#{item.totalScore}</td>
+												<td>#{item.percentage}%</td>
+												<td>#{item.level}</td>
+												<td>☆</td>
+											</tr>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{item.examType eq '4'}">
+											<tr>
+												<td>記述</td>
+												<td>#{item.myScore}</td>
+												<td>#{item.totalScore}</td>
+												<td>#{item.percentage}%</td>
+												<td>#{item.level}</td>
+												<td>☆</td>
+											</tr>
+										</h:panelGroup>
+									</h:column>
+								</c:forEach>
+							</table>
 						</div>
 						<br />
 						<div>
 							<h5>注1:得点率と評価</h5>
-							<table>
-								<tr>
-									<td>93%以上</td>
-									<td>特A</td>
-									<td>(Special A)</td>
-								</tr>
-								<tr>
-									<td>90%以上</td>
-									<td>A</td>
-									<td>( A )</td>
-								</tr>
-								<tr>
-									<td>85%以上</td>
-									<td>準A</td>
-									<td>( Pre-A )</td>
-								</tr>
-								<tr>
-									<td>80%以上</td>
-									<td>B</td>
-									<td>( B )</td>
-								</tr>
-								<tr>
-									<td>70%以上</td>
-									<td>準B</td>
-									<td>( Pre-B )</td>
-								</tr>
-								<tr>
-									<td>60%以上</td>
-									<td>C</td>
-									<td>( C )</td>
-								</tr>
-								<tr>
-									<td>50%以上</td>
-									<td>D</td>
-									<td>( D )</td>
-								</tr>
-								<tr>
-									<td>40%以上</td>
-									<td>準D</td>
-									<td>( Pre-D )</td>
-								</tr>
-								<tr>
-									<td>40%未満</td>
-									<td>評価なし</td>
-									<td>( -- )</td>
-								</tr>
-							</table>
+							<div style="width: 40%; border: 1px solid #ddd;">
+								<table class="to toTable" style="width: 100%;">
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">93%以上</td>
+										<td>特A</td>
+										<td style="width: 40%;">(Special A)</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">90%以上</td>
+										<td style="width: 30%;">A</td>
+										<td style="width: 40%;">( A )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">85%以上</td>
+										<td style="width: 30%;">準A</td>
+										<td style="width: 40%;">( Pre-A )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">80%以上</td>
+										<td style="width: 30%;">B</td>
+										<td style="width: 40%;">( B )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">70%以上</td>
+										<td style="width: 30%;">準B</td>
+										<td style="width: 40%;">( Pre-B )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">60%以上</td>
+										<td style="width: 30%;">C</td>
+										<td style="width: 40%;">( C )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">50%以上</td>
+										<td style="width: 30%;">D</td>
+										<td style="width: 40%;">( D )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">40%以上</td>
+										<td style="width: 30%;">準D</td>
+										<td style="width: 40%;">( Pre-D )</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 8px; width: 30%;">40%未満</td>
+										<td style="width: 30%;">評価なし</td>
+										<td style="width: 40%;">( -- )</td>
+									</tr>
+								</table>
+							</div>
 							<div style="border: 1px;"></div>
 						</div>
 						<div class="clearfix"></div>
