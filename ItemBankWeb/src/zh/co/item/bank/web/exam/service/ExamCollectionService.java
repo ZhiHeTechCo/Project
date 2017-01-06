@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
-import zh.co.item.bank.web.exam.controller.ScoreModel;
+import zh.co.item.bank.model.entity.ScoreModel;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 
 @Named
@@ -21,11 +21,20 @@ public class ExamCollectionService {
      * 获取试题的考试种别
      * 
      * @param source
-     * 
      * @return
      */
     public List<String> getReportTypes(String source) {
-        return examCollectionDao.getExamType(source);
+        return examCollectionDao.getExamTypes(source);
+    }
+
+    /**
+     * 取本次考试大题
+     * 
+     * @param source
+     * @return
+     */
+    public List<String> getStructureIds(String source) {
+        return examCollectionDao.getStructureIds(source);
     }
 
     /**
@@ -64,8 +73,20 @@ public class ExamCollectionService {
      * @param param
      * @return
      */
-    public ScoreModel getMyScore(Map<String, Object> param) {
-        ScoreModel scoreModel = examCollectionDao.getMyScore(param);
+    public ScoreModel getMyScoreByExamType(Map<String, Object> param) {
+        ScoreModel scoreModel = examCollectionDao.getMyScoreByExamType(param);
+        setDetail(scoreModel);
+        return scoreModel;
+    }
+
+    /**
+     * J.TEST成绩单取得
+     * 
+     * @param param
+     * @return
+     */
+    public ScoreModel getMyScoreByStructureId(Map<String, Object> param) {
+        ScoreModel scoreModel = examCollectionDao.getMyScoreByStructureId(param);
         setDetail(scoreModel);
         return scoreModel;
     }
@@ -76,11 +97,11 @@ public class ExamCollectionService {
      * @param param
      * @return
      */
-    public ScoreModel getReadingTotal(Map<String, Object> param) {
-        ScoreModel scoreModel =examCollectionDao.getReadingTotal(param);
-        setDetail(scoreModel);
-        return scoreModel;
-    }
+    // public ScoreModel getReadingTotal(Map<String, Object> param) {
+    // ScoreModel scoreModel = examCollectionDao.getReadingTotal(param);
+    // setDetail(scoreModel);
+    // return scoreModel;
+    // }
 
     /**
      * 设置成绩单部分信息
@@ -123,5 +144,48 @@ public class ExamCollectionService {
             // TODO
         }
         scoreModel.setLevel(level);
+    }
+
+    /**
+     * 总分设置
+     * 
+     * @param scoreModels
+     * @param myReadingTotal
+     * @param readingTotal
+     * @param myListenTotal
+     * @param listenTotal
+     * @param source
+     */
+    public void setTotalScore(List<ScoreModel> scoreModels, int myReadingTotal, int readingTotal, int myListenTotal,
+            int listenTotal, String source) {
+        // 读解总分
+        ScoreModel reading = setModelValue(myReadingTotal, readingTotal, source, "readingTotal");
+        scoreModels.add(reading);
+        // 听力总分
+        ScoreModel listen = setModelValue(myListenTotal, listenTotal, source, "listenTotal");
+        scoreModels.add(listen);
+        // 总分
+        ScoreModel total = setModelValue(myReadingTotal + myListenTotal, readingTotal + listenTotal, source, "total");
+        scoreModels.add(total);
+    }
+
+    /**
+     * ScoreModel设值
+     * 
+     * @param myScore
+     * @param total
+     * @param source
+     * @param examType
+     * @return
+     */
+    private ScoreModel setModelValue(int myScore, int total, String source, String examType) {
+        ScoreModel scoreModel = new ScoreModel();
+        scoreModel.setMyTotalScore(myScore);
+        scoreModel.setTotalScore(total);
+        System.out.println(source);
+        scoreModel.setSource(source);
+        scoreModel.setExamType(examType);
+        setDetail(scoreModel);
+        return scoreModel;
     }
 }

@@ -38,65 +38,118 @@
 										<td>得点率</td>
 										<td>評価</td>
 									</tr>
-									<c:forEach var="item"
-										items="#{examScoreController.scoreModels}">
-										<h:column>
-											<h:panelGroup rendered="#{item.examType eq '3'}">
-												<tr>
-													<td>文法語彙</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.examType eq '5'}">
-												<tr>
-													<td>読解</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.examType eq '1'}">
-												<tr>
-													<td>漢字</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.examType eq '4'}">
-												<tr>
-													<td>記述</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
-												<tr>
-													<td>読解計</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.examType eq '6'}">
-												<tr>
-													<td>写真</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
-												</tr>
-											</h:panelGroup>
-										</h:column>
-									</c:forEach>
+									<!-- AD级成绩单 -->
+									<c:if test="#{examScoreController.report eq 'AD'})">
+										<c:forEach var="item"
+											items="#{examScoreController.scoreModels}">
+											<h:column>
+												<h:panelGroup rendered="#{item.examType eq '3'}">
+													<tr>
+														<td>文法語彙</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq '5'}">
+													<tr>
+														<td>読解</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq '1'}">
+													<tr>
+														<td>漢字</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq '4'}">
+													<tr>
+														<td>記述</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
+													<tr>
+														<td>読解計</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
+												</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq '6'}">
+													<h:panelGroup rendered="#{item.structureId eq '73'}">
+														<tr>
+															<td>写真</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{item.structureId eq '74'}">
+														<tr>
+															<td>聴読解</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{item.structureId eq '75'}">
+														<tr>
+															<td>応答</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{item.structureId eq '76'}">
+														<tr>
+															<td>会話・説明</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{item.examType eq 'listenTotal'}">
+														<tr>
+															<td>聴解計</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{item.examType eq 'total'}">
+														<tr style="border: 2px solid #ddd;">
+															<td>合計</td>
+															<td>#{item.myTotalScore}</td>
+															<td>#{item.totalScore}</td>
+															<td>#{item.percentage}%</td>
+															<td>#{item.level}</td>
+														</tr>
+													</h:panelGroup>
+												</h:panelGroup>
+											</h:column>
+										</c:forEach>
+									</c:if>
+									<!-- EF级成绩单 -->
+									<c:if test="#{examScoreController.report eq 'EF'})">
+									</c:if>
 								</table>
 							</div>
 							<br />

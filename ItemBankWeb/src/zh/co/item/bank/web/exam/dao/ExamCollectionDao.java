@@ -7,7 +7,7 @@ import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
-import zh.co.item.bank.web.exam.controller.ScoreModel;
+import zh.co.item.bank.model.entity.ScoreModel;
 
 @Named
 public class ExamCollectionDao extends BaseDao {
@@ -25,12 +25,22 @@ public class ExamCollectionDao extends BaseDao {
      * 取本次考试种别
      * 
      * @param source
-     * 
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<String> getExamType(String source) {
-        return getIbatisTemplate().selectList("ExamCollection.getExamType", source);
+    public List<String> getExamTypes(String source) {
+        return getIbatisTemplate().selectList("ExamCollection.getExamTypes", source);
+    }
+    
+    /**
+     * 取本次考试大题
+     * 
+     * @param source
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<String> getStructureIds(String source) {
+        return getIbatisTemplate().selectList("ExamCollection.getStructureIds", source);
     }
 
     /**
@@ -55,13 +65,23 @@ public class ExamCollectionDao extends BaseDao {
     }
 
     /**
-     * J.TEST成绩单取得
+     * J.TEST分项成绩取得[examType]
      * 
      * @param param
      * @return
      */
-    public ScoreModel getMyScore(Map<String, Object> param) {
-        return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getMyScore", param);
+    public ScoreModel getMyScoreByExamType(Map<String, Object> param) {
+        return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getMyScoreByExamType", param);
+    }
+
+    /**
+     * J.TEST大题成绩取得[structureId]
+     * 
+     * @param param
+     * @return
+     */
+    public ScoreModel getMyScoreByStructureId(Map<String, Object> param) {
+        return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getMyScoreByStructureId", param);
     }
 
     /**

@@ -4,11 +4,18 @@
 
 <mapper namespace="ExamCollection">
 
-	<select id="getExamType" parameterType="java.lang.String"
+	<select id="getExamTypes" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		select exam_type as examType
+		select exam_type
 		from tb_exam_collection where
 		source = #{source} group by exam_type
+	</select>
+
+	<select id="getStructureIds" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select structure_id
+		from tb_exam_collection where
+		source = #{source} group by structure_id
 	</select>
 
 	<select id="getPercentage" parameterType="zh.co.item.bank.model.entity.ExamReportModel"
@@ -44,16 +51,28 @@
 		order by id
 	</select>
 
-	<select id="getMyScore" parameterType="java.util.Map"
-		resultType="zh.co.item.bank.web.exam.controller.ScoreModel">
+	<select id="getMyScoreByExamType" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ScoreModel">
 		select sum(my_score) as my_total_score,sum(score) as total_score,a.source,a.exam_type from vb_score a
 		where source=#{source,jdbcType=CHAR} and exam_type=#{examType,jdbcType=CHAR}
 	</select>
 
+	<select id="getMyScoreByStructureId" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ScoreModel">
+		select sum(my_score) as my_total_score,sum(score) as total_score,a.source,a.exam_type,a.structure_id from vb_score a
+		where source=#{source,jdbcType=CHAR} and structure_id=#{structureId,jdbcType=CHAR}
+	</select>
+
 	<select id="getReadingTotal" parameterType="java.util.Map"
-		resultType="zh.co.item.bank.web.exam.controller.ScoreModel">
+		resultType="zh.co.item.bank.model.entity.ScoreModel">
 		select sum(my_score) as my_total_score,sum(score) as total_score,a.source from vb_score a
 		where source=#{source,jdbcType=CHAR} and exam_type!="6";
+	</select>
+
+	<select id="getTotal" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.ScoreModel">
+		select sum(my_score) as my_total_score,sum(score) as total_score,a.source from vb_score a
+		where source=#{source,jdbcType=CHAR};
 	</select>
 
 	<delete id="deleteBySource" parameterType="java.util.Map">

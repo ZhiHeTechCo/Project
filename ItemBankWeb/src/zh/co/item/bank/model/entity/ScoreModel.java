@@ -1,8 +1,10 @@
-package zh.co.item.bank.web.exam.controller;
+package zh.co.item.bank.model.entity;
 
 import zh.co.item.bank.db.entity.VbScoreBean;
 
 public class ScoreModel extends VbScoreBean {
+
+    private String type;
 
     // 得点
     private int myTotalScore;
@@ -15,6 +17,14 @@ public class ScoreModel extends VbScoreBean {
 
     // 评价
     private String level;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getMyTotalScore() {
         return myTotalScore;
