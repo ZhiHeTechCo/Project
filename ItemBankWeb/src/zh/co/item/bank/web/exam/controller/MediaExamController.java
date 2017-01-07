@@ -246,6 +246,7 @@ public class MediaExamController extends BaseController {
         ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                 .getBean("examReportController");
         examReportController.setMediaFlag("false");
+        examReportController.setJtestFlag("true");
         return examReportController.init(mediaModel.getSource());
     }
 

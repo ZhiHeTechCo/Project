@@ -288,6 +288,7 @@ public class ExamController extends BaseController {
                 ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                         .getBean("examReportController");
                 examReportController.setMediaFlag("true");
+                examReportController.setJtestFlag("true");
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             } else {
@@ -408,6 +409,7 @@ public class ExamController extends BaseController {
                 .getBean("examReportController");
         // 中途退出不显示听力
         examReportController.setMediaFlag("false");
+        examReportController.setJtestFlag("false");
         return examReportController.init(source);
     }
 
