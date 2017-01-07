@@ -338,6 +338,10 @@ th {
   content: "\e013";
   color: #00ff00;
 }
+.glyphicon-ok-white:before {
+  content: "\e013";
+  color: #ffffff;
+}
 .glyphicon-remove:before {
   content: "\e014";
   color: #ff0000;
