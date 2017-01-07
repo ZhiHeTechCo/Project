@@ -142,8 +142,14 @@ public class ExamCollectionService {
             } else {
                 level = "評価なし";
             }
-        } else {
-            // TODO
+        } else if(scoreModel.getSource().contains("E-F")){
+            if (tmp >= 400) {
+                level = "E";
+            } else if (tmp >= 300) {
+                level = "F";
+            } else {
+                level = "評価なし";
+            }
         }
         scoreModel.setLevel(level);
     }
