@@ -230,13 +230,13 @@
 						<div class="form-submit1">
 							<h:commandButton value="返回题型选择" class="button1"
 								action="#{examReportController.goBackToClassify}"
+								style="margin-right: 5px;"
 								id="goBackToExamBtn">
 							</h:commandButton>
 						</div>
 						<c:if test="#{examReportController.jtestFlag eq 'true'}">
 							<div class="form-submit1">
 								<h:commandButton value="查看成绩单" class="button1"
-									style="margin-right: 5px;"
 									action="#{examReportController.toShowScore}"
 									id="toShowScoreBtn">
 								</h:commandButton>
