@@ -38,118 +38,116 @@
 										<td>得点率</td>
 										<td>評価</td>
 									</tr>
-									<!-- AD级成绩单 -->
-									<c:if test="#{examScoreController.report eq 'AD'}">
-										<c:forEach var="item"
-											items="#{examScoreController.scoreModels}">
-											<h:column>
-												<h:panelGroup rendered="#{item.examType eq '3' and item.structureId eq null}">
+									<c:forEach var="item"
+										items="#{examScoreController.scoreModels}">
+										<h:column>
+											<h:panelGroup
+												rendered="#{item.examType eq '3' and item.structureId eq null}">
+												<tr>
+													<td>文法語彙</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup
+												rendered="#{item.examType eq '5' and item.structureId eq null}">
+												<tr>
+													<td>読解</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup
+												rendered="#{item.examType eq '1' and item.structureId eq null}">
+												<tr>
+													<td>漢字</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup
+												rendered="#{item.examType eq '4' and item.structureId eq null}">
+												<tr>
+													<td>記述</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
+												<tr>
+													<td>読解計</td>
+													<td>#{item.myTotalScore}</td>
+													<td>#{item.totalScore}</td>
+													<td>#{item.percentage}%</td>
+													<td>#{item.level}</td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq '6'}">
+												<h:panelGroup rendered="#{item.structureId eq '73'}">
 													<tr>
-														<td>文法語彙</td>
+														<td>写真</td>
 														<td>#{item.myTotalScore}</td>
 														<td>#{item.totalScore}</td>
 														<td>#{item.percentage}%</td>
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq '5' and item.structureId eq null}">
+												<h:panelGroup rendered="#{item.structureId eq '74'}">
 													<tr>
-														<td>読解</td>
+														<td>聴読解</td>
 														<td>#{item.myTotalScore}</td>
 														<td>#{item.totalScore}</td>
 														<td>#{item.percentage}%</td>
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq '1' and item.structureId eq null}">
+												<h:panelGroup rendered="#{item.structureId eq '75'}">
 													<tr>
-														<td>漢字</td>
+														<td>応答</td>
 														<td>#{item.myTotalScore}</td>
 														<td>#{item.totalScore}</td>
 														<td>#{item.percentage}%</td>
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq '4' and item.structureId eq null}">
+												<h:panelGroup rendered="#{item.structureId eq '76'}">
 													<tr>
-														<td>記述</td>
+														<td>会話・説明</td>
 														<td>#{item.myTotalScore}</td>
 														<td>#{item.totalScore}</td>
 														<td>#{item.percentage}%</td>
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
+												<h:panelGroup rendered="#{item.examType eq 'listenTotal'}">
 													<tr>
-														<td>読解計</td>
+														<td>聴解計</td>
 														<td>#{item.myTotalScore}</td>
 														<td>#{item.totalScore}</td>
 														<td>#{item.percentage}%</td>
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq '6'}">
-													<h:panelGroup rendered="#{item.structureId eq '73'}">
-														<tr>
-															<td>写真</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
-													<h:panelGroup rendered="#{item.structureId eq '74'}">
-														<tr>
-															<td>聴読解</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
-													<h:panelGroup rendered="#{item.structureId eq '75'}">
-														<tr>
-															<td>応答</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
-													<h:panelGroup rendered="#{item.structureId eq '76'}">
-														<tr>
-															<td>会話・説明</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
-													<h:panelGroup rendered="#{item.examType eq 'listenTotal'}">
-														<tr>
-															<td>聴解計</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
-													<h:panelGroup rendered="#{item.examType eq 'total'}">
-														<tr style="border: 2px solid #ddd;">
-															<td>合計</td>
-															<td>#{item.myTotalScore}</td>
-															<td>#{item.totalScore}</td>
-															<td>#{item.percentage}%</td>
-															<td>#{item.level}</td>
-														</tr>
-													</h:panelGroup>
+												<h:panelGroup rendered="#{item.examType eq 'total'}">
+													<tr style="border: 2px solid #ddd;">
+														<td>合計</td>
+														<td>#{item.myTotalScore}</td>
+														<td>#{item.totalScore}</td>
+														<td>#{item.percentage}%</td>
+														<td>#{item.level}</td>
+													</tr>
 												</h:panelGroup>
-											</h:column>
-										</c:forEach>
-									</c:if>
-									<!-- EF级成绩单 -->
-									<c:if test="#{examScoreController.report eq 'EF'}">
-									</c:if>
+											</h:panelGroup>
+										</h:column>
+									</c:forEach>
 								</table>
 							</div>
 							<br />
@@ -160,53 +158,74 @@
 								</div>
 								<div
 									style="margin-left: auto; margin-right: auto; border: 2px solid #ddd; width: #{examScoreController.width};">
-									<table class="to toTable" style="width: 100%;">
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">93%以上</td>
-											<td>特A</td>
-											<td style="width: 40%;">(Special A)</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">90%以上</td>
-											<td style="width: 30%;">A</td>
-											<td style="width: 40%;">( A )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">85%以上</td>
-											<td style="width: 30%;">準A</td>
-											<td style="width: 40%;">( Pre-A )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">80%以上</td>
-											<td style="width: 30%;">B</td>
-											<td style="width: 40%;">( B )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">70%以上</td>
-											<td style="width: 30%;">準B</td>
-											<td style="width: 40%;">( Pre-B )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">60%以上</td>
-											<td style="width: 30%;">C</td>
-											<td style="width: 40%;">( C )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">50%以上</td>
-											<td style="width: 30%;">D</td>
-											<td style="width: 40%;">( D )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">40%以上</td>
-											<td style="width: 30%;">準D</td>
-											<td style="width: 40%;">( Pre-D )</td>
-										</tr>
-										<tr>
-											<td style="padding-left: 8px; width: 30%;">40%未満</td>
-											<td style="width: 30%;">評価なし</td>
-											<td style="width: 40%;">( -- )</td>
-										</tr>
-									</table>
+									<c:if test="#{examScoreController.report eq 'AD'}">
+										<table class="to toTable" style="width: 100%;">
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">93%以上</td>
+												<td>特A</td>
+												<td style="width: 40%;">(Special A)</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">90%以上</td>
+												<td style="width: 30%;">A</td>
+												<td style="width: 40%;">( A )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">85%以上</td>
+												<td style="width: 30%;">準A</td>
+												<td style="width: 40%;">( Pre-A )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">80%以上</td>
+												<td style="width: 30%;">B</td>
+												<td style="width: 40%;">( B )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">70%以上</td>
+												<td style="width: 30%;">準B</td>
+												<td style="width: 40%;">( Pre-B )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">60%以上</td>
+												<td style="width: 30%;">C</td>
+												<td style="width: 40%;">( C )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">50%以上</td>
+												<td style="width: 30%;">D</td>
+												<td style="width: 40%;">( D )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">40%以上</td>
+												<td style="width: 30%;">準D</td>
+												<td style="width: 40%;">( Pre-D )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">40%未満</td>
+												<td style="width: 30%;">評価なし</td>
+												<td style="width: 40%;">( -- )</td>
+											</tr>
+										</table>
+									</c:if>
+									<c:if test="#{examScoreController.report eq 'EF'}">
+										<table class="to toTable" style="width: 100%;">
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">80%以上</td>
+												<td>E</td>
+												<td style="width: 40%;">( E )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">60%以上</td>
+												<td style="width: 30%;">F</td>
+												<td style="width: 40%;">( F )</td>
+											</tr>
+											<tr>
+												<td style="padding-left: 8px; width: 30%;">60%未満</td>
+												<td style="width: 30%;">評価なし</td>
+												<td style="width: 40%;">( -- )</td>
+											</tr>
+										</table>
+									</c:if>
 								</div>
 								<div
 									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">

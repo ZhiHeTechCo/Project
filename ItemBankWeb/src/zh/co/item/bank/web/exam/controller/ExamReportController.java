@@ -82,7 +82,7 @@ public class ExamReportController extends BaseController {
             reportModels = new ArrayList<ExamReportModel>();
             // 默认显示听力
             mediaFlag = StringUtils.isEmpty(mediaFlag) ? "true" : mediaFlag;
-            jtestFlag = source.contains("J.TEST") ? "true" : null;
+            jtestFlag = StringUtils.isEmpty(jtestFlag) && source.contains("J.TEST") ? "true" : jtestFlag;
 
             // b.显示本次考试结果
             // b-1.本次考试出现的试题种别
