@@ -50,8 +50,7 @@ public class ExamCollectionService {
     /**
      * 获取百分比
      * 
-     * @param model[examType
-     *            source]
+     * @param model[examType source]
      * @return
      */
     public ExamReportModel getPercentage(ExamReportModel model) {
@@ -111,11 +110,14 @@ public class ExamCollectionService {
     public void setDetail(ScoreModel scoreModel) {
         // c-1.得点率设置
         if (scoreModel.getTotalScore() != 0) {
-            String tmp = String.valueOf(scoreModel.getMyTotalScore() / scoreModel.getTotalScore());
+            float percentageFloat = (float)scoreModel.getMyTotalScore() / (float)scoreModel.getTotalScore() * 100;
+            String tmp = String.valueOf(percentageFloat);
             if (tmp.length() > 4) {
                 tmp = tmp.substring(0, 4);
             }
             scoreModel.setPercentage(tmp);
+        } else {
+            scoreModel.setPercentage("0");
         }
         // c-2.评价设置
         float tmp = Float.parseFloat(scoreModel.getPercentage());
@@ -182,7 +184,6 @@ public class ExamCollectionService {
         ScoreModel scoreModel = new ScoreModel();
         scoreModel.setMyTotalScore(myScore);
         scoreModel.setTotalScore(total);
-        System.out.println(source);
         scoreModel.setSource(source);
         scoreModel.setExamType(examType);
         setDetail(scoreModel);

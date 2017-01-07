@@ -81,9 +81,10 @@ public class ExamScoreController extends BaseController {
             int myReadingTotal = 0;
             int listenTotal = 0;
             int myListenTotal = 0;
-            // c-1.按试题种别
+            // c-1.按试题种别取成绩
             Map<String, Object> param = new HashMap<String, Object>();
             param.put("source", source);
+            param.put("userId", WebUtils.getLoginUserInfo().getId());
             for (String examType : examTypes) {
                 param.put("examType", examType);
                 ScoreModel scoreModel = examCollectionService.getMyScoreByExamType(param);
@@ -98,7 +99,7 @@ public class ExamScoreController extends BaseController {
                     scoreModels.add(scoreModel);
                 }
             }
-            // c-2.按大题
+            // c-2.按大题取成绩
             for (String structureId : structureIds) {
                 param.put("structureId", structureId);
                 ScoreModel scoreModel = examCollectionService.getMyScoreByStructureId(param);
@@ -106,13 +107,6 @@ public class ExamScoreController extends BaseController {
                     scoreModels.add(scoreModel);
                 }
             }
-            // c-3.取读解总分
-            // ScoreModel readingTotal =
-            // examCollectionService.getReadingTotal(param);
-            // if (readingTotal != null) {
-            // readingTotal.setExamType("readingTotal");
-            // scoreModels.add(readingTotal);
-            // }
             // c-3.总分设置
             examCollectionService.setTotalScore(scoreModels, myReadingTotal, readingTotal, myListenTotal, listenTotal,
                     source);
