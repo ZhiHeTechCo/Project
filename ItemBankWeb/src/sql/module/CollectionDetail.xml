@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CollectionDetail">
+
+<!-- 批量插入做题记录 -->
+	<insert id="insertDetailCollections" parameterType="zh.co.item.bank.db.entity.TbCollectionDetailBean">
+		insert into tb_collection_detail (
+		        user_id,
+				question_id,
+				my_answer)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+					(#{item.userId,jdbcType=INTEGER},
+					#{item.questionId,jdbcType=INTEGER},
+					#{item.myAnswer,jdbcType=CHAR})
+		</foreach>
+	</insert>
+
+</mapper>
