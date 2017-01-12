@@ -1,6 +1,5 @@
 package zh.co.item.bank.web.exam.controller;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,6 @@ import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.CollectionService;
@@ -152,48 +150,8 @@ public class ResumeBean extends BaseController {
                 ExamModel examModel = (ExamModel) questions.get(i);
                 examModel.setUserId(userInfo.getId());
 
-                TbCollectionBean collection = collectionService.selectCollectionForOne(examModel);
-                if (collection == null) {
-                    logger.log(MessageId.COMMON_E_0005);
-                    Exception ex = new Exception(MessageId.COMMON_E_0005);
-                    throw ex;
-                }
-
-                // 用户ID
-                collection.setId(userInfo.getId());
-
-                // 试题ID
-                collection.setQuestionId(Integer.valueOf(examModel.getNo()));
-
-                // 第几次做
-                short count = collection.getCount() == null ? 0 : collection.getCount();
-                count = (short) (count + 1);
-                collection.setCount(count);
-
-                // resultX
-                String param = "setResult" + count;
-
-                Method method = collection.getClass().getMethod(param, new Class[] { String.class });
-                String choice = StringUtils.isEmpty(examModel.getMyAnswer()) ? "" : examModel.getMyAnswer();
-                method.invoke(collection, new Object[] { choice });
-                // finish
-                boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
-                String finish = collection.getFinish();
-                if ("1".equals(finish)) {
-                    finish = flag ? "9" : "0";
-                } else if ("0".equals(finish)) {
-                    finish = flag ? "2" : "0";
-                } else if ("2".equals(finish)) {
-                    finish = flag ? "3" : "0";
-                } else if ("3".equals(finish)) {
-                    finish = flag ? "1" : "2";
-                }
-
-                // 是否完成
-                collection.setFinish(finish);
-
                 // b.更新做题记录
-                collectionService.updateCollection(collection);
+                collectionService.updateCollection(examModel);
             }
 
             // c.去结果一览画面

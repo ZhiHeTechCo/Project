@@ -1,6 +1,5 @@
 package zh.co.item.bank.web.exam.service;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +11,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import zh.co.item.bank.db.entity.TbCollectionBean;
+import zh.co.item.bank.db.entity.TbCollectionDetailBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.dao.CollectionDao;
+import zh.co.item.bank.web.exam.dao.CollectionDetailDao;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 
 @Named
@@ -24,6 +25,9 @@ public class CollectionService {
 
     @Inject
     private ExamCollectionDao examCollectionDao;
+
+    @Inject
+    private CollectionDetailDao collectionDetailDao;
 
     /**
      * 检索当前做题记录是否存在
@@ -42,8 +46,44 @@ public class CollectionService {
      * 
      * @param collection
      */
-    public void updateCollection(TbCollectionBean collection) {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void updateCollection(ExamModel examModel) {
+
+        // 记录表
+        TbCollectionBean collection = selectCollectionForOne(examModel);
+        // 做题详细表
+        TbCollectionDetailBean collectionDetail = new TbCollectionDetailBean();
+
+        // 用户ID
+        collection.setId(examModel.getUserId());
+        collectionDetail.setUserId(examModel.getUserId());
+
+        // 试题ID
+        Integer questionId = Integer.valueOf(examModel.getNo());
+        collection.setQuestionId(questionId);
+        collectionDetail.setQuestionId(questionId);
+
+        // 我的答案
+        collectionDetail.setMyAnswer(examModel.getMyAnswer());
+
+        // finish
+        boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
+        String finish = collection.getFinish();
+        if ("1".equals(finish)) {
+            finish = flag ? "9" : "0";
+        } else if ("0".equals(finish)) {
+            finish = flag ? "2" : "0";
+        } else if ("2".equals(finish)) {
+            finish = flag ? "3" : "0";
+        } else if ("3".equals(finish)) {
+            finish = flag ? "1" : "2";
+        }
+
+        // 是否完成
+        collection.setFinish(finish);
+
         collectionDao.updateCollection(collection);
+        collectionDetailDao.insertCollectionDetail(collectionDetail);
     }
 
     /**
@@ -59,45 +99,60 @@ public class CollectionService {
         // 批量登录数据用
         List<TbCollectionBean> collections = new ArrayList<TbCollectionBean>();
         List<ExamModel> examCollections = new ArrayList<ExamModel>();
+        List<TbCollectionDetailBean> collectionDetails = new ArrayList<TbCollectionDetailBean>();
         for (int i = 0; i < questions.size(); i++) {
 
             ExamModel examModel = (ExamModel) questions.get(i);
             examModel.setUserId(userInfo.getId());
             // a-1.取当前用户当前题目做题记录
             TbCollectionBean collection = selectCollectionForOne(examModel);
+            boolean isNew = collection.getQuestionId() == null ? true : false;
+            // 做题详细表
+            TbCollectionDetailBean collectionDetail = new TbCollectionDetailBean();
 
             // 用户ID
             collection.setId(userInfo.getId());
+            collectionDetail.setUserId(userInfo.getId());
 
             // 试题ID
-            collection.setQuestionId(Integer.valueOf(examModel.getNo()));
+            Integer questionId = Integer.valueOf(examModel.getNo());
+            collection.setQuestionId(questionId);
+            collectionDetail.setQuestionId(questionId);
 
-            // 第几次做
-            short count = collection.getCount() == null ? 0 : collection.getCount();
-            count = (short) (count + 1);
-            collection.setCount(count);
+            // 我的答案
+            collectionDetail.setMyAnswer(examModel.getMyAnswer());
 
-            // resultX
-            String param = "setResult" + count;
-
-            Method method = collection.getClass().getMethod(param, new Class[] { String.class });
-            String choice = StringUtils.isEmpty(examModel.getMyAnswer()) ? "" : examModel.getMyAnswer();
-            method.invoke(collection, new Object[] { choice });
-            if (examModel.getAnswer().equals(choice)) {
-                collection.setFinish("1");
-            } else {
-                collection.setFinish("0");
+            // finish
+            boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
+            String finish = collection.getFinish();
+            if (StringUtils.isEmpty(finish)) {
+                finish = flag ? "1" : "0";
+            } else if ("1".equals(finish)) {
+                finish = flag ? "9" : "0";
+            } else if ("0".equals(finish)) {
+                finish = flag ? "2" : "0";
+            } else if ("2".equals(finish)) {
+                finish = flag ? "3" : "0";
+            } else if ("3".equals(finish)) {
+                finish = flag ? "1" : "2";
             }
+
+            // 是否完成
+            collection.setFinish(finish);
+
             // 错题表登录·更新
-            if (count == 1) {
+            if (isNew) {
                 collections.add(collection);
+
             } else {
-                updateCollection(collection);
+                collectionDao.updateCollection(collection);
             }
             // 考试记录表登录
             if ("ing".equals(status) || "exist".equals(status)) {
                 examCollections.add(examModel);
             }
+            // 做题记录详细登录
+            collectionDetails.add(collectionDetail);
         }
         // a-1.批量登录做题记录表
         if (collections.size() != 0) {
@@ -106,6 +161,10 @@ public class CollectionService {
         // a-2.批量登录考试做题记录表
         if (examCollections.size() != 0) {
             examCollectionDao.insertExamCollections(examCollections);
+        }
+        // a-3.批量登录做题详细表
+        if (collectionDetails.size() != 0) {
+            collectionDetailDao.insertCollectionDetails(collectionDetails);
         }
     }
 

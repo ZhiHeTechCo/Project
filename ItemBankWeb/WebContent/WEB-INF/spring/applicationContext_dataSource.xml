@@ -25,6 +25,7 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath:sql/common/TbCollection.xml</value>
+                <value>classpath:sql/common/TbCollectionDetail.xml</value>
                 <value>classpath:sql/common/TbErrorReport.xml</value>
                 <value>classpath:sql/common/TbFirstLevelDirectory.xml</value>
                 <value>classpath:sql/common/TbForumAsker.xml</value>
@@ -48,6 +49,7 @@
                 <value>classpath:sql/module/Media.xml</value>
                 <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
+                <value>classpath:sql/module/CollectionDetail.xml</value>
                 <value>classpath:sql/module/ExamCollection.xml</value>
                 <value>classpath:sql/module/ExamDropout.xml</value>
             </list>
