@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.exam.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -52,11 +54,25 @@ public class ExamClassifyController extends BaseController {
     // 所有J.TEST考试级别
     private List<TsCodeBean> jtestLevels;
 
+    // 考卷（年）
+    private List<String> years;
+
+    // 考卷（月）
+    private List<String> counts;
+
+    private String chooseYear;
+
+    private String chooseCount;
+
     private TbQuestionClassifyBean classifyBean;
 
     private UserModel userInfo;
 
     private String showExamFlag;
+
+    private String mode;
+
+    List<TbExamListBean> examListBeans;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
@@ -71,18 +87,30 @@ public class ExamClassifyController extends BaseController {
         try {
             pushPathHistory("examClassifyController");
 
+            // a.初始化
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 // 跳转至登录画面
                 SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
                 return signInBean.init();
             }
+            years = new ArrayList<String>();
+            counts = new ArrayList<String>();
 
-            // a.画面显示
+            // 跳转至
+            if (StringUtils.isEmpty(mode)) {
+                return SystemConstants.PAGE_ITBK_EXAM_000;
+            }
+
+            // b.画面显示
             // 获取考试类别
             exams = examService.getExams();
             // 获取试题种别
             examTypes = examService.getExamTypes();
+            // 1:考试模式时获取试卷
+            if ("1".equals(mode)) {
+                examListBeans = examService.getExamListAll();
+            }
 
             if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
                 for (TsCodeBean bean : examTypes) {
@@ -98,10 +126,10 @@ public class ExamClassifyController extends BaseController {
             // 获取JTEST等级
             jtestLevels = examService.getJtestLevels();
 
-            // b.初始化Bean
+            // c.初始化Bean
             classifyBean = new TbQuestionClassifyBean();
 
-            // c.智能推题
+            // d.智能推题
             // 语言信息为空，则智能推题不显示。
             showExamFlag = StringUtils.isEmpty(userInfo.getJlptLevel()) && StringUtils.isEmpty(userInfo.getJtestLevel())
                     ? "" : "true";
@@ -110,7 +138,7 @@ public class ExamClassifyController extends BaseController {
             processForException(logger, e);
         }
 
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        return getPageId();
     }
 
     /**
@@ -151,7 +179,7 @@ public class ExamClassifyController extends BaseController {
         } catch (Exception e) {
             processForException(logger, e);
         }
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        return getPageId();
     }
 
     /**
@@ -178,7 +206,7 @@ public class ExamClassifyController extends BaseController {
             processForException(logger, e);
         }
         // 留在当前画面
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        return getPageId();
     }
 
     /**
@@ -199,7 +227,7 @@ public class ExamClassifyController extends BaseController {
             // b.跳转至【考试题库】画面
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
-            examController.setYear(null);
+            examController.setYear(chooseYear);
             examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
             return examController.examSearch();
 
@@ -207,7 +235,29 @@ public class ExamClassifyController extends BaseController {
             processForException(logger, e);
         }
         // 留在当前画面
-        return SystemConstants.PAGE_ITBK_EXAM_001;
+        return getPageId();
+    }
+
+    /**
+     * 4.模式选择跳转
+     * 
+     * @param currentMode
+     * @return
+     */
+    public String index(String currentMode) {
+        mode = currentMode;
+        return init();
+    }
+
+    /**
+     * 5.模式选择跳转
+     * 
+     * @param currentMode
+     * @return
+     */
+    public String goBackToIndex() {
+        mode = null;
+        return SystemConstants.PAGE_ITBK_EXAM_000;
     }
 
     /**
@@ -223,10 +273,84 @@ public class ExamClassifyController extends BaseController {
     }
 
     /**
-     * [Ajax]考题种别变更，刷新考试级别 TODO 是否使用？
+     * [Ajax]考题种别变更,试卷年变更
      */
     public void changExamType() {
-        logger.debug("题种别变更，刷新考试级别");
+        logger.debug("题种别变更，刷新考试级别和考卷年。");
+        years.clear();
+        counts.clear();
+    }
+
+    /**
+     * [Ajax]试卷年变更
+     */
+    public String changeYear() {
+        try {
+            logger.debug("题种别变更，刷新考卷年。");
+            years.clear();
+            // 获取考卷年(JLPT)
+            if (StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
+                for (TbExamListBean examListBean : examListBeans) {
+                    // 考试级别相等
+                    if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
+                            && !years.contains(examListBean.getYear())) {
+                        years.add(examListBean.getYear());
+                    }
+                }
+            }
+            if (years.size() == 0) {
+                logger.log(MessageId.ITBK_I_0020);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                throw ex;
+            }
+            counts.clear();
+            if ("2".equals(classifyBean.getExam()) && StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
+                for (TbExamListBean examListBean : examListBeans) {
+                    if (classifyBean.getExam().equals(examListBean.getExam())
+                            && classifyBean.getJtestLevel().equals(examListBean.getLevel())
+                            && !counts.contains(chooseCount)) {
+                        counts.add(examListBean.getCount());
+                    }
+                }
+                if (counts.size() == 0) {
+                    logger.log(MessageId.ITBK_I_0020);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                    throw ex;
+                }
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * [Ajax]试卷月变更
+     */
+    public String changeMonth() {
+        try {
+            logger.debug("题种别变更，刷新考卷月。");
+            counts.clear();
+            // 获取考卷月
+            for (TbExamListBean examListBean : examListBeans) {
+                // 考试级别相等+考试年相等+考试种别相等
+                if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
+                        && examListBean.getYear().equals(chooseYear)
+                        && examListBean.getExam().equals(classifyBean.getExam())) {
+                    if (!counts.contains(examListBean.getCount())) {
+                        counts.add(examListBean.getCount());
+                    }
+                }
+            }
+            if (counts.size() == 0) {
+                logger.log(MessageId.ITBK_I_0020);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                throw ex;
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
     }
 
     public List<TsCodeBean> getExams() {
@@ -275,6 +399,46 @@ public class ExamClassifyController extends BaseController {
 
     public void setShowExamFlag(String showExamFlag) {
         this.showExamFlag = showExamFlag;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public List<String> getYears() {
+        return years;
+    }
+
+    public void setYears(List<String> years) {
+        this.years = years;
+    }
+
+    public List<String> getCounts() {
+        return counts;
+    }
+
+    public void setCounts(List<String> counts) {
+        this.counts = counts;
+    }
+
+    public String getChooseYear() {
+        return chooseYear;
+    }
+
+    public void setChooseYear(String chooseYear) {
+        this.chooseYear = chooseYear;
+    }
+
+    public String getChooseCount() {
+        return chooseCount;
+    }
+
+    public void setChooseCount(String chooseCount) {
+        this.chooseCount = chooseCount;
     }
 
 }

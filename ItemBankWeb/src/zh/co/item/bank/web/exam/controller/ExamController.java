@@ -81,6 +81,9 @@ public class ExamController extends BaseController {
     // 考卷年
     String year = null;
 
+    // 考卷月
+    String count = null;
+
     // 开始做题时间
     Date startTime = null;
 
@@ -301,7 +304,8 @@ public class ExamController extends BaseController {
         } catch (CmnBizException ex) {
             processForException(logger, ex);
             // 返回题型选择
-            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager
+                    .getBean("examClassifyController");
             return classifyBean.init();
 
         } catch (Exception e) {
@@ -327,7 +331,8 @@ public class ExamController extends BaseController {
             }
             // c.考试结束
             // 跳转至[结果一览]画面
-            ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
+            ExamResultController examResultController = (ExamResultController) SpringAppContextManager
+                    .getBean("examResultController");
             examResultController.setQuestions(questions);
             examResultController.setTitle(title);
             examResultController.setSubject(subject);
@@ -385,7 +390,8 @@ public class ExamController extends BaseController {
         examService.deleteExamCollectionBySource(map);
         doclear();
         // b.跳转至试题选择
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
     }
 
@@ -433,7 +439,8 @@ public class ExamController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
     }
 
@@ -462,7 +469,8 @@ public class ExamController extends BaseController {
     /**
      * 画面序号,折行
      * 
-     * @param subject 题干
+     * @param subject
+     *            题干
      */
     private void prepareData(String subject) {
         // 画面序号和显示设置
@@ -549,6 +557,14 @@ public class ExamController extends BaseController {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 
     public Date getStartTime() {

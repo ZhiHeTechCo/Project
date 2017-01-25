@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="examIndexForm">
+				<div class="typrography">
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">模式选择</h2>
+					<div class="container">
+						<div class="bs-docs-example">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<h5 style="color: #3382C9;">
+								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;依次为“考试模式”、“单项训练”、“错题复习”
+							</h5>
+							<div style="text-align: center;">
+								<div>
+									<h:commandButton
+										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_exam.jpg);"
+										action="#{examClassifyController.index('1')}" />
+								</div>
+								<div>
+									<h:commandButton
+										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_training.jpg);"
+										action="#{examClassifyController.index('2')}" />
+								</div>
+								<div>
+									<h:commandButton
+										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_resume.jpg);"
+										action="#{resumeBean.init}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

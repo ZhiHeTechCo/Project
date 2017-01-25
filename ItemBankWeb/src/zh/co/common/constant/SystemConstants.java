@@ -109,6 +109,8 @@ public class SystemConstants {
     /** 回答一览 */
     public static final String PAGE_ITBK_FORUM_002 = "ITBK_FORUM_002";
 
+    /** 选择模式 */
+    public static final String PAGE_ITBK_EXAM_000 = "ITBK_EXAM_000";
     /** 选择题型 */
     public static final String PAGE_ITBK_EXAM_001 = "ITBK_EXAM_001";
     /** 试题库 */

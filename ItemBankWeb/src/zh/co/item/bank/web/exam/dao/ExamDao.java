@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbErrorReportBean;
+import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 
@@ -140,7 +141,17 @@ public class ExamDao extends BaseDao {
     /**
      * 试题报错
      */
-    public void insertErrorReport(TbErrorReportBean bean){
+    public void insertErrorReport(TbErrorReportBean bean) {
         getIbatisTemplate().insert("TbErrorReport.insertSelective", bean);
+    }
+
+    /**
+     * 检索考卷表
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbExamListBean> getExamListAll() {
+        return getIbatisTemplate().selectList("ExamList.getExamListAll");
     }
 }

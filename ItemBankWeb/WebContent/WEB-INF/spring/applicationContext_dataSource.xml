@@ -27,6 +27,7 @@
                 <value>classpath:sql/common/TbCollection.xml</value>
                 <value>classpath:sql/common/TbCollectionDetail.xml</value>
                 <value>classpath:sql/common/TbErrorReport.xml</value>
+                <value>classpath:sql/common/TbExamList.xml</value>
                 <value>classpath:sql/common/TbFirstLevelDirectory.xml</value>
                 <value>classpath:sql/common/TbForumAsker.xml</value>
                 <value>classpath:sql/common/TbForumResponse.xml</value>
@@ -44,6 +45,7 @@
                 <value>classpath:sql/common/TbFileInfo.xml</value>
                 
                 <value>classpath:sql/module/CodeManage.xml</value>
+                <value>classpath:sql/module/ExamList.xml</value>
                 <value>classpath:sql/module/UserManage.xml</value>
                 <value>classpath:sql/module/Forum.xml</value>
                 <value>classpath:sql/module/Media.xml</value>
