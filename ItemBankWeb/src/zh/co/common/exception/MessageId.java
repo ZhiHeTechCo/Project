@@ -113,6 +113,9 @@ public class MessageId {
 
     /** 感谢您的回答。 */
     public static final String ITBK_I_0019 = "ITBK_I_0019";
+    
+    /** 该等级暂无试题。 */
+    public static final String ITBK_I_0020 = "ITBK_I_0020";
 
     // ------------------------Qestion------------------------
     /** 您确定要立刻结束此次模拟考试么？ */
