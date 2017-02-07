@@ -54,6 +54,10 @@
    
    
    <navigation-case>
+      <from-outcome>ITBK_EXAM_000</from-outcome>
+      <to-view-id>/xhtml/examination/ExamIndex.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_EXAM_001</from-outcome>
       <to-view-id>/xhtml/examination/ExamClassify.xhtml</to-view-id>
    </navigation-case>
