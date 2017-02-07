@@ -58,7 +58,7 @@
 												var="entry" itemValue="#{entry.key}"
 												itemLabel="#{entry.value}" />
 											<f:ajax event="change" execute="@this"
-												render="levelLableWrapper levelWrapper yearLableWrapper"
+												render="levelLableWrapper levelWrapper yearLableWrapperMsg yearLableWrapper"
 												listener="#{examClassifyController.changExamType}"
 												onevent="changExamTypeChangeCallBack" />
 										</h:selectOneRadio></td>
@@ -82,7 +82,7 @@
 															value="#{examClassifyController.jlptLevels}" var="entry"
 															itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 														<f:ajax event="change" execute="@this"
-															render="yearLableWrapper ngossfw_error_display"
+															render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
 															listener="#{examClassifyController.changeYear}"
 															onevent="changExamTypeChangeCallBack" />
 													</h:selectOneMenu>
@@ -97,7 +97,7 @@
 															value="#{examClassifyController.jtestLevels}" var="entry"
 															itemValue="#{entry.key}" itemLabel="#{entry.value}" />
 														<f:ajax event="change" execute="@this"
-															render="yearLableWrapper ngossfw_error_display"
+															render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
 															listener="#{examClassifyController.changeYear}"
 															onevent="changExamTypeChangeCallBack" />
 													</h:selectOneMenu>
@@ -117,18 +117,23 @@
 											</h:selectOneRadio></td>
 									</tr>
 								</c:if>
-								<h:panelGroup id="yearLableWrapper">
-									<c:if test="#{examClassifyController.mode eq '1'}">
-										<tr>
+								<tr>
+									<td><h:panelGroup id="yearLableWrapperMsg">
 											<c:if
 												test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' and examClassifyController.counts.size() != 0 }">
-												<td><h4>选择考题：</h4></td>
-												<td class="to"><c:if
+												<h4>选择考题：</h4>
+											</c:if>
+										</h:panelGroup></td>
+									<td class="to"><h:panelGroup id="yearLableWrapper">
+											<c:if
+												test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' and examClassifyController.counts.size() != 0 }">
+												<c:if test="#{examClassifyController.mode eq '1'}">
+													<c:if
 														test="#{examClassifyController.classifyBean.exam=='1'}">
 														<div style="float: left;">
 															<h:selectOneMenu
 																value="#{examClassifyController.chooseYear}"
-																style="width: 50%;margin:0px 0;">
+																style="width: 30%;margin:0px 0;">
 																<f:selectItem itemValue="" itemLabel="" />
 																<f:selectItems value="#{examClassifyController.years}" />
 																<f:ajax event="change" execute="@this"
@@ -144,7 +149,7 @@
 															<c:if test="#{examClassifyController.counts.size() != 0}">
 																<h:selectOneMenu
 																	value="#{examClassifyController.chooseCount}"
-																	style="width: 50%;margin:0px 0;">
+																	style="width: 20%;margin:0px 0;">
 																	<f:selectItem itemValue="" itemLabel="" />
 																	<f:selectItems value="#{examClassifyController.counts}" />
 																</h:selectOneMenu>
@@ -158,11 +163,11 @@
 																</c:if>
 															</c:if>
 														</h:panelGroup>
-													</div></td>
+													</div>
+												</c:if>
 											</c:if>
-										</tr>
-									</c:if>
-								</h:panelGroup>
+										</h:panelGroup></td>
+								</tr>
 								<tr>
 									<c:if test="#{examClassifyController.mode eq '2'}">
 										<td>
