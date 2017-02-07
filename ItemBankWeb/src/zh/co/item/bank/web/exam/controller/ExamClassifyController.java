@@ -281,8 +281,20 @@ public class ExamClassifyController extends BaseController {
      */
     public void changExamType() {
         logger.debug("题种别变更，刷新考试级别和考卷年。");
+        
         years.clear();
         counts.clear();
+        
+        chooseYear = "";
+        chooseCount = "";
+        //JLPT的场合
+        if(SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
+        	classifyBean.setJtestLevel("");
+        }
+        //J.TEST的场合
+        if(SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
+        	classifyBean.setJlptLevel("");
+        }
     }
 
     /**
