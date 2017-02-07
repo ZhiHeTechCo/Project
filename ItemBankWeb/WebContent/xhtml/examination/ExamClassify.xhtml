@@ -117,11 +117,11 @@
 											</h:selectOneRadio></td>
 									</tr>
 								</c:if>
-								<c:if test="#{examClassifyController.mode eq '1'}">
-									<tr>
-										<h:panelGroup id="yearLableWrapper">
+								<h:panelGroup id="yearLableWrapper">
+									<c:if test="#{examClassifyController.mode eq '1'}">
+										<tr>
 											<c:if
-												test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' }">
+												test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' and examClassifyController.counts.size() != 0 }">
 												<td><h4>选择考题：</h4></td>
 												<td class="to"><c:if
 														test="#{examClassifyController.classifyBean.exam=='1'}">
@@ -160,11 +160,11 @@
 														</h:panelGroup>
 													</div></td>
 											</c:if>
-										</h:panelGroup>
-									</tr>
-								</c:if>
+										</tr>
+									</c:if>
+								</h:panelGroup>
 								<tr>
-									<c:if test="#{examClassifyController.mode eq '1'}">
+									<c:if test="#{examClassifyController.mode eq '2'}">
 										<td>
 											<div class="form-submit1">
 												<h:commandButton value="开始做题" class="button1"
@@ -174,7 +174,7 @@
 											</div>
 										</td>
 									</c:if>
-									<c:if test="#{examClassifyController.mode eq '2'}">
+									<c:if test="#{examClassifyController.mode eq '1'}">
 										<td><div class="form-submit1">
 												<h:commandButton value="开始考试" class="button1"
 													style="margin-top: 5px;"

@@ -227,7 +227,11 @@ public class ExamClassifyController extends BaseController {
             // b.跳转至【考试题库】画面
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
-            examController.setYear(chooseYear);
+            if ("1".equals(classifyBean.getExam())) {
+                examController.setYear(chooseYear + "-" + chooseCount);
+            } else {
+                examController.setYear(chooseCount);
+            }
             examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
             return examController.examSearch();
 
@@ -289,7 +293,7 @@ public class ExamClassifyController extends BaseController {
             logger.debug("题种别变更，刷新考卷年。");
             years.clear();
             // 获取考卷年(JLPT)
-            if (StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
+            if ("1".equals(classifyBean.getExam()) && StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
                 for (TbExamListBean examListBean : examListBeans) {
                     // 考试级别相等
                     if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
@@ -297,12 +301,13 @@ public class ExamClassifyController extends BaseController {
                         years.add(examListBean.getYear());
                     }
                 }
+                if (years.size() == 0) {
+                    logger.log(MessageId.ITBK_I_0020);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                    throw ex;
+                }
             }
-            if (years.size() == 0) {
-                logger.log(MessageId.ITBK_I_0020);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
-                throw ex;
-            }
+            // 获取考次（JTEST）
             counts.clear();
             if ("2".equals(classifyBean.getExam()) && StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
                 for (TbExamListBean examListBean : examListBeans) {
