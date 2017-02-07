@@ -56,6 +56,12 @@ public class SystemConstants {
     
     /** 题型种类 听力 */
     public static final String EXAM_TYPE_LISTION = "6";
+    
+    /** 试题种类 JLPT */
+    public static final String EXAM_1 = "1";
+    
+    /** 试题种类 J.TEST */
+    public static final String EXAM_2 = "2";
 
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/
