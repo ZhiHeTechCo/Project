@@ -295,18 +295,24 @@ public class ExamController extends BaseController {
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             } else {
-                // 未检索到指定试题
-                logger.log(MessageId.ITBK_I_0015);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
-                throw ex;
+//                // 未检索到指定试题
+//                logger.log(MessageId.ITBK_I_0015);
+//                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
+//                throw ex;
+                // 显示上次成绩
+                ExamReportController examReportController = (ExamReportController) SpringAppContextManager
+                        .getBean("examReportController");
+                examReportController.setMediaFlag("false");
+                examReportController.setClassifyBean(classifyBean);
+                return examReportController.init(source);
             }
 
-        } catch (CmnBizException ex) {
-            processForException(logger, ex);
-            // 返回题型选择
-            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager
-                    .getBean("examClassifyController");
-            return classifyBean.init();
+//        } catch (CmnBizException ex) {
+//            processForException(logger, ex);
+//            // 返回题型选择
+//            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager
+//                    .getBean("examClassifyController");
+//            return classifyBean.init();
 
         } catch (Exception e) {
             processForException(logger, e);

@@ -225,6 +225,17 @@ public class ExamClassifyController extends BaseController {
             }
 
             // b.跳转至【考试题库】画面
+            String source = null;
+            for (TbExamListBean bean : examListBeans) {
+                // Exam相同 and Count相同 and (chooseYear为空 or Year相同) and
+                // (level等于jlptLevel或者jtestLevel)
+                if (classifyBean.getExam().equals(bean.getExam()) && chooseCount.equals(bean.getCount())
+                        && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
+                        && bean.getLevel().equals(classifyBean.getJlptLevel())
+                        || bean.getLevel().equals(classifyBean.getJtestLevel())) {
+                    source = bean.getSource();
+                }
+            }
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
             if ("1".equals(classifyBean.getExam())) {
@@ -232,6 +243,7 @@ public class ExamClassifyController extends BaseController {
             } else {
                 examController.setYear(chooseCount);
             }
+            examController.setSource(source);
             examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
             return examController.examSearch();
 

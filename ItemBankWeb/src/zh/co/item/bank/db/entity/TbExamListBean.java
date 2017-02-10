@@ -11,6 +11,8 @@ public class TbExamListBean extends TbExamListBeanKey {
 
     private String count;
 
+    private String source;
+
     public String getLanguage() {
         return language;
     }
@@ -50,4 +52,13 @@ public class TbExamListBean extends TbExamListBeanKey {
     public void setCount(String count) {
         this.count = count == null ? null : count.trim();
     }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
 }
