@@ -218,7 +218,8 @@ public class ExamClassifyController extends BaseController {
         try {
             // a.用户选择check
             if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
-                    && StringUtils.isEmpty(classifyBean.getJtestLevel()))) {
+                    && StringUtils.isEmpty(classifyBean.getJtestLevel()))
+                    && (counts.size() > 0 && StringUtils.isEmpty(chooseCount))) {
                 logger.log(MessageId.ITBK_E_0006);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
                 throw ex;
@@ -227,10 +228,12 @@ public class ExamClassifyController extends BaseController {
             // b.跳转至【考试题库】画面
             String source = null;
             for (TbExamListBean bean : examListBeans) {
-                // Exam相同 and Count相同 and (chooseYear为空 or Year相同) and
+                // Exam相同 and (chooseYear为空 or Year相同) and (chooseCount为空 or
+                // Count相同) and
                 // (level等于jlptLevel或者jtestLevel)
-                if (classifyBean.getExam().equals(bean.getExam()) && chooseCount.equals(bean.getCount())
+                if (classifyBean.getExam().equals(bean.getExam())
                         && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
+                        && (StringUtils.isEmpty(chooseCount) || chooseCount.equals(bean.getCount()))
                         && bean.getLevel().equals(classifyBean.getJlptLevel())
                         || bean.getLevel().equals(classifyBean.getJtestLevel())) {
                     source = bean.getSource();
@@ -292,20 +295,22 @@ public class ExamClassifyController extends BaseController {
      * [Ajax]考题种别变更,试卷年变更
      */
     public void changExamType() {
-        logger.debug("题种别变更，刷新考试级别和考卷年。");
-        
-        years.clear();
-        counts.clear();
-        
-        chooseYear = "";
-        chooseCount = "";
-        //JLPT的场合
-        if(SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
-        	classifyBean.setJtestLevel("");
-        }
-        //J.TEST的场合
-        if(SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
-        	classifyBean.setJlptLevel("");
+        logger.debug("题种别变更，刷新考试级别");
+
+        if ("1".equals(mode)) {
+            years.clear();
+            counts.clear();
+
+            chooseYear = "";
+            chooseCount = "";
+            // JLPT的场合
+            if (SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
+                classifyBean.setJtestLevel("");
+            }
+            // J.TEST的场合
+            if (SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
+                classifyBean.setJlptLevel("");
+            }
         }
     }
 
@@ -313,14 +318,19 @@ public class ExamClassifyController extends BaseController {
      * [Ajax]试卷年变更
      */
     public String changeYear() {
+        if (!"1".equals(mode)) {
+            return getPageId();
+        }
         try {
             logger.debug("题种别变更，刷新考卷年。");
             years.clear();
             // 获取考卷年(JLPT)
-            if ("1".equals(classifyBean.getExam()) && StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
+            if (SystemConstants.EXAM_1.equals(classifyBean.getExam())
+                    && StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
                 for (TbExamListBean examListBean : examListBeans) {
-                    // 考试级别相等
-                    if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
+                    // 取JLPT对应等级的年份
+                    if (classifyBean.getExam().equals(examListBean.getExam())
+                            && classifyBean.getJlptLevel().equals(examListBean.getLevel())
                             && !years.contains(examListBean.getYear())) {
                         years.add(examListBean.getYear());
                     }
@@ -333,7 +343,8 @@ public class ExamClassifyController extends BaseController {
             }
             // 获取考次（JTEST）
             counts.clear();
-            if ("2".equals(classifyBean.getExam()) && StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
+            if (SystemConstants.EXAM_2.equals(classifyBean.getExam())
+                    && StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
                 for (TbExamListBean examListBean : examListBeans) {
                     if (classifyBean.getExam().equals(examListBean.getExam())
                             && classifyBean.getJtestLevel().equals(examListBean.getLevel())
@@ -357,6 +368,9 @@ public class ExamClassifyController extends BaseController {
      * [Ajax]试卷月变更
      */
     public String changeMonth() {
+        if (!"1".equals(mode)) {
+            return getPageId();
+        }
         try {
             logger.debug("题种别变更，刷新考卷月。");
             counts.clear();
@@ -366,15 +380,10 @@ public class ExamClassifyController extends BaseController {
                 if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
                         && examListBean.getYear().equals(chooseYear)
                         && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if (!counts.contains(examListBean.getCount())) {
+                    if (!counts.contains(examListBean.getCount()) && StringUtils.isNotEmpty(examListBean.getCount())) {
                         counts.add(examListBean.getCount());
                     }
                 }
-            }
-            if (counts.size() == 0) {
-                logger.log(MessageId.ITBK_I_0020);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
-                throw ex;
             }
         } catch (Exception e) {
             processForException(logger, e);

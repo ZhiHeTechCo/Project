@@ -232,11 +232,12 @@ public class ExamController extends BaseController {
             map.put("userId", userInfo.getId());
             // J.TEST，JLPT区分，order By控制
             map.put("exam", classifyBean.getExam());
+            map.put("source", source);
 
-            // b-1.检测是否有中途退出的试题存在
-            if (year == null) {
-                year = examDropoutService.getYear(getExamDropoutBean());
-            }
+//            // b-1.检测是否有中途退出的试题存在
+//            if (year == null) {
+//                year = examDropoutService.getYear(getExamDropoutBean());
+//            }
             // b-2.获得试题结构(一次考试只获取一次)(听力大题目不检索)
             if (safeList == null || safeList.size() == 0) {
                 List<ExamModel> examStructure = examService.getStructure(classifyBean);
@@ -245,19 +246,19 @@ public class ExamController extends BaseController {
             for (ExamModel model : safeList) {
                 map.put("structureId", model.getStructureId());
 
-                // TODO 添加年限选择后废弃
-                if (year == null) {
-                    // 获取题库中最新一年的试题year
-                    year = examService.getYear(map);
-                    if (year == null) {
-                        safeList.remove(model);
-                        continue;
-                    }
-                }
-                // TODO 添加年限选择后废弃
-                map.put("year", year);
+//                // 添加年限选择后废弃
+//                if (year == null) {
+//                    // 获取题库中最新一年的试题year
+//                    year = examService.getYear(map);
+//                    if (year == null) {
+//                        safeList.remove(model);
+//                        continue;
+//                    }
+//                }
+//                // 添加年限选择后废弃
+//                map.put("year", year);
                 // b-3.检索指定年限试题
-                questions = examService.getTestQuestion(map);
+                questions = examService.getTestQuestionBySource(map);
 
                 // 当前大题已做完
                 if (questions == null || questions.size() == 0) {

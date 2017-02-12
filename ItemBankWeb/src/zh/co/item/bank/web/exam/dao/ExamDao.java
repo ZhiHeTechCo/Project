@@ -114,8 +114,8 @@ public class ExamDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ExamModel> getTestQuestion(Map<String, Object> map) {
-        return getIbatisTemplate().selectList("Question.getTestQuestion", map);
+    public List<ExamModel> getTestQuestionBySource(Map<String, Object> map) {
+        return getIbatisTemplate().selectList("Question.getTestQuestionBySource", map);
     }
 
     /**

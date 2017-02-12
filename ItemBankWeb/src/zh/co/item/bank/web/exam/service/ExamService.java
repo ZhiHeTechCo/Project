@@ -188,13 +188,6 @@ public class ExamService {
     }
 
     /**
-     * 用户提问
-     */
-    public void askQuestion() {
-        // TODO
-    }
-
-    /**
      * 检索特殊试题
      * 
      * @param map
@@ -207,8 +200,7 @@ public class ExamService {
     /**
      * 获取试题结构
      * 
-     * @param map[exam,
-     *            examType]
+     * @param map[exam,examType]
      * @return
      */
     public List<ExamModel> getStructure(TbQuestionClassifyBean classifyBean) {
@@ -218,11 +210,11 @@ public class ExamService {
     /**
      * 获取对应试题
      * 
-     * @param map[structure_id,year]
+     * @param map[structure_id,source]
      * @return
      */
-    public List<ExamModel> getTestQuestion(Map<String, Object> map) {
-        return examDao.getTestQuestion(map);
+    public List<ExamModel> getTestQuestionBySource(Map<String, Object> map) {
+        return examDao.getTestQuestionBySource(map);
     }
 
     /**

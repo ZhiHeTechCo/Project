@@ -42,12 +42,12 @@
 		tb_question_classify a right join tb_question_structure b on
 		a.id=b.classify_id
 		where a.exam = #{exam}
-		<if test="jlptLevel !=null">
-			and a.jlpt_level=#{jlptLevel}
-		</if>
-		<if test="jtestLevel !=null">
-			and a.jtest_level=#{jtestLevel}
-		</if>
+        <if test="jlptLevel !=null &amp; jlptLevel !=''">
+            and a.jlpt_level=#{jlptLevel}
+        </if>
+        <if test="jtestLevel !=null &amp; jtestLevel != ''">
+            and a.jtest_level=#{jtestLevel}
+        </if>
 		and exam_type != 6
 		order by structureId
 	</select>
@@ -69,13 +69,13 @@
 		limit 1
 	</select>
 
-	<select id="getTestQuestion" parameterType="java.util.Map"
+	<select id="getTestQuestionBySource" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select * from vb_question_detail where no not in(select question_id
 		from tb_exam_collection
 		where user_id = #{userId}
 		) and structure_id = #{structureId} and delete_flag='0'
-		and year = #{year}
+		and source = #{source}
 		order by
 		<if test="exam ==1">
 			year desc,
@@ -93,10 +93,10 @@
 		tb_question_classify a right join tb_question_structure_old b on
 		a.id=b.classify_id
 		where a.exam = #{exam}
-		<if test="jlptLevel !=null">
+		<if test="jlptLevel !=null &amp; jlptLevel !=''">
 			and a.jlpt_level=#{jlptLevel}
 		</if>
-		<if test="jtestLevel !=null">
+		<if test="jtestLevel !=null &amp; jtestLevel != ''">
 			and a.jtest_level=#{jtestLevel}
 		</if>
 		order by structureId
