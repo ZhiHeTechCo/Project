@@ -241,11 +241,6 @@ public class ExamClassifyController extends BaseController {
             }
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
-            if ("1".equals(classifyBean.getExam())) {
-                examController.setYear(chooseYear + "-" + chooseCount);
-            } else {
-                examController.setYear(chooseCount);
-            }
             examController.setSource(source);
             examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
             return examController.examSearch();

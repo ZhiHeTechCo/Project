@@ -12,10 +12,6 @@ public class ExamDropoutService {
     @Inject
     private ExamDropoutDao examDropoutDao;
 
-    public String getYear(TbExamDropoutBean tbExamDropoutBean) {
-        return examDropoutDao.getDropoutForYear(tbExamDropoutBean);
-    }
-
     public void insertExamDropout(TbExamDropoutBean bean) {
         examDropoutDao.insert(bean);
     }

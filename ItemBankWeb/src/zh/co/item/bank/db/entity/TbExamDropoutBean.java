@@ -4,7 +4,7 @@ public class TbExamDropoutBean {
 
     private Integer userId;
 
-    private String year;
+    private String source;
 
     private String exam;
 
@@ -20,12 +20,12 @@ public class TbExamDropoutBean {
         this.userId = userId;
     }
 
-    public String getYear() {
-        return year;
+    public String getSource() {
+        return source;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getExam() {

@@ -78,12 +78,6 @@ public class ExamController extends BaseController {
     // 考试进行状态
     private String status;
 
-    // 考卷年
-    String year = null;
-
-    // 考卷月
-    String count = null;
-
     // 开始做题时间
     Date startTime = null;
 
@@ -234,11 +228,7 @@ public class ExamController extends BaseController {
             map.put("exam", classifyBean.getExam());
             map.put("source", source);
 
-//            // b-1.检测是否有中途退出的试题存在
-//            if (year == null) {
-//                year = examDropoutService.getYear(getExamDropoutBean());
-//            }
-            // b-2.获得试题结构(一次考试只获取一次)(听力大题目不检索)
+            // b-1.获得试题结构(一次考试只获取一次)(听力大题目不检索)
             if (safeList == null || safeList.size() == 0) {
                 List<ExamModel> examStructure = examService.getStructure(classifyBean);
                 safeList.addAll(examStructure);
@@ -246,18 +236,7 @@ public class ExamController extends BaseController {
             for (ExamModel model : safeList) {
                 map.put("structureId", model.getStructureId());
 
-//                // 添加年限选择后废弃
-//                if (year == null) {
-//                    // 获取题库中最新一年的试题year
-//                    year = examService.getYear(map);
-//                    if (year == null) {
-//                        safeList.remove(model);
-//                        continue;
-//                    }
-//                }
-//                // 添加年限选择后废弃
-//                map.put("year", year);
-                // b-3.检索指定年限试题
+                // b-2.检索指定试卷
                 questions = examService.getTestQuestionBySource(map);
 
                 // 当前大题已做完
@@ -296,10 +275,6 @@ public class ExamController extends BaseController {
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             } else {
-//                // 未检索到指定试题
-//                logger.log(MessageId.ITBK_I_0015);
-//                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0015);
-//                throw ex;
                 // 显示上次成绩
                 ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                         .getBean("examReportController");
@@ -307,13 +282,6 @@ public class ExamController extends BaseController {
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             }
-
-//        } catch (CmnBizException ex) {
-//            processForException(logger, ex);
-//            // 返回题型选择
-//            ExamClassifyController classifyBean = (ExamClassifyController) SpringAppContextManager
-//                    .getBean("examClassifyController");
-//            return classifyBean.init();
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -434,7 +402,6 @@ public class ExamController extends BaseController {
         subject = null;
         subjectList = null;
         status = null;
-        year = null;
         safeList.clear();
         startTime = null;
         questions.clear();
@@ -452,7 +419,7 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * 中途退出信息保存（添加year选择后废弃）TODO
+     * 中途退出信息保存
      */
     private void saveDropoutInfo() {
         examDropoutService.insertExamDropout(getExamDropoutBean());
@@ -463,11 +430,11 @@ public class ExamController extends BaseController {
      * 
      * @return
      */
-    private TbExamDropoutBean getExamDropoutBean() {
+    protected TbExamDropoutBean getExamDropoutBean() {
         TbExamDropoutBean bean = new TbExamDropoutBean();
         bean.setUserId(userInfo.getId());
-        bean.setYear(year);
         bean.setExam(classifyBean.getExam());
+        bean.setSource(source);
         bean.setJlptLevel(classifyBean.getJlptLevel());
         bean.setJtestLevel(classifyBean.getJtestLevel());
         return bean;
@@ -556,22 +523,6 @@ public class ExamController extends BaseController {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
     }
 
     public Date getStartTime() {
