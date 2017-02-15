@@ -13,6 +13,8 @@ public class TbExamListBean extends TbExamListBeanKey {
 
     private String source;
 
+    private String deleteFlag;
+
     public String getLanguage() {
         return language;
     }
@@ -58,7 +60,14 @@ public class TbExamListBean extends TbExamListBeanKey {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source == null ? null : source.trim();
     }
 
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    }
 }

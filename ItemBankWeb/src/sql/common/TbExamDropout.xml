@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TbExamDropout" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbExamDropoutBean" >
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="CHAR" />
+    <result column="exam" property="exam" jdbcType="CHAR" />
+    <result column="jlpt_level" property="jlptLevel" jdbcType="CHAR" />
+    <result column="jtest_level" property="jtestLevel" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean" >
+    insert into tb_exam_dropout (user_id, source, exam, 
+      jlpt_level, jtest_level)
+    values (#{userId,jdbcType=INTEGER}, #{source,jdbcType=CHAR}, #{exam,jdbcType=CHAR}, 
+      #{jlptLevel,jdbcType=CHAR}, #{jtestLevel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean" >
+    insert into tb_exam_dropout
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="exam != null" >
+        exam,
+      </if>
+      <if test="jlptLevel != null" >
+        jlpt_level,
+      </if>
+      <if test="jtestLevel != null" >
+        jtest_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="exam != null" >
+        #{exam,jdbcType=CHAR},
+      </if>
+      <if test="jlptLevel != null" >
+        #{jlptLevel,jdbcType=CHAR},
+      </if>
+      <if test="jtestLevel != null" >
+        #{jtestLevel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

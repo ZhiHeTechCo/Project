@@ -1,7 +1,6 @@
 package zh.co.item.bank.db.entity;
 
 public class TbExamDropoutBean {
-
     private Integer userId;
 
     private String source;
@@ -25,7 +24,7 @@ public class TbExamDropoutBean {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source == null ? null : source.trim();
     }
 
     public String getExam() {
@@ -33,7 +32,7 @@ public class TbExamDropoutBean {
     }
 
     public void setExam(String exam) {
-        this.exam = exam;
+        this.exam = exam == null ? null : exam.trim();
     }
 
     public String getJlptLevel() {
@@ -41,7 +40,7 @@ public class TbExamDropoutBean {
     }
 
     public void setJlptLevel(String jlptLevel) {
-        this.jlptLevel = jlptLevel;
+        this.jlptLevel = jlptLevel == null ? null : jlptLevel.trim();
     }
 
     public String getJtestLevel() {
@@ -49,7 +48,6 @@ public class TbExamDropoutBean {
     }
 
     public void setJtestLevel(String jtestLevel) {
-        this.jtestLevel = jtestLevel;
+        this.jtestLevel = jtestLevel == null ? null : jtestLevel.trim();
     }
-
 }

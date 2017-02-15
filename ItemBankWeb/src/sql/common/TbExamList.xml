@@ -8,9 +8,11 @@
     <result column="level" property="level" jdbcType="CHAR" />
     <result column="year" property="year" jdbcType="CHAR" />
     <result column="count" property="count" jdbcType="CHAR" />
+    <result column="source" property="source" jdbcType="CHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, language, exam, level, year, count
+    id, language, exam, level, year, count, source, delete_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbExamListBeanKey" >
     select 
@@ -24,9 +26,11 @@
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
     insert into tb_exam_list (id, language, exam, 
-      level, year, count)
+      level, year, count, source, 
+      delete_flag)
     values (#{id,jdbcType=INTEGER}, #{language,jdbcType=CHAR}, #{exam,jdbcType=CHAR}, 
-      #{level,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{count,jdbcType=CHAR})
+      #{level,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{count,jdbcType=CHAR}, #{source,jdbcType=CHAR}, 
+      #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
     insert into tb_exam_list
@@ -49,6 +53,12 @@
       <if test="count != null" >
         count,
       </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -68,6 +78,12 @@
       </if>
       <if test="count != null" >
         #{count,jdbcType=CHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -89,6 +105,12 @@
       <if test="count != null" >
         count = #{count,jdbcType=CHAR},
       </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -98,7 +120,9 @@
       exam = #{exam,jdbcType=CHAR},
       level = #{level,jdbcType=CHAR},
       year = #{year,jdbcType=CHAR},
-      count = #{count,jdbcType=CHAR}
+      count = #{count,jdbcType=CHAR},
+      source = #{source,jdbcType=CHAR},
+      delete_flag = #{deleteFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

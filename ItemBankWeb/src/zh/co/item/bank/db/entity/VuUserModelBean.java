@@ -5,15 +5,23 @@ import java.util.Date;
 public class VuUserModelBean {
     private Integer id;
 
+    private String openId;
+
+    private String uuid;
+
     private String name;
+
+    private String nickname;
+
+    private String wechat;
 
     private String password;
 
     private String role;
 
-    private Date createTime;
+    private Date createtime;
 
-    private Date updateTime;
+    private Date updatetime;
 
     private Date birthday;
 
@@ -21,23 +29,19 @@ public class VuUserModelBean {
 
     private String email;
 
-    private String jlptLevel;
+    private String jlptlevel;
 
-    private String jtestLevel;
-
-    private String nickName;
-
-    private String wechat;
+    private String jtestlevel;
 
     private Integer point;
 
     private Integer contribution;
 
-    private Date expireTime;
+    private Date expiretime;
 
-    private Long questionNum;
+    private Long questionnum;
 
-    private Long errorNum;
+    private Long errornum;
 
     public Integer getId() {
         return id;
@@ -47,12 +51,44 @@ public class VuUserModelBean {
         this.id = id;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat == null ? null : wechat.trim();
     }
 
     public String getPassword() {
@@ -71,20 +107,20 @@ public class VuUserModelBean {
         this.role = role == null ? null : role.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdatetime() {
+        return updatetime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 
     public Date getBirthday() {
@@ -111,36 +147,20 @@ public class VuUserModelBean {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getJlptLevel() {
-        return jlptLevel;
+    public String getJlptlevel() {
+        return jlptlevel;
     }
 
-    public void setJlptLevel(String jlptLevel) {
-        this.jlptLevel = jlptLevel == null ? null : jlptLevel.trim();
+    public void setJlptlevel(String jlptlevel) {
+        this.jlptlevel = jlptlevel == null ? null : jlptlevel.trim();
     }
 
-    public String getJtestLevel() {
-        return jtestLevel;
+    public String getJtestlevel() {
+        return jtestlevel;
     }
 
-    public void setJtestLevel(String jtestLevel) {
-        this.jtestLevel = jtestLevel == null ? null : jtestLevel.trim();
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
-    }
-
-    public String getWechat() {
-        return wechat;
-    }
-
-    public void setWechat(String wechat) {
-        this.wechat = wechat == null ? null : wechat.trim();
+    public void setJtestlevel(String jtestlevel) {
+        this.jtestlevel = jtestlevel == null ? null : jtestlevel.trim();
     }
 
     public Integer getPoint() {
@@ -159,27 +179,27 @@ public class VuUserModelBean {
         this.contribution = contribution;
     }
 
-    public Date getExpireTime() {
-        return expireTime;
+    public Date getExpiretime() {
+        return expiretime;
     }
 
-    public void setExpireTime(Date expireTime) {
-        this.expireTime = expireTime;
+    public void setExpiretime(Date expiretime) {
+        this.expiretime = expiretime;
     }
 
-    public Long getQuestionNum() {
-        return questionNum;
+    public Long getQuestionnum() {
+        return questionnum;
     }
 
-    public void setQuestionNum(Long questionNum) {
-        this.questionNum = questionNum;
+    public void setQuestionnum(Long questionnum) {
+        this.questionnum = questionnum;
     }
 
-    public Long getErrorNum() {
-        return errorNum;
+    public Long getErrornum() {
+        return errornum;
     }
 
-    public void setErrorNum(Long errorNum) {
-        this.errorNum = errorNum;
+    public void setErrornum(Long errornum) {
+        this.errornum = errornum;
     }
 }
