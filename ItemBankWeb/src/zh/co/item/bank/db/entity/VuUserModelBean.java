@@ -7,6 +7,8 @@ public class VuUserModelBean {
 
     private String openId;
 
+    private String uuid;
+
     private String name;
 
     private String password;
@@ -55,6 +57,14 @@ public class VuUserModelBean {
 
     public void setOpenId(String openId) {
         this.openId = openId == null ? null : openId.trim();
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
     }
 
     public String getName() {
