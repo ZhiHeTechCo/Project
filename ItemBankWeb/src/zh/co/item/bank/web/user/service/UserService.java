@@ -203,6 +203,16 @@ public class UserService {
         if (userDao.isUserExistForWechat(userInfo)) {
             // 存在的场合，自动登录
             user = userDao.getUserInfo(userInfo);
+            //UnionID为空的场合
+            if(CmnStringUtils.isEmptyStr(user.getUuid()) && !CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
+            	TuUserBean newUser = new TuUserBean();
+                newUser.setId(userInfo.getId());
+                //UnionID
+                newUser.setUuid(userInfo.getUuid());
+                // 更新时间
+                newUser.setUpdateTime(new Date());
+                userDao.updateUserInfo(newUser);
+            }
         } else {
         	if(!CmnStringUtils.isNickName(userInfo.getNickName())) {
         		logger.log(MessageId.ITBK_I_0001, new Object[] { userInfo.getName() });
