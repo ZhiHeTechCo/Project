@@ -300,11 +300,11 @@ public class ExamClassifyController extends BaseController {
             chooseCount = "";
             // JLPT的场合
             if (SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
-                classifyBean.setJtestLevel("");
+                classifyBean.setJtestLevel(null);
             }
             // J.TEST的场合
             if (SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
-                classifyBean.setJlptLevel("");
+                classifyBean.setJlptLevel(null);
             }
         }
     }
