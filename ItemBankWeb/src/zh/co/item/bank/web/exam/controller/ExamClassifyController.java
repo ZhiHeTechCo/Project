@@ -252,16 +252,6 @@ public class ExamClassifyController extends BaseController {
         return getPageId();
     }
 
-    /**
-     * 4.模式选择跳转
-     * 
-     * @param currentMode
-     * @return
-     */
-    public String index(String currentMode) {
-        mode = currentMode;
-        return init();
-    }
 
     /**
      * 5.模式选择跳转

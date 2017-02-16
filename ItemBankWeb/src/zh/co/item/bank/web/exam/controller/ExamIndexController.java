@@ -37,36 +37,17 @@ public class ExamIndexController extends BaseController {
     }
 
     /**
-     * 2.单项训练
+     * 2.模式选择跳转
      * 
+     * @param currentMode
      * @return
      */
-    public String classifySearch() {
-
-        try {
-            ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
-                    .getBean("examClassifyController");
-            examClassifyController.setMode("1");
-            return examClassifyController.init();
-
-        } catch (Exception e) {
-            processForException(logger, e);
-        }
-        // 留在当前画面
-        return getPageId();
-    }
-
-    /**
-     * 2.考试模式
-     * 
-     * @return
-     */
-    public String examSearch() {
+    public String index(String currentMode) {
         try {
 
             ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
                     .getBean("examClassifyController");
-            examClassifyController.setMode("2");
+            examClassifyController.setMode(currentMode);
             return examClassifyController.init();
 
         } catch (Exception e) {
