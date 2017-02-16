@@ -12,10 +12,10 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examIndexForm">
 				<div class="typrography">
-				<!-- 
-					<h2
-						style="text-align: center; padding-bottom: 20px; color: #3382C9;">模式选择</h2>
-				 -->
+					<c:if test="#{examIndexController.showFlag eq '0'}">
+						<h2
+							style="text-align: center; padding-bottom: 20px; color: #3382C9;margin-bottom: 50px;">模式选择</h2>
+					</c:if>
 					<div class="container">
 						<div class="bs-docs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -32,18 +32,18 @@
 							 -->
 							<div style="text-align: center;">
 								<div>
-									<h:commandButton
-										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_exam.jpg);"
+									<h:commandButton value="考试模式"
+										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
 										action="#{examIndexController.index('1')}" />
 								</div>
 								<div>
-									<h:commandButton
-										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_training.jpg);"
+									<h:commandButton value="单项练习"
+										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
 										action="#{examIndexController.index('2')}" />
 								</div>
 								<div>
-									<h:commandButton
-										style="width: 210px;height: 118px;background-image: url(${request.contextPath}/resources/images/btn_resume.jpg);"
+									<h:commandButton value="错题复习"
+										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
 										action="#{resumeBean.init}" />
 								</div>
 							</div>

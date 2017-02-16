@@ -8,6 +8,7 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
+import zh.co.common.utils.WebUtils;
 
 /**
  * 试题类型选择画面
@@ -21,6 +22,8 @@ public class ExamIndexController extends BaseController {
 
     private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
 
+    private String showFlag;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_000;
     }
@@ -32,6 +35,9 @@ public class ExamIndexController extends BaseController {
      */
     public String init() {
         pushPathHistory("examIndexController");
+        if (!WebUtils.judgeIsMoblie()) {
+            showFlag = SystemConstants.FLAG_YES;
+        }
 
         return getPageId();
     }
@@ -73,6 +79,14 @@ public class ExamIndexController extends BaseController {
         }
         // 留在当前画面
         return getPageId();
+    }
+
+    public String getShowFlag() {
+        return showFlag;
+    }
+
+    public void setShowFlag(String showFlag) {
+        this.showFlag = showFlag;
     }
 
 }
