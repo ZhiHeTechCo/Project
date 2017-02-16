@@ -234,8 +234,8 @@ public class ExamClassifyController extends BaseController {
                 if (classifyBean.getExam().equals(bean.getExam())
                         && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
                         && (StringUtils.isEmpty(chooseCount) || chooseCount.equals(bean.getCount()))
-                        && bean.getLevel().equals(classifyBean.getJlptLevel())
-                        || bean.getLevel().equals(classifyBean.getJtestLevel())) {
+                        && (bean.getLevel().equals(classifyBean.getJlptLevel())
+                        || bean.getLevel().equals(classifyBean.getJtestLevel()))) {
                     source = bean.getSource();
                 }
             }

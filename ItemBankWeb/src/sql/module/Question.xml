@@ -76,14 +76,7 @@
 		where user_id = #{userId}
 		) and structure_id = #{structureId} and delete_flag='0'
 		and source = #{source}
-		order by
-		<if test="exam ==1">
-			year desc,
-		</if>
-		<if test="exam ==2">
-			year+0 desc,
-		</if>
-		no
+		order by no
 	</select>
 	<!-- 2009年以前的试题，使用旧结构 -->
 	<select id="getTestQuestionsOld" parameterType="zh.co.item.bank.db.entity.TbQuestionClassifyBean"
