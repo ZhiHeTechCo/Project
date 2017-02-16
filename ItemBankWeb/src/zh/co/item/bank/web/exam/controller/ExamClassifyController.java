@@ -254,7 +254,7 @@ public class ExamClassifyController extends BaseController {
 
 
     /**
-     * 5.模式选择跳转
+     * 4.模式选择跳转
      * 
      * @param currentMode
      * @return

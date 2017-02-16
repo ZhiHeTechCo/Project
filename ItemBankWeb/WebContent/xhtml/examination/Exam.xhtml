@@ -53,8 +53,8 @@
 															<a class="example-image-link"
 																href="#{examController.graphicImage}"
 																data-lightbox="example-set"><img
-																class="example-image" src="#{examController.graphicImage}"
-																alt="" /></a>
+																class="example-image"
+																src="#{examController.graphicImage}" alt="" /></a>
 														</div>
 													</div>
 												</td>
@@ -86,14 +86,19 @@
 											</h:selectOneRadio>
 										</h:panelGroup>
 										<h:panelGroup rendered="#{item.a eq ''}">
-											<h:inputText value="#{item.myAnswer}" maxlength="6"/>
+											<h:inputText value="#{item.myAnswer}" maxlength="6" />
 										</h:panelGroup>
 									</h:column>
 								</h:dataTable>
 								<c:if test="#{examController.status == null}">
 									<div class="form-submit1">
 										<h:commandButton value="确认" class="button1"
+											style="margin-right: 5px;"
 											action="#{examController.doSubmit}" id="doSubmitBtn" />
+									</div>
+									<div class="form-submit1">
+										<h:commandButton value="退出" class="button1"
+											action="#{examController.goBackToClassify}" id="doExistBtn" />
 									</div>
 								</c:if>
 								<c:if test="#{examController.status != null}">
@@ -108,7 +113,8 @@
 									<div class="form-submit1">
 										<h:commandButton value="保存退出" class="button1"
 											style="margin-right: 5px;"
-											action="#{examController.doSaveAndExist}" id="doSaveAndExistBtn">
+											action="#{examController.doSaveAndExist}"
+											id="doSaveAndExistBtn">
 										</h:commandButton>
 									</div>
 									<div class="form-submit1">
@@ -132,7 +138,8 @@
 								</div>
 								<div class="form-submit1">
 									<h:commandButton value="其他题型" class="button1"
-										action="#{examController.goBackToClassify}" id="goBackToClassifyBtn" />
+										action="#{examController.goBackToClassify}"
+										id="goBackToClassifyBtn" />
 								</div>
 							</c:if>
 						</div>

@@ -184,6 +184,15 @@ public class ResumeBean extends BaseController {
         return examClassifyController.init();
     }
 
+    /**
+     * 4.[退出]按钮按下
+     * 
+     * @return
+     */
+    public String goBackToIndex() {
+        return SystemConstants.PAGE_ITBK_EXAM_000;
+    }
+
     public List<ExamModel> getQuestions() {
         return questions;
     }

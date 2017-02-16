@@ -86,12 +86,18 @@
 								</h:dataTable>
 								<div class="form-submit1">
 									<h:commandButton value="确认" class="button1"
+										style="margin-right: 5px;"
 										action="#{resumeBean.doResumeSubmit}" id="doResumeSubmitBtn" />
+								</div>
+								<div class="form-submit1">
+									<h:commandButton value="退出" class="button1"
+										action="#{resumeBean.goBackToIndex}" id="doExistBtn" />
 								</div>
 							</c:if>
 							<c:if test="#{resumeBean.tableShow eq null}">
 								<h5 style="color: red;">
-									<span class="glyphicon glyphicon-exclamation-sign"></span> 错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。
+									<span class="glyphicon glyphicon-exclamation-sign"></span>
+									错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。
 								</h5>
 								<div class="form-submit1" style="margin-top: 50px;">
 									<h:commandButton value="去做题" class="button1"
