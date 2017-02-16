@@ -1,6 +1,10 @@
 package zh.co.item.bank.web.filter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.UUID;
 
 import javax.servlet.Filter;
@@ -167,6 +171,7 @@ public class AccessFilter implements Filter {
         else {
         	UserModel userInfo =  WebUtils.getLoginUserInfo();
         	if(userInfo == null) {
+
         		if (!URI.endsWith("/index.xhtml") 
         				&& !URI.endsWith("/home.xhtml")
         				&& !URI.endsWith("/signIn.xhtml")
@@ -178,6 +183,21 @@ public class AccessFilter implements Filter {
 	                signInBean.init();
 	        		response.sendRedirect(path + "/xhtml/user/signIn.xhtml");
 	                return;
+	                
+        		} else {
+            		String param = request.getParameter("pageController");
+            		//试题库、错题库
+        			if("examIndexController".equals(param) || "resumeBean".equals(param)) {
+        				if("examIndexController".equals(param)) {
+        					WebUtils.setSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID, SystemConstants.PAGE_ITBK_EXAM_000);
+        				} else {
+        					WebUtils.setSessionAttribute(WebUtils.SESSION_CURRENT_PAGE_ID, SystemConstants.PAGE_ITBK_EXAM_005);
+        				}
+    	        		SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
+    	                signInBean.init();
+    	        		response.sendRedirect(path + "/xhtml/user/signIn.xhtml");
+    	                return;
+        			}
         		}
         	}
 /*            String tokenValidator = request.getParameter("tokenValidator");
