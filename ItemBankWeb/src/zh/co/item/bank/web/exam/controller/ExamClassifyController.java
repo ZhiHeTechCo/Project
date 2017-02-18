@@ -54,16 +54,6 @@ public class ExamClassifyController extends BaseController {
     // 所有J.TEST考试级别
     private List<TsCodeBean> jtestLevels;
 
-    // 考卷（年）
-    private List<String> years;
-
-    // 考卷（月）
-    private List<String> counts;
-
-    private String chooseYear;
-
-    private String chooseCount;
-
     private TbQuestionClassifyBean classifyBean;
 
     private UserModel userInfo;
@@ -71,6 +61,10 @@ public class ExamClassifyController extends BaseController {
     private String showExamFlag;
 
     private String mode;
+
+    private List<TbExamListBean> showList;
+
+    private String chooseSource;
 
     private List<TbExamListBean> examListBeans;
 
@@ -96,8 +90,7 @@ public class ExamClassifyController extends BaseController {
                 SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
                 return signInBean.init();
             }
-            years = new ArrayList<String>();
-            counts = new ArrayList<String>();
+            showList = new ArrayList<TbExamListBean>();
 
             // 跳转至
             if (StringUtils.isEmpty(mode)) {
@@ -222,30 +215,16 @@ public class ExamClassifyController extends BaseController {
             // mobile
             String source = WebUtils.getRequestParam("currentSource");
             if (StringUtils.isEmpty(source)) {
-
+                source = chooseSource;
                 // a.用户选择check
                 if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
-                        && StringUtils.isEmpty(classifyBean.getJtestLevel()))
-                        && (counts.size() > 0 && StringUtils.isEmpty(chooseCount))) {
+                        && StringUtils.isEmpty(classifyBean.getJtestLevel())) && StringUtils.isEmpty(source)) {
                     logger.log(MessageId.ITBK_E_0006);
                     CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
                     throw ex;
                 }
-
-                // b.跳转至【考试题库】画面
-                for (TbExamListBean bean : examListBeans) {
-                    // Exam相同 and (chooseYear为空 or Year相同) and (chooseCount为空 or
-                    // Count相同) and
-                    // (level等于jlptLevel或者jtestLevel)
-                    if (classifyBean.getExam().equals(bean.getExam())
-                            && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
-                            && (StringUtils.isEmpty(chooseCount) || chooseCount.equals(bean.getCount()))
-                            && (bean.getLevel().equals(classifyBean.getJlptLevel())
-                                    || bean.getLevel().equals(classifyBean.getJtestLevel()))) {
-                        source = bean.getSource();
-                    }
-                }
             }
+            // b.跳转至【考试题库】画面
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
             examController.setSource(source);
@@ -289,11 +268,9 @@ public class ExamClassifyController extends BaseController {
         logger.debug("题种别变更，刷新考试级别");
 
         if ("1".equals(mode)) {
-            years.clear();
-            counts.clear();
+            showList.clear();
 
-            chooseYear = "";
-            chooseCount = "";
+            chooseSource = "";
             // JLPT的场合
             if (SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
                 classifyBean.setJtestLevel(null);
@@ -308,78 +285,35 @@ public class ExamClassifyController extends BaseController {
     /**
      * [Ajax]试卷年变更
      */
-    public String changeYear() {
+    public void changeSource() {
         if (!"1".equals(mode)) {
-            return getPageId();
+            return;
         }
         try {
-            logger.debug("题种别变更，刷新考卷年。");
-            years.clear();
-            // 获取考卷年(JLPT)
-            if (SystemConstants.EXAM_1.equals(classifyBean.getExam())
-                    && StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
-                for (TbExamListBean examListBean : examListBeans) {
-                    // 取JLPT对应等级的年份
-                    if (classifyBean.getExam().equals(examListBean.getExam())
-                            && classifyBean.getJlptLevel().equals(examListBean.getLevel())
-                            && !years.contains(examListBean.getYear())) {
-                        years.add(examListBean.getYear());
-                    }
-                }
-                if (years.size() == 0) {
-                    logger.log(MessageId.ITBK_I_0020);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
-                    throw ex;
-                }
-            }
-            // 获取考次（JTEST）
-            counts.clear();
-            if (SystemConstants.EXAM_2.equals(classifyBean.getExam())
-                    && StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
-                for (TbExamListBean examListBean : examListBeans) {
-                    if (classifyBean.getExam().equals(examListBean.getExam())
-                            && classifyBean.getJtestLevel().equals(examListBean.getLevel())
-                            && !counts.contains(chooseCount)) {
-                        counts.add(examListBean.getCount());
-                    }
-                }
-                if (counts.size() == 0) {
-                    logger.log(MessageId.ITBK_I_0020);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
-                    throw ex;
-                }
-            }
-        } catch (Exception e) {
-            processForException(logger, e);
-        }
-        return getPageId();
-    }
-
-    /**
-     * [Ajax]试卷月变更
-     */
-    public String changeMonth() {
-        if (!"1".equals(mode)) {
-            return getPageId();
-        }
-        try {
-            logger.debug("题种别变更，刷新考卷月。");
-            counts.clear();
-            // 获取考卷月
+            logger.debug("题种别变更，刷新考卷。");
+            showList.clear();
+            // 获取考卷
             for (TbExamListBean examListBean : examListBeans) {
-                // 考试级别相等+考试年相等+考试种别相等
-                if (classifyBean.getJlptLevel().equals(examListBean.getLevel())
-                        && examListBean.getYear().equals(chooseYear)
+                // 取JLPT对应等级的年份
+                if ("1".equals(classifyBean.getExam()) && examListBean.getExam().equals(classifyBean.getExam())) {
+                    if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
+                        showList.add(examListBean);
+                    }
+                } else if ("2".equals(classifyBean.getExam())
                         && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if (!counts.contains(examListBean.getCount()) && StringUtils.isNotEmpty(examListBean.getCount())) {
-                        counts.add(examListBean.getCount());
+                    if (examListBean.getLevel().equals(classifyBean.getJtestLevel())) {
+                        showList.add(examListBean);
                     }
                 }
+            }
+            if (showList.size() == 0) {
+                logger.log(MessageId.ITBK_I_0020);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                throw ex;
             }
         } catch (Exception e) {
             processForException(logger, e);
         }
-        return getPageId();
     }
 
     public List<TsCodeBean> getExams() {
@@ -438,36 +372,20 @@ public class ExamClassifyController extends BaseController {
         this.mode = mode;
     }
 
-    public List<String> getYears() {
-        return years;
+    public String getChooseSource() {
+        return chooseSource;
     }
 
-    public void setYears(List<String> years) {
-        this.years = years;
+    public void setChooseSource(String chooseSource) {
+        this.chooseSource = chooseSource;
     }
 
-    public List<String> getCounts() {
-        return counts;
+    public List<TbExamListBean> getShowList() {
+        return showList;
     }
 
-    public void setCounts(List<String> counts) {
-        this.counts = counts;
-    }
-
-    public String getChooseYear() {
-        return chooseYear;
-    }
-
-    public void setChooseYear(String chooseYear) {
-        this.chooseYear = chooseYear;
-    }
-
-    public String getChooseCount() {
-        return chooseCount;
-    }
-
-    public void setChooseCount(String chooseCount) {
-        this.chooseCount = chooseCount;
+    public void setShowList(List<TbExamListBean> showList) {
+        this.showList = showList;
     }
 
     public List<TbExamListBean> getExamListBeans() {

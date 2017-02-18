@@ -2,12 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
-  <ui:define name="content">
-    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
-    <script type="text/javascript">
+	<ui:define name="content">
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<script type="text/javascript">
 					/**
 					 * 考题种别变更CallBack
 					 * 
@@ -26,190 +28,277 @@
 							break;
 						}
 					}
+					$(document).ready(function() {
+					    var menuParent = $('.menu > .ListTitlePanel > div');//获取menu下的父层的DIV
+					    var menuList = $('.menuList');
+					    $('.menu > .menuParent > .ListTitlePanel > .ListTitle').each(function(i) {//获取列表的大标题并遍历
+					        $(this).click(function(){
+					            if($(menuList[i]).css('display') == 'none'){
+					                $(menuList[i]).slideDown(300);
+					            }
+					            else{
+					                $(menuList[i]).slideUp(300);
+					            }
+					        });
+					    });
+					});
 				</script>
-    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
-      <h:form id="examClassifyForm">
-        <div class="typrography">
-          <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
-          <div class="container">
-            <div class="col-md-8 contact-top">
-              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                layout="block">
-                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
-              </h:panelGroup>
-              <h5 style="color: #3382C9;">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                <c:if test="#{examClassifyController.mode eq '1'}">&nbsp;请选择试题类型。</c:if>
-                <c:if test="#{examClassifyController.mode eq '2'}">&nbsp;请选择考题。</c:if>
-              </h5>
-              <table class="toTable" style="width: 70%">
-                <tr>
-                  <td><h4>考题种别：</h4></td>
-                  <td><h:selectOneRadio value="#{examClassifyController.classifyBean.exam}" style="width: 150px"
-                      onchange="return cancelToken(this, 1)">
-                      <f:selectItems value="#{examClassifyController.exams}" var="entry" itemValue="#{entry.key}"
-                        itemLabel="#{entry.value}" />
-                      <f:ajax event="change" execute="@this"
-                        render="levelLableWrapper levelWrapper yearLableWrapperMsg yearLableWrapper"
-                        listener="#{examClassifyController.changExamType}" onevent="changExamTypeChangeCallBack" />
-                    </h:selectOneRadio></td>
-                </tr>
-                <tr>
-                  <td><h:panelGroup id="levelLableWrapper">
-                      <c:if
-                        test="#{examClassifyController.classifyBean.exam=='1' ||  examClassifyController.classifyBean.exam =='2'}">
-                        <h4>考试级别：</h4>
-                      </c:if>
-                    </h:panelGroup></td>
-                  <td class="to"><h:panelGroup id="levelWrapper">
-                      <c:choose>
-                        <c:when test="#{examClassifyController.classifyBean.exam eq '1'}">
-                          <h:selectOneMenu value="#{examClassifyController.classifyBean.jlptLevel}" style="width: 50%;">
-                            <f:selectItem itemValue="" itemLabel="" />
-                            <f:selectItems value="#{examClassifyController.jlptLevels}" var="entry"
-                              itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                            <f:ajax event="change" execute="@this"
-                              render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
-                              listener="#{examClassifyController.changeYear}" onevent="changExamTypeChangeCallBack" />
-                          </h:selectOneMenu>
-                        </c:when>
-                        <c:when test="#{examClassifyController.classifyBean.exam eq '2'}">
-                          <h:selectOneMenu value="#{examClassifyController.classifyBean.jtestLevel}" style="width: 50%;">
-                            <f:selectItem itemValue="" itemLabel="" />
-                            <f:selectItems value="#{examClassifyController.jtestLevels}" var="entry"
-                              itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                            <f:ajax event="change" execute="@this"
-                              render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
-                              listener="#{examClassifyController.changeYear}" onevent="changExamTypeChangeCallBack" />
-                          </h:selectOneMenu>
-                        </c:when>
-                      </c:choose>
-                    </h:panelGroup></td>
-                </tr>
-                <c:if test="#{examClassifyController.mode eq '2'}">
-                  <tr>
-                    <td><h4>考试类别：</h4></td>
-                    <td><h:selectOneRadio value="#{examClassifyController.classifyBean.examType}"
-                        style="width: 150px">
-                        <f:selectItems value="#{examClassifyController.examTypes}" var="entry" itemValue="#{entry.key}"
-                          itemLabel="#{entry.value}" />
-                      </h:selectOneRadio></td>
-                  </tr>
-                </c:if>
-                <tr>
-                  <td><h:panelGroup id="yearLableWrapperMsg">
-                      <c:if
-                        test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' and examClassifyController.counts.size() != 0 }">
-                        <h4>选择考题：</h4>
-                      </c:if>
-                    </h:panelGroup></td>
-                  <td class="to"><h:panelGroup id="yearLableWrapper">
+		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
+			<h:form id="examClassifyForm">
+				<div class="typrography">
+					<h2
+						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
+					<div class="container">
+						<c:if test="#{examClassifyController.mobile ne 'true'}">
+							<div class="col-md-8 contact-top">
+								<h:panelGroup id="ngossfw_error_display"
+									class="#{request.getAttribute('request-message-level')}"
+									layout="block">
+									<h:outputText
+										value="${request.getAttribute('request-message-content')}"
+										escape="false" />
+								</h:panelGroup>
+								<h5 style="color: #3382C9;">
+									<span class="glyphicon glyphicon-info-sign"></span>
+									<c:if test="#{examClassifyController.mode eq '1'}">&nbsp;请选择试题类型。</c:if>
+									<c:if test="#{examClassifyController.mode eq '2'}">&nbsp;请选择考题。</c:if>
+								</h5>
+								<table class="toTable" style="width: 70%">
+									<tr>
+										<td><h4>考题种别：</h4></td>
+										<td><h:selectOneRadio
+												value="#{examClassifyController.classifyBean.exam}"
+												style="width: 150px" onchange="return cancelToken(this, 1)">
+												<f:selectItems value="#{examClassifyController.exams}"
+													var="entry" itemValue="#{entry.key}"
+													itemLabel="#{entry.value}" />
+												<f:ajax event="change" execute="@this"
+													render="levelLableWrapper levelWrapper yearLableWrapperMsg yearLableWrapper"
+													listener="#{examClassifyController.changExamType}"
+													onevent="changExamTypeChangeCallBack" />
+											</h:selectOneRadio></td>
+									</tr>
+									<tr>
+										<td><h:panelGroup id="levelLableWrapper">
+												<c:if
+													test="#{examClassifyController.classifyBean.exam=='1' ||  examClassifyController.classifyBean.exam =='2'}">
+													<h4>考试级别：</h4>
+												</c:if>
+											</h:panelGroup></td>
+										<td class="to"><h:panelGroup id="levelWrapper">
+												<c:choose>
+													<c:when
+														test="#{examClassifyController.classifyBean.exam eq '1'}">
+														<h:selectOneMenu
+															value="#{examClassifyController.classifyBean.jlptLevel}"
+															style="width: 50%;">
+															<f:selectItem itemValue="" itemLabel="" />
+															<f:selectItems
+																value="#{examClassifyController.jlptLevels}" var="entry"
+																itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+															<f:ajax event="change" execute="@this"
+																render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
+																listener="#{examClassifyController.changeSource}"
+																onevent="changExamTypeChangeCallBack" />
+														</h:selectOneMenu>
+													</c:when>
+													<c:when
+														test="#{examClassifyController.classifyBean.exam eq '2'}">
+														<h:selectOneMenu
+															value="#{examClassifyController.classifyBean.jtestLevel}"
+															style="width: 50%;">
+															<f:selectItem itemValue="" itemLabel="" />
+															<f:selectItems
+																value="#{examClassifyController.jtestLevels}"
+																var="entry" itemValue="#{entry.key}"
+																itemLabel="#{entry.value}" />
+															<f:ajax event="change" execute="@this"
+																render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
+																listener="#{examClassifyController.changeSource}"
+																onevent="changExamTypeChangeCallBack" />
+														</h:selectOneMenu>
+													</c:when>
+												</c:choose>
+											</h:panelGroup></td>
+									</tr>
+									<c:if test="#{examClassifyController.mode eq '2'}">
+										<tr>
+											<td><h4>考试类别：</h4></td>
+											<td><h:selectOneRadio
+													value="#{examClassifyController.classifyBean.examType}"
+													style="width: 150px">
+													<f:selectItems value="#{examClassifyController.examTypes}"
+														var="entry" itemValue="#{entry.key}"
+														itemLabel="#{entry.value}" />
+												</h:selectOneRadio></td>
+										</tr>
+									</c:if>
+									<tr>
+										<td><h:panelGroup id="yearLableWrapperMsg">
+												<c:if test="#{examClassifyController.showList.size() != 0}">
+													<h4>选择考卷：</h4>
+												</c:if>
+											</h:panelGroup></td>
+										<td class="to"><h:panelGroup id="yearLableWrapper">
+												<c:if test="#{examClassifyController.showList.size() != 0}">
+													<c:if test="#{examClassifyController.mode eq '1'}">
+														<table style="width: 100%;">
+															<tr>
+																<td style="width: 50%;">
+																	<table style="width: 100%;">
+																		<tr>
+																			<td><h:selectOneMenu
+																					value="#{examClassifyController.chooseSource}"
+																					style="width: 100%;">
+																					<f:selectItem itemValue="" itemLabel="" />
+																					<f:selectItems
+																						value="#{examClassifyController.showList}"
+																						var="entry" itemValue="#{entry.source}"
+																						itemLabel=" #{entry.source}" />
+																				</h:selectOneMenu></td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</c:if>
+												</c:if>
+											</h:panelGroup></td>
+									</tr>
+									<tr>
+										<c:if test="#{examClassifyController.mode eq '2'}">
+											<td>
+												<div class="form-submit1">
+													<h:commandButton value="开始做题" class="button1"
+														style="margin-right: 5px;margin-top: 5px;"
+														action="#{examClassifyController.classifySearch}"
+														id="classifySearchBtn" />
+												</div>
+											</td>
+										</c:if>
+										<c:if test="#{examClassifyController.mode eq '1'}">
+											<td><div class="form-submit1">
+													<h:commandButton value="开始考试" class="button1"
+														style="margin-right: 5px;margin-top: 5px;"
+														action="#{examClassifyController.examSearch}"
+														id="examSearchBtn" />
+												</div></td>
+										</c:if>
+										<c:if
+											test="#{examClassifyController.mode eq '1' || examClassifyController.mode eq '2'}">
+											<td><div class="form-submit1">
+													<h:commandButton value="模式选择" class="button1"
+														style="margin-top: 5px;"
+														action="#{examClassifyController.goBackToIndex}" />
+												</div></td>
+										</c:if>
+									</tr>
+								</table>
 
-                      <c:if
-                        test="#{examClassifyController.years.size() != 0 and examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam =='2' and examClassifyController.counts.size() != 0 }">
-                        <c:if test="#{examClassifyController.mode eq '1'}">
-                          <table style="width: 100%;">
-                            <tr>
-                              <c:if test="#{examClassifyController.classifyBean.exam=='1'}">
-                                <td style="width: 50%;">
-                                  <table style="width: 100%;">
-                                    <tr>
-                                      <td><h:selectOneMenu value="#{examClassifyController.chooseYear}"
-                                          style="width: 90%;">
-                                          <f:selectItem itemValue="" itemLabel="" />
-                                          <f:selectItems value="#{examClassifyController.years}" />
-                                          <f:ajax event="change" execute="@this" render="monthLableWrapper"
-                                            listener="#{examClassifyController.changeMonth}"
-                                            onevent="changExamTypeChangeCallBack" />
-                                        </h:selectOneMenu></td>
-                                      <td style="text-align: left;"><h:outputText  value="年" /></td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </c:if>
-                              <td style="width: 50%;"><h:panelGroup id="monthLableWrapper">
-                                  <c:if test="#{examClassifyController.counts.size() != 0}">
-                                    <table style="width: 100%;">
-                                      <tr>
-                                        <td><h:selectOneMenu value="#{examClassifyController.chooseCount}"
-                                            style="width: 90%;">
-                                            <f:selectItem itemValue="" itemLabel="" />
-                                            <f:selectItems value="#{examClassifyController.counts}" />
-                                          </h:selectOneMenu></td>
-                                        <td style="text-align: left;"><c:if test="#{examClassifyController.classifyBean.exam eq '1'}">
-                                            <h:outputText  value="月" />
-                                          </c:if> <c:if test="#{examClassifyController.classifyBean.exam eq '2'}">
-                                            <h:outputText  value="回" />
-                                          </c:if></td>
-                                      </tr>
-                                    </table>
-                                  </c:if>
-                                </h:panelGroup></td>
-                            </tr>
-                          </table>
-                        </c:if>
-                      </c:if>
-                    </h:panelGroup></td>
-                </tr>
-                <tr>
-                  <c:if test="#{examClassifyController.mode eq '2'}">
-                    <td>
-                      <div class="form-submit1">
-                        <h:commandButton value="开始做题" class="button1" style="margin-right: 5px;margin-top: 5px;"
-                          action="#{examClassifyController.classifySearch}" id="classifySearchBtn" />
-                      </div>
-                    </td>
-                  </c:if>
-                  <c:if test="#{examClassifyController.mode eq '1'}">
-                    <td><div class="form-submit1">
-                        <h:commandButton value="开始考试" class="button1" style="margin-right: 5px;margin-top: 5px;"
-                          action="#{examClassifyController.examSearch}" id="examSearchBtn" />
-                      </div></td>
-                  </c:if>
-                  <c:if test="#{examClassifyController.mode eq '1' || examClassifyController.mode eq '2'}">
-                    <td><div class="form-submit1">
-                        <h:commandButton value="模式选择" class="button1" style="margin-top: 5px;"
-                          action="#{examClassifyController.goBackToIndex}" />
-                      </div></td>
-                  </c:if>
-                </tr>
-              </table>
-
-              <c:if test="#{examClassifyController.showExamFlag ne ''}">
-                <table class="to" style="margin-top: 50px; margin-bottom: 50px;">
-                  <tr>
-                    <td><h5 style="color: #3382C9;">
-                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;您的个人资料中已包含语言等级信息，可以试试：
-                      </h5></td>
-                  </tr>
-                  <tr>
-                    <td><div class="form-submit1">
-                        <h:commandButton value="智能推题" class="button1" action="#{examClassifyController.smartSearch}"
-                          id="smartSearchBtn" />
-                      </div></td>
-                  </tr>
-                </table>
-              </c:if>
-            </div>
-            <div class="col-md-4 contact-top_right">
-              <h3>说明</h3>
-              <p>
-                <b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
-              </p>
-              <p>
-                <b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
-              </p>
-              <p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
-              <c:if test="#{examClassifyController.showExamFlag ne ''}">
-                <p>
-                  <b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
-                </p>
-              </c:if>
-            </div>
-          </div>
-        </div>
-      </h:form>
-    </div>
-  </ui:define>
+								<c:if test="#{examClassifyController.showExamFlag ne ''}">
+									<table class="to"
+										style="margin-top: 50px; margin-bottom: 50px;">
+										<tr>
+											<td><h5 style="color: #3382C9;">
+													<span class="glyphicon glyphicon-info-sign"></span>&nbsp;您的个人资料中已包含语言等级信息，可以试试：
+												</h5></td>
+										</tr>
+										<tr>
+											<td><div class="form-submit1">
+													<h:commandButton value="智能推题" class="button1"
+														action="#{examClassifyController.smartSearch}"
+														id="smartSearchBtn" />
+												</div></td>
+										</tr>
+									</table>
+								</c:if>
+							</div>
+							<div class="col-md-4 contact-top_right">
+								<h3>说明</h3>
+								<p>
+									<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
+								</p>
+								<p>
+									<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
+								</p>
+								<p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
+								<c:if test="#{examClassifyController.showExamFlag ne ''}">
+									<p>
+										<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
+									</p>
+								</c:if>
+							</div>
+						</c:if>
+						<!-- 手机时显示 -->
+						<c:if test="#{examClassifyController.mobile eq 'true'}">
+							<h:panelGroup id="ngossfw_error_display"
+								class="#{request.getAttribute('request-message-level')}"
+								layout="block">
+								<h:outputText
+									value="${request.getAttribute('request-message-content')}"
+									escape="false" />
+							</h:panelGroup>
+							<div class="leftMenu">
+								<div class="menu">
+									<div class="menuParent">
+										<div class="ListTitlePanel">
+											<div class="ListTitle">
+												<strong>JLPT</strong>
+												<div class="leftbgbt"></div>
+											</div>
+										</div>
+										<div class="menuList" style="display: none;">
+											<c:forEach items="#{examClassifyController.examListBeans}"
+												var="item">
+												<c:if test="#{item.exam eq '1'}">
+													<div>
+														<h:commandLink value="#{item.source}"
+															action="#{examClassifyController.examSearch}"
+															onclick="return buttonDisable();">
+															<f:param name='currentSource' value="#{item.source}"></f:param>
+														</h:commandLink>
+													</div>
+												</c:if>
+											</c:forEach>
+										</div>
+									</div>
+									<div class="menuParent">
+										<div class="ListTitlePanel">
+											<div class="ListTitle">
+												<strong>J.TEST</strong>
+												<div class="leftbgbt2"></div>
+											</div>
+										</div>
+										<div class="menuList" style="display: none;">
+											<c:forEach items="#{examClassifyController.examListBeans}"
+												var="item">
+												<c:if test="#{item.exam eq '2'}">
+													<div>
+														<h:commandLink value="#{item.source}"
+															action="#{examClassifyController.examSearch}"
+															onclick="return buttonDisable();">
+															<f:param name='currentSource' value="#{item.source}"></f:param>
+														</h:commandLink>
+													</div>
+												</c:if>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</div>
+							<c:if
+								test="#{examClassifyController.mode eq '1' || examClassifyController.mode eq '2'}">
+								<div class="form-submit1"
+									style="float: right; margin-top: 50px;">
+									<h:commandButton value="模式选择" class="button1"
+										action="#{examClassifyController.goBackToIndex}" />
+								</div>
+							</c:if>
+						</c:if>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
 </ui:composition>
 </html>
