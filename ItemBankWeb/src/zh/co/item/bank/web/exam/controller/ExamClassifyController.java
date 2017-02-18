@@ -72,7 +72,9 @@ public class ExamClassifyController extends BaseController {
 
     private String mode;
 
-    List<TbExamListBean> examListBeans;
+    private List<TbExamListBean> examListBeans;
+
+    private String mobile;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
@@ -101,6 +103,7 @@ public class ExamClassifyController extends BaseController {
             if (StringUtils.isEmpty(mode)) {
                 return SystemConstants.PAGE_ITBK_EXAM_000;
             }
+            mobile = "1".equals(mode) && WebUtils.judgeIsMoblie() ? "true" : "false";
 
             // b.画面显示
             // 获取考试类别
@@ -216,27 +219,31 @@ public class ExamClassifyController extends BaseController {
      */
     public String examSearch() {
         try {
-            // a.用户选择check
-            if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
-                    && StringUtils.isEmpty(classifyBean.getJtestLevel()))
-                    && (counts.size() > 0 && StringUtils.isEmpty(chooseCount))) {
-                logger.log(MessageId.ITBK_E_0006);
-                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
-                throw ex;
-            }
+            // mobile
+            String source = WebUtils.getRequestParam("currentSource");
+            if (StringUtils.isEmpty(source)) {
 
-            // b.跳转至【考试题库】画面
-            String source = null;
-            for (TbExamListBean bean : examListBeans) {
-                // Exam相同 and (chooseYear为空 or Year相同) and (chooseCount为空 or
-                // Count相同) and
-                // (level等于jlptLevel或者jtestLevel)
-                if (classifyBean.getExam().equals(bean.getExam())
-                        && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
-                        && (StringUtils.isEmpty(chooseCount) || chooseCount.equals(bean.getCount()))
-                        && (bean.getLevel().equals(classifyBean.getJlptLevel())
-                        || bean.getLevel().equals(classifyBean.getJtestLevel()))) {
-                    source = bean.getSource();
+                // a.用户选择check
+                if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
+                        && StringUtils.isEmpty(classifyBean.getJtestLevel()))
+                        && (counts.size() > 0 && StringUtils.isEmpty(chooseCount))) {
+                    logger.log(MessageId.ITBK_E_0006);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0006);
+                    throw ex;
+                }
+
+                // b.跳转至【考试题库】画面
+                for (TbExamListBean bean : examListBeans) {
+                    // Exam相同 and (chooseYear为空 or Year相同) and (chooseCount为空 or
+                    // Count相同) and
+                    // (level等于jlptLevel或者jtestLevel)
+                    if (classifyBean.getExam().equals(bean.getExam())
+                            && (StringUtils.isEmpty(chooseYear) || chooseYear.equals(bean.getYear()))
+                            && (StringUtils.isEmpty(chooseCount) || chooseCount.equals(bean.getCount()))
+                            && (bean.getLevel().equals(classifyBean.getJlptLevel())
+                                    || bean.getLevel().equals(classifyBean.getJtestLevel()))) {
+                        source = bean.getSource();
+                    }
                 }
             }
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
@@ -251,7 +258,6 @@ public class ExamClassifyController extends BaseController {
         // 留在当前画面
         return getPageId();
     }
-
 
     /**
      * 4.模式选择跳转
@@ -462,6 +468,22 @@ public class ExamClassifyController extends BaseController {
 
     public void setChooseCount(String chooseCount) {
         this.chooseCount = chooseCount;
+    }
+
+    public List<TbExamListBean> getExamListBeans() {
+        return examListBeans;
+    }
+
+    public void setExamListBeans(List<TbExamListBean> examListBeans) {
+        this.examListBeans = examListBeans;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
 }
