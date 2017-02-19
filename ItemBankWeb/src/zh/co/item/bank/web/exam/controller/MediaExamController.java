@@ -232,7 +232,7 @@ public class MediaExamController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        // 返回试题一览画面
+        // 返回试题选择
         ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
         return examClassifyController.init();
     }
