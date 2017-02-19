@@ -262,19 +262,31 @@
 															<div class="leftbgbt"></div>
 														</div>
 													</div>
-													<div class="menuList"
-														style="display: none;">
+													<div class="menuList" style="display: none;">
 														<c:forEach items="#{examClassifyController.examListBeans}"
 															var="item">
 															<c:if
 																test="#{levels.key eq item.level and item.exam eq '1'}">
-																<div>
-																	<h:commandLink value="#{item.source}"
-																		action="#{examClassifyController.examSearch}"
-																		onclick="return buttonDisable();">
-																		<f:param name='currentSource' value="#{item.source}"></f:param>
-																	</h:commandLink>
-																</div>
+																<table style="width: 100%;">
+																	<tr>
+																		<td>
+																			<div>
+																				<h:commandLink value="#{item.source}"
+																					action="#{examClassifyController.examSearch}"
+																					onclick="return buttonDisable();">
+																					<f:param name='currentSource'
+																						value="#{item.source}"></f:param>
+																				</h:commandLink>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<div class="progress-bar-info"
+																				style="width: 0%; height: 3px;"></div>
+																		</td>
+																	</tr>
+																</table>
 															</c:if>
 														</c:forEach>
 													</div>
@@ -301,13 +313,26 @@
 															var="item">
 															<c:if
 																test="#{levels.key eq item.level and item.exam eq '2'}">
-																<div>
-																	<h:commandLink value="#{item.source}"
-																		action="#{examClassifyController.examSearch}"
-																		onclick="return buttonDisable();">
-																		<f:param name='currentSource' value="#{item.source}"></f:param>
-																	</h:commandLink>
-																</div>
+																<table style="width: 100%;">
+																	<tr>
+																		<td>
+																			<div>
+																				<h:commandLink value="#{item.source}"
+																					action="#{examClassifyController.examSearch}"
+																					onclick="return buttonDisable();">
+																					<f:param name='currentSource'
+																						value="#{item.source}"></f:param>
+																				</h:commandLink>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<div class="progress-bar-info"
+																				style="width: 0%; height: 3px;"></div>
+																		</td>
+																	</tr>
+																</table>
 															</c:if>
 														</c:forEach>
 													</div>
