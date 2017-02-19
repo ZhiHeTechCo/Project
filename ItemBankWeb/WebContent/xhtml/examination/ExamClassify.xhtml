@@ -249,7 +249,7 @@
 									aria-controls="jtest" aria-expanded="false">J.TEST</a></li>
 							</ul>
 							<div id="myTabContent" class="tab-content">
-								<div role="tabpanel" class="tab-pane fade" id="jlpt"
+								<div role="tabpanel" class="tab-pane fade active in" id="jlpt"
 									aria-labelledby="jlpt-tab">
 									<div class="leftMenu">
 										<div class="menu">
@@ -262,7 +262,8 @@
 															<div class="leftbgbt"></div>
 														</div>
 													</div>
-													<div class="menuList" style="display: none;">
+													<div class="menuList"
+														style="display: none;">
 														<c:forEach items="#{examClassifyController.examListBeans}"
 															var="item">
 															<c:if
@@ -282,7 +283,7 @@
 										</div>
 									</div>
 								</div>
-								<div role="tabpanel" class="tab-pane fade active in" id="jtest"
+								<div role="tabpanel" class="tab-pane fade" id="jtest"
 									aria-labelledby="jtest-tab">
 									<div class="leftMenu">
 										<div class="menu">
