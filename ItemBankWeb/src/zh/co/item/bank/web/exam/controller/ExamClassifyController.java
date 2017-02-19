@@ -283,25 +283,25 @@ public class ExamClassifyController extends BaseController {
     }
 
     /**
-     * [Ajax]试卷年变更
+     * [Ajax]试卷变更
      */
     public void changeSource() {
-        if (!"1".equals(mode)) {
-            return;
-        }
         try {
             logger.debug("题种别变更，刷新考卷。");
             showList.clear();
             // 获取考卷
             for (TbExamListBean examListBean : examListBeans) {
-                // 取JLPT对应等级的年份
                 if ("1".equals(classifyBean.getExam()) && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
+                    if ("1".equals(mode)) {
+                        showList.add(examListBean);
+                    } else if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
                         showList.add(examListBean);
                     }
                 } else if ("2".equals(classifyBean.getExam())
                         && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if (examListBean.getLevel().equals(classifyBean.getJtestLevel())) {
+                    if ("1".equals(mode)) {
+                        showList.add(examListBean);
+                    } else if (examListBean.getLevel().equals(classifyBean.getJtestLevel())) {
                         showList.add(examListBean);
                     }
                 }

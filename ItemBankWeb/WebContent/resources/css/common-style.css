@@ -1,20 +1,21 @@
-
 .errorMessage {
-	color: #ff0000;
-	font-weight: 900;
+    color: #ff0000;
+    font-weight: 900;
 }
+
 .infoMessage {
-  color: #000000;
+    color: #000000;
 }
+
 .warnMessage {
-	color: #ff0000;
+    color: #ff0000;
 }
 
 .report {
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	border: 1px solid #999;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #999;
 }
 
 .radioTable1 {
@@ -35,13 +36,13 @@
 }
 
 .showAnswer1 {
-	width : 25%;
-	float: left;
+    width: 25%;
+    float: left;
 }
 
 .showAnswer2 {
-	width : 100%;
-	float: left;
+    width: 100%;
+    float: left;
 }
 
 .leftMenu {
@@ -65,7 +66,7 @@
     height: 38px;
     line-height: 38px;
     cursor: pointer;
-    /*+min-width:220px;*/
+    /*+min-width:220px;*/ +
     width: 100%;
 }
 

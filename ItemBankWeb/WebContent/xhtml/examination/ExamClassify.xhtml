@@ -238,54 +238,86 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<div class="leftMenu">
-								<div class="menu">
-									<div class="menuParent">
-										<div class="ListTitlePanel">
-											<div class="ListTitle">
-												<strong>JLPT</strong>
-												<div class="leftbgbt"></div>
-											</div>
-										</div>
-										<div class="menuList" style="display: none;">
-											<c:forEach items="#{examClassifyController.examListBeans}"
-												var="item">
-												<c:if test="#{item.exam eq '1'}">
-													<div>
-														<h:commandLink value="#{item.source}"
-															action="#{examClassifyController.examSearch}"
-															onclick="return buttonDisable();">
-															<f:param name='currentSource' value="#{item.source}"></f:param>
-														</h:commandLink>
-													</div>
-												</c:if>
-											</c:forEach>
-										</div>
-									</div>
-									<div class="menuParent">
-										<div class="ListTitlePanel">
-											<div class="ListTitle">
-												<strong>J.TEST</strong>
-												<div class="leftbgbt2"></div>
-											</div>
-										</div>
-										<div class="menuList" style="display: none;">
-											<c:forEach items="#{examClassifyController.examListBeans}"
-												var="item">
-												<c:if test="#{item.exam eq '2'}">
-													<div>
-														<h:commandLink value="#{item.source}"
-															action="#{examClassifyController.examSearch}"
-															onclick="return buttonDisable();">
-															<f:param name='currentSource' value="#{item.source}"></f:param>
-														</h:commandLink>
-													</div>
-												</c:if>
-											</c:forEach>
-										</div>
-									</div>
-								</div>
+							<div style="margin-left: 11px; margin-top: 40px;">
+								<h:selectOneRadio
+									value="#{examClassifyController.classifyBean.exam}"
+									style="width: 150px" onchange="return cancelToken(this, 1)">
+									<f:selectItems value="#{examClassifyController.exams}"
+										var="entry" itemValue="#{entry.key}"
+										itemLabel="#{entry.value}" />
+									<f:ajax event="change" execute="@this" render="sourceWrapper"
+										listener="#{examClassifyController.changeSource}"
+										onevent="changExamTypeChangeCallBack" />
+								</h:selectOneRadio>
 							</div>
+							<h:panelGroup id="sourceWrapper">
+								<c:if
+									test="#{examClassifyController.classifyBean.exam=='1' || examClassifyController.classifyBean.exam=='2'}">
+									<div class="leftMenu">
+										<div class="menu">
+											<c:if test="#{examClassifyController.classifyBean.exam=='1'}">
+												<c:forEach items="#{examClassifyController.jlptLevels}"
+													var="levels">
+													<div class="menuParent">
+														<div class="ListTitlePanel">
+															<div class="ListTitle">
+																<strong>#{levels.value}</strong>
+																<div class="leftbgbt"></div>
+															</div>
+														</div>
+														<div class="menuList">
+															<c:forEach
+																items="#{examClassifyController.examListBeans}"
+																var="item">
+																<c:if
+																	test="#{levels.key eq item.level and item.exam eq '1'}">
+																	<div>
+																		<h:commandLink value="#{item.source}"
+																			action="#{examClassifyController.examSearch}"
+																			onclick="return buttonDisable();">
+																			<f:param name='currentSource' value="#{item.source}"></f:param>
+																		</h:commandLink>
+																	</div>
+																</c:if>
+															</c:forEach>
+														</div>
+													</div>
+												</c:forEach>
+											</c:if>
+											<c:if
+												test="#{examClassifyController.classifyBean.exam =='2'}">
+												<c:forEach items="#{examClassifyController.jtestLevels}"
+													var="levels">
+													<div class="menuParent">
+														<div class="ListTitlePanel">
+															<div class="ListTitle">
+																<strong>#{levels.value}</strong>
+																<div class="leftbgbt"></div>
+															</div>
+														</div>
+														<div class="menuList">
+															<c:forEach
+																items="#{examClassifyController.examListBeans}"
+																var="item">
+																<c:if
+																	test="#{levels.key eq item.level and item.exam eq '2'}">
+																	<div>
+																		<h:commandLink value="#{item.source}"
+																			action="#{examClassifyController.examSearch}"
+																			onclick="return buttonDisable();">
+																			<f:param name='currentSource' value="#{item.source}"></f:param>
+																		</h:commandLink>
+																	</div>
+																</c:if>
+															</c:forEach>
+														</div>
+													</div>
+												</c:forEach>
+											</c:if>
+										</div>
+									</div>
+								</c:if>
+							</h:panelGroup>
 							<c:if
 								test="#{examClassifyController.mode eq '1' || examClassifyController.mode eq '2'}">
 								<div class="form-submit1"
