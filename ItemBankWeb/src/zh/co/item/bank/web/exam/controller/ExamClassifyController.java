@@ -287,21 +287,20 @@ public class ExamClassifyController extends BaseController {
      */
     public void changeSource() {
         try {
+            if (!"1".equals(mode)) {
+                return;
+            }
             logger.debug("题种别变更，刷新考卷。");
             showList.clear();
             // 获取考卷
             for (TbExamListBean examListBean : examListBeans) {
                 if ("1".equals(classifyBean.getExam()) && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if ("1".equals(mode)) {
-                        showList.add(examListBean);
-                    } else if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
+                    if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
                         showList.add(examListBean);
                     }
                 } else if ("2".equals(classifyBean.getExam())
                         && examListBean.getExam().equals(classifyBean.getExam())) {
-                    if ("1".equals(mode)) {
-                        showList.add(examListBean);
-                    } else if (examListBean.getLevel().equals(classifyBean.getJtestLevel())) {
+                    if (examListBean.getLevel().equals(classifyBean.getJtestLevel())) {
                         showList.add(examListBean);
                     }
                 }
