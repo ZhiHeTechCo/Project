@@ -4,8 +4,14 @@
 
 <mapper namespace="ExamList">
 
-	<select id="getExamListAll" resultType="zh.co.item.bank.db.entity.TbExamListBean">
-		select * from tb_exam_list where delete_flag != 1 order by year+0, count+0;
+	<select id="getExamListForUser" parameterType="java.lang.Integer"
+		resultType="zh.co.item.bank.model.entity.ExamListModel">
+		select a.language, a.exam, a.level, a.year, a.count, a.source, ifnull(b.rate,'0%') as rate
+		from tb_exam_list a 
+		left join vb_exam_rate b
+		on a.source=b.source
+		where a.delete_flag!=1 and (user_id=#{userId} or user_id is null)
+		order by year+0, count+0;
 	</select>
 
 </mapper>

@@ -19,9 +19,9 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
+import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
@@ -56,18 +56,23 @@ public class ExamClassifyController extends BaseController {
 
     private TbQuestionClassifyBean classifyBean;
 
+    // 用户信息
     private UserModel userInfo;
 
     private String showExamFlag;
 
+    // 做题模式
     private String mode;
 
-    private List<TbExamListBean> showList;
+    // 非手机模式显示试卷（配合Ajax)
+    private List<ExamListModel> showList;
 
     private String chooseSource;
 
-    private List<TbExamListBean> examListBeans;
+    // 试卷（包含完成度）
+    private List<ExamListModel> examListBeans;
 
+    // 是否是手机
     private String mobile;
 
     public String getPageId() {
@@ -90,7 +95,7 @@ public class ExamClassifyController extends BaseController {
                 SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
                 return signInBean.init();
             }
-            showList = new ArrayList<TbExamListBean>();
+            showList = new ArrayList<ExamListModel>();
 
             // 跳转至
             if (StringUtils.isEmpty(mode)) {
@@ -99,13 +104,13 @@ public class ExamClassifyController extends BaseController {
             mobile = "1".equals(mode) && WebUtils.judgeIsMoblie() ? "true" : "false";
 
             // b.画面显示
-            // 获取考试类别
+            // b-1.获取考试类别
             exams = examService.getExams();
-            // 获取试题种别
+            // b-2.获取试题种别
             examTypes = examService.getExamTypes();
-            // 1:考试模式时获取试卷
+            // b-3:考试模式时获取试卷和完成度
             if ("1".equals(mode)) {
-                examListBeans = examService.getExamListAll();
+                examListBeans = examService.getExamListForUser(userInfo.getId());
             }
 
             if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
@@ -293,7 +298,7 @@ public class ExamClassifyController extends BaseController {
             logger.debug("题种别变更，刷新考卷。");
             showList.clear();
             // 获取考卷
-            for (TbExamListBean examListBean : examListBeans) {
+            for (ExamListModel examListBean : examListBeans) {
                 if ("1".equals(classifyBean.getExam()) && examListBean.getExam().equals(classifyBean.getExam())) {
                     if (examListBean.getLevel().equals(classifyBean.getJlptLevel())) {
                         showList.add(examListBean);
@@ -379,20 +384,12 @@ public class ExamClassifyController extends BaseController {
         this.chooseSource = chooseSource;
     }
 
-    public List<TbExamListBean> getShowList() {
+    public List<ExamListModel> getShowList() {
         return showList;
     }
 
-    public void setShowList(List<TbExamListBean> showList) {
+    public void setShowList(List<ExamListModel> showList) {
         this.showList = showList;
-    }
-
-    public List<TbExamListBean> getExamListBeans() {
-        return examListBeans;
-    }
-
-    public void setExamListBeans(List<TbExamListBean> examListBeans) {
-        this.examListBeans = examListBeans;
     }
 
     public String getMobile() {
@@ -401,6 +398,14 @@ public class ExamClassifyController extends BaseController {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public List<ExamListModel> getExamListBeans() {
+        return examListBeans;
+    }
+
+    public void setExamListBeans(List<ExamListModel> examListBeans) {
+        this.examListBeans = examListBeans;
     }
 
 }
