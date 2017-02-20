@@ -217,9 +217,25 @@ public class ExamClassifyController extends BaseController {
      */
     public String examSearch() {
         try {
-            // mobile
+            // 手机模式
             String source = WebUtils.getRequestParam("currentSource");
-            if (StringUtils.isEmpty(source)) {
+            if (StringUtils.isNotEmpty(source)) {
+                // 根据source设定classifyBean
+                for (ExamListModel model : examListBeans) {
+                    if (model.getSource().equals(source)) {
+                        // Exam
+                        classifyBean.setExam(model.getExam());
+                        // JlptLevel JtestLevel
+                        if ("1".equals(model.getExam())) {
+                            classifyBean.setJlptLevel(model.getLevel());
+                        } else if ("1".equals(model.getExam())) {
+                            classifyBean.setJtestLevel(model.getLevel());
+                        }
+                        break;
+                    }
+                }
+            } else {
+                // pc模式
                 source = chooseSource;
                 // a.用户选择check
                 if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
