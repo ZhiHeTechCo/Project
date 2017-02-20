@@ -266,32 +266,29 @@
 															var="item">
 															<c:if
 																test="#{levels.key eq item.level and item.exam eq '1'}">
-																<table style="width: 100%;">
+																<table
+																	style="width: 100%; height: 38px; border-bottom: 1px #ddd solid;">
 																	<tr>
 																		<td>
 																			<div>
 																				<h:commandLink
 																					action="#{examClassifyController.examSearch}"
-																					onclick="return buttonDisable();" style="padding-top: 5px;">
+																					onclick="return buttonDisable();"
+																					style="padding-top: 5px;">
 																					<f:param name='currentSource'
 																						value="#{item.source}"></f:param>
-                                                                                <section style="width: 100%;">
-                                                                                  <table style="width: 100%;">
-                                                                                    <tr>
-                                                                                      <td style="width: 20%;" ></td>
-                                                                                      <td style="width: 60%; text-align: center;"><h:outputText value="#{item.source}" /></td>
-                                                                                      <td style="text-align: right;"><h:outputText value="#{item.rate}" /></td>
-                                                                                    </tr>
-                                                                                  </table>
-                                                                                </section>
+																					<section style="width: 100%;">
+																						<table style="width: 100%; margin-bottom: 5px;">
+																							<tr style="margin-top: 5px; margin-bottom: 5px;">
+																								<td style="width: 80%; padding-left: 10px;"><span
+																									style="margin-right: 5px; font-size: 0.9em;">#{item.source}</span></td>
+																								<td style="text-align: right;"><span
+																									class="badge" style="margin-right: 5px;">#{item.rate}</span></td>
+																							</tr>
+																						</table>
+																					</section>
 																				</h:commandLink>
 																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<div class="progress-bar-info"
-																				style="width: 0%; height: 3px;"></div>
 																		</td>
 																	</tr>
 																</table>
@@ -321,32 +318,29 @@
 															var="item">
 															<c:if
 																test="#{levels.key eq item.level and item.exam eq '2'}">
-																<table style="width: 100%;">
+																<table
+																	style="width: 100%; height: 38px; border-bottom: 1px #ddd solid;">
 																	<tr>
 																		<td>
 																			<div>
 																				<h:commandLink
 																					action="#{examClassifyController.examSearch}"
-																					onclick="return buttonDisable();" style="padding-top: 5px;">
+																					onclick="return buttonDisable();"
+																					style="padding-top: 5px;">
 																					<f:param name='currentSource'
 																						value="#{item.source}"></f:param>
-                                                                                <section style="width: 100%;">
-                                                                                  <table style="width: 100%;">
-                                                                                    <tr>
-                                                                                      <td style="width: 20%;" ></td>
-                                                                                      <td style="width: 60%;text-align: center;"><h:outputText value="#{item.source}" /></td>
-                                                                                      <td style="text-align: right;"><h:outputText value="#{item.rate}" /></td>
-                                                                                    </tr>
-                                                                                  </table>
-                                                                                </section>
+																					<section style="width: 100%;">
+																						<table style="width: 100%; margin-bottom: 5px;">
+																							<tr style="margin-top: 5px; margin-bottom: 5px;">
+																								<td style="width: 80%; padding-left: 10px;"><span
+																									style="margin-right: 5px; font-size: 0.9em;">#{item.source}</span></td>
+																								<td style="text-align: right;"><span
+																									class="badge" style="margin-right: 5px;">#{item.rate}</span></td>
+																							</tr>
+																						</table>
+																					</section>
 																				</h:commandLink>
 																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<div class="progress-bar-info"
-																				style="width: 0%; height: 3px;"></div>
 																		</td>
 																	</tr>
 																</table>
