@@ -20,8 +20,8 @@
 
 	<select id="getPercentage" parameterType="zh.co.item.bank.model.entity.ExamReportModel"
 		resultType="zh.co.item.bank.model.entity.ExamReportModel">
-		select b.exam_type as examType, concat ( left (a.rit /
-		b.total *100,5),'%') as percentage,
+		select b.exam_type as examType,
+		concat(round((a.rit / b.total * 100),2),'%') AS percentage,
 		b.source from
 		(select count(*) as
 		rit
