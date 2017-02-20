@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -62,8 +61,8 @@
 								</h:panelGroup>
 								<h5 style="color: #3382C9;">
 									<span class="glyphicon glyphicon-info-sign"></span>
-									<c:if test="#{examClassifyController.mode eq '1'}">&nbsp;请选择试题类型。</c:if>
-									<c:if test="#{examClassifyController.mode eq '2'}">&nbsp;请选择考题。</c:if>
+									<c:if test="#{examClassifyController.mode eq '1'}">请选择试题类型。</c:if>
+									<c:if test="#{examClassifyController.mode eq '2'}">请选择考题。</c:if>
 								</h5>
 								<table class="toTable" style="width: 70%">
 									<tr>
@@ -202,7 +201,7 @@
 										style="margin-top: 50px; margin-bottom: 50px;">
 										<tr>
 											<td><h5 style="color: #3382C9;">
-													<span class="glyphicon glyphicon-info-sign"></span>&nbsp;您的个人资料中已包含语言等级信息，可以试试：
+													<span class="glyphicon glyphicon-info-sign"></span>您的个人资料中已包含语言等级信息，可以试试：
 												</h5></td>
 										</tr>
 										<tr>
@@ -218,15 +217,15 @@
 							<div class="col-md-4 contact-top_right">
 								<h3>说明</h3>
 								<p>
-									<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
+									<b><span class="glyphicon glyphicon-info-sign"></span>点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
 								</p>
 								<p>
-									<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
+									<b><span class="glyphicon glyphicon-info-sign"></span>点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
 								</p>
 								<p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
 								<c:if test="#{examClassifyController.showExamFlag ne ''}">
 									<p>
-										<b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
+										<b><span class="glyphicon glyphicon-info-sign"></span>点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。
 									</p>
 								</c:if>
 							</div>
@@ -271,11 +270,20 @@
 																	<tr>
 																		<td>
 																			<div>
-																				<h:commandLink value="#{item.source}"
+																				<h:commandLink
 																					action="#{examClassifyController.examSearch}"
-																					onclick="return buttonDisable();">
+																					onclick="return buttonDisable();" style="padding-top: 5px;">
 																					<f:param name='currentSource'
 																						value="#{item.source}"></f:param>
+                                                                                <section style="width: 100%;">
+                                                                                  <table style="width: 100%;">
+                                                                                    <tr>
+                                                                                      <td style="width: 20%;" ></td>
+                                                                                      <td style="width: 60%; text-align: center;"><h:outputText value="#{item.source}" /></td>
+                                                                                      <td style="text-align: right;"><h:outputText value="#{item.rate}" /></td>
+                                                                                    </tr>
+                                                                                  </table>
+                                                                                </section>
 																				</h:commandLink>
 																			</div>
 																		</td>
@@ -317,11 +325,20 @@
 																	<tr>
 																		<td>
 																			<div>
-																				<h:commandLink value="#{item.source}"
+																				<h:commandLink
 																					action="#{examClassifyController.examSearch}"
-																					onclick="return buttonDisable();">
+																					onclick="return buttonDisable();" style="padding-top: 5px;">
 																					<f:param name='currentSource'
 																						value="#{item.source}"></f:param>
+                                                                                <section style="width: 100%;">
+                                                                                  <table style="width: 100%;">
+                                                                                    <tr>
+                                                                                      <td style="width: 20%;" ></td>
+                                                                                      <td style="width: 60%;text-align: center;"><h:outputText value="#{item.source}" /></td>
+                                                                                      <td style="text-align: right;"><h:outputText value="#{item.rate}" /></td>
+                                                                                    </tr>
+                                                                                  </table>
+                                                                                </section>
 																				</h:commandLink>
 																			</div>
 																		</td>
