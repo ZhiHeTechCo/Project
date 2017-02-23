@@ -83,11 +83,11 @@
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.examType eq 'readingTotal'}">
 												<tr>
-													<td>読解計</td>
-													<td>#{item.myTotalScore}</td>
-													<td>#{item.totalScore}</td>
-													<td>#{item.percentage}%</td>
-													<td>#{item.level}</td>
+													<td><b>読解計</b></td>
+													<td><b>#{item.myTotalScore}</b></td>
+													<td><b>#{item.totalScore}</b></td>
+													<td><b>#{item.percentage}%</b></td>
+													<td><b>#{item.level}</b></td>
 												</tr>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.examType eq '6'}">
@@ -127,24 +127,24 @@
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq 'listenTotal'}">
-													<tr>
-														<td>聴解計</td>
-														<td>#{item.myTotalScore}</td>
-														<td>#{item.totalScore}</td>
-														<td>#{item.percentage}%</td>
-														<td>#{item.level}</td>
-													</tr>
-												</h:panelGroup>
-												<h:panelGroup rendered="#{item.examType eq 'total'}">
-													<tr style="border: 2px solid #ddd;">
-														<td>合計</td>
-														<td>#{item.myTotalScore}</td>
-														<td>#{item.totalScore}</td>
-														<td>#{item.percentage}%</td>
-														<td>#{item.level}</td>
-													</tr>
-												</h:panelGroup>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq 'listenTotal'}">
+												<tr>
+													<td><b>聴解計</b></td>
+													<td><b>#{item.myTotalScore}</b></td>
+													<td><b>#{item.totalScore}</b></td>
+													<td><b>#{item.percentage}%</b></td>
+													<td><b>#{item.level}</b></td>
+												</tr>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{item.examType eq 'total'}">
+												<tr style="border: 2px solid #ddd;">
+													<td><b>合計</b></td>
+													<td><b>#{item.myTotalScore}</b></td>
+													<td><b>#{item.totalScore}</b></td>
+													<td><b>#{item.percentage}%</b></td>
+													<td><b>#{item.level}</b></td>
+												</tr>
 											</h:panelGroup>
 										</h:column>
 									</c:forEach>
