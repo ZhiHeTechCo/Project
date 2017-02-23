@@ -110,7 +110,9 @@ public class ExamClassifyController extends BaseController {
             examTypes = examService.getExamTypes();
             // b-3:考试模式时获取试卷和完成度
             if ("1".equals(mode)) {
+                // 非听力部分完成度
                 examListBeans = examService.getExamListForUser(userInfo.getId());
+                
             }
 
             if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {

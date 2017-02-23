@@ -31,7 +31,7 @@ public class ExamCollectionDao extends BaseDao {
     public List<String> getExamTypes(String source) {
         return getIbatisTemplate().selectList("ExamCollection.getExamTypes", source);
     }
-    
+
     /**
      * 取本次考试大题
      * 
@@ -94,4 +94,22 @@ public class ExamCollectionDao extends BaseDao {
         return (ScoreModel) getIbatisTemplate().selectOne("ExamCollection.getReadingTotal", param);
     }
 
+    /**
+     * 取听力完成度
+     * 
+     * @param paramMap
+     */
+    public String getMediaRate(Map<String, Object> paramMap) {
+        return (String) getIbatisTemplate().selectOne("ExamCollection.getMediaRate", paramMap);
+    }
+
+    /**
+     * 删除本次做题记录
+     * 
+     * @param map
+     * @return
+     */
+    public void deleteExamCollectionBySource(Map<String, Object> map) {
+        getIbatisTemplate().delete("ExamCollection.deleteBySource", map);
+    }
 }

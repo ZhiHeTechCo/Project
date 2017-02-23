@@ -32,7 +32,7 @@ import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.forum.service.ForumService;
 
 /**
- * 结果一览画面
+ * 试题详细画面
  * 
  * @author gaoya
  *
@@ -80,7 +80,7 @@ public class ExamDetailController extends BaseController {
     private boolean isResume;
 
     public String getPageId() {
-        return SystemConstants.PAGE_ITBK_EXAM_003;
+        return SystemConstants.PAGE_ITBK_EXAM_004;
     }
 
     /**
@@ -119,7 +119,7 @@ public class ExamDetailController extends BaseController {
                 logger.log(MessageId.COMMON_E_0001);
                 processForException(this.logger, new Exception(MessageId.COMMON_E_0001));
                 // 留在当前画面
-                return SystemConstants.PAGE_ITBK_EXAM_003;
+                return getPageId();
             }
             if (StringUtils.isEmpty(examFlag)) {
                 // 做题模式
@@ -157,13 +157,14 @@ public class ExamDetailController extends BaseController {
                 } else {
                     questionUpdateController.setExamFlag(null);
                 }
+                // 试题变更画面
                 return questionUpdateController.init();
             }
         } catch (Exception e) {
             processForException(this.logger, e);
         }
 
-        return SystemConstants.PAGE_ITBK_EXAM_004;
+        return getPageId();
     }
 
     /**
@@ -202,7 +203,7 @@ public class ExamDetailController extends BaseController {
         } catch (Exception e) {
             processForException(this.logger, e);
         }
-        return SystemConstants.PAGE_ITBK_EXAM_004;
+        return getPageId();
     }
 
     /**
@@ -244,7 +245,7 @@ public class ExamDetailController extends BaseController {
         } catch (Exception e) {
             processForException(this.logger, e);
         }
-        return SystemConstants.PAGE_ITBK_EXAM_004;
+        return getPageId();
     }
 
     /**
@@ -253,15 +254,9 @@ public class ExamDetailController extends BaseController {
      * @return
      */
     public String goBackToResult() {
-        // 前画面为考试结果一览
-        if (StringUtils.isNotEmpty(examFlag)) {
-            ExamReportController examReportController = (ExamReportController) SpringAppContextManager
-                    .getBean("examReportController");
-            return examReportController.init(question.getSource());
-        }
-        // 做题结果一览
-        ExamResultController examResultController = (ExamResultController) SpringAppContextManager.getBean("examResultController");
-        return examResultController.init();
+        // 考试模式返回【考试结果一览】，单项练习模式返回【做题结果一览】
+        return StringUtils.isNotEmpty(examFlag) ? SystemConstants.PAGE_ITBK_EXAM_006
+                : SystemConstants.PAGE_ITBK_EXAM_003;
     }
 
     /**

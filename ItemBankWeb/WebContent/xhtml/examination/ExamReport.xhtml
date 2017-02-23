@@ -9,8 +9,18 @@
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<script type="text/javascript">
+			function disp_confirm()
+			  {
+				  if(true == confirm("重做听力将会清空上一次的听力成绩，确定要重做听力部分吗？")){
+					  document.getElementById('examReportForm\:toMedia').click();
+				  }else{
+					  return false;
+			      }
+			  }
+		</script>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examDetailForm">
+			<h:form id="examReportForm">
 				<div class="typrography">
 					<h2
 						style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
@@ -34,7 +44,16 @@
 							<c:forEach var="type"
 								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '1'}">
-									<h4>文字：（正确率#{type.percentage}）</h4>
+									<h4>
+										文字：（正确率#{type.percentage}）
+										<!-- 
+										<h:commandLink
+											action="#{examReportController.showPaperDetail('1')}"
+											title="点击浏览试卷">
+											<span class="glyphicon glyphicon-eye-open"></span>
+										</h:commandLink>
+										 -->
+									</h4>
 								</h:panelGroup>
 							</c:forEach>
 							<c:forEach var="item" items="#{examReportController.questions}">
@@ -208,10 +227,17 @@
 							<br />
 							<c:if
 								test="#{session.getAttribute('session-user-info').getRole() >= '1'}">
-								<c:if test="#{examReportController.mediaFlag eq 'true'}">
-									<h4>
-										-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
-									</h4>
+								<c:if test="#{examReportController.mediaFlag ne '0'}">
+									<c:if test="#{examReportController.mediaFlag eq '1'}">
+										<h4>
+											-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
+										</h4>
+									</c:if>
+									<c:if test="#{examReportController.mediaFlag eq '2'}">
+										<h4>
+											-- 点击<span class="glyphicon glyphicon-headphones"></span>，可重做本套听力--
+										</h4>
+									</c:if>
 									<h5>
 										<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
 									</h5>
@@ -219,9 +245,19 @@
 										<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;建议在Wifi环境下使用。
 									</h5>
 									<h3>
-										<h:commandLink action="#{examReportController.toMediaExam}">
-											<span class="glyphicon glyphicon-headphones"></span>
-										</h:commandLink>
+										<c:if test="#{examReportController.mediaFlag eq '1'}">
+											<h:commandLink action="#{examReportController.toMediaExam}">
+												<span class="glyphicon glyphicon-headphones"></span>
+											</h:commandLink>
+										</c:if>
+										<c:if test="#{examReportController.mediaFlag eq '2'}">
+											<h:commandLink onclick="disp_confirm();return false;">
+												<span class="glyphicon glyphicon-headphones"></span>
+											</h:commandLink>
+											<h:commandButton id="toMedia" style="display: none;" value=""
+												action="#{examReportController.toMediaExam}">
+											</h:commandButton>
+										</c:if>
 									</h3>
 								</c:if>
 							</c:if>
@@ -230,8 +266,7 @@
 						<div class="form-submit1">
 							<h:commandButton value="返回题型选择" class="button1"
 								action="#{examReportController.goBackToClassify}"
-								style="margin-right: 5px;"
-								id="goBackToExamBtn">
+								style="margin-right: 5px;" id="goBackToExamBtn">
 							</h:commandButton>
 						</div>
 						<c:if test="#{examReportController.jtestFlag eq 'true'}">

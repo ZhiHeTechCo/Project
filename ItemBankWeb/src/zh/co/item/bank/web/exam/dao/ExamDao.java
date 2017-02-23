@@ -119,16 +119,6 @@ public class ExamDao extends BaseDao {
     }
 
     /**
-     * 删除本次做题记录
-     * 
-     * @param map
-     * @return
-     */
-    public void deleteExamCollectionBySource(Map<String, Object> map) {
-        getIbatisTemplate().delete("ExamCollection.deleteBySource", map);
-    }
-
-    /**
      * 检索题库中最新一年的试题的年份
      * 
      * @param map

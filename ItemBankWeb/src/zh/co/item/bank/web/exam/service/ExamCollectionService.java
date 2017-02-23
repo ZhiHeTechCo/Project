@@ -6,16 +6,23 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.ScoreModel;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
+import zh.co.item.bank.web.exam.dao.MediaDao;
 
 @Named
 public class ExamCollectionService {
 
     @Inject
     private ExamCollectionDao examCollectionDao;
+
+    @Inject
+    private MediaDao mediaDao;
 
     /**
      * 获取试题的考试种别
@@ -50,7 +57,8 @@ public class ExamCollectionService {
     /**
      * 获取百分比
      * 
-     * @param model[examType source]
+     * @param model[examType
+     *            source]
      * @return
      */
     public ExamReportModel getPercentage(ExamReportModel model) {
@@ -110,7 +118,7 @@ public class ExamCollectionService {
     public void setDetail(ScoreModel scoreModel) {
         // c-1.得点率设置
         if (scoreModel.getTotalScore() != 0) {
-            float percentageFloat = (float)scoreModel.getMyTotalScore() / (float)scoreModel.getTotalScore() * 100;
+            float percentageFloat = (float) scoreModel.getMyTotalScore() / (float) scoreModel.getTotalScore() * 100;
             String tmp = String.valueOf(percentageFloat);
             if (tmp.length() > 4) {
                 tmp = tmp.substring(0, 4);
@@ -142,7 +150,7 @@ public class ExamCollectionService {
             } else {
                 level = "評価なし";
             }
-        } else if(scoreModel.getSource().contains("E-F")){
+        } else if (scoreModel.getSource().contains("E-F")) {
             if (tmp >= 400) {
                 level = "E";
             } else if (tmp >= 300) {
@@ -195,4 +203,26 @@ public class ExamCollectionService {
         setDetail(scoreModel);
         return scoreModel;
     }
+
+    /**
+     * 取听力完成度
+     * 
+     * @param paramMap
+     * @return
+     */
+    public String getMediaRate(Map<String, Object> paramMap) {
+        return examCollectionDao.getMediaRate(paramMap);
+    }
+
+    /**
+     * 删除当前用户本套试题听力记录
+     * 
+     * @param param
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteMediaCollectionBySource(Map<String, Object> param) {
+        examCollectionDao.deleteExamCollectionBySource(param);
+        mediaDao.deleteMediaCollectionBySource(param);
+    }
+    
 }

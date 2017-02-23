@@ -16,6 +16,7 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 import zh.co.item.bank.web.exam.dao.ExamDao;
 
 /**
@@ -34,6 +35,9 @@ public class ExamService {
 
     @Inject
     private ExamDao examDao;
+
+    @Inject
+    private ExamCollectionDao examCollectionDao;
 
     /**
      * 考试类别
@@ -223,7 +227,7 @@ public class ExamService {
      * @param map
      */
     public void deleteExamCollectionBySource(Map<String, Object> map) {
-        examDao.deleteExamCollectionBySource(map);
+        examCollectionDao.deleteExamCollectionBySource(map);
     }
 
     /**
@@ -245,7 +249,8 @@ public class ExamService {
 
     /**
      * 取得考卷
-     * @param userId 
+     * 
+     * @param userId
      * 
      * @return
      */

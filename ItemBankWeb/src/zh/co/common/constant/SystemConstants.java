@@ -63,6 +63,12 @@ public class SystemConstants {
     /** 试题种类 J.TEST */
     public static final String EXAM_2 = "2";
 
+    /** false */
+    public static final String FALSE = "false";
+
+    /** true */
+    public static final String TRUE = "true";
+
     /**---------------------properties文件key------------------------------
     /**一页表示件数*/
     public static final String PAGE_CONTROL_RECORDS_PER_PAGE = "page-control.1page.count";

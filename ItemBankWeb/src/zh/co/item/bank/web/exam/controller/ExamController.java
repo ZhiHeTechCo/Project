@@ -270,15 +270,14 @@ public class ExamController extends BaseController {
                 // c-2.显示成绩
                 ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                         .getBean("examReportController");
-                examReportController.setMediaFlag("true");
-                examReportController.setJtestFlag("true");
+                examReportController.setMediaFlag("1");
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             } else {
                 // 显示上次成绩
                 ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                         .getBean("examReportController");
-                examReportController.setMediaFlag("false");
+                examReportController.setMediaFlag("1");
                 examReportController.setClassifyBean(classifyBean);
                 return examReportController.init(source);
             }
@@ -362,6 +361,7 @@ public class ExamController extends BaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("source", questions.get(0).getSource());
         map.put("startTime", startTime);
+        map.put("userId", userInfo.getId());
         examService.deleteExamCollectionBySource(map);
         doclear();
         // b.跳转至试题选择
@@ -389,8 +389,9 @@ public class ExamController extends BaseController {
         ExamReportController examReportController = (ExamReportController) SpringAppContextManager
                 .getBean("examReportController");
         // 中途退出不显示听力
-        examReportController.setMediaFlag("false");
-        examReportController.setJtestFlag("false");
+        examReportController.setMediaFlag("0");
+        // 中途退出不显示成绩单
+        examReportController.setJtestFlag(SystemConstants.FALSE);
         return examReportController.init(source);
     }
 

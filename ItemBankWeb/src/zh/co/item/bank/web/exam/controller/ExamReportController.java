@@ -17,6 +17,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
@@ -80,9 +81,14 @@ public class ExamReportController extends BaseController {
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
 
             reportModels = new ArrayList<ExamReportModel>();
-            // 默认显示听力
-            mediaFlag = StringUtils.isEmpty(mediaFlag) ? "true" : mediaFlag;
-            jtestFlag = StringUtils.isEmpty(jtestFlag) && source.contains("J.TEST") ? "true" : jtestFlag;
+            // 是否显示听力
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            paramMap.put("userId", userInfo.getId());
+            paramMap.put("source", source);
+            String rate = examCollectionService.getMediaRate(paramMap);
+            // 听力完成度100%显示出现【重做听力】选项
+            mediaFlag = "100%".equals(rate) ? "2" : mediaFlag;
+            jtestFlag = source.contains("J.TEST") && !"false".equals(jtestFlag) ? "true" : "false";
 
             // b.显示本次考试结果
             // b-1.本次考试出现的试题种别
@@ -123,13 +129,30 @@ public class ExamReportController extends BaseController {
      * @return
      */
     public String toMediaExam() {
-        MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
-                .getBean("mediaExamController");
-        // 题型设置为听力
-        classifyBean.setExamType("6");
-        mediaExamController.setStatus("ing");
-        mediaExamController.setClassifyBean(classifyBean);
-        return mediaExamController.mediaOfExam(questions.get(0).getSource());
+        try {
+
+            String source = questions.get(0).getSource();
+            // 重做本套听力，则删除之前记录
+            if ("2".equals(mediaFlag)) {
+                Map<String, Object> param = new HashMap<String, Object>();
+                param.put("userId", userInfo.getId());
+                param.put("source", source);
+                param.put("examType", "6");
+                examCollectionService.deleteMediaCollectionBySource(param);
+            }
+            MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
+                    .getBean("mediaExamController");
+            // 题型设置为听力
+            classifyBean.setExamType("6");
+            mediaExamController.setStatus("ing");
+            mediaExamController.setClassifyBean(classifyBean);
+            return mediaExamController.mediaOfExam(source);
+
+        } catch (Exception e) {
+            processForException(this.logger, e);
+        }
+
+        return getPageId();
     }
 
     /**
@@ -174,6 +197,35 @@ public class ExamReportController extends BaseController {
 
         } catch (Exception e) {
             processForException(this.logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * 6.浏览试卷
+     * 
+     * @return
+     */
+    public String showPaperDetail(String examType) {
+        try {
+
+            List<ExamModel> currentQuestions = new ArrayList<ExamModel>();
+            for (ExamModel question : questions) {
+                if (question.getExamType().equals(examType)) {
+                    currentQuestions.add(question);
+                }
+            }
+            // 跳转至[结果一览]画面
+            ExamResultController examResultController = (ExamResultController) SpringAppContextManager
+                    .getBean("examResultController");
+            examResultController.setQuestions(currentQuestions);
+            examResultController.setTitle(currentQuestions.get(0).getTitle());
+            examResultController.setSubject(currentQuestions.get(0).getSubject());
+            examResultController.setGraphicImage(CmnStringUtils.getGraphicImage(currentQuestions.get(0).getImg()));
+            examResultController.setResume(false);
+            return examResultController.init();
+        } catch (Exception e) {
+            processForException(logger, e);
         }
         return getPageId();
     }

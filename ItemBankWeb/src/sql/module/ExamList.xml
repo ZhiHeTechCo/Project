@@ -8,9 +8,9 @@
 		resultType="zh.co.item.bank.model.entity.ExamListModel">
 		select a.language, a.exam, a.level, a.year, a.count, a.source, ifnull(b.rate,'0%') as rate
 		from tb_exam_list a 
-		left join vb_exam_rate b
+		left join (select * from vb_exam_rate where user_id=#{userId}) b
 		on a.source=b.source
-		where a.delete_flag!=1 and (user_id=#{userId} or user_id is null)
+		where a.delete_flag!=1 
 		order by year+0, count+0;
 	</select>
 
