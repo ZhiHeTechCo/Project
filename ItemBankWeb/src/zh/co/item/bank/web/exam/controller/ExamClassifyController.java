@@ -72,9 +72,6 @@ public class ExamClassifyController extends BaseController {
     // 试卷（包含完成度）
     private List<ExamListModel> examListBeans;
 
-    // 是否是手机
-    private String mobile;
-
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
     }
@@ -101,7 +98,6 @@ public class ExamClassifyController extends BaseController {
             if (StringUtils.isEmpty(mode)) {
                 return SystemConstants.PAGE_ITBK_EXAM_000;
             }
-            mobile = "1".equals(mode) && WebUtils.judgeIsMoblie() ? "true" : "false";
 
             // b.画面显示
             // b-1.获取考试类别
@@ -408,14 +404,6 @@ public class ExamClassifyController extends BaseController {
 
     public void setShowList(List<ExamListModel> showList) {
         this.showList = showList;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public List<ExamListModel> getExamListBeans() {

@@ -69,6 +69,8 @@ public class WebUtils {
     public static final String REQUEST_MESSAGE_LEVEL = "request-message-level";
     
     public static final String SESSION_USER_AGENT = "session-user-agent";
+
+    public static final String SESSION_IS_MOBILE = "session-is-mobile";
     
     public final static Map<String, String> controllerAndPageMap = new HashMap<String, String>();
     static {

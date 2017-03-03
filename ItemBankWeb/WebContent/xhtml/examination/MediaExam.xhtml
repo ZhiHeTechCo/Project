@@ -65,8 +65,10 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="mediaExamForm">
 				<div class="typrography">
-					<h2
-						style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力部分</h2>
+				    <c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
+						<h2
+							style="text-align: center; padding-bottom: 20px; color: #3382C9;">听力部分</h2>
+					</c:if>
 					<h3 style="text-align: center;">(#{mediaExamController.mediaModel.source})</h3>
 					<div class="container">
 						<div class="bs-example">

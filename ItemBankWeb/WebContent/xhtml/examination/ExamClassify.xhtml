@@ -45,12 +45,12 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examClassifyForm">
 				<div class="typrography">
-					<c:if test="#{examClassifyController.mobile ne 'true'}">
+					<c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
 						<h2
 							style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
 					</c:if>
 					<div class="container">
-						<c:if test="#{examClassifyController.mobile ne 'true'}">
+						<c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
 							<div class="col-md-8 contact-top">
 								<h:panelGroup id="ngossfw_error_display"
 									class="#{request.getAttribute('request-message-level')}"
@@ -231,7 +231,7 @@
 							</div>
 						</c:if>
 						<!-- 手机时显示 -->
-						<c:if test="#{examClassifyController.mobile eq 'true'}">
+						<c:if test="#{session.getAttribute('session-is-mobile') eq 'true'}">
 							<h:panelGroup id="ngossfw_error_display"
 								class="#{request.getAttribute('request-message-level')}"
 								layout="block">

@@ -82,6 +82,8 @@ public class SignInBean extends BaseController {
         	}
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_INFO, loginUserInfo);
         	WebUtils.setSessionAttribute(WebUtils.SESSION_USER_ID, String.valueOf(loginUserInfo.getId()));
+        	String isMobile = WebUtils.judgeIsMoblie()?SystemConstants.TRUE:SystemConstants.FALSE;
+        	WebUtils.setSessionAttribute(WebUtils.SESSION_IS_MOBILE, isMobile);
     		logger.log(MessageId.ITBK_I_0003);
             //登录成功，跳转到首页
             if(fromPageId == null) {

@@ -88,7 +88,14 @@ public class ExamReportController extends BaseController {
             String rate = examCollectionService.getMediaRate(paramMap);
             // 听力完成度100%显示出现【重做听力】选项
             mediaFlag = "100%".equals(rate) ? "2" : mediaFlag;
-            jtestFlag = source.contains("J.TEST") && !"false".equals(jtestFlag) ? "true" : "false";
+            // 初始化jtestFlag
+            if (SystemConstants.FALSE.equals(jtestFlag)) {
+                // 中途退出不显示成绩单
+                jtestFlag = null;
+            } else {
+                // 根据source和听力完成度判断
+                jtestFlag = source.contains("J.TEST") && "100%".equals(rate) ? SystemConstants.TRUE : null;
+            }
 
             // b.显示本次考试结果
             // b-1.本次考试出现的试题种别
