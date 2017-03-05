@@ -23,7 +23,7 @@ public class SystemConstants {
     public static final String PC_FLAG = "0";
 
     /** USER_AGENT Flag mobile */
-    public static final String AGENT_FLAG = "1";
+    public static final String AGENT_FLAG = "true";
 
     /** 文件 review flag 0:未审核 */
     public static final String REVIEW_FLAG_0 = "0";
@@ -120,6 +120,9 @@ public class SystemConstants {
     public static final String PAGE_ITBK_FORUM_001 = "ITBK_FORUM_001";
     /** 回答一览 */
     public static final String PAGE_ITBK_FORUM_002 = "ITBK_FORUM_002";
+
+    /** 邀请码确认 */
+    public static final String PAGE_ITBK_INVITE_001 = "ITBK_INVITE_001";
 
     /** 选择模式 */
     public static final String PAGE_ITBK_EXAM_000 = "ITBK_EXAM_000";

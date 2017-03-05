@@ -237,6 +237,29 @@ public class ExamReportController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * 7. 重做指定部分TODO
+     * 
+     * @return
+     */
+    public String reDo(String examType) {
+        try {
+            Integer[] structureIds = new Integer[5];
+            int i = 0;
+            for (ExamModel question : questions) {
+                if (examType.equals(question.getExamType())) {
+                    structureIds[i] = question.getStructureId();
+                    i++;
+                }
+            }
+            examCollectionService.reDo(userInfo.getId(), structureIds);
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
     public List<ExamModel> getQuestions() {
         return questions;
     }

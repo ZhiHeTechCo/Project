@@ -45,12 +45,13 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examClassifyForm">
 				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
+					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
 						<h2
 							style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
 					</c:if>
 					<div class="container">
-						<c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
+						<c:if
+							test="#{session.getAttribute('session-user-agent') ne 'true' || examClassifyController.mode eq '2'}">
 							<div class="col-md-8 contact-top">
 								<h:panelGroup id="ngossfw_error_display"
 									class="#{request.getAttribute('request-message-level')}"
@@ -155,7 +156,7 @@
 																					<f:selectItems
 																						value="#{examClassifyController.showList}"
 																						var="entry" itemValue="#{entry.source}"
-																						itemLabel=" #{entry.source}" />
+																						itemLabel=" #{entry.source} (#{entry.rate})" />
 																				</h:selectOneMenu></td>
 																		</tr>
 																	</table>
@@ -231,7 +232,8 @@
 							</div>
 						</c:if>
 						<!-- 手机时显示 -->
-						<c:if test="#{session.getAttribute('session-is-mobile') eq 'true'}">
+						<c:if
+							test="#{session.getAttribute('session-user-agent') eq 'true' and examClassifyController.mode eq '1'}">
 							<h:panelGroup id="ngossfw_error_display"
 								class="#{request.getAttribute('request-message-level')}"
 								layout="block">

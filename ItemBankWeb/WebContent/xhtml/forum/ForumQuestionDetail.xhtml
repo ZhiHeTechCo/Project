@@ -12,8 +12,10 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="forumForm">
 				<div class="typrography">
-					<h2
-						style="text-align: center; padding-bottom: 20px; color: #6682C9;">回答一览</h2>
+					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+						<h2
+							style="text-align: center; padding-bottom: 20px; color: #6682C9;">回答一览</h2>
+					</c:if>
 					<div class="container">
 						<div class="bs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -24,8 +26,7 @@
 									escape="false" />
 							</h:panelGroup>
 							<h4 style="color: orange;">
-								请解释为什么这题选项#{forumController.forumModel.answer}是正确的，谢谢！
-							</h4>
+								请解释为什么这题选项#{forumController.forumModel.answer}是正确的，谢谢！</h4>
 							<h5 style="color: #6682C9;">
 								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumController.askers}
 								标记了这道题。
@@ -620,7 +621,8 @@
 							<h:inputTextarea style="width: 100%" id="myResponse"
 								value="#{forumController.myResponse}" />
 							<div class="form-button1" style="margin-top: 30px;">
-								<input type="button" id="checkinputbutton" value="提交" style="margin-right: 5px;"
+								<input type="button" id="checkinputbutton" value="提交"
+									style="margin-right: 5px;"
 									onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输入您的回答再提交!'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
 								<h:commandButton value="提交" id="responseQuestion"
 									style="display: none;"

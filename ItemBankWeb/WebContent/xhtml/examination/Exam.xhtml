@@ -13,7 +13,7 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examForm">
 				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-is-mobile') ne 'true'}">
+					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
 						<h2
 							style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
 					</c:if>

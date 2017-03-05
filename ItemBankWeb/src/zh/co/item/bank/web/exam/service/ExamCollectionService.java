@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.exam.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,8 +58,7 @@ public class ExamCollectionService {
     /**
      * 获取百分比
      * 
-     * @param model[examType
-     *            source]
+     * @param model[examType source]
      * @return
      */
     public ExamReportModel getPercentage(ExamReportModel model) {
@@ -224,5 +224,17 @@ public class ExamCollectionService {
         examCollectionDao.deleteExamCollectionBySource(param);
         mediaDao.deleteMediaCollectionBySource(param);
     }
-    
+
+    /**
+     * 重做指定题型TODO
+     * 
+     * @param userId
+     * @param structureIds
+     */
+    public void reDo(Integer userId, Integer[] structureIds) {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("userId", userId);
+        paramMap.put("structureId", structureIds);
+    }
+
 }
