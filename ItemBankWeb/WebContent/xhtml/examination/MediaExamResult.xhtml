@@ -131,11 +131,11 @@
 											</h:commandLink>
 										</div>
 										<h:panelGroup id="audioWrapper">
-											<!-- 显示音频 -->
+											<!-- 显示音频 controls="controls" -->
 											<div class="audio_wrap"
 												style="float:right;display:#{mediaExamController.mediaReady};">
 												<div class="music_control">
-													<audio id="listen" controls="controls"
+													<audio id="listen" 
 														autobuffer="autobuffer" src="#{mediaExamController.mediaModel.media}"></audio>
 												</div>
 											</div>
