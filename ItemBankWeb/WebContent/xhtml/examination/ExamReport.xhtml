@@ -48,13 +48,6 @@
 								<h:panelGroup rendered="#{type.examType eq '1'}">
 									<h4>
 										文字：（正确率#{type.percentage}）
-										<!-- 
-										<h:commandLink
-											action="#{examReportController.showPaperDetail('1')}"
-											title="点击浏览试卷">
-											<span class="glyphicon glyphicon-eye-open"></span>
-										</h:commandLink>
-										 -->
 									</h4>
 								</h:panelGroup>
 							</c:forEach>
@@ -117,12 +110,6 @@
 								<h:panelGroup rendered="#{type.examType eq '3'}">
 									<h4>
 										文法：（正确率#{type.percentage}）
-										<!--
-										<h:commandLink
-											action="#{examReportController.reDo('3')}"
-											title="重做本类型试题">
-											<span class="glyphicon glyphicon-eye-open"></span>
-										</h:commandLink>-->
 									</h4>
 								</h:panelGroup>
 							</c:forEach>
@@ -184,12 +171,7 @@
 								items="#{examReportController.reportModels}">
 								<h:panelGroup rendered="#{type.examType eq '5'}">
 									<h4>
-										阅读：（正确率#{type.percentage}）<!--
-										<h:commandLink
-											action="#{examReportController.redo(type.structureId)}"
-											title="重做本类型试题">
-											<span class="glyphicon glyphicon-eye-open"></span>
-										</h:commandLink>-->
+										阅读：（正确率#{type.percentage}）
 									</h4>
 								</h:panelGroup>
 							</c:forEach>
