@@ -24,6 +24,13 @@
           -webkit-keyframes a_music_play { 0%{-webkit-transform: rotate(0deg);}
           100%{-webkit-transform:rotate(360deg);}
           }
+           audio::-webkit-media-controls {
+                overflow: hidden !important
+            }
+            audio::-webkit-media-controls-enclosure {
+                width: calc(100% + 32px);
+                margin-left: auto;
+            }
         </style>
         <script type="text/javascript">
         //<![CDATA[ 
