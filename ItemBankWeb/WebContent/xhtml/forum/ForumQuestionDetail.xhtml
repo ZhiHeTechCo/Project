@@ -70,7 +70,7 @@
 									value="#{forumController.forumModel}" var="detail">
 									<h:column>
 										<h4>解析</h4>
-										<td><c:if test="#{detail.analysis eq null}">暂无</c:if> <h:outputText
+										<td><h:panelGroup rendered="#{detail.analysis eq null}">暂无</h:panelGroup> <h:outputText
 												value="#{detail.analysis}" /></td>
 										<tr>
 											<td width="20%"><h4>试题种别</h4></td>
