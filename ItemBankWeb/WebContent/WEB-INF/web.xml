@@ -56,6 +56,16 @@
     <url-pattern>/servlet/OAuthServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>WebOAuthServlet</servlet-name>
+    <servlet-class>zh.co.item.bank.web.user.controller.WebOAuthServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WebOAuthServlet</servlet-name>
+    <url-pattern>/servlet/WebOAuthServlet</url-pattern>
+  </servlet-mapping>
+  
   <filter>
     <filter-name>AccessFilter</filter-name>
     <filter-class>zh.co.item.bank.web.filter.AccessFilter</filter-class>
