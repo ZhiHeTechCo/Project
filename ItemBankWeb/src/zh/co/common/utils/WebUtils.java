@@ -627,7 +627,12 @@ public class WebUtils {
                 // 用户特权信息
                 snsUserInfo.setPrivilegeList(JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class));
                 // UnionID
-                snsUserInfo.setUnionId(jsonObject.getString("unionid"));
+                try {
+                	snsUserInfo.setUnionId(jsonObject.getString("unionid"));
+                } catch (Exception e) {
+                	logger.debug("获取用户信息失败 unionid:{null}");
+                }
+                
             } catch (Exception e) {
                 snsUserInfo = null;
                 int errorCode = jsonObject.getInt("errcode");
