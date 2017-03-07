@@ -648,8 +648,20 @@ public class WebUtils {
     	
     	try{
     	FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = facesContext.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
+        HttpServletRequest request = null;
+        
+        if(facesContext == null) {
+        	ServletRequestAttributes ra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        	if ( ra != null ){
+                //SpringMvc
+                request = ra.getRequest();
+        	} else {
+        		return false;
+        	}
+        } else {
+        	ExternalContext extContext = facesContext.getExternalContext();
+            request = (HttpServletRequest) extContext.getRequest();
+        }
 		
 		String[] mobileAgents = { "iphone", "android", "phone", "mobile", "wap", "netfront", "java", "opera mobi",
 				"opera mini", "ucweb", "windows ce", "symbian", "series", "webos", "sony", "blackberry", "dopod",
