@@ -626,8 +626,8 @@ public class WebUtils {
                 snsUserInfo.setHeadImgUrl(jsonObject.getString("headimgurl"));
                 // 用户特权信息
                 snsUserInfo.setPrivilegeList(JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class));
-/*                // UnionID
-                snsUserInfo.setUnionId(jsonObject.getString("unionid"));*/
+                // UnionID
+                snsUserInfo.setUnionId(jsonObject.getString("unionid"));
             } catch (Exception e) {
                 snsUserInfo = null;
                 int errorCode = jsonObject.getInt("errcode");

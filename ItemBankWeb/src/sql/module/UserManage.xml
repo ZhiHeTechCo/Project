@@ -27,7 +27,7 @@
     from
       tu_user 
     where
-       (open_id = #{openId, jdbcType=VARCHAR } or uuid = #{uuid, jdbcType=VARCHAR }
+       (open_id = #{openId, jdbcType=VARCHAR } or uuid = #{uuid, jdbcType=VARCHAR })
        and wechat = '1'
   </select>
   
