@@ -626,8 +626,13 @@ public class WebUtils {
                 snsUserInfo.setHeadImgUrl(jsonObject.getString("headimgurl"));
                 // 用户特权信息
                 snsUserInfo.setPrivilegeList(JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class));
-/*                // UnionID
-                snsUserInfo.setUnionId(jsonObject.getString("unionid"));*/
+                // UnionID
+                try {
+                	snsUserInfo.setUnionId(jsonObject.getString("unionid"));
+                } catch (Exception e) {
+                	logger.debug("获取用户信息失败 unionid:{null}");
+                }
+                
             } catch (Exception e) {
                 snsUserInfo = null;
                 int errorCode = jsonObject.getInt("errcode");
@@ -648,8 +653,20 @@ public class WebUtils {
     	
     	try{
     	FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = facesContext.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) extContext.getRequest();
+        HttpServletRequest request = null;
+        
+        if(facesContext == null) {
+        	ServletRequestAttributes ra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        	if ( ra != null ){
+                //SpringMvc
+                request = ra.getRequest();
+        	} else {
+        		return false;
+        	}
+        } else {
+        	ExternalContext extContext = facesContext.getExternalContext();
+            request = (HttpServletRequest) extContext.getRequest();
+        }
 		
 		String[] mobileAgents = { "iphone", "android", "phone", "mobile", "wap", "netfront", "java", "opera mobi",
 				"opera mini", "ucweb", "windows ce", "symbian", "series", "webos", "sony", "blackberry", "dopod",

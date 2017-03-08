@@ -10,7 +10,7 @@
 <h:head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="keywords" content="日语 在线测试 题库" />
+  <meta name="keywords" content="日语 在线测试 题库,JTEST,Jtest,JLPT,日本语能力测试" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- <ui:insert name="title"></ui:insert> -->
   <title>
@@ -39,6 +39,7 @@
     <h:outputScript library="js" name="bootstrap.js" />
     <h:outputScript library="js" name="responsiveslides.min.js" />
     <h:outputScript library="js" name="owl.carousel.js" />
+    <h:outputScript library="js" name="newsbox.min.js" />
 
 </h:head>  
   
@@ -62,6 +63,26 @@
                 navigationText : false,
                 pagination : true,
             });
+            $(".demo1").bootstrapNews({
+                newsPerPage: 4,
+                autoplay: true,
+    			pauseOnHover:true,
+    			navigation: false,
+                direction: 'down',
+                newsTickerInterval: 4000,
+                onToDo: function () {
+                }
+            });
+    		$(".demo2").bootstrapNews({
+                newsPerPage: 4,
+                autoplay: true,
+    			pauseOnHover: true,
+    			navigation: false,
+                direction: 'down',
+                newsTickerInterval: 2500,
+                onToDo: function () {
+                }
+            });
         });
 
         function topMenu() {
@@ -69,8 +90,8 @@
         }
         
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-    </script>
 
+    </script>
 
   
 <h:form id="menuform">

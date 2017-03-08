@@ -8,6 +8,22 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+		<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+	    <script type="text/javascript">
+	    $(document)
+        .ready(
+                function() {
+			        var obj = new WxLogin({
+			            id:"login_container", 
+			            appid: "wx1e2b360eac9f3475", 
+			            scope: "snsapi_login", 
+			            redirect_uri: "http%3a%2f%2fwww.itembank.cn%2fservlet%2fWebOAuthServlet",
+			            state: "state",
+			            style: "",
+			            href: ".impowerBox .title {font-family: 'FZYaoti', 'Arial', 'Dorsa-Regular', 'sans-serif';}"
+			          });
+                });
+	    </script>
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="sgiform">
 				<!-- //requried-jsfiles-for owl -->
@@ -23,6 +39,7 @@
 										value="${request.getAttribute('request-message-content')}"
 										escape="false" style="padding-left: 15px;" />
 								</h:panelGroup>
+								<div id="login_containerZ"></div>
 								<table class="to toTable">
 									<tr>
 										<td>
@@ -62,15 +79,7 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="col-md-4 contact-top_right">
-								<h3>帮助</h3>
-								<p>
-									<span class="glyphicon glyphicon-info-sign"></span>
-									登录时遇到任何问题，可以扫描底部二维码，在微信中直接给我们留言。
-								</p>
-								<p>
-									<span class="glyphicon glyphicon-info-sign"></span>
-									您也可以点击上方菜单【留言板】反馈您的问题。
-								</p>
+								<div id="login_container"></div>
 							</div>
 						</div>
 					</div>
