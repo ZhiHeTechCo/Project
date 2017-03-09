@@ -206,7 +206,7 @@ public class UserService {
             //UnionID为空的场合
             if(CmnStringUtils.isEmptyStr(user.getUuid()) && !CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
             	TuUserBean newUser = new TuUserBean();
-                newUser.setId(userInfo.getId());
+                newUser.setId(user.getId());
                 //UnionID
                 newUser.setUuid(userInfo.getUuid());
                 // 更新时间
