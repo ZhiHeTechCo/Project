@@ -102,4 +102,15 @@ public class MediaDao extends BaseDao {
     public void deleteMediaCollectionBySource(Map<String, Object> param) {
         getIbatisTemplate().delete("Media.deleteMediaCollectionBySource", param);
     }
+    
+    /**
+     * 听力题检索
+     * 
+     * @param map[source]
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<MediaQuestionStructure> selectMediaStructure(Map<String, Object> param){
+        return getIbatisTemplate().selectList("Media.selectMediaStructure", param);
+    }
 }

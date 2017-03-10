@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbErrorReportBean;
+import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -137,12 +138,23 @@ public class ExamDao extends BaseDao {
 
     /**
      * 检索考卷表
-     * @param userId 
+     * 
+     * @param userId
      * 
      * @return
      */
     @SuppressWarnings("unchecked")
     public List<ExamListModel> getExamListForUser(Integer userId) {
         return getIbatisTemplate().selectList("ExamList.getExamListForUser", userId);
+    }
+
+    /**
+     * 获取成绩快速查询相关试题
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbExamListBean> getQuickSourceForAll() {
+        return getIbatisTemplate().selectList("ExamList.getQuickSourceForAll");
     }
 }

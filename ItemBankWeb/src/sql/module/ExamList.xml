@@ -10,8 +10,12 @@
 		from tb_exam_list a 
 		left join (select * from vb_exam_rate where user_id=#{userId}) b
 		on a.source=b.source
-		where a.delete_flag!=1 
+		where a.delete_flag = 0 
 		order by year+0, count+0;
+	</select>
+
+	<select id="getQuickSourceForAll" resultType="zh.co.item.bank.db.entity.TbExamListBean">
+		select source from tb_exam_list where delete_flag = 9
 	</select>
 
 </mapper>

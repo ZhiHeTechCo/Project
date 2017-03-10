@@ -12,6 +12,7 @@ import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TbErrorReportBean;
+import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamListModel;
@@ -256,5 +257,14 @@ public class ExamService {
      */
     public List<ExamListModel> getExamListForUser(Integer userId) {
         return examDao.getExamListForUser(userId);
+    }
+
+    /**
+     * 获取成绩快速查询相关试题
+     * 
+     * @return
+     */
+    public List<TbExamListBean> getQuickSourceForAll() {
+        return examDao.getQuickSourceForAll();
     }
 }

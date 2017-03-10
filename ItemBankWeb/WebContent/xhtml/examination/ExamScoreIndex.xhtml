@@ -10,10 +10,10 @@
 	<ui:define name="content">
 		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examIndexForm">
+			<h:form id="examScoreIndexForm">
 				<div class="typrography">
 					<h2
-						style="text-align: center; padding-bottom: 20px; color: #3382C9; margin-bottom: 50px;">模式选择</h2>
+						style="text-align: center; padding-bottom: 20px; color: #3382C9; margin-bottom: 50px;">成绩查询通道</h2>
 					<div class="container">
 						<div class="bs-docs-example">
 							<h:panelGroup id="ngossfw_error_display"
@@ -23,23 +23,20 @@
 									value="${request.getAttribute('request-message-content')}"
 									escape="false" />
 							</h:panelGroup>
-							<div style="text-align: center;">
-								<div>
-									<h:commandButton value="考试模式"
-										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
-										action="#{examIndexController.index('1')}" />
-								</div>
-								<div>
-									<h:commandButton value="单项练习"
-										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
-										action="#{examIndexController.index('2')}" />
-								</div>
-								<div>
-									<h:commandButton value="错题复习"
-										style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
-										action="#{resumeBean.init}" />
-								</div>
-							</div>
+							<h:dataTable class="searchTable"
+								value="#{examScoreIndexController.sources}" var="item">
+								<h:column>
+									<div style="text-align: center;">
+										<div>
+											<h:commandButton value="#{item.source}"
+												style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
+												action="#{examScoreIndexController.doRecord()}">
+												<f:param name="source" value="#{item.source}" />
+											</h:commandButton>
+										</div>
+									</div>
+								</h:column>
+							</h:dataTable>
 						</div>
 					</div>
 				</div>

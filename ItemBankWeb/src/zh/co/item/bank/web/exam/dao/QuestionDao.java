@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -8,6 +9,7 @@ import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
 
 /**
  * 考题管理模块
@@ -90,5 +92,16 @@ public class QuestionDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<TbQuestionStructureBean> getStructuresByClassifyId(Integer classifyId) {
         return getIbatisTemplate().selectList("Media.selectStructuresByClassifyId", classifyId);
+    }
+    
+    /**
+     * 非听力题检索
+     * 
+     * @param map[source]
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<QuestionStructure> selectQuestionsStructure(Map<String, Object> map) {
+        return getIbatisTemplate().selectList("Question.selectQuestionsStructure", map);
     }
 }

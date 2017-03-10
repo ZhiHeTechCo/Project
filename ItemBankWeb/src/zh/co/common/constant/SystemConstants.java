@@ -144,6 +144,10 @@ public class SystemConstants {
     public static final String PAGE_ITBK_EXAM_008 = "ITBK_EXAM_008";
     /** JTEST成绩单 */
     public static final String PAGE_ITBK_EXAM_009 = "ITBK_EXAM_009";
+    /** 成绩查询通道 */
+    public static final String PAGE_ITBK_EXAM_010 = "ITBK_EXAM_010";
+    /** 答案录入 */
+    public static final String PAGE_ITBK_EXAM_011 = "ITBK_EXAM_011";
     /** 试题登录 */
     public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     /** 试题更新 */

@@ -280,6 +280,37 @@
 		limit 1
 	</select>
 
+    <resultMap id="questionsResult" type="zh.co.item.bank.model.entity.QuestionStructure">  
+      <result property="title" column="title"/>
+      <collection property="questions" ofType="zh.co.item.bank.model.entity.ExamModel" >
+        <id column="no" property="no" jdbcType="INTEGER" />
+	    <result column="rowNo" property="rowNo" jdbcType="CHAR" />
+	    <result column="context" property="context" jdbcType="VARCHAR" />
+	    <result column="context_key" property="contextKey" jdbcType="VARCHAR" />
+	    <result column="context_after" property="contextAfter" jdbcType="VARCHAR" />
+	    <result column="a" property="a" jdbcType="VARCHAR" />
+	    <result column="b" property="b" jdbcType="VARCHAR" />
+	    <result column="c" property="c" jdbcType="VARCHAR" />
+	    <result column="d" property="d" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="CHAR" />
+	    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+	    <result column="source" property="source" jdbcType="VARCHAR" />
+	    <result column="father_id" property="fatherId" jdbcType="INTEGER" />
+	    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+	    <result column="structure_id" property="structureId" jdbcType="INTEGER" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+      </collection>
+    </resultMap>
+
+    <select id="selectQuestionsStructure" parameterType="java.util.Map" resultMap="questionsResult">
+       SELECT (@rowNO := @rowNO+1) as rowNo, t1.title, t3.*
+          FROM tb_question_structure t1,tb_question_classify t2,
+           tb_question t3, (select @rowNO :=0) t4
+          WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id and t3.delete_flag = #{deleteFlag,jdbcType=CHAR}
+          and t3.source = #{source,jdbcType=CHAR}
+        order by t3.no
+    </select>
+
 	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">
 		update tb_question
 		<set>

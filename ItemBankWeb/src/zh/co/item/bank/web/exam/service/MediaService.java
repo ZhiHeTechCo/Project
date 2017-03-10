@@ -146,4 +146,14 @@ public class MediaService {
             examCollectionDao.insertExamCollections(examCollections);
         }
     }
+
+    /**
+     * 非听力题检索
+     * 
+     * @param map[source]
+     * @return
+     */
+    public List<MediaQuestionStructure> selectMediaStructure(Map<String, Object> map) {
+        return mediaDao.selectMediaStructure(map);
+    }
 }
