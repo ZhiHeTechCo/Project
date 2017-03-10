@@ -116,6 +116,10 @@ public class ExamCollectionService {
      * @param scoreModel
      */
     public void setDetail(ScoreModel scoreModel) {
+        if (scoreModel == null) {
+            // 数据错误的情况
+            return;
+        }
         // c-1.得点率设置
         if (scoreModel.getTotalScore() != 0) {
             float percentageFloat = (float) scoreModel.getMyTotalScore() / (float) scoreModel.getTotalScore() * 100;
