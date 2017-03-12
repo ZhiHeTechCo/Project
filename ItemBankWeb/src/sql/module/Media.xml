@@ -87,7 +87,7 @@
         order by t3.no
     </select>
 
-<!-- 查成绩用 -->
+    <!-- 查成绩用 -->
     <select id="selectMediaStructure" parameterType="java.util.Map" resultMap="mediaQuestionsResult">
        SELECT (@rowNO := @rowNO+1) as rowNo, t1.title, t1.classify_id, t5.source, t3.*
             FROM tb_question_structure t1,tb_question_classify t2,
@@ -95,6 +95,14 @@
           WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id and t3.delete_flag = #{deleteFlag}
           AND t5.source = #{source} and t5.id=t3.media_id
         order by t3.no
+    </select>
+
+    <select id="selectMediaIdByUsers" parameterType="java.util.Map"
+        resultMap="zh.co.item.bank.db.entity.TbMediaCollectionBean">
+       select media_id, user_id from tb_media_collection
+       where user_id=#{newUserId}
+       and media_id in (select media_id from tb_media_collection where user_id=#{oldUserId})
+       group by media_id
     </select>
 
 
@@ -115,9 +123,14 @@
 		</foreach>
 	</insert>
 
-  <delete id="deleteMediaCollectionBySource" parameterType="java.util.Map" >
-    delete from tb_media_collection where
-    media_id = (select id from tb_media where source = #{source,jdbcType=CHAR} limit 1)
-    and user_id = #{userId,jdbcType=INTEGER}
-  </delete>
+	<delete id="deleteMediaCollectionBySource" parameterType="java.util.Map" >
+	  delete from tb_media_collection where
+	  media_id = (select id from tb_media where source = #{source,jdbcType=CHAR} limit 1)
+	  and user_id = #{userId,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteMediaCollectionBySource" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean" >
+	  delete from tb_media_collection where
+	  media_id = #{media_id} and user_id = #{userId,jdbcType=INTEGER}
+	</delete>
 </mapper>

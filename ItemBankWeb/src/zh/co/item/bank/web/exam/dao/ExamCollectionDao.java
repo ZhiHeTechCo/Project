@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
+import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.ScoreModel;
@@ -121,5 +122,25 @@ public class ExamCollectionDao extends BaseDao {
      */
     public Integer selectExamCollectionForCount(Map<String, Object> map) {
         return (Integer) getIbatisTemplate().selectOne("ExamCollection.selectExamCollectionForCount", map);
+    }
+
+    /**
+     * 帐号合并-检索冲突数据
+     * 
+     * @param users
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbExamCollectionBean> selectExamCollectionByUsers(List<Integer> users) {
+        return getIbatisTemplate().selectList("ExamCollection.selectExamCollectionByUsers", users);
+    }
+
+    /**
+     * 帐号合并-删除用户旧数据
+     * 
+     * @param deleteList
+     */
+    public void deleteExamCollectionOld(List<TbExamCollectionBean> deleteList) {
+        getIbatisTemplate().delete("ExamCollection.deleteExamCollectionOld", deleteList);
     }
 }

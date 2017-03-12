@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.user.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +19,18 @@ import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
+import zh.co.item.bank.db.entity.TbCollectionBean;
+import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.db.entity.TbFileInfoBean;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
+import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbMediaQuestionBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
+import zh.co.item.bank.web.exam.dao.CollectionDao;
+import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
+import zh.co.item.bank.web.exam.dao.MediaDao;
 import zh.co.item.bank.web.user.dao.UserDao;
 
 /**
@@ -52,6 +59,15 @@ public class UserService {
 
     @Inject
     private UserDao userDao;
+
+    @Inject
+    private ExamCollectionDao examCollectionDao;
+    
+    @Inject
+    private CollectionDao collectionDao;
+    
+    @Inject
+    private MediaDao mediaDao;
 
     /**
      * 取得Codelist
@@ -203,21 +219,21 @@ public class UserService {
         if (userDao.isUserExistForWechat(userInfo)) {
             // 存在的场合，自动登录
             user = userDao.getUserInfo(userInfo);
-            //UnionID为空的场合
-            if(CmnStringUtils.isEmptyStr(user.getUuid()) && !CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
-            	TuUserBean newUser = new TuUserBean();
+            // UnionID为空的场合
+            if (CmnStringUtils.isEmptyStr(user.getUuid()) && !CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
+                TuUserBean newUser = new TuUserBean();
                 newUser.setId(user.getId());
-                //UnionID
+                // UnionID
                 newUser.setUuid(userInfo.getUuid());
                 // 更新时间
                 newUser.setUpdateTime(new Date());
                 userDao.updateUserInfo(newUser);
             }
         } else {
-        	if(!CmnStringUtils.isNickName(userInfo.getNickName())) {
-        		logger.log(MessageId.ITBK_I_0001, new Object[] { userInfo.getName() });
-        		userInfo.setNickName(SystemConstants.EMPTY);
-        	}
+            if (!CmnStringUtils.isNickName(userInfo.getNickName())) {
+                logger.log(MessageId.ITBK_I_0001, new Object[] { userInfo.getName() });
+                userInfo.setNickName(SystemConstants.EMPTY);
+            }
             // 不存在的场合，注册，自动登录
             int count = userDao.insertUserInfo(userInfo);
             if (count > 0) {
@@ -311,7 +327,7 @@ public class UserService {
         count = userDao.updateImgInfo(bean);
         return count;
     }
-    
+
     /**
      * 插入听力图片试题
      * 
@@ -369,11 +385,127 @@ public class UserService {
      * 检索所有用户昵称
      */
     public Map<Integer, String> selectUserForNickName() {
-        List<TuUserBean> users= userDao.selectUserForNickName();
+        List<TuUserBean> users = userDao.selectUserForNickName();
         Map<Integer, String> userName = new HashMap<>();
         for (TuUserBean user : users) {
             userName.put(user.getId(), user.getNickName());
         }
         return userName;
+    }
+
+    /**
+     * 账号绑定TODO
+     * 
+     * @param olderUser
+     * @param newUser
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void accountBinging(UserModel olderUser, UserModel newUser) {
+//        TuUserBean tuUserBean = new TuUserBean();
+//        // newUser.id
+//        tuUserBean.setId(olderUser.getId());
+//        // 微信用户和pc用户都有值的时候，设微信用户的值
+//        // name
+//        tuUserBean.setName(getItemValue(olderUser.getName(), newUser.getName()));
+//        // nick_name
+//        tuUserBean.setNickName(getItemValue(olderUser.getNickName(), newUser.getNickName()));
+//        // password 双方都有值，设置pc用户的值
+//        tuUserBean.setPassword(getItemValue(newUser.getPassword(), olderUser.getPassword()));
+//        // role
+//        String tmpRole = Integer.valueOf(olderUser.getRole()) > Integer.valueOf(newUser.getRole()) ? olderUser.getRole()
+//                : newUser.getRole();
+//        tuUserBean.setRole(tmpRole);
+//        // birthday
+//        tuUserBean.setBirthday(getItemValue(olderUser.getBirthday(), newUser.getBirthday()));
+//        // telephone
+//        tuUserBean.setTelephone(getItemValue(olderUser.getTelephone(), newUser.getTelephone()));
+//        // email
+//        tuUserBean.setEmail(getItemValue(olderUser.getEmail(), newUser.getEmail()));
+//        // jlpt_level
+//        tuUserBean.setJlptLevel(getItemValue(olderUser.getJlptLevel(), newUser.getJlptLevel()));
+//        // jtest_level
+//        tuUserBean.setJtestLevel(getItemValue(olderUser.getJtestLevel(), newUser.getJtestLevel()));
+
+        // 1.更新tu_user
+//        userDao.updateUserById(tuUserBean);
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("newUserId", olderUser.getId());
+        param.put("oldUserId", newUser.getId());
+        // 2.更新tb_exam_collection
+        List<Integer> users = new ArrayList<Integer>();
+        users.add(newUser.getId());
+        users.add(olderUser.getId());
+        updateExamCollection(users);
+        // 3.更新tb_collection
+        updateCollection(param);
+        // 4.更新tb_media_collection
+        updateMediaCollection(param);
+
+        // 5.删除newUser
+//        userDao.deleteUserById(newUser.getId());
+    }
+
+//    private String getItemValue(String wechatValue, String pcValue) {
+//        if (StringUtils.isNotEmpty(wechatValue)) {
+//            return wechatValue;
+//        } else if (StringUtils.isNotEmpty(pcValue)) {
+//            return pcValue;
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    private Date getItemValue(Date wechatValue, Date pcValue) {
+//        if (wechatValue == null) {
+//            return wechatValue;
+//        } else if (pcValue == null) {
+//            return pcValue;
+//        } else {
+//            return null;
+//        }
+//    }
+
+    /**
+     * 更新tb_exam_collection
+     * @param users
+     */
+    private void updateExamCollection(List<Integer> users) {
+        List<TbExamCollectionBean> tbExamCollectionBeans = examCollectionDao.selectExamCollectionByUsers(users);
+        List<String> sources = new ArrayList<String>();
+        List<TbExamCollectionBean> deleteList = new ArrayList<TbExamCollectionBean>();
+        for (TbExamCollectionBean bean : tbExamCollectionBeans) {
+            if (sources.contains(bean.getSource())) {
+                deleteList.add(bean);
+            } else {
+                // 最新的一件保留
+                sources.add(bean.getSource());
+            }
+        }
+
+        // 数据删除
+        examCollectionDao.deleteExamCollectionOld(deleteList);
+    }
+    
+    /**
+     * 更新tb_collection
+     * @param param
+     */
+    private void updateCollection(Map<String, Object> param) {
+        // OldUser的更新时间小于NewUser更新时间的试题
+        List<TbCollectionBean> deleteList = collectionDao.selectOldCollectionByUsers(param);
+        // 删除
+        collectionDao.deleteCollectionOld(deleteList);
+        // 更新NewUser的ID为OldUser的Id
+        collectionDao.updateCollectionUserId(param);
+    }
+    
+    /**
+     * 更新tb_media_collection
+     * @param param
+     */
+    private void updateMediaCollection(Map<String, Object> param) {
+        List<TbMediaCollectionBean> deleteList = mediaDao.selectMediaIdByUsers(param);
+        // 删除检索到的数据
+        mediaDao.deleteMediaCollectionOld(deleteList);
     }
 }

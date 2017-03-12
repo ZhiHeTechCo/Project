@@ -1,6 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
@@ -35,6 +36,35 @@ public class CollectionDao extends BaseDao {
      */
     public void updateCollection(TbCollectionBean collection) {
         getIbatisTemplate().update("Collection.updateCollection", collection);
+    }
+
+    /**
+     * 帐号合并-取不要的旧数据
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbCollectionBean> selectOldCollectionByUsers(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("Collection.selectOldCollectionByUsers", param);
+    }
+
+    /**
+     * 帐号合并-删除不要的数据
+     * 
+     * @param deleteList
+     */
+    public void deleteCollectionOld(List<TbCollectionBean> deleteList) {
+        getIbatisTemplate().delete("Collection.deleteCollection", deleteList);
+    }
+
+    /**
+     * 帐号合并-统一用户ID
+     * 
+     * @param param
+     */
+    public void updateCollectionUserId(Map<String, Object> param) {
+        getIbatisTemplate().update("Collection.updateCollectionUserId", param);
     }
 
 }

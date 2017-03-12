@@ -11,6 +11,27 @@
 		question_id = #{no}
 	</select>
 
+<!-- 
+    <select id="selectCollectionByUsers" parameterType="INTEGER"
+        resultType="zh.co.item.bank.db.entity.TbExamCollectionBean">
+        select id, question_id, update_time from tb_collection
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            #{item,jdbcType=INTEGER}
+        </foreach>
+        group by question_id, id order by create_time desc
+    </select>
+ -->
+
+    <select id="selectOldCollectionByUsers" parameterType="java.util.Map"
+        resultType="zh.co.item.bank.db.entity.TbCollectionBean">
+        select t1.question_id,t1.id from (
+			(select id, question_id, update_time from tb_collection where id=#{oldUser} and delete_flag='0') t1,
+			(select id, question_id, update_time from tb_collection where id=#{newUser} and delete_flag='0') t2
+			)
+		where t1.question_id=t2.question_id and t1.update_time<![CDATA[ < ]]>t2.update_time
+    </select>
+
 	<!-- 批量插入做题记录 -->
 	<insert id="insertCollections" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
 		insert into tb_collection (
@@ -37,5 +58,19 @@
 		and question_id =
 		#{questionId,jdbcType=SMALLINT}
 	</update>
+
+    <!-- 帐号合并更新ID -->
+	<update id="updateCollectionUserId" parameterType="java.util.Map">
+		update tb_collection set id=#{OldUser,jdbcType=SMALLINT}
+		where id = #{newUser,jdbcType=SMALLINT}
+		and question_id = #{questionId,jdbcType=SMALLINT}
+	</update>
+
+    <!-- 帐号合并更新新账号ID -->
+	<delete id="deleteCollectionOld" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		delete tb_collection
+		where id = #{id,jdbcType=SMALLINT}
+		and question_id = #{questionId,jdbcType=SMALLINT}
+	</delete>
 
 </mapper>

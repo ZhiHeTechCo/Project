@@ -102,7 +102,7 @@ public class MediaDao extends BaseDao {
     public void deleteMediaCollectionBySource(Map<String, Object> param) {
         getIbatisTemplate().delete("Media.deleteMediaCollectionBySource", param);
     }
-    
+
     /**
      * 听力题检索
      * 
@@ -110,7 +110,27 @@ public class MediaDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<MediaQuestionStructure> selectMediaStructure(Map<String, Object> param){
+    public List<MediaQuestionStructure> selectMediaStructure(Map<String, Object> param) {
         return getIbatisTemplate().selectList("Media.selectMediaStructure", param);
+    }
+
+    /**
+     * 帐号合并-检索新用户和旧用户重复的听力做题记录
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbMediaCollectionBean> selectMediaIdByUsers(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("Media.selectMediaIdByUsers", param);
+    }
+
+    /**
+     * 帐号合并-删除数据
+     * 
+     * @param deleteList
+     */
+    public void deleteMediaCollectionOld(List<TbMediaCollectionBean> deleteList) {
+        getIbatisTemplate().delete("Media.deleteMediaCollectionOld", deleteList);
     }
 }
