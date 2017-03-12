@@ -12,7 +12,8 @@
 		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
 			<h:form id="examDetailForm">
 				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+					<c:if
+						test="#{session.getAttribute('session-user-agent') ne 'true'}">
 						<h2
 							style="text-align: center; padding-bottom: 20px; color: #3382C9;">成绩单</h2>
 					</c:if>
@@ -88,11 +89,11 @@
 													<td><b>#{item.myTotalScore}</b></td>
 													<td><b>#{item.totalScore}</b></td>
 													<td><b>#{item.percentage}%</b></td>
-													<td><b>#{item.level}</b></td>
+													<td><b style="color:red;">#{item.level}</b></td>
 												</tr>
 											</h:panelGroup>
 											<h:panelGroup rendered="#{item.examType eq '6'}">
-												<h:panelGroup rendered="#{item.structureId eq '73'}">
+												<h:panelGroup rendered="#{item.structureId eq '73' or item.structureId eq '87'}">
 													<tr>
 														<td>写真</td>
 														<td>#{item.myTotalScore}</td>
@@ -101,7 +102,7 @@
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.structureId eq '74'}">
+												<h:panelGroup rendered="#{item.structureId eq '74' or item.structureId eq '88'}">
 													<tr>
 														<td>聴読解</td>
 														<td>#{item.myTotalScore}</td>
@@ -110,7 +111,7 @@
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.structureId eq '75'}">
+												<h:panelGroup rendered="#{item.structureId eq '75' or item.structureId eq '89'}">
 													<tr>
 														<td>応答</td>
 														<td>#{item.myTotalScore}</td>
@@ -119,7 +120,7 @@
 														<td>#{item.level}</td>
 													</tr>
 												</h:panelGroup>
-												<h:panelGroup rendered="#{item.structureId eq '76'}">
+												<h:panelGroup rendered="#{item.structureId eq '76' or item.structureId eq '90'}">
 													<tr>
 														<td>会話・説明</td>
 														<td>#{item.myTotalScore}</td>
@@ -144,14 +145,16 @@
 													<td><b>#{item.myTotalScore}</b></td>
 													<td><b>#{item.totalScore}</b></td>
 													<td><b>#{item.percentage}%</b></td>
-													<td><b>#{item.level}</b></td>
+													<td><b style="color:red;">#{item.level}</b></td>
 												</tr>
 											</h:panelGroup>
 										</h:column>
 									</c:forEach>
 								</table>
 								<h5 style='color: red;'>
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;成绩不包含《记叙问题（60分）》。
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;成绩不包含《记叙问题》。
+									<br/>
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;《読解計》和《合計》评价请结合自身情况计算。
 								</h5>
 							</div>
 							<br />
@@ -235,15 +238,32 @@
 									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
 									<h5>注2:合計点が４０%以上であっても、０点の分野があると、認定されません。</h5>
 								</div>
-								<div
-									style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
-									<div class="form-submit1">
-										<h:commandButton value="返回前页" class="button1"
-											action="#{examScoreController.goBackToResult}"
-											id="goBackToResultBtn">
-										</h:commandButton>
+								<c:if test="#{examScoreController.gobackFlag ne 'false'}">
+									<div
+										style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
+										<div class="form-submit1">
+											<h:commandButton value="返回前页" class="button1"
+												action="#{examScoreController.goBackToResult}"
+												id="goBackToResultBtn">
+											</h:commandButton>
+										</div>
 									</div>
-								</div>
+								</c:if>
+								<c:if test="#{examScoreController.gobackFlag eq 'false'}">
+									<div
+										style="margin-left: auto; margin-right: auto; width: #{examScoreController.width};">
+										<div class="form-submit1">
+											<h:commandButton value="重测" class="button1"
+												action="#{examScoreController.reDoExam}" id="reDoExamBtn">
+											</h:commandButton>
+										</div>
+										<div class="form-submit1">
+											<h:commandButton value="退出" class="button1"
+												action="#{examScoreController.doExist}" id="doExistBtn">
+											</h:commandButton>
+										</div>
+									</div>
+								</c:if>
 							</div>
 							<div class="clearfix"></div>
 						</div>

@@ -124,7 +124,11 @@ public class ExamCollectionService {
         if (scoreModel.getTotalScore() != 0) {
             float percentageFloat = (float) scoreModel.getMyTotalScore() / (float) scoreModel.getTotalScore() * 100;
             String tmp = String.valueOf(percentageFloat);
-            if (tmp.length() > 4) {
+            System.out.println(tmp);
+            if (tmp.indexOf(".") == 3) {
+                // 100.0
+                tmp = tmp.substring(0, 3);
+            } else if (tmp.length() > 4) {
                 tmp = tmp.substring(0, 4);
             }
             scoreModel.setPercentage(tmp);
@@ -155,10 +159,12 @@ public class ExamCollectionService {
                 level = "評価なし";
             }
         } else if (scoreModel.getSource().contains("E-F")) {
-            if (tmp >= 400) {
+            if (tmp >= 70) {
                 level = "E";
-            } else if (tmp >= 300) {
+            } else if (tmp >= 50) {
                 level = "F";
+            } else if (tmp >= 40) {
+                level = "準F";
             } else {
                 level = "評価なし";
             }
