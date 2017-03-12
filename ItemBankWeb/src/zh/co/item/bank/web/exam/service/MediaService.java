@@ -103,7 +103,7 @@ public class MediaService {
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void doInsertCollections(List<MediaQuestionStructure> mediaQuestions, UserModel userInfo,
-            MediaModel mediaModel, String status) {
+            String source, String status) {
         // a.更新听力记录表
         List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
         // 考试模式需登录考试表
@@ -130,7 +130,7 @@ public class MediaService {
                     // 正确答案
                     examModel.setAnswer(question.getAnswer());
                     // 试题来源
-                    examModel.setSource(mediaModel.getSource());
+                    examModel.setSource(source);
                     // StructureId
                     examModel.setStructureId(question.getStructureId());
                     // 题型种别[6:听力]
@@ -145,15 +145,5 @@ public class MediaService {
         if (StringUtils.isNotEmpty(status) && examCollections.size() != 0) {
             examCollectionDao.insertExamCollections(examCollections);
         }
-    }
-
-    /**
-     * 非听力题检索
-     * 
-     * @param map[source]
-     * @return
-     */
-    public List<MediaQuestionStructure> selectMediaStructure(Map<String, Object> map) {
-        return mediaDao.selectMediaStructure(map);
     }
 }

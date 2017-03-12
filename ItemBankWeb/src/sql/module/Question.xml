@@ -297,16 +297,19 @@
 	    <result column="source" property="source" jdbcType="VARCHAR" />
 	    <result column="father_id" property="fatherId" jdbcType="INTEGER" />
 	    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+	    <result column="exam_type" property="examType" jdbcType="CHAR" />
 	    <result column="structure_id" property="structureId" jdbcType="INTEGER" />
         <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
       </collection>
     </resultMap>
 
     <select id="selectQuestionsStructure" parameterType="java.util.Map" resultMap="questionsResult">
-       SELECT (@rowNO := @rowNO+1) as rowNo, t1.title, t3.*
+       SELECT (@rowNO := @rowNO+1) as rowNo, t1.title, t2.exam_type, t3.*
           FROM tb_question_structure t1,tb_question_classify t2,
            tb_question t3, (select @rowNO :=0) t4
-          WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id and t3.delete_flag = #{deleteFlag,jdbcType=CHAR}
+          WHERE t1.classify_id = t2.id
+          and t1.id = t3.structure_id
+          and t3.delete_flag = #{deleteFlag,jdbcType=CHAR}
           and t3.source = #{source,jdbcType=CHAR}
         order by t3.no
     </select>

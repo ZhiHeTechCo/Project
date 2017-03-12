@@ -16,9 +16,12 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.model.entity.ScoreModel;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
+import zh.co.item.bank.web.exam.service.ExamScoreService;
 
 /**
  * 成绩单画面
@@ -35,11 +38,18 @@ public class ExamScoreController extends BaseController {
     @Inject
     private ExamCollectionService examCollectionService;
 
+    @Inject
+    private ExamScoreService examScoreService;
+
     private List<ScoreModel> scoreModels;
 
     private String width;
 
     private String report;
+
+    private String gobackFlag;
+
+    private String currentSource;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_009;
@@ -64,6 +74,7 @@ public class ExamScoreController extends BaseController {
             }
             // a.初始化
             scoreModels = new ArrayList<ScoreModel>();
+            currentSource = source;
             if (source.contains("A-D")) {
                 report = "AD";
             } else if (source.contains("E-F")) {
@@ -143,6 +154,34 @@ public class ExamScoreController extends BaseController {
         return SystemConstants.PAGE_ITBK_EXAM_006;
     }
 
+    /**
+     * 3.[重测]按钮
+     * 
+     * @return
+     */
+    public String reDoExam() {
+        // 删除记录
+        UserModel userInfo = WebUtils.getLoginUserInfo();
+        examScoreService.prepareForRedo(currentSource, userInfo.getId());
+
+        // 跳转至成绩录入
+        ExamScoreInputController examScoreInputController = (ExamScoreInputController) SpringAppContextManager
+                .getBean("examScoreInputController");
+        return examScoreInputController.init();
+    }
+
+    /**
+     * 4.[退出]按钮
+     * 
+     * @return
+     */
+    public String doExist() {
+        // 转至模式选择
+        ExamIndexController examIndexController = (ExamIndexController) SpringAppContextManager
+                .getBean("examIndexController");
+        return examIndexController.init();
+    }
+
     public List<ScoreModel> getScoreModels() {
         return scoreModels;
     }
@@ -165,6 +204,14 @@ public class ExamScoreController extends BaseController {
 
     public void setReport(String report) {
         this.report = report;
+    }
+
+    public String getGobackFlag() {
+        return gobackFlag;
+    }
+
+    public void setGobackFlag(String gobackFlag) {
+        this.gobackFlag = gobackFlag;
     }
 
 }

@@ -36,7 +36,7 @@
 											<h:column>
 											#{question.rowNo}
 											<td style="width: 90%"><h:panelGroup
-														rendered="#{question.structureId ne '70'}">
+														rendered="#{question.structureId ne '70' and question.structureId ne '106'}">
 														<h:selectOneRadio value="#{question.myAnswer}"
 															class="radioTable1">
 															<f:selectItem itemValue="1" itemLabel="1" />
@@ -44,7 +44,7 @@
 															<f:selectItem itemValue="3" itemLabel="3" />
 															<f:selectItem itemValue="4" itemLabel="4" />
 														</h:selectOneRadio>
-													</h:panelGroup> <h:panelGroup rendered="#{question.structureId eq '70'}">
+													</h:panelGroup> <h:panelGroup rendered="#{question.structureId eq '70' || question.structureId eq '106'}">
 														<h:inputText value="#{question.myAnswer}" maxlength="6" />
 													</h:panelGroup></td>
 											</h:column>
@@ -52,9 +52,9 @@
 									</h:column>
 								</h:dataTable>
 								<div class="form-submit1">
-									<h:commandButton value="确认" class="button1"
+									<h:commandButton value="听力部分" class="button1"
 										style="margin-right: 5px;"
-										action="#{examScoreInputController.doSubmit}" id="doSubmitBtn" />
+										action="#{examScoreInputController.toMedia}" id="toMediaBtn" />
 								</div>
 							</c:if>
 							<c:if
@@ -68,7 +68,7 @@
 											<h:column>
 											#{question.rowNo}
 											<td style="width: 90%"><h:panelGroup
-														rendered="#{question.structureId ne '75'}">
+														rendered="#{question.structureId ne '75' and question.structureId ne '89'}">
 														<h:selectOneRadio value="#{question.myAnswer}"
 															class="radioTable1">
 															<f:selectItem itemValue="1" itemLabel="1" />
@@ -76,7 +76,7 @@
 															<f:selectItem itemValue="3" itemLabel="3" />
 															<f:selectItem itemValue="4" itemLabel="4" />
 														</h:selectOneRadio>
-													</h:panelGroup> <h:panelGroup rendered="#{question.structureId eq '75'}">
+													</h:panelGroup> <h:panelGroup rendered="#{question.structureId eq '75' || question.structureId eq '89'}">
 														<h:selectOneRadio value="#{question.myAnswer}"
 															style="width:75%;" class="radioTable1">
 															<f:selectItem itemValue="1" itemLabel="1" />
@@ -91,8 +91,8 @@
 								<div class="form-submit1">
 									<h:commandButton value="确认" class="button1"
 										style="margin-right: 5px;"
-										action="#{examScoreInputController.doSubmitMedia}"
-										id="doSubmitMediaBtn" />
+										action="#{examScoreInputController.doSubmit}"
+										id="doSubmitBtn" />
 								</div>
 							</c:if>
 						</div>

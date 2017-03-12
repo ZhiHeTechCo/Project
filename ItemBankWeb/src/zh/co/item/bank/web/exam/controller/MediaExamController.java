@@ -167,7 +167,7 @@ public class MediaExamController extends BaseController {
                 // a.对象初始化
                 userInfo = WebUtils.getLoginUserInfo();
                 mediaModel = null;
-                examFlag = "true";
+                examFlag = SystemConstants.TRUE;
                 mediaQuestions = new ArrayList<MediaQuestionStructure>();
 
                 Map<String, Object> map = new HashMap<String, Object>();
@@ -216,7 +216,7 @@ public class MediaExamController extends BaseController {
             mediaModel.setMedia(SystemConstants.EMPTY);
 
             // b.登录听力做题记录表和考试做题记录表
-            mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel, examFlag);
+            mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel.getSource(), examFlag);
 
         } catch (Exception e) {
             processForException(logger, e);

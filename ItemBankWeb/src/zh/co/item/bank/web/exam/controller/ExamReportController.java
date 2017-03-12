@@ -200,6 +200,7 @@ public class ExamReportController extends BaseController {
         try {
             ExamScoreController examScoreController = (ExamScoreController) SpringAppContextManager
                     .getBean("examScoreController");
+            examScoreController.setGobackFlag(SystemConstants.TRUE);
             return examScoreController.init(questions.get(0).getSource());
 
         } catch (Exception e) {

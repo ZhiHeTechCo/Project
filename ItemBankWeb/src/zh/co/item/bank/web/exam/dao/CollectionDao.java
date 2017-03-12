@@ -19,7 +19,6 @@ public class CollectionDao extends BaseDao {
         return (TbCollectionBean) getIbatisTemplate().selectOne("Collection.selectCollectionForOne", examModel);
     }
 
-    
     /**
      * 批量登录做题记录
      * 

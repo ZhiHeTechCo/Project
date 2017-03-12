@@ -4,6 +4,12 @@
 
 <mapper namespace="ExamCollection">
 
+    <select id="selectExamCollectionForCount" parameterType="java.util.Map"
+        resultType="INTEGER">
+        select count(id) as num from tb_exam_collection
+        where user_id=#{userId} and source=#{source}
+    </select>
+
 	<select id="getExamTypes" parameterType="java.lang.String"
 		resultType="java.lang.String">
 		select exam_type

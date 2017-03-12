@@ -12,7 +12,6 @@ import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.web.exam.dao.QuestionDao;
 
 /**
@@ -178,13 +177,4 @@ public class QuestionService {
         return questionDao.getStructuresByClassifyId(classifyId);
     }
 
-    /**
-     * 非听力题检索
-     * 
-     * @param map[source]
-     * @return
-     */
-    public List<QuestionStructure> selectQuestionsStructure(Map<String, Object> map) {
-        return questionDao.selectQuestionsStructure(map);
-    }
 }

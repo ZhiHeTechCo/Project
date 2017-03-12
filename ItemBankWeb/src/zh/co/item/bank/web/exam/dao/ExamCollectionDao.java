@@ -112,4 +112,14 @@ public class ExamCollectionDao extends BaseDao {
     public void deleteExamCollectionBySource(Map<String, Object> map) {
         getIbatisTemplate().delete("ExamCollection.deleteBySource", map);
     }
+
+    /**
+     * 查询是否已做过
+     * 
+     * @param map
+     * @return
+     */
+    public Integer selectExamCollectionForCount(Map<String, Object> map) {
+        return (Integer) getIbatisTemplate().selectOne("ExamCollection.selectExamCollectionForCount", map);
+    }
 }
