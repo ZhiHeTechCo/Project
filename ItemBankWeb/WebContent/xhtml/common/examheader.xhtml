@@ -56,6 +56,13 @@
                               <f:param name='pageController' value="fileManageBean"></f:param>
                             </h:commandLink>
                           </li>
+                          <c:if test="#{session.getAttribute('session-user-info').getRole() >= '3'}">
+                          <li>
+                            <h:commandLink value="成绩速查" action="#{pageTopController.pageForward}" onclick="return buttonDisable();">
+                              <f:param name='pageController' value="examScoreIndexController"></f:param>
+                            </h:commandLink>
+                          </li>
+                          </c:if>
                           <li><h:commandLink value="切换用户" action="#{pageTopController.changeUser}"
                               onclick="return buttonDisable();" /></li>
                           <li><h:commandLink value="退出" action="#{pageTopController.logOut}"
