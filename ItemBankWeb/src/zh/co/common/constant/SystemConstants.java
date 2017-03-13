@@ -148,6 +148,8 @@ public class SystemConstants {
     public static final String PAGE_ITBK_EXAM_010 = "ITBK_EXAM_010";
     /** 答案录入 */
     public static final String PAGE_ITBK_EXAM_011 = "ITBK_EXAM_011";
+    /** 查阅试卷 */
+    public static final String PAGE_ITBK_EXAM_012 = "ITBK_EXAM_012";
     /** 试题登录 */
     public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     /** 试题更新 */
