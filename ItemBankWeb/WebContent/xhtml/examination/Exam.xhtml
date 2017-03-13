@@ -1,154 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 
-<html xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
-	<ui:define name="content">
-		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<h:outputScript library="js" name="lightbox.js" />
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:outputScript library="js" name="lightbox.js" />
 
-		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examForm">
-				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-						<h2
-							style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
-					</c:if>
-					<div class="container">
-						<div class="bs-example">
-							<h:panelGroup id="ngossfw_error_display"
-								class="#{request.getAttribute('request-message-level')}"
-								layout="block">
-								<h:outputText
-									value="${request.getAttribute('request-message-content')}"
-									escape="false" />
-							</h:panelGroup>
-							<c:if test="#{examController.title != ''}">
-								<c:if test="#{examController.graphicImage !=''}">
-									<h5 style="color: #3382C9;">
-										<span class="glyphicon glyphicon-info-sign"></span>点击图片可放大。
-									</h5>
-								</c:if>
-								<h4>
-									<b><h:outputText value="#{examController.title}"></h:outputText></b>
-								</h4>
-								<c:if test="#{examController.subject !=''}">
-									<table class="table table-bordered">
-										<tr>
-											<td align="center"><h4>问题</h4></td>
-										</tr>
-										<tr>
-											<td><ui:repeat value="#{examController.subjectList}"
-													var="stringItem">
-													<h:outputText value="#{stringItem}" />
-													<br />
-												</ui:repeat></td>
-										</tr>
-										<c:if test="#{examController.graphicImage !=''}">
-											<tr>
-												<td align="center">
-													<div class="gallery-bottom">
-														<div class="col-md-3 gallery-grid">
-															<a class="example-image-link"
-																href="#{examController.graphicImage}"
-																data-lightbox="example-set"><img
-																class="example-image"
-																src="#{examController.graphicImage}" alt="" /></a>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</c:if>
-									</table>
-								</c:if>
-								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{examController.questions}" var="item"
-									width="100%">
-									<h:column>
-										<h4>
-											<h:outputText value="#{item.rowNo}"></h:outputText>
-										</h4>
-									</h:column>
-									<h:column>
-										<ui:repeat value="#{item.contextList}" var="stringItem">
-											<h:outputText value="#{stringItem}" />
-										</ui:repeat>
-										<ins>#{item.contextKey}</ins>#{item.contextAfter}
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="examForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <c:if test="#{examController.title != ''}">
+                <c:if test="#{examController.graphicImage !=''}">
+                  <h5 style="color: #3382C9;">
+                    <span class="glyphicon glyphicon-info-sign"></span>点击图片可放大。
+                  </h5>
+                </c:if>
+                <h4>
+                  <b><h:outputText value="#{examController.title}"></h:outputText></b>
+                </h4>
+                <c:if test="#{examController.subject !='' or examController.graphicImage !=''}">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td align="center"><h4>问题</h4></td>
+                    </tr>
+                    <c:if test="#{examController.subject !=null and examController.subject !=''}">
+                      <tr>
+                        <td><ui:repeat value="#{examController.subjectList}" var="stringItem">
+                            <h:outputText value="#{stringItem}" />
+                            <br />
+                          </ui:repeat></td>
+                      </tr>
+                    </c:if>
+                    <c:if test="#{examController.graphicImage !=''}">
+                      <tr>
+                        <td align="center">
+                          <div class="gallery-bottom">
+                            <div class="col-md-3 gallery-grid">
+                              <a class="example-image-link" href="#{examController.graphicImage}"
+                                data-lightbox="example-set"><img class="example-image"
+                                src="#{examController.graphicImage}" alt="" /></a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:if>
+                  </table>
+                </c:if>
+                <h:dataTable id="qt" class="table table-bordered" rendered="true" value="#{examController.questions}"
+                  var="item" width="100%">
+                  <h:column>
+                    <h4>
+                      <h:outputText value="#{item.rowNo}"></h:outputText>
+                    </h4>
+                  </h:column>
+                  <h:column>
+                    <ui:repeat value="#{item.contextList}" var="stringItem">
+                      <h:outputText value="#{stringItem}" />
+                    </ui:repeat>
+                    <ins>#{item.contextKey}</ins>#{item.contextAfter}
                                         <hr />
-										<h:panelGroup rendered="#{item.a ne ''}">
-											<h:selectOneRadio value="#{item.myAnswer}"
-												layout="#{item.layoutStyle}" class="#{item.radioClass}">
-												<f:selectItem itemValue="1" itemLabel="#{item.a}" />
-												<f:selectItem itemValue="2" itemLabel="#{item.b}" />
-												<f:selectItem itemValue="3" itemLabel="#{item.c}" />
-												<f:selectItem itemValue="4" itemLabel="#{item.d}" />
-											</h:selectOneRadio>
-										</h:panelGroup>
-										<h:panelGroup rendered="#{item.a eq ''}">
-											<h:inputText value="#{item.myAnswer}" maxlength="6" />
-										</h:panelGroup>
-									</h:column>
-								</h:dataTable>
-								<c:if test="#{examController.status == null}">
-									<div class="form-submit1">
-										<h:commandButton value="确认" class="button1"
-											style="margin-right: 5px;"
-											action="#{examController.doSubmit}" id="doSubmitBtn" />
-									</div>
-									<div class="form-submit1">
-										<h:commandButton value="退出" class="button1"
-											action="#{examController.goBackToClassify}" id="doExistBtn" />
-									</div>
-								</c:if>
-								<c:if test="#{examController.status != null}">
-									<div class="form-submit1">
-										<h:commandButton value="下一题" class="button1"
-											style="margin-right: 5px;" action="#{examController.doNext}"
-											id="doNextBtn">
-											<f:param name="source"
-												value="#{examController.questions.get(0).source}" />
-										</h:commandButton>
-									</div>
-									<div class="form-submit1">
-										<h:commandButton value="保存退出" class="button1"
-											style="margin-right: 5px;"
-											action="#{examController.doSaveAndExist}"
-											id="doSaveAndExistBtn">
-										</h:commandButton>
-									</div>
-									<div class="form-submit1">
-										<h:commandButton value="直接退出" class="button1"
-											style="margin-right: 5px;" action="#{examController.doExist}"
-											id="doExistBtn">
-										</h:commandButton>
-									</div>
-									<div class="clearfix"></div>
-									<h5>
-										<span class="glyphicon glyphicon-exclamation-sign"></span>
-										注意："直接退出"将清空本次的做题记录。
-									</h5>
-								</c:if>
-							</c:if>
-							<c:if test="#{examController.title == ''}">
-								<div class="form-submit1">
-									<h:commandButton value="我的错题" class="button1"
-										style="margin-right: 5px;" action="#{examController.doResume}"
-										id="doResumeBtn" />
-								</div>
-								<div class="form-submit1">
-									<h:commandButton value="其他题型" class="button1"
-										action="#{examController.goBackToClassify}"
-										id="goBackToClassifyBtn" />
-								</div>
-							</c:if>
-						</div>
-					</div>
-				</div>
-			</h:form>
-		</div>
-	</ui:define>
+                    <h:panelGroup rendered="#{item.a ne ''}">
+                      <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}" class="#{item.radioClass}">
+                        <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                        <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                        <f:selectItem itemValue="3" itemLabel="#{item.c}" />
+                        <f:selectItem itemValue="4" itemLabel="#{item.d}" />
+                      </h:selectOneRadio>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{item.a eq ''}">
+                      <h:inputText value="#{item.myAnswer}" maxlength="6" />
+                    </h:panelGroup>
+                  </h:column>
+                </h:dataTable>
+                <c:if test="#{examController.status == null}">
+                  <div class="form-submit1">
+                    <h:commandButton value="确认" class="button1" style="margin-right: 5px;"
+                      action="#{examController.doSubmit}" id="doSubmitBtn" />
+                  </div>
+                  <div class="form-submit1">
+                    <h:commandButton value="退出" class="button1" action="#{examController.goBackToClassify}"
+                      id="doExistBtn" />
+                  </div>
+                </c:if>
+                <c:if test="#{examController.status != null}">
+                  <div class="form-submit1">
+                    <h:commandButton value="下一题" class="button1" style="margin-right: 5px;"
+                      action="#{examController.doNext}" id="doNextBtn">
+                      <f:param name="source" value="#{examController.questions.get(0).source}" />
+                    </h:commandButton>
+                  </div>
+                  <div class="form-submit1">
+                    <h:commandButton value="保存退出" class="button1" style="margin-right: 5px;"
+                      action="#{examController.doSaveAndExist}" id="doSaveAndExistBtn">
+                    </h:commandButton>
+                  </div>
+                  <div class="form-submit1">
+                    <h:commandButton value="直接退出" class="button1" style="margin-right: 5px;"
+                      action="#{examController.doExist}" id="doExistBtn">
+                    </h:commandButton>
+                  </div>
+                  <div class="clearfix"></div>
+                  <h5>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> 注意："直接退出"将清空本次的做题记录。
+                  </h5>
+                </c:if>
+              </c:if>
+              <c:if test="#{examController.title == ''}">
+                <div class="form-submit1">
+                  <h:commandButton value="我的错题" class="button1" style="margin-right: 5px;"
+                    action="#{examController.doResume}" id="doResumeBtn" />
+                </div>
+                <div class="form-submit1">
+                  <h:commandButton value="其他题型" class="button1" action="#{examController.goBackToClassify}"
+                    id="goBackToClassifyBtn" />
+                </div>
+              </c:if>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
 </ui:composition>
 </html>
