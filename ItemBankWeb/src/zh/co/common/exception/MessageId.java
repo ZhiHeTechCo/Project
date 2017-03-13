@@ -117,6 +117,9 @@ public class MessageId {
     /** 该等级暂无试题。 */
     public static final String ITBK_I_0020 = "ITBK_I_0020";
 
+    /** 请依次选择"考试级别"、"考试种别"、"考卷" */
+    public static final String ITBK_I_0021 = "ITBK_I_0021";
+
     // ------------------------Qestion------------------------
     /** 您确定要立刻结束此次模拟考试么？ */
     public static final String ITBK_Q_0001 = "ITBK_Q_0001";
