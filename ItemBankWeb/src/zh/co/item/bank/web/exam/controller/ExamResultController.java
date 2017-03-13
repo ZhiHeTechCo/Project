@@ -10,11 +10,8 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
-import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.FirstLevelModel;
-import zh.co.item.bank.model.entity.QuestionStructure;
 
 /**
  * 结果一览画面
@@ -40,9 +37,6 @@ public class ExamResultController extends BaseController {
     private List<String> subjectList;
 
     private boolean isResume;
-
-    // 试卷
-    private List<QuestionStructure> examPaper;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -109,38 +103,6 @@ public class ExamResultController extends BaseController {
         }
     }
 
-    /**
-     * 5.浏览试卷
-     * 
-     * @return
-     */
-    public String showPaper() {
-        pushPathHistory("examResultController");
-        if (examPaper != null && examPaper.size() > 0) {
-            for (QuestionStructure questionStructure : examPaper) {
-                List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
-                for(FirstLevelModel firstLevelModle:firstLevelModles){
-                   List<String> subjectList= CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
-                   firstLevelModle.setSubjectList(subjectList);
-                }
-            }
-        }
-        return SystemConstants.PAGE_ITBK_EXAM_012;
-    }
-
-    /**
-     * 画面序号,折行
-     * 
-     * @param subject
-     *            题干
-     */
-    private void prepareData(String subject) {
-        // 画面序号和显示设置
-        questions = CmnStringUtils.answerLayoutSet(questions);
-        // 折行
-        subjectList = CmnStringUtils.getSubjectList(subject);
-    }
-
     public List<ExamModel> getQuestions() {
         return questions;
     }
@@ -187,14 +149,6 @@ public class ExamResultController extends BaseController {
 
     public void setResume(boolean isResume) {
         this.isResume = isResume;
-    }
-
-    public List<QuestionStructure> getExamPaper() {
-        return examPaper;
-    }
-
-    public void setExamPaper(List<QuestionStructure> examPaper) {
-        this.examPaper = examPaper;
     }
 
 }

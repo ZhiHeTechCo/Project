@@ -10,6 +10,8 @@ public class FirstLevelModel extends TbFirstLevelDirectoryBean {
 
     private List<String> subjectList;
 
+    private String graphicImage;
+
     public List<ExamModel> getQuestions() {
         return questions;
     }
@@ -24,6 +26,14 @@ public class FirstLevelModel extends TbFirstLevelDirectoryBean {
 
     public void setSubjectList(List<String> subjectList) {
         this.subjectList = subjectList;
+    }
+
+    public String getGraphicImage() {
+        return graphicImage;
+    }
+
+    public void setGraphicImage(String graphicImage) {
+        this.graphicImage = graphicImage;
     }
 
 }

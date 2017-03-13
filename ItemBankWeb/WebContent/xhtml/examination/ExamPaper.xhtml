@@ -43,15 +43,14 @@
               <h5 style="color: #3382C9;">
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。
               </h5>
-              <h:dataTable class="searchTable" rendered="true" value="#{examResultController.examPaper}"
-                var="first">
+              <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.examPaper}" var="first">
                 <h:column>
                   <h4>
                     <b><h:outputText value="#{first.title}"></h:outputText></b>
                   </h4>
                   <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
                     <h:column>
-                      <c:if test="#{second.subject !=''}">
+                      <h:panelGroup rendered="#{second.subject ne '' and second.subject ne null}">
                         <table class="table table-bordered">
                           <tr>
                             <td><ui:repeat value="#{second.subjectList}" var="stringItem">
@@ -59,20 +58,20 @@
                                 <br />
                               </ui:repeat></td>
                           </tr>
-                          <c:if test="#{second.img !='' and second.img !=null}">
+                          <h:panelGroup rendered="#{second.graphicImage ne ''}">
                             <tr>
                               <td align="center">
                                 <div class="gallery-bottom">
                                   <div class="col-md-3 gallery-grid">
-                                    <a class="example-image-link" href="#{second.img}" data-lightbox="example-set"><img
-                                      class="example-image" src="#{second.img}" alt="" /></a>
+                                    <a class="example-image-link" href="#{second.graphicImage}" data-lightbox="example-set"><img
+                                      class="example-image" src="#{second.graphicImage}" alt="" /></a>
                                   </div>
                                 </div>
                               </td>
                             </tr>
-                          </c:if>
+                          </h:panelGroup>
                         </table>
-                      </c:if>
+                      </h:panelGroup>
                       <h:dataTable class="table table-bordered" rendered="true" value="#{second.questions}" var="item">
                         <h:column>
                           <h4>
@@ -80,7 +79,7 @@
                           </h4>
                           <h:inputHidden value="#{item.answer}" id="questionAnswer" />
                           <td class="list-group list-group-alternate"><h:commandLink
-                              action="#{examResultController.showDetail}"
+                              action="#{examPaperController.showDetail}"
                               style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
                               class="list-group-item">
                               <f:param name="questionId" value="#{item.no}"></f:param>
@@ -90,7 +89,7 @@
                               <ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
                           <tr>
-                            <td><h4>选项</h4></td>
+                            <td style="width: 10%;"><h4>选项</h4></td>
                             <td>
                               <!-- 选择题时 --> <h:panelGroup rendered="#{item.a ne ''}">
                                 <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
@@ -118,14 +117,13 @@
                             </td>
                           </tr>
                           <tr>
-                            <h:panelGroup rendered="#{item.a ne ''}">
+                            <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
                               <td>
                                 <h4>解析</h4>
                               </td>
-                              <td><h:panelGroup rendered="#{item.analysis eq null}">暂无</h:panelGroup> <h:outputText
-                                  value="#{item.analysis}" /></td>
+                              <td><h:outputText value="#{item.analysis}" /></td>
                             </h:panelGroup>
-                            <h:panelGroup rendered="#{item.a eq ''}">
+                            <h:panelGroup rendered="#{item.a eq '' and item.answer ne item.myAnswer}">
                               <td><h4>正解</h4></td>
                               <td><h:outputText value="#{item.answer}" /></td>
                             </h:panelGroup>
@@ -137,8 +135,8 @@
                 </h:column>
               </h:dataTable>
               <div class="form-submit1">
-                <h:commandButton value="继续做题" class="button1" action="#{examResultController.goBackToExam}"
-                  id="goBackToExamBtn">
+                <h:commandButton value="返回" class="button1" action="#{examPaperController.goBackToReport}"
+                  id="goBackToReportBtn">
                 </h:commandButton>
               </div>
             </div>
