@@ -226,10 +226,11 @@ public class ExamReportController extends BaseController {
             currentQuestions = examCollectionService.selectReportStructure(param);
 
             // 跳转至[结果一览]画面
-            ExamResultController examResultController = (ExamResultController) SpringAppContextManager
-                    .getBean("examResultController");
-            examResultController.setExamPaper(currentQuestions);
-            return examResultController.showPaper();
+            ExamPaperController examPaperController = (ExamPaperController) SpringAppContextManager
+                    .getBean("examPaperController");
+            examPaperController.setExamPaper(currentQuestions);
+            return examPaperController.init();
+
         } catch (Exception e) {
             processForException(logger, e);
         }
