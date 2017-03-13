@@ -76,6 +76,7 @@ public class WebUtils {
     	controllerAndPageMap.put("examClassifyController", "/xhtml/examination/ExamClassify.xhtml");
     	controllerAndPageMap.put("resumeBean", "/xhtml/examination/Resume.xhtml");
     	controllerAndPageMap.put("forumController", "/xhtml/forum/Forum.xhtml");
+    	controllerAndPageMap.put("examScoreIndexController", "/xhtml/examination/ExamScoreIndex.xhtml");
     }
     
     
