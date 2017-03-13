@@ -13,7 +13,7 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.FirstLevelModle;
+import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
 
 /**
@@ -118,8 +118,8 @@ public class ExamResultController extends BaseController {
         pushPathHistory("examResultController");
         if (examPaper != null && examPaper.size() > 0) {
             for (QuestionStructure questionStructure : examPaper) {
-                List<FirstLevelModle> firstLevelModles = questionStructure.getFirstLevels();
-                for(FirstLevelModle firstLevelModle:firstLevelModles){
+                List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
+                for(FirstLevelModel firstLevelModle:firstLevelModles){
                    List<String> subjectList= CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
                    firstLevelModle.setSubjectList(subjectList);
                 }

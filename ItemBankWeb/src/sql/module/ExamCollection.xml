@@ -107,7 +107,7 @@
 
 	<resultMap id="questionsResult" type="zh.co.item.bank.model.entity.QuestionStructure">  
       <result property="title" column="title"/>
-      <collection property="firstLevels" ofType="zh.co.item.bank.model.entity.FirstLevelModle" >
+      <collection property="firstLevels" ofType="zh.co.item.bank.model.entity.FirstLevelModel" >
 	    <result column="subject" property="subject" jdbcType="VARCHAR" />
 	    <result column="img" property="examType" jdbcType="LONGVARBINARY" />
 	      <collection property="questions" ofType="zh.co.item.bank.model.entity.ExamModel" >
