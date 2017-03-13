@@ -22,6 +22,7 @@
 	      <fileset file="${deploy.sysconf.dir}/application.properties" />
       	  <fileset file="${src}/system.properties" /> 
       	  <fileset file="${webApp}/WEB-INF/web.xml" /> 
+      	  <fileset file="${webApp}/WEB-INF/jboss-web.xml" /> 
       </replace>
     </target>
  

@@ -7,7 +7,7 @@
     <property name="lib" value="${webApp}/WEB-INF/lib" />  
     <property name="target.jvm" value="1.7" /> 
     <!--请将下面的路径改为你本地的路径-->  
-    <property name="webserver" value="C:/jboss-as-7.1.1.Final/standalone/deployments" />  
+    <property name="webserver" value="D:/ItemBank" />  
     
     <!--定义CLASSPACH,编译时用到你外部加入的包-->  
     <path id="classpath">  
@@ -68,6 +68,10 @@
             <fileset file="${src}/system.properties" /> 
         </copy>
     	
+        <copy todir="${build}/WEB-INF/classes/zh/co/common/ibatis" overwrite="true">  
+            <fileset file="${src}/zh/co/common/ibatis/count_sql.ftl" /> 
+        </copy>
+    	
     	<replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
     	      <fileset file="${build}/WEB-INF/classes/system.properties" />
     	</replace>
@@ -83,6 +87,7 @@
         </copy> 
         <replace encoding="UTF-8" replacefilterfile="${basedir}/ant/build.properties">
         	  <fileset file="${build}/WEB-INF/web.xml" /> 
+        	  <fileset file="${build}/WEB-INF/jboss-web.xml" /> 
         </replace>
     	
         <copy todir="${build}" overwrite="true">  

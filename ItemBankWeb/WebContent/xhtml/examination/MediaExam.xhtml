@@ -28,7 +28,7 @@
 			    overflow: hidden !important
 			}
 			audio::-webkit-media-controls-enclosure {
-			    width: calc(100% + 32px);
+			    width: calc(135%);
 			    margin-left: auto;
 			}
         </style>
@@ -108,7 +108,7 @@
 												style="float:right;display:#{mediaExamController.mediaReady};">
 												<div class="music_control">
 													<audio id="listen" 
-														autobuffer="autobuffer"
+														autobuffer="autobuffer" controls="controls"
 														src="#{mediaExamController.mediaModel.media}"></audio>
 												</div>
 											</div>
