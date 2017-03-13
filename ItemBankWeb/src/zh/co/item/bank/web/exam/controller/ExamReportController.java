@@ -17,12 +17,12 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
-import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 
@@ -49,6 +49,8 @@ public class ExamReportController extends BaseController {
 
     /** 画面显示变量 */
     private List<ExamReportModel> reportModels;
+    
+    List<QuestionStructure> currentQuestions;
 
     // 是否显示听力
     private String mediaFlag;
@@ -217,21 +219,17 @@ public class ExamReportController extends BaseController {
     public String showPaperDetail(String examType) {
         try {
 
-            List<ExamModel> currentQuestions = new ArrayList<ExamModel>();
-            for (ExamModel question : questions) {
-                if (question.getExamType().equals(examType)) {
-                    currentQuestions.add(question);
-                }
-            }
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("userId", userInfo.getId());
+            param.put("source", questions.get(0).getSource());
+            param.put("examType", examType);
+            currentQuestions = examCollectionService.selectReportStructure(param);
+
             // 跳转至[结果一览]画面
             ExamResultController examResultController = (ExamResultController) SpringAppContextManager
                     .getBean("examResultController");
-            examResultController.setQuestions(currentQuestions);
-            examResultController.setTitle(currentQuestions.get(0).getTitle());
-            examResultController.setSubject(currentQuestions.get(0).getSubject());
-            examResultController.setGraphicImage(CmnStringUtils.getGraphicImage(currentQuestions.get(0).getImg()));
-            examResultController.setResume(false);
-            return examResultController.init();
+            examResultController.setExamPaper(currentQuestions);
+            return examResultController.showPaper();
         } catch (Exception e) {
             processForException(logger, e);
         }

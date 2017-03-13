@@ -10,8 +10,11 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.FirstLevelModle;
+import zh.co.item.bank.model.entity.QuestionStructure;
 
 /**
  * 结果一览画面
@@ -37,6 +40,9 @@ public class ExamResultController extends BaseController {
     private List<String> subjectList;
 
     private boolean isResume;
+
+    // 试卷
+    private List<QuestionStructure> examPaper;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_003;
@@ -82,7 +88,8 @@ public class ExamResultController extends BaseController {
      * @return
      */
     public String goBackToClassify() {
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
     }
 
@@ -100,6 +107,38 @@ public class ExamResultController extends BaseController {
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             return examController.init();
         }
+    }
+
+    /**
+     * 5.浏览试卷
+     * 
+     * @return
+     */
+    public String showPaper() {
+        pushPathHistory("examResultController");
+        if (examPaper != null && examPaper.size() > 0) {
+            for (QuestionStructure questionStructure : examPaper) {
+                List<FirstLevelModle> firstLevelModles = questionStructure.getFirstLevels();
+                for(FirstLevelModle firstLevelModle:firstLevelModles){
+                   List<String> subjectList= CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
+                   firstLevelModle.setSubjectList(subjectList);
+                }
+            }
+        }
+        return SystemConstants.PAGE_ITBK_EXAM_012;
+    }
+
+    /**
+     * 画面序号,折行
+     * 
+     * @param subject
+     *            题干
+     */
+    private void prepareData(String subject) {
+        // 画面序号和显示设置
+        questions = CmnStringUtils.answerLayoutSet(questions);
+        // 折行
+        subjectList = CmnStringUtils.getSubjectList(subject);
     }
 
     public List<ExamModel> getQuestions() {
@@ -148,6 +187,14 @@ public class ExamResultController extends BaseController {
 
     public void setResume(boolean isResume) {
         this.isResume = isResume;
+    }
+
+    public List<QuestionStructure> getExamPaper() {
+        return examPaper;
+    }
+
+    public void setExamPaper(List<QuestionStructure> examPaper) {
+        this.examPaper = examPaper;
     }
 
 }

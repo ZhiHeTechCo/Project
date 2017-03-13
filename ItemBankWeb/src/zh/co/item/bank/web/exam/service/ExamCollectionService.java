@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.ScoreModel;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 import zh.co.item.bank.web.exam.dao.MediaDao;
@@ -245,6 +246,16 @@ public class ExamCollectionService {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("userId", userId);
         paramMap.put("structureId", structureIds);
+    }
+
+    /**
+     * 根据试题结构取指定做题记录
+     * 
+     * @param param
+     * @return
+     */
+    public List<QuestionStructure> selectReportStructure(Map<String, Object> param) {
+        return examCollectionDao.selectReportStructure(param);
     }
 
 }

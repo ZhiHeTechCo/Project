@@ -8,6 +8,7 @@ import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.ScoreModel;
 
 @Named
@@ -142,5 +143,16 @@ public class ExamCollectionDao extends BaseDao {
      */
     public void deleteExamCollectionOld(List<TbExamCollectionBean> deleteList) {
         getIbatisTemplate().delete("ExamCollection.deleteExamCollectionOld", deleteList);
+    }
+
+    /**
+     * 根据试题结构取指定试题
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<QuestionStructure> selectReportStructure(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("ExamCollection.selectReportStructure", param);
     }
 }
