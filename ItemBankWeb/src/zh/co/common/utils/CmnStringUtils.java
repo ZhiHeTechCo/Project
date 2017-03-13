@@ -820,9 +820,20 @@ public final class CmnStringUtils {
      */
     public static String getMedia(String path) throws IOException {
 
-        // 根据文件路径取得byte[]
-        String filePath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + path;
-        return filePath;
+        String mp3Path = System.getProperty("web.root") + "mp3" + System.getProperty("file.separator") + path;
+
+        File file = new File(mp3Path);
+        if (!file.exists()) {
+        	String srcPath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + System.getProperty("file.separator") + path;
+        	File srcFile = new File(srcPath);
+        	if(srcFile.exists()) {
+        		FileUtils.copyFile(srcPath, mp3Path);
+        	} else {
+        		return SystemConstants.EMPTY;
+        	}
+        } 
+        String fileUrl = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_URL) + path;
+        return fileUrl;
 /*        File file = new File(filePath);
         if (!file.exists()) {
             return SystemConstants.EMPTY;

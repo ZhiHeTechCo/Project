@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE jboss-web>  
+<jboss-web>  
+   <context-root>/</context-root>  
+   <virtual-host>@VIRTUAL_HOST@</virtual-host>
+</jboss-web>

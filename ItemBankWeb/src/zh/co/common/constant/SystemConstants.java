@@ -86,6 +86,9 @@ public class SystemConstants {
     /** 听力保存路径 */
     public static final String MEDIA_FILE_PATH = "media_file_path";
     
+    /** 听力网络路径 */
+    public static final String MEDIA_FILE_URL = "media_file_url";
+    
     /** 配置文件路径 */
     public static final String CONFIG_DIR = "CONFIG_DIR";
     public static final String PROPERTIES_FILE = "/system.properties";
