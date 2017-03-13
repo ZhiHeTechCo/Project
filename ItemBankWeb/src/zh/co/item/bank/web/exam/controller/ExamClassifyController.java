@@ -108,7 +108,7 @@ public class ExamClassifyController extends BaseController {
             if ("1".equals(mode)) {
                 // 非听力部分完成度
                 examListBeans = examService.getExamListForUser(userInfo.getId());
-                
+
             }
 
             if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
@@ -214,9 +214,11 @@ public class ExamClassifyController extends BaseController {
      * @return
      */
     public String examSearch() {
+        
         try {
             // 手机模式
             String source = WebUtils.getRequestParam("currentSource");
+            String rate = WebUtils.getRequestParam("currentRate");
             if (StringUtils.isNotEmpty(source)) {
                 // 根据source设定classifyBean
                 for (ExamListModel model : examListBeans) {
@@ -234,7 +236,14 @@ public class ExamClassifyController extends BaseController {
                 }
             } else {
                 // pc模式
-                source = chooseSource;
+                // 用户信息中不包含日语等级
+                if (StringUtils.isEmpty(chooseSource)) {
+                    logger.log(MessageId.ITBK_I_0021);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0021);
+                    throw ex;
+                }
+                source = chooseSource.split(";")[0];
+                rate = chooseSource.split(";")[1];
                 // a.用户选择check
                 if (StringUtils.isEmpty(classifyBean.getExam()) || (StringUtils.isEmpty(classifyBean.getJlptLevel())
                         && StringUtils.isEmpty(classifyBean.getJtestLevel())) && StringUtils.isEmpty(source)) {
@@ -243,7 +252,15 @@ public class ExamClassifyController extends BaseController {
                     throw ex;
                 }
             }
-            // b.跳转至【考试题库】画面
+            // b-1.试题已完成则直接去结果一览画面
+            if ("100%".equals(rate)) {
+                ExamReportController examReportController = (ExamReportController) SpringAppContextManager
+                        .getBean("examReportController");
+                examReportController.setMediaFlag("1");
+                examReportController.setClassifyBean(classifyBean);
+                return examReportController.init(source);
+            }
+            // b-2.跳转至【考试题库】画面
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             examController.setClassifyBean(classifyBean);
             examController.setSource(source);
