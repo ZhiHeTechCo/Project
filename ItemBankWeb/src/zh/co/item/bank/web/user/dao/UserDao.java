@@ -132,11 +132,12 @@ public class UserDao extends BaseDao {
     public int updateImgInfo(TbFirstLevelDirectoryBean bean) {
         return getIbatisTemplate().insert("TbFirstLevelDirectory.updateByPrimaryKeySelective", bean);
     }
-    
+
     /**
      * 插入听力图片试题
      * 
-     * @param bean 文件信息
+     * @param bean
+     *            文件信息
      * @return
      * @throws Exception
      */
@@ -173,5 +174,23 @@ public class UserDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<TuUserBean> selectUserForNickName() {
         return getIbatisTemplate().selectList("UserManage.selectUserForNickName");
+    }
+
+    /**
+     * 删除用户
+     * 
+     * @param id
+     */
+    public void deleteUserdeleteByPrimaryKey(Integer id) {
+        getIbatisTemplate().delete("TuUser.deleteByPrimaryKey", id);
+    }
+
+    /**
+     * 更新用户
+     * 
+     * @param keepUser
+     */
+    public void updateUserByPrimaryKeySelective(TuUserBean keepUser) {
+        getIbatisTemplate().update("TuUser.updateByPrimaryKeySelective", keepUser);
     }
 }

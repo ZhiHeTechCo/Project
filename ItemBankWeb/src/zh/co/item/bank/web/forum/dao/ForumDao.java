@@ -118,4 +118,13 @@ public class ForumDao extends BaseDao {
     public void updateSystemChoose(Map<String, Object> param) {
         getIbatisTemplate().update("Forum.updateSystemChoose", param);
     }
+
+    /**
+     * 账号合并-更新asker
+     * 
+     * @param map
+     */
+    public void updateUserId(Map<String, Object> map) {
+        getIbatisTemplate().update("Forum.updateUserId", map);
+    }
 }
