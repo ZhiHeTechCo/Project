@@ -78,4 +78,14 @@
     <select id="selectUserForNickName" resultType="zh.co.item.bank.db.entity.TuUserBean">
         select id, nick_name from tu_user
     </select>
+    <!-- 取得指定uuid的用户个数(wechat) -->
+   <select id="getUserCountByUuid" resultType="zh.co.item.bank.model.entity.UserModel" parameterType="zh.co.item.bank.db.entity.TuUserBean">
+    select
+      * 
+    FROM
+      vu_user_model
+    where
+       uuid = #{uuid, jdbcType=VARCHAR }
+    order by id asc
+  </select>
 </mapper>

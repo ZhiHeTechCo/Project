@@ -83,6 +83,16 @@ public class UserDao extends BaseDao {
     }
 
     /**
+     * UUid取用户数
+     * 
+     * @param userInfo
+     * @return
+     */
+    public List<UserModel> getUserCountByUuid(TuUserBean userInfo) {
+        return (List<UserModel>)getIbatisTemplate().selectList("UserManage.getUserCountByUuid", userInfo);
+    }
+    
+    /**
      * 用户信息取得 信息显示
      * 
      * @param userInfo

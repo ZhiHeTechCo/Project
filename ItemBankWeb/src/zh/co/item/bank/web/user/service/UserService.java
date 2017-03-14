@@ -52,6 +52,9 @@ public class UserService {
 
     @Inject
     private UserDao userDao;
+    
+    @Inject
+    private AccountBindingService accountBindingService;
 
     /**
      * 取得Codelist
@@ -201,17 +204,33 @@ public class UserService {
         UserModel user = new UserModel();
         // check当前用户名是否已经存在
         if (userDao.isUserExistForWechat(userInfo)) {
-            // 存在的场合，自动登录
-            user = userDao.getUserInfo(userInfo);
-            // UnionID为空的场合
-            if (CmnStringUtils.isEmptyStr(user.getUuid()) && !CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
-                TuUserBean newUser = new TuUserBean();
-                newUser.setId(user.getId());
-                // UnionID
-                newUser.setUuid(userInfo.getUuid());
-                // 更新时间
-                newUser.setUpdateTime(new Date());
-                userDao.updateUserInfo(newUser);
+            //首先用uuid取数据
+            if(!CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
+            	List<UserModel> userList = userDao.getUserCountByUuid(userInfo);
+            	//取到的数据件数是 大于 1的场合，进行合并
+	            if(userList != null && userList.size() > 1) {
+	            	//合并
+	            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
+	            	//取新的信息
+	            	user = userDao.getUserCountByUuid(userInfo).get(0);
+	            } else if(userList == null || userList.size() < 1){
+	            	//件数小于1的场合，更新uuid字段
+	                TuUserBean newUser = new TuUserBean();
+	                newUser.setId(user.getId());
+	                // UnionID
+	                newUser.setUuid(userInfo.getUuid());
+	                // 更新时间
+	                newUser.setUpdateTime(new Date());
+	                //更新uuid
+	                userDao.updateUserInfo(newUser);
+	                //取新的信息
+	                user = userDao.getUserCountByUuid(userInfo).get(0);
+	            } else {
+	            	//件数等于1的场合,直接使用取到的信息
+	            	user = userList.get(0);
+	            }
+            } else {
+            	user = userDao.getUserInfo(userInfo);
             }
         } else {
             if (!CmnStringUtils.isNickName(userInfo.getNickName())) {
