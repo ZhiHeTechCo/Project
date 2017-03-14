@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="manageIndexForm">
+        <div class="typrography">
+          <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">管理控制</h2>
+          <div class="container">
+            <div class="bs-docs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <div>
+                <h4>用户管理</h4>
+                <div>
+                  <h:commandButton value="更改密码"
+                    style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
+                    action="#{manageIndexController.changePassword}" />
+                </div>
+                <div>
+                  <h:commandButton value="账号合并"
+                    style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
+                    action="#{manageIndexController.accountBingding}" />
+                </div>
+                <hr />
+                <h4>试题管理</h4>
+                  <h:commandButton value="试题上传"
+                    style="width: 210px;background: #3382C9;height: 50px;font-size: 1.4em;color: #fff;margin-bottom: 10px;"
+                    action="#{manageIndexController.toQuestionInsert}" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>
