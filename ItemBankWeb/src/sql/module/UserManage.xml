@@ -59,6 +59,19 @@
         vu_user_model
         where id = #{id}
     </select>
+  
+    <select id="selectUserByIds" parameterType="java.lang.Integer" resultType="zh.co.item.bank.model.entity.UserModel">
+        select * from tu_user where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            #{item,jdbcType=INTEGER}
+        </foreach>
+        order by id
+    </select>
+  
+    <select id="selectUserWithSameUuid" resultType="zh.co.item.bank.model.entity.UserModel">
+        select a.* from tu_user a, (select count(id) as num, uuid from tu_user a where uuid !='' group by uuid) b
+		where a.uuid=b.uuid and b.num>=2 order by id
+    </select>
     
     <select id="getFileInfoList" parameterType="zh.co.item.bank.db.entity.TbFileInfoBean" resultType="zh.co.item.bank.db.entity.TbFileInfoBean">
         select * from

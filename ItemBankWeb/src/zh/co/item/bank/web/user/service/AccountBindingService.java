@@ -53,6 +53,28 @@ public class AccountBindingService {
     private ForumDao forumDao;
 
     /**
+     * 取指定ID用户
+     * 
+     * @param param
+     * @return
+     */
+    public List<UserModel> selectUserByIds(Integer newUserId,Integer oldUserId) {
+        List<Integer> param = new ArrayList<Integer>();
+        param.add(oldUserId);
+        param.add(newUserId);
+        return userDao.selectUserByIds(param);
+    }
+
+    /**
+     * 检索有相同Uuid的用户
+     * @return
+     */
+    public List<UserModel> selectUserWithSameUuid() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
      * 账号绑定
      * 
      * @param olderUser
@@ -186,4 +208,5 @@ public class AccountBindingService {
     private void updateForum(Map<String, Object> map){
         forumDao.updateUserId(map);
     }
+
 }

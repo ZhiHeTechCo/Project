@@ -126,6 +126,9 @@ public class SystemConstants {
 
     /** 邀请码确认 */
     public static final String PAGE_ITBK_INVITE_001 = "ITBK_INVITE_001";
+    
+    /** 管理控制台 */
+    public static final String PAGE_ITBK_MANAGE_001 = "ITBK_MANAGE_001";
 
     /** 选择模式 */
     public static final String PAGE_ITBK_EXAM_000 = "ITBK_EXAM_000";

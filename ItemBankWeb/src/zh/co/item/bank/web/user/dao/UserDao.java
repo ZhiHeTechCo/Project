@@ -193,4 +193,25 @@ public class UserDao extends BaseDao {
     public void updateUserByPrimaryKeySelective(TuUserBean keepUser) {
         getIbatisTemplate().update("TuUser.updateByPrimaryKeySelective", keepUser);
     }
+
+    /**
+     * 账号合并-取用户信息
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserModel> selectUserByIds(List<Integer> param) {
+        return getIbatisTemplate().selectList("UserManage.selectUserByIds", param);
+    }
+    
+    /**
+     * 账号合并-取相同uuid的用户信息
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserModel> selectUserWithSameUuid() {
+        return getIbatisTemplate().selectList("UserManage.selectUserWithSameUuid");
+    }
 }
