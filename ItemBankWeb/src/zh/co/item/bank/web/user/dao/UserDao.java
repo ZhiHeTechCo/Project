@@ -88,10 +88,11 @@ public class UserDao extends BaseDao {
      * @param userInfo
      * @return
      */
+    @SuppressWarnings("unchecked")
     public List<UserModel> getUserCountByUuid(TuUserBean userInfo) {
-        return (List<UserModel>)getIbatisTemplate().selectList("UserManage.getUserCountByUuid", userInfo);
+        return getIbatisTemplate().selectList("UserManage.getUserCountByUuid", userInfo);
     }
-    
+
     /**
      * 用户信息取得 信息显示
      * 
@@ -146,8 +147,7 @@ public class UserDao extends BaseDao {
     /**
      * 插入听力图片试题
      * 
-     * @param bean
-     *            文件信息
+     * @param bean 文件信息
      * @return
      * @throws Exception
      */
@@ -214,7 +214,7 @@ public class UserDao extends BaseDao {
     public List<UserModel> selectUserByIds(List<Integer> param) {
         return getIbatisTemplate().selectList("UserManage.selectUserByIds", param);
     }
-    
+
     /**
      * 账号合并-取相同uuid的用户信息
      * 
@@ -223,5 +223,14 @@ public class UserDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<UserModel> selectUserWithSameUuid() {
         return getIbatisTemplate().selectList("UserManage.selectUserWithSameUuid");
+    }
+
+    /**
+     * 后台管理-变更指定用户密码
+     * 
+     * @param user
+     */
+    public void changePasswordForce(TuUserBean user) {
+        getIbatisTemplate().update("TuUser.updateByPrimaryKeySelective", user);
     }
 }

@@ -17,6 +17,10 @@
 		jtest_level = #{jtestLevel}) and source = #{source}
 	</delete>
 
+    <update id="updateUserId" parameterType="java.util.Map">
+        update tb_exam_dropout set user_id=#{oldUserId} where user_id=#{newUserId}
+    </update>
+
 	<insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamDropoutBean">
 		insert into tb_exam_dropout
 		<trim prefix="(" suffix=")" suffixOverrides=",">

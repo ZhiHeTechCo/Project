@@ -26,8 +26,8 @@
     <select id="selectOldCollectionByUsers" parameterType="java.util.Map"
         resultType="zh.co.item.bank.db.entity.TbCollectionBean">
         select t1.question_id,t1.id from (
-			(select id, question_id, update_time from tb_collection where id=#{oldUser} and delete_flag='0') t1,
-			(select id, question_id, update_time from tb_collection where id=#{newUser} and delete_flag='0') t2
+			(select id, question_id, update_time from tb_collection where id=#{oldUserId} and delete_flag='0') t1,
+			(select id, question_id, update_time from tb_collection where id=#{newUserId} and delete_flag='0') t2
 			)
 		where t1.question_id=t2.question_id and t1.update_time<![CDATA[ < ]]>t2.update_time
     </select>
@@ -61,15 +61,18 @@
 
     <!-- 帐号合并更新ID -->
 	<update id="updateCollectionUserId" parameterType="java.util.Map">
-		update tb_collection set id=#{OldUser,jdbcType=SMALLINT}
-		where id = #{newUser,jdbcType=SMALLINT}
-		and question_id = #{questionId,jdbcType=SMALLINT}
+		update tb_collection set id=#{oldUserId,jdbcType=SMALLINT}
+		where id = #{newUserId,jdbcType=SMALLINT}
 	</update>
 
-    <!-- 帐号合并更新新账号ID -->
+    <!-- 帐号合并删除旧数据 -->
 	<delete id="deleteCollectionOld" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
 		delete tb_collection
-		where id = #{id,jdbcType=SMALLINT}
+		where
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            #{item.id,jdbcType=SMALLINT} and 
+        </foreach>
+		 id = #{id,jdbcType=SMALLINT}
 		and question_id = #{questionId,jdbcType=SMALLINT}
 	</delete>
 

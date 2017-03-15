@@ -105,7 +105,7 @@ public class MessageId {
     /** 问题已被登录，您可以在【我的问题】中查看。 */
     public static final String ITBK_I_0016 = "ITBK_I_0016";
     
-    /** 提问成功，您可以在【我的问题】中查看。 */
+    /** 提问成功，您可以在《交流区》"我的问题"中查看。 */
     public static final String ITBK_I_0017 = "ITBK_I_0017";
 
     /** 您尚未登录，登录后答题可获得积分。 */

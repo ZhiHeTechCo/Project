@@ -2,6 +2,7 @@ package zh.co.item.bank.web.manage.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +15,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.controller.QuestionInsertController;
 import zh.co.item.bank.web.user.service.AccountBindingService;
@@ -65,7 +67,23 @@ public class ManageIndexController extends BaseController {
 
             // b.超过两个用户，对头两条数据执行绑定
             if (users.size() >= 2) {
-                accountBindingService.accountBinging(users.get(0), users.get(1));
+                // 取关联帐号
+                CopyOnWriteArrayList<UserModel> safeList = new CopyOnWriteArrayList<UserModel>();
+                safeList.addAll(users);
+                while (safeList.size() > 0) {
+                    UserModel user1 = safeList.get(0);
+                    safeList.remove(0);
+                    UserModel user2 = new UserModel();
+                    for (UserModel user : safeList) {
+                        if (user.getUuid().equals(user1.getUuid())) {
+                            user2 = user;
+                            safeList.remove(user);
+                            break;
+                        }
+                    }
+                    // 执行绑定
+                    accountBindingService.accountBinging(user1, user2);
+                }
             }
         } catch (Exception e) {
             processForException(logger, e);
@@ -84,9 +102,21 @@ public class ManageIndexController extends BaseController {
             QuestionInsertController questionInsertController = (QuestionInsertController) SpringAppContextManager
                     .getBean("questionInsertController");
             return questionInsertController.init();
-            
+
         } catch (Exception e) {
             processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    public String changePassword() {
+        try {
+//            TuUserBean user = new TuUserBean();
+//            user.setId(105);
+//            user.setPassword("1");
+//            accountBindingService.changePassword(user);
+        } catch (Exception e) {
+           processForException(logger, e);
         }
         return getPageId();
     }

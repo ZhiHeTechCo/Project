@@ -120,6 +120,10 @@
 		</foreach>
 	</insert>
 
+    <update id="updateUserId" parameterType="java.util.Map">
+        update tb_media_collection set asker = #{oldUserId} where asker = #{newUserId}
+    </update>
+
 	<delete id="deleteMediaCollectionBySource" parameterType="java.util.Map" >
 	  delete from tb_media_collection where
 	  media_id = (select id from tb_media where source = #{source,jdbcType=CHAR} limit 1)

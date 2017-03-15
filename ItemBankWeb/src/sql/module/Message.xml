@@ -5,7 +5,7 @@
 <mapper namespace="Message">
 
 	<update id="updateUserId" parameterType="java.util.Map">
-		update tc_message set user_id={oldUserId} where user_id=#{newUserId}
+		update tc_message set user_id=#{oldUserId} where user_id=#{newUserId}
 	</update>
 
 </mapper>

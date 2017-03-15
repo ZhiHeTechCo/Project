@@ -18,4 +18,10 @@
 		</foreach>
 	</insert>
 
+    <!-- 帐号合并更新ID -->
+    <update id="updateDetailUserId" parameterType="java.util.Map">
+        update tb_collection_detail set user_id=#{oldUserId,jdbcType=SMALLINT}
+        where user_id = #{newUserId,jdbcType=SMALLINT}
+    </update>
+
 </mapper>
