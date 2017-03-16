@@ -1,5 +1,7 @@
 package zh.co.item.bank.web.exam.dao;
 
+import java.util.Map;
+
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbExamDropoutBean;
@@ -32,5 +34,14 @@ public class ExamDropoutDao extends BaseDao {
      */
     public void deleteExamDropout(TbExamDropoutBean bean) {
         getIbatisTemplate().delete("ExamDropout.deleteExamDropout", bean);
+    }
+
+    /**
+     * 账号合并-更新UserId
+     * 
+     * @param map
+     */
+    public void updateUserId(Map<String, Object> map) {
+        getIbatisTemplate().update("ExamDropout.updateUserId", map);
     }
 }

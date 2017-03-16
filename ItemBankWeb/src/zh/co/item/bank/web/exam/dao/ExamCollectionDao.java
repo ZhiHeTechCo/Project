@@ -128,12 +128,12 @@ public class ExamCollectionDao extends BaseDao {
     /**
      * 帐号合并-检索冲突数据
      * 
-     * @param users
+     * @param param
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<TbExamCollectionBean> selectExamCollectionByUsers(List<Integer> users) {
-        return getIbatisTemplate().selectList("ExamCollection.selectExamCollectionByUsers", users);
+    public List<TbExamCollectionBean> selectExamCollectionByUsers(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("ExamCollection.selectExamCollectionByUsers", param);
     }
 
     /**
@@ -154,5 +154,14 @@ public class ExamCollectionDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<QuestionStructure> selectReportStructure(Map<String, Object> param) {
         return getIbatisTemplate().selectList("ExamCollection.selectReportStructure", param);
+    }
+
+    /**
+     * 帐号合并-更新用户ID
+     * 
+     * @param param
+     */
+    public void updateUserId(Map<String, Object> param) {
+        getIbatisTemplate().update("ExamCollection.updateUserId", param);
     }
 }

@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W6C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w6.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="forumResponseForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #6682C9;">回答一览</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h4 style="color: orange;">请解释为什么这题选项#{forumResponseController.forumModel.answer}是正确的，谢谢！</h4>
+              <h5 style="color: #6682C9;">
+                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumResponseController.askers}标记了这道题。
+              </h5>
+              <h:dataTable class="table" rendered="true" value="#{forumResponseController.forumModel}" var="item">
+                <h:column>
+                  <h4>题干</h4>
+                  <td>#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
+                  </td>
+                  <tr>
+                    <h:panelGroup rendered="#{item.a ne ''}">
+                      <td width="20%"><h4>选项</h4></td>
+                      <td width="80%" colspan="4"><h:selectOneRadio value="#{item.answer}" readonly="true"
+                          disabled="true" layout="#{item.layoutStyle}" class="#{item.radioClass}">
+                          <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                          <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                          <f:selectItem itemValue="3" itemLabel="#{item.c}" />
+                          <f:selectItem itemValue="4" itemLabel="#{item.d}" />
+                        </h:selectOneRadio></td>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{item.a eq ''}">
+                      <td width="20%"><h4>答案</h4></td>
+                      <h:inputText value="#{item.myAnswer}" maxlength="6" />
+                    </h:panelGroup>
+                  </tr>
+                  <tr>
+                    <td colspan="2"></td>
+                  </tr>
+                </h:column>
+              </h:dataTable>
+              <h5 id="down" style="display: ''">
+                <a href="#"
+                  onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
+                  <span class="glyphicon glyphicon-hand-down"></span>显示更多信息
+                </a>
+              </h5>
+              <h5 id="up" style="display: none">
+                <a href="#"
+                  onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
+                  <span class="glyphicon glyphicon-hand-up"></span>收起
+                </a>
+              </h5>
+              <div id="detail" style="display: none">
+                <h:dataTable class="table" rendered="true" value="#{forumResponseController.forumModel}" var="detail">
+                  <h:column>
+                    <h4>解析</h4>
+                    <td><h:panelGroup rendered="#{detail.analysis eq null}">暂无</h:panelGroup> <h:outputText
+                        value="#{detail.analysis}" /></td>
+                    <tr>
+                      <td width="20%"><h4>试题种别</h4></td>
+                      <td><h:outputText value="#{detail.examTypeName}" /></td>
+                    </tr>
+                    <tr>
+                      <td><h4>试题出处</h4></td>
+                      <td><h:outputText value="#{detail.source}" /></td>
+                    </tr>
+                  </h:column>
+                </h:dataTable>
+              </div>
+              <c:if test="#{forumResponseController.forumModel.response1 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '1'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '1'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response1}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count1" value="#{response.count1}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="1"></f:param>
+                              <f:ajax render="count1"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName1}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="1"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response2 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '2'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '2'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response2}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count2" value="#{response.count2}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="2"></f:param>
+                              <f:ajax render="count2"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName2}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="2"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response3 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '3'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '3'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response3}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count3" value="#{response.count3}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="3"></f:param>
+                              <f:ajax render="count3"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName3}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="3"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response4 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '4'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '4'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response4}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count4" value="#{response.count4}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="4"></f:param>
+                              <f:ajax render="count4"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName4}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="4"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response5 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '5'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '5'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response5}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count5" value="#{response.count5}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="5"></f:param>
+                              <f:ajax render="count5"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName5}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="5"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response6 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '6'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '6'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response6}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count6" value="#{response.count6}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="6"></f:param>
+                              <f:ajax render="count6"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName6}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="6"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response7 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '7'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '7'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response7}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count7" value="#{response.count7}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="7"></f:param>
+                              <f:ajax render="count7"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName7}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="7"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response8 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '8'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '8'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response8}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count8" value="#{response.count8}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="8"></f:param>
+                              <f:ajax render="count8"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName8}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="8"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response9 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '9'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '9'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response9}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count9" value="#{response.count9}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="9"></f:param>
+                              <f:ajax render="count9"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName9}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="9"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+              <c:if test="#{forumResponseController.forumModel.response10 ne null}">
+                <div style="border: 1px solid; border-color: #ddd;">
+                  <h:dataTable class="searchTable" rendered="true" value="#{forumResponseController.forumModel}"
+                    var="response">
+                    <h:column>
+                      <h:panelGroup rendered="#{response.userChoose eq '10'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: orange">&nbsp;最佳答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{response.systemChoose eq '10'}">
+                        <tr>
+                          <td colspan="2"><h4 class="glyphicon glyphicon-ok" style="color: #99DD00">&nbsp;推荐答案</h4></td>
+                        </tr>
+                      </h:panelGroup>
+                      <tr>
+                        <td colspan="2">#{response.response10}</td>
+                      </tr>
+                      <tr>
+                        <td><h5>
+                            <h:outputText id="count10" value="#{response.count10}">
+                            </h:outputText>
+                            人赞&nbsp;&nbsp;
+                            <h:commandLink value="" action="#{forumResponseController.doUp}">
+                              <f:param name='questionId' value="#{response.questionId}"></f:param>
+                              <f:param name='upResponse' value="10"></f:param>
+                              <f:ajax render="count10"></f:ajax>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </h:commandLink>
+                          </h5></td>
+                        <td align="right"><h5>回答者：#{response.responserName10}</h5></td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="2"><h:panelGroup
+                            rendered="#{session.getAttribute('session-user-info').getRole() >= '90'}">
+                            <h:commandLink value="" action="#{forumResponseController.selectAsAnswer}">
+                              <f:param name='item' value="10"></f:param>
+                              <span class="glyphicon glyphicon-ok-sign"></span>
+                            </h:commandLink>
+                            <h:commandLink value="" action="#{forumResponseController.moveAsAnswer}">
+                              <span class="glyphicon glyphicon-remove-sign"></span>
+                            </h:commandLink>
+                          </h:panelGroup></td>
+                      </tr>
+                    </h:column>
+                  </h:dataTable>
+                </div>
+              </c:if>
+            </div>
+            <c:if test="#{forumResponseController.forumModel.status lt 2}">
+              <h5 style="color: #3382C9; margin-top: 30px;">
+                <span class="glyphicon glyphicon-pencil"></span> 回答问题 / 发表评论
+              </h5>
+              <h:inputTextarea style="width: 100%" id="myResponse" value="#{forumResponseController.myResponse}" />
+              <div class="form-button1" style="margin-top: 30px;">
+                <input type="button" id="checkinputbutton" value="提交" style="margin-right: 5px;"
+                  onclick="if(document.getElementById('forumForm\:myResponse').value == '') { alert('请输后再提交!'); return false;} else {document.getElementById('forumForm\:responseQuestion').click();} " />
+                <h:commandButton value="提交" id="responseQuestion" style="display: none;"
+                  action="#{forumResponseController.responseQuestion}">
+                </h:commandButton>
+              </div>
+            </c:if>
+            <div class="form-submit1" style="margin-top: 30px;">
+              <h:commandButton value="返回" action="#{forumResponseController.init}" />
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

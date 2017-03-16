@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TbCollectionBean;
 import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.db.entity.TbMediaCollectionBean;
@@ -20,7 +21,10 @@ import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.contact.dao.MessageDao;
 import zh.co.item.bank.web.exam.dao.CollectionDao;
+import zh.co.item.bank.web.exam.dao.CollectionDetailDao;
+import zh.co.item.bank.web.exam.dao.ErrorReportDao;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
+import zh.co.item.bank.web.exam.dao.ExamDropoutDao;
 import zh.co.item.bank.web.exam.dao.MediaDao;
 import zh.co.item.bank.web.forum.dao.ForumDao;
 import zh.co.item.bank.web.user.dao.UserDao;
@@ -34,6 +38,8 @@ import zh.co.item.bank.web.user.dao.UserDao;
 @Named
 public class AccountBindingService {
 
+    private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
+
     @Inject
     private ExamCollectionDao examCollectionDao;
 
@@ -41,16 +47,47 @@ public class AccountBindingService {
     private CollectionDao collectionDao;
 
     @Inject
+    private CollectionDetailDao collectionDetailDao;
+
+    @Inject
     private MediaDao mediaDao;
 
     @Inject
     private MessageDao messageDao;
-    
+
     @Inject
     private UserDao userDao;
-    
+
     @Inject
     private ForumDao forumDao;
+
+    @Inject
+    private ExamDropoutDao examDropoutDao;
+
+    @Inject
+    private ErrorReportDao errorReportDao;
+
+    /**
+     * 取指定ID用户
+     * 
+     * @param param
+     * @return
+     */
+    public List<UserModel> selectUserByIds(Integer newUserId, Integer oldUserId) {
+        List<Integer> param = new ArrayList<Integer>();
+        param.add(oldUserId);
+        param.add(newUserId);
+        return userDao.selectUserByIds(param);
+    }
+
+    /**
+     * 检索有相同Uuid的用户
+     * 
+     * @return
+     */
+    public List<UserModel> selectUserWithSameUuid() {
+        return userDao.selectUserWithSameUuid();
+    }
 
     /**
      * 账号绑定
@@ -59,7 +96,7 @@ public class AccountBindingService {
      * @param newUser
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void accountBinging(UserModel olderUser, UserModel  newUser) {
+    public void accountBinging(UserModel olderUser, UserModel newUser) {
         TuUserBean keepUser = new TuUserBean();
         // 较小的id号留用
         keepUser.setId(olderUser.getId());
@@ -87,22 +124,25 @@ public class AccountBindingService {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("newUserId", olderUser.getId());
         param.put("oldUserId", newUser.getId());
+        logger.debug(
+                String.format("[uuid][%s]:[userId](%s, %s)", newUser.getUuid(), newUser.getId(), olderUser.getId()));
         // 1.更新tb_exam_collection
-        List<Integer> users = new ArrayList<Integer>();
-        users.add(newUser.getId());
-        users.add(olderUser.getId());
-        updateExamCollection(users);
-        // 2.更新tb_collection
+        updateExamCollection(param);
+        // 2.更新tb_collection, tb_collection_detail
         updateCollection(param);
         // 3.更新tb_media_collection
         updateMediaCollection(param);
         // 4.更新tc_message
         updateMessage(param);
-        // 6.更新forum
+        // 5.更新forum
         updateForum(param);
-        // 5.更新tu_user
-        userDao.updateUserByPrimaryKeySelective(keepUser);
-        userDao.deleteUserdeleteByPrimaryKey(newUser.getId());
+        // 6.更新tb_exam_dropout
+        updateExamDropout(param);
+        // 7.更新tb_error_report
+        updateErrorReport(param);
+        // 8.更新tu_user
+        updateUser(keepUser, newUser);
+
     }
 
     private String getItemValue(String wechatValue, String pcValue) {
@@ -130,8 +170,10 @@ public class AccountBindingService {
      * 
      * @param users
      */
-    private void updateExamCollection(List<Integer> users) {
-        List<TbExamCollectionBean> tbExamCollectionBeans = examCollectionDao.selectExamCollectionByUsers(users);
+    private void updateExamCollection(Map<String, Object> param) {
+        logger.debug("1.更新tb_exam_collection");
+        // 根据Source检索重复数据[时间降顺]
+        List<TbExamCollectionBean> tbExamCollectionBeans = examCollectionDao.selectExamCollectionByUsers(param);
         List<String> sources = new ArrayList<String>();
         List<TbExamCollectionBean> deleteList = new ArrayList<TbExamCollectionBean>();
         for (TbExamCollectionBean bean : tbExamCollectionBeans) {
@@ -144,21 +186,31 @@ public class AccountBindingService {
         }
 
         // 数据删除
-        examCollectionDao.deleteExamCollectionOld(deleteList);
+        if (deleteList.size() > 0) {
+            logger.debug(String.format("tb_exam_collection删除执行...([source]%s组删除)", deleteList.size()));
+            examCollectionDao.deleteExamCollectionOld(deleteList);
+        }
+        //更新userId
+        examCollectionDao.updateUserId(param);
     }
 
     /**
-     * 更新tb_collection
+     * 更新tb_collection,tb_collection_detail
      * 
      * @param param
      */
     private void updateCollection(Map<String, Object> param) {
+        logger.debug("2.更新tb_collection, tb_collection_detail");
         // OldUser的更新时间小于NewUser更新时间的试题
         List<TbCollectionBean> deleteList = collectionDao.selectOldCollectionByUsers(param);
         // 删除
-        collectionDao.deleteCollectionOld(deleteList);
+        if (deleteList.size() > 0) {
+            logger.debug(String.format("tb_collection删除执行...(%s件删除)", deleteList.size()));
+            collectionDao.deleteCollectionOld(deleteList);
+        }
         // 更新NewUser的ID为OldUser的Id
         collectionDao.updateCollectionUserId(param);
+        collectionDetailDao.updateDetailUserId(param);
     }
 
     /**
@@ -167,23 +219,72 @@ public class AccountBindingService {
      * @param param
      */
     private void updateMediaCollection(Map<String, Object> param) {
+        logger.debug("3.更新tb_media_collection");
+        // 1.检索重复做过的数据
         List<TbMediaCollectionBean> deleteList = mediaDao.selectMediaIdByUsers(param);
-        // 删除检索到的数据
-        mediaDao.deleteMediaCollectionOld(deleteList);
+        // 2.删除检索到的数据
+        if (deleteList.size() > 0) {
+            logger.debug(String.format("tb_media_collection删除执行...(%s件删除)", deleteList.size()));
+            mediaDao.deleteMediaCollectionOld(deleteList);
+        }
+        // 更新NewUser的ID为OldUser的Id
+        mediaDao.updateUserId(param);
     }
 
     /**
      * 更新tc_message
      */
     private void updateMessage(Map<String, Object> map) {
+        logger.debug("4.更新tc_message");
         // NewUserId改成OldUser
         messageDao.updateUserId(map);
     }
-    
+
     /**
-     * 更新tc_froum
+     * 更新tb_forum
      */
-    private void updateForum(Map<String, Object> map){
+    private void updateForum(Map<String, Object> map) {
+        logger.debug("5.更新tc_forum_asker");
         forumDao.updateUserId(map);
+        // tb_forum_response（结构不对）TODO
+    }
+
+    /**
+     * 更新tb_exam_dropout
+     * 
+     * @param param
+     */
+    private void updateExamDropout(Map<String, Object> param) {
+        logger.debug("6.更新tb_exam_dropout");
+        examDropoutDao.updateUserId(param);
+    }
+
+    /**
+     * 更新tb_error_report
+     * 
+     * @param param
+     */
+    private void updateErrorReport(Map<String, Object> param) {
+        logger.debug("7.更新tb_error_report");
+        errorReportDao.updateUserId(param);
+    }
+
+    /**
+     * 更新tu_user
+     * 
+     * @param keepUser
+     * @param newUser
+     */
+    private void updateUser(TuUserBean keepUser, UserModel newUser) {
+        logger.debug("8.更新tu_user");
+        userDao.updateUserByPrimaryKeySelective(keepUser);
+        userDao.deleteUserdeleteByPrimaryKey(newUser.getId());
+    }
+
+    /**
+     * 更改密码
+     */
+    public void changePassword(TuUserBean user) {
+        userDao.changePasswordForce(user);
     }
 }

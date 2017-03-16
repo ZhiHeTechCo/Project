@@ -111,7 +111,7 @@
    </navigation-case>
    <navigation-case>
       <from-outcome>ITBK_FORUM_002</from-outcome>
-      <to-view-id>/xhtml/forum/ForumQuestionDetail.xhtml</to-view-id>
+      <to-view-id>/xhtml/forum/ForumResponse.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
       <from-outcome>ITBK_QUE_001</from-outcome>
@@ -120,6 +120,10 @@
    <navigation-case>
       <from-outcome>ITBK_QUE_002</from-outcome>
       <to-view-id>/xhtml/examination/QuestionUpdate.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_MANAGE_001</from-outcome>
+      <to-view-id>/xhtml/manage/ManageHome.xhtml</to-view-id>
    </navigation-case>
    
    

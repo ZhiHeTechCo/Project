@@ -55,7 +55,7 @@ public class CollectionDao extends BaseDao {
      * @param deleteList
      */
     public void deleteCollectionOld(List<TbCollectionBean> deleteList) {
-        getIbatisTemplate().delete("Collection.deleteCollection", deleteList);
+        getIbatisTemplate().delete("Collection.deleteCollectionOld", deleteList);
     }
 
     /**

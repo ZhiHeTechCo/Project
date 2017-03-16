@@ -52,6 +52,7 @@
                 <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
                 <value>classpath:sql/module/CollectionDetail.xml</value>
+                <value>classpath:sql/module/ErrorReport.xml</value>
                 <value>classpath:sql/module/ExamCollection.xml</value>
                 <value>classpath:sql/module/ExamDropout.xml</value>
                 <value>classpath:sql/module/Message.xml</value>

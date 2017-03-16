@@ -133,4 +133,13 @@ public class MediaDao extends BaseDao {
     public void deleteMediaCollectionOld(List<TbMediaCollectionBean> deleteList) {
         getIbatisTemplate().delete("Media.deleteMediaCollectionOld", deleteList);
     }
+
+    /**
+     * 帐号合并-更新用户ID
+     * 
+     * @param deleteList
+     */
+    public void updateUserId(Map<String, Object> param) {
+        getIbatisTemplate().update("Media.updateUserId", param);
+    }
 }
