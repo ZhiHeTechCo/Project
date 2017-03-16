@@ -24,9 +24,9 @@ import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbErrorReportBean;
+import zh.co.item.bank.db.entity.TbForumAskerBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.forum.service.ForumService;
@@ -179,24 +179,14 @@ public class ExamDetailController extends BaseController {
                 if (!checkuser(userInfo)) {
                     return SystemConstants.PAGE_ITBK_EXAM_004;
                 }
-                ForumModel model = new ForumModel();
-                model.setAsker(userInfo.getId());
-                model.setQuestionId(questionId);
+                TbForumAskerBean bean = new TbForumAskerBean();
+                bean.setAsker(userInfo.getId());
+                bean.setQuestionId(questionId);
+                
+                // 记录数据
+                forumService.insertForumAsker(bean);
+                setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), BaseController.MESSAGE_LEVEL_INFO);
 
-                if (forumService.selectForumAskerForOne(model) == 1) {
-                    // 当前用户已询问过此道问题
-                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0016), MESSAGE_LEVEL_INFO);
-
-                } else if (forumService.checkQuestionIsExist(questionId) == 1) {
-                    // 其他用户已询问过此道问题
-                    forumService.insertForumAsker(model, true);
-                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), MESSAGE_LEVEL_INFO);
-
-                } else {
-                    // 首次有用户询问此道问题
-                    forumService.insertForumAsker(model, false);
-                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), MESSAGE_LEVEL_INFO);
-                }
             } else {
                 setMessage(MessageUtils.getMessage(MessageId.ITBK_E_0008), MESSAGE_LEVEL_ERROR);
             }

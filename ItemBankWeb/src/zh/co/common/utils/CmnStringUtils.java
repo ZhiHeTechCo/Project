@@ -909,35 +909,35 @@ public final class CmnStringUtils {
      * @param questions
      * @return
      */
-    public static ForumModel selectionLayoutSet(ForumModel forumModel) {
+    public static ExamModel selectionLayoutSet(ExamModel examModel) {
 
-        if (forumModel != null) {
+        if (examModel != null) {
             if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                     .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-                forumModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(forumModel.getA())
-                    && forumModel.getA().length() > CmnContants.FOLDING_LINE) {
-                forumModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(forumModel.getB())
-                    && forumModel.getB().length() > CmnContants.FOLDING_LINE) {
-                forumModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(forumModel.getC())
-                    && forumModel.getC().length() > CmnContants.FOLDING_LINE) {
-                forumModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(forumModel.getD())
-                    && forumModel.getD().length() > CmnContants.FOLDING_LINE) {
-                forumModel.setLayoutStyle("pageDirection");
+                examModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(examModel.getA())
+                    && examModel.getA().length() > CmnContants.FOLDING_LINE) {
+                examModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(examModel.getB())
+                    && examModel.getB().length() > CmnContants.FOLDING_LINE) {
+                examModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(examModel.getC())
+                    && examModel.getC().length() > CmnContants.FOLDING_LINE) {
+                examModel.setLayoutStyle("pageDirection");
+            } else if (!StringUtils.isEmpty(examModel.getD())
+                    && examModel.getD().length() > CmnContants.FOLDING_LINE) {
+                examModel.setLayoutStyle("pageDirection");
             } else {
-                forumModel.setLayoutStyle("lineDirection");
+                examModel.setLayoutStyle("lineDirection");
             }
 
-            if ("lineDirection".equals(forumModel.getLayoutStyle())) {
-                forumModel.setRadioClass("radioTable1");
+            if ("lineDirection".equals(examModel.getLayoutStyle())) {
+                examModel.setRadioClass("radioTable1");
             } else {
-                forumModel.setRadioClass("radioTable2");
+                examModel.setRadioClass("radioTable2");
             }
         }
-        return forumModel;
+        return examModel;
     }
 
     /**

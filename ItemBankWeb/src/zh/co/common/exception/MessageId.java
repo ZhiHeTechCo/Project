@@ -102,8 +102,8 @@ public class MessageId {
     /** 此类考题已做完，请重新选择或试试智能推题。 */
     public static final String ITBK_I_0015 = "ITBK_I_0015";
     
-    /** 问题已被登录，您可以在【我的问题】中查看。 */
-    public static final String ITBK_I_0016 = "ITBK_I_0016";
+//    /** 问题已被登录，您可以在【我的问题】中查看。 */
+//    public static final String ITBK_I_0016 = "ITBK_I_0016";
     
     /** 提问成功，您可以在《交流区》"我的问题"中查看。 */
     public static final String ITBK_I_0017 = "ITBK_I_0017";

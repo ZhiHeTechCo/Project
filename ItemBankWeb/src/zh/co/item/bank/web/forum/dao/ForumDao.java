@@ -9,6 +9,7 @@ import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbForumAskerBean;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.db.entity.TuUserBean;
+import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
 
 @Named
@@ -29,16 +30,6 @@ public class ForumDao extends BaseDao {
      */
     public void insertForumResponse(Integer questionId) {
         getIbatisTemplate().insert("Forum.insertForumResponse", questionId);
-    }
-
-    /**
-     * 根据用户名和问题ID检索当前问题是否已经被提问
-     * 
-     * @param model
-     * @return
-     */
-    public int selectForumAskerForOne(ForumModel model) {
-        return (int) getIbatisTemplate().selectOne("Forum.selectForumAskerForOne", model);
     }
 
     /**
@@ -66,8 +57,8 @@ public class ForumDao extends BaseDao {
      * 
      * @return
      */
-    public ForumModel selectForumByQuestionId(Integer questionId) {
-        return (ForumModel) getIbatisTemplate().selectOne("Forum.selectForumByQuestionId", questionId);
+    public ExamModel selectQuestionByQuestionId(Integer questionId) {
+        return (ExamModel) getIbatisTemplate().selectOne("Forum.selectQuestionByQuestionId", questionId);
     }
 
     /**
@@ -86,8 +77,8 @@ public class ForumDao extends BaseDao {
      * 
      * @return
      */
-    public int doUp(TbForumResponseBean bean) {
-        return getIbatisTemplate().update("Forum.doUp", bean);
+    public int doUp(Integer id) {
+        return getIbatisTemplate().update("Forum.doUp", id);
     }
 
     /**
@@ -96,8 +87,8 @@ public class ForumDao extends BaseDao {
      * @param model
      * @return
      */
-    public int updateForumResponse(ForumModel model) {
-        return getIbatisTemplate().update("Forum.updateForumResponse", model);
+    public int insertResponse(TbForumResponseBean model) {
+        return getIbatisTemplate().update("TbForum.insertSelective", model);
     }
 
     /**
@@ -126,5 +117,16 @@ public class ForumDao extends BaseDao {
      */
     public void updateUserId(Map<String, Object> map) {
         getIbatisTemplate().update("Forum.updateUserId", map);
+    }
+
+    /**
+     * 根据试题ID取所有回答
+     * 
+     * @param id 试题ID
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbForumResponseBean> selectResponseByQuestionId(Integer id) {
+        return getIbatisTemplate().selectList("Forum.selectResponseByQuestionId", id);
     }
 }
