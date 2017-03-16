@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import zh.co.item.bank.db.entity.TbForumResponseBean;
-
 public class ForumModel {
 
     private Map<Integer, String> userName = new HashMap<Integer, String>();
@@ -13,7 +11,7 @@ public class ForumModel {
     /** 试题详细 */
     ExamModel question;
 
-    List<TbForumResponseBean> responses;
+    List<ForumResponseModel> responses;
 
     /** 提问者昵称 */
     private String askers;
@@ -37,11 +35,11 @@ public class ForumModel {
         this.question = question;
     }
 
-    public List<TbForumResponseBean> getResponses() {
+    public List<ForumResponseModel> getResponses() {
         return responses;
     }
 
-    public void setResponses(List<TbForumResponseBean> responses) {
+    public void setResponses(List<ForumResponseModel> responses) {
         this.responses = responses;
     }
 

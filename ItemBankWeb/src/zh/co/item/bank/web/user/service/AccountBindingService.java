@@ -203,7 +203,7 @@ public class AccountBindingService {
         logger.debug("2.更新tb_collection, tb_collection_detail");
         // OldUser的更新时间小于NewUser更新时间的试题
         List<TbCollectionBean> deleteList = collectionDao.selectOldCollectionByUsers(param);
-        // 删除 TODO 删除sql不对
+        // 删除
         if (deleteList.size() > 0) {
             logger.debug(String.format("tb_collection删除执行...(%s件删除)", deleteList.size()));
             collectionDao.deleteCollectionOld(deleteList);

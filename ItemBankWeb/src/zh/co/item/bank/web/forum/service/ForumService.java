@@ -12,6 +12,7 @@ import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.ForumResponseModel;
 import zh.co.item.bank.web.forum.dao.ForumDao;
 
 /**
@@ -116,11 +117,10 @@ public class ForumService {
     /**
      * 根据试题ID取所有回答
      * 
-     * @param id
-     *            试题ID
+     * @param id 试题ID
      * @return
      */
-    public List<TbForumResponseBean> selectResponseByQuestionId(Integer id) {
+    public List<ForumResponseModel> selectResponseByQuestionId(Integer id) {
         return forumDao.selectResponseByQuestionId(id);
     }
 }

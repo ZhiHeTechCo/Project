@@ -18,6 +18,7 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.ForumResponseModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.forum.service.ForumService;
 
@@ -32,14 +33,14 @@ public class ForumResponseController extends BaseController {
 
     /** 画面显示变量 */
     private ForumModel forumModel;
-    
+
     /** 回答·评论 */
     private String myResponse;
 
     /** --共通变量-- */
     // 当前用户信息
     private UserModel userInfo;
-    
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_FORUM_002;
     }
@@ -47,7 +48,7 @@ public class ForumResponseController extends BaseController {
     public String init() {
         try {
             pushPathHistory("forumResponseController");
-            
+
             String questionId = WebUtils.getRequestParam("questionId");
 
             if (StringUtils.isNotEmpty(questionId)) {
@@ -61,13 +62,9 @@ public class ForumResponseController extends BaseController {
                 forumModel.setAskers(forumService.selectAllAsker(id));
 
                 // c.取回答
-                List<TbForumResponseBean> responses = forumService.selectResponseByQuestionId(id);
+                List<ForumResponseModel> responses = forumService.selectResponseByQuestionId(id);
                 forumModel.setResponses(responses);
 
-                // Map<Integer, String> userName =
-                // userService.selectUserForNickName();
-                // userName.put(0, "游侠");
-                // forumModel.setUserName(userName);
             }
 
         } catch (Exception e) {
@@ -90,9 +87,9 @@ public class ForumResponseController extends BaseController {
             int id = userInfo != null ? userInfo.getId() : 0;
             newResponse.setResponser(id);
             forumService.insertResponse(newResponse);
-            
+
             // 重置页面信息
-            forumModel.getResponses().add(newResponse);
+            forumModel.setResponses(forumService.selectResponseByQuestionId(id));
             myResponse = null;
             setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0019), MESSAGE_LEVEL_INFO);
 
@@ -113,7 +110,8 @@ public class ForumResponseController extends BaseController {
             String id = WebUtils.getRequestParam("id");
             if (StringUtils.isNotEmpty(id)) {
                 forumService.doUp(Integer.parseInt(id));
-//                forumModel = forumService.selectForumById(Integer.parseInt(id));
+                // 重置页面信息
+                forumModel.setResponses(forumService.selectResponseByQuestionId(Integer.parseInt(id)));
             }
         } catch (Exception e) {
             processForException(logger, e);
@@ -140,14 +138,12 @@ public class ForumResponseController extends BaseController {
 
 //    /**
 //     * 管理员选择正确答案
-//     * 
+//     *
 //     * @return
 //     */
 //    public String selectAsAnswer() {
 //        try {
-//            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-//                    .getRequest();
-//            String item = request.getParameter("item");
+//            String item = WebUtils.getRequestParam("item");
 //            if (checkuser(userInfo) && StringUtils.isNotEmpty(item)) {
 //                Map<String, Object> param = new HashMap<String, Object>();
 //                param.put("systemChoose", item);
@@ -165,7 +161,7 @@ public class ForumResponseController extends BaseController {
 //
 //    /**
 //     * 管理员选择取消选择正确答案
-//     * 
+//     *
 //     * @return
 //     */
 //    public String moveAsAnswer() {
@@ -184,5 +180,5 @@ public class ForumResponseController extends BaseController {
 //        }
 //        return SystemConstants.PAGE_ITBK_FORUM_002;
 //    }
-    
+
 }

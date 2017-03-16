@@ -20,9 +20,9 @@
 	</select>
 
 	<select id="selectResponseByQuestionId" parameterType="Integer"
-		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select * from tb_forum_response
-		where question_id = #{questionId}
+		resultType="zh.co.item.bank.model.entity.ForumResponseModel">
+		select t1.*, t2.nick_name from tb_forum_response t1, tu_user t2
+		where t1.question_id = #{questionId} and t1.responser = t2.id
 		order by id
 	</select>
 

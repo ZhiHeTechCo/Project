@@ -11,6 +11,7 @@ import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.ForumResponseModel;
 
 @Named
 public class ForumDao extends BaseDao {
@@ -126,7 +127,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<TbForumResponseBean> selectResponseByQuestionId(Integer id) {
+    public List<ForumResponseModel> selectResponseByQuestionId(Integer id) {
         return getIbatisTemplate().selectList("Forum.selectResponseByQuestionId", id);
     }
 }
