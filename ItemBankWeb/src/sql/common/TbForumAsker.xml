@@ -2,34 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
 <mapper namespace="TbForumAsker" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbForumAskerBean" >
-    <id column="no" property="no" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="asker" property="asker" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    no, question_id, asker
+    id, question_id, asker, status, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbForumAskerBeanKey" >
     select 
     <include refid="Base_Column_List" />
     from tb_forum_asker
-    where no = #{no,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbForumAskerBeanKey" >
     delete from tb_forum_asker
-    where no = #{no,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
-    insert into tb_forum_asker (no, question_id, asker
-      )
-    values (#{no,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{asker,jdbcType=INTEGER}
-      )
+    insert into tb_forum_asker (id, question_id, asker, 
+      status, create_time)
+    values (#{id,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{asker,jdbcType=INTEGER}, 
+      #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
     insert into tb_forum_asker
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        no,
+      <if test="id != null" >
+        id,
       </if>
       <if test="questionId != null" >
         question_id,
@@ -37,16 +39,28 @@
       <if test="asker != null" >
         asker,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        #{no,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="questionId != null" >
         #{questionId,jdbcType=INTEGER},
       </if>
       <if test="asker != null" >
         #{asker,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -59,13 +73,21 @@
       <if test="asker != null" >
         asker = #{asker,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
-    where no = #{no,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbForumAskerBean" >
     update tb_forum_asker
     set question_id = #{questionId,jdbcType=INTEGER},
-      asker = #{asker,jdbcType=INTEGER}
-    where no = #{no,jdbcType=INTEGER}
+      asker = #{asker,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

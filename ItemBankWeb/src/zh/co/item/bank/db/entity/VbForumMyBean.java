@@ -1,11 +1,21 @@
 package zh.co.item.bank.db.entity;
 
+import java.util.Date;
+
 public class VbForumMyBean {
-    private String nickName;
+    private Integer id;
+
+    private Integer questionId;
 
     private Integer asker;
 
-    private Integer questionId;
+    private String status;
+
+    private Date createTime;
+
+    private String nickName;
+
+    private String value;
 
     private String context;
 
@@ -13,16 +23,20 @@ public class VbForumMyBean {
 
     private String contextAfter;
 
-    private String status;
-
-    private String statusName;
-
-    public String getNickName() {
-        return nickName;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public Integer getAsker() {
@@ -33,12 +47,36 @@ public class VbForumMyBean {
         this.asker = asker;
     }
 
-    public Integer getQuestionId() {
-        return questionId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value == null ? null : value.trim();
     }
 
     public String getContext() {
@@ -63,21 +101,5 @@ public class VbForumMyBean {
 
     public void setContextAfter(String contextAfter) {
         this.contextAfter = contextAfter == null ? null : contextAfter.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName == null ? null : statusName.trim();
     }
 }

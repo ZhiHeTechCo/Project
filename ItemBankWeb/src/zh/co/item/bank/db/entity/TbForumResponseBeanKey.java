@@ -1,6 +1,6 @@
 package zh.co.item.bank.db.entity;
 
-public class TbForumAskerBeanKey {
+public class TbForumResponseBeanKey {
     private Integer id;
 
     public Integer getId() {
