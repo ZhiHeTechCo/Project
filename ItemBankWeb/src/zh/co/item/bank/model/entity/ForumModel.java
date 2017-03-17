@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ForumModel {
+import zh.co.item.bank.db.entity.VbForumMyBean;
+
+public class ForumModel extends VbForumMyBean {
 
     private Map<Integer, String> userName = new HashMap<Integer, String>();
 
@@ -16,16 +18,9 @@ public class ForumModel {
     /** 提问者昵称 */
     private String askers;
 
-    /** 提问者 */
-    private int asker;
-
-    /** 问题状态 */
-    private String statusName;
-
     /** 行号 */
     private int rowNo;
 
-    private String responserName;
 
     public ExamModel getQuestion() {
         return question;
@@ -51,18 +46,6 @@ public class ForumModel {
         this.askers = askers;
     }
 
-    public int getAsker() {
-        return asker;
-    }
-
-    public void setAsker(int asker) {
-        this.asker = asker;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
     public int getRowNo() {
         return rowNo;
     }
@@ -71,24 +54,12 @@ public class ForumModel {
         this.rowNo = rowNo;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
-
     public Map<Integer, String> getUserName() {
         return userName;
     }
 
     public void setUserName(Map<Integer, String> userName) {
         this.userName = userName;
-    }
-
-    public String getResponserName() {
-        return responserName;
-    }
-
-    public void setResponserName(String responserName) {
-        this.responserName = responserName;
     }
 
 }

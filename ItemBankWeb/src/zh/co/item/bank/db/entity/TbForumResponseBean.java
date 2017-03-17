@@ -15,8 +15,6 @@ public class TbForumResponseBean extends TbForumResponseBeanKey {
 
     private Short count;
 
-    private String status;
-
     private Date createTime;
 
     public Integer getQuestionId() {
@@ -65,14 +63,6 @@ public class TbForumResponseBean extends TbForumResponseBeanKey {
 
     public void setCount(Short count) {
         this.count = count;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
     }
 
     public Date getCreateTime() {

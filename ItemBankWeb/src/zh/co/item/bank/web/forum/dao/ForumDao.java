@@ -89,7 +89,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     public int insertResponse(TbForumResponseBean model) {
-        return getIbatisTemplate().update("TbForum.insertSelective", model);
+        return getIbatisTemplate().update("TbForumResponse.insertSelective", model);
     }
 
     /**

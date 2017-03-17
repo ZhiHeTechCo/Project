@@ -175,10 +175,6 @@ public class ExamDetailController extends BaseController {
     public String askQuestion() {
         try {
             if (questionId != null) {
-                userInfo = (UserModel) WebUtils.getLoginUserInfo();
-                if (!checkuser(userInfo)) {
-                    return SystemConstants.PAGE_ITBK_EXAM_004;
-                }
                 TbForumAskerBean bean = new TbForumAskerBean();
                 bean.setAsker(userInfo.getId());
                 bean.setQuestionId(questionId);

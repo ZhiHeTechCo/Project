@@ -177,7 +177,7 @@ public class AccessFilter implements Filter {
         				&& !URI.endsWith("/signIn.xhtml")
         				&& !URI.endsWith("/signUp.xhtml") 
         				&& !URI.endsWith("/Forum.xhtml")
-        				&& !URI.endsWith("/ForumQuestionDetail.xhtml")
+        				&& !URI.endsWith("/ForumResponse.xhtml")
         				&& !URI.endsWith("/contact.xhtml")) {
 	        		SignInBean signInBean = (SignInBean) SpringAppContextManager.getBean("signInBean");
 	                signInBean.init();

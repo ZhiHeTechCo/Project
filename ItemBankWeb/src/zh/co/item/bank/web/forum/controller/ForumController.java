@@ -12,6 +12,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.PaginatorLogger;
@@ -34,10 +35,11 @@ public class ForumController extends BaseController {
     @Inject
     private ForumService forumService;
 
-    //分页
-    private RepeatPaginator paginator; 
+    // 分页
+    private RepeatPaginator paginator;
 
-    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页","向后翻页", "指定页"); 
+    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页",
+            "向后翻页", "指定页");
 
     /** --共通变量-- */
     // 当前用户信息
@@ -53,19 +55,19 @@ public class ForumController extends BaseController {
     }
 
     /**
-     * initial
+     * 1.画面初始化
      * 
      * @return
      */
     public String init() {
         try {
-        	
-        	pushPathHistory("forumController");
-        	
+
+            pushPathHistory("forumController");
+
             if ("true".equals(justShowMine)) {
                 return showAllMyQuestion();
             }
-            
+
             userInfo = WebUtils.getLoginUserInfo();
             if (!checkuser(userInfo)) {
                 setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0018), MESSAGE_LEVEL_INFO);
@@ -83,7 +85,7 @@ public class ForumController extends BaseController {
     }
 
     /**
-     * 显示全部问题
+     * 2.显示全部问题
      * 
      * @return
      */
@@ -93,7 +95,7 @@ public class ForumController extends BaseController {
     }
 
     /**
-     * 查看当前用户提问
+     * 3.查看当前用户提问
      * 
      * @return
      */
@@ -113,6 +115,17 @@ public class ForumController extends BaseController {
         }
 
         return getPageId();
+    }
+
+    /**
+     * 显示问题详细
+     * 
+     * @return
+     */
+    public String showQuestionDetail() {
+        ForumResponseController forumResponseController = (ForumResponseController) SpringAppContextManager
+                .getBean("forumResponseController");
+        return forumResponseController.init();
     }
 
     public RepeatPaginator getPaginator() {

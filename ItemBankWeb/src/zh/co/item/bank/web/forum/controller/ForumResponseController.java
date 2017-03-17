@@ -41,28 +41,36 @@ public class ForumResponseController extends BaseController {
     // 当前用户信息
     private UserModel userInfo;
 
+    private Integer currentQuestionId;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_FORUM_002;
     }
 
+    /**
+     * 1.画面初始化
+     */
     public String init() {
         try {
             pushPathHistory("forumResponseController");
 
+            forumModel = new ForumModel();
+            myResponse = null;
+            currentQuestionId = null;
             String questionId = WebUtils.getRequestParam("questionId");
 
             if (StringUtils.isNotEmpty(questionId)) {
                 // a.取当前试题内容
-                Integer id = Integer.parseInt(questionId);
-                ExamModel question = forumService.selectQuestionByQuestionId(id);
+                currentQuestionId = Integer.parseInt(questionId);
+                ExamModel question = forumService.selectQuestionByQuestionId(currentQuestionId);
                 forumModel.setQuestion(question);
                 // 选项格式设置
                 question = CmnStringUtils.selectionLayoutSet(question);
                 // b.获取提问用户
-                forumModel.setAskers(forumService.selectAllAsker(id));
+                forumModel.setAskers(forumService.selectAllAsker(currentQuestionId));
 
                 // c.取回答
-                List<ForumResponseModel> responses = forumService.selectResponseByQuestionId(id);
+                List<ForumResponseModel> responses = forumService.selectResponseByQuestionId(currentQuestionId);
                 forumModel.setResponses(responses);
 
             }
@@ -75,7 +83,7 @@ public class ForumResponseController extends BaseController {
     }
 
     /**
-     * 回答问题
+     * 2.回答问题
      * 
      * @return
      */
@@ -86,10 +94,11 @@ public class ForumResponseController extends BaseController {
             // 用户信息不存在则使用游客身份
             int id = userInfo != null ? userInfo.getId() : 0;
             newResponse.setResponser(id);
+            newResponse.setQuestionId(forumModel.getQuestion().getNo());
             forumService.insertResponse(newResponse);
 
             // 重置页面信息
-            forumModel.setResponses(forumService.selectResponseByQuestionId(id));
+            forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
             myResponse = null;
             setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0019), MESSAGE_LEVEL_INFO);
 
@@ -97,7 +106,7 @@ public class ForumResponseController extends BaseController {
             processForException(logger, e);
         }
 
-        return SystemConstants.PAGE_ITBK_FORUM_002;
+        return getPageId();
     }
 
     /**
@@ -105,20 +114,68 @@ public class ForumResponseController extends BaseController {
      * 
      * @return
      */
-    public String doUp() {
+    public void doUp() {
         try {
             String id = WebUtils.getRequestParam("id");
             if (StringUtils.isNotEmpty(id)) {
                 forumService.doUp(Integer.parseInt(id));
                 // 重置页面信息
-                forumModel.setResponses(forumService.selectResponseByQuestionId(Integer.parseInt(id)));
+                forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
             }
         } catch (Exception e) {
             processForException(logger, e);
         }
-
-        return getPageId();
     }
+
+    public String goBackToForum() {
+        return SystemConstants.PAGE_ITBK_FORUM_001;
+    }
+    // /**
+    // * 管理员选择正确答案
+    // *
+    // * @return
+    // */
+    // public String selectAsAnswer() {
+    // try {
+    // String item = WebUtils.getRequestParam("item");
+    // if (StringUtils.isNotEmpty(item)) {
+    // Map<String, Object> param = new HashMap<String, Object>();
+    // param.put("systemChoose", item);
+    // param.put("questionId", forumModel.getQuestionId());
+    // if (Integer.parseInt(userInfo.getRole()) >= 90) {
+    // forumService.updateSystemChoose(param);
+    // forumModel.setSystemChoose(item);
+    // // 重置页面信息
+    // forumModel.setResponses(forumService.selectResponseByQuestionId(Integer.parseInt(id)));
+    // }
+    // }
+    // } catch (Exception e) {
+    // processForException(logger, e);
+    // }
+    // return SystemConstants.PAGE_ITBK_FORUM_002;
+    // }
+    //
+    // /**
+    // * 管理员选择取消选择正确答案
+    // *
+    // * @return
+    // */
+    // public String moveAsAnswer() {
+    // try {
+    // if (checkuser(userInfo)) {
+    // Map<String, Object> param = new HashMap<String, Object>();
+    // param.put("systemChoose", null);
+    // param.put("questionId", forumModel.getQuestionId());
+    // if (Integer.parseInt(userInfo.getRole()) >= 90) {
+    // forumService.updateSystemChoose(param);
+    // forumModel.setSystemChoose(null);
+    // }
+    // }
+    // } catch (Exception e) {
+    // processForException(logger, e);
+    // }
+    // return SystemConstants.PAGE_ITBK_FORUM_002;
+    // }
 
     public ForumModel getForumModel() {
         return forumModel;
@@ -135,50 +192,4 @@ public class ForumResponseController extends BaseController {
     public void setMyResponse(String myResponse) {
         this.myResponse = myResponse;
     }
-
-//    /**
-//     * 管理员选择正确答案
-//     *
-//     * @return
-//     */
-//    public String selectAsAnswer() {
-//        try {
-//            String item = WebUtils.getRequestParam("item");
-//            if (checkuser(userInfo) && StringUtils.isNotEmpty(item)) {
-//                Map<String, Object> param = new HashMap<String, Object>();
-//                param.put("systemChoose", item);
-//                param.put("questionId", forumModel.getQuestionId());
-//                if (Integer.parseInt(userInfo.getRole()) >= 90) {
-//                    forumService.updateSystemChoose(param);
-//                    forumModel.setSystemChoose(item);
-//                }
-//            }
-//        } catch (Exception e) {
-//            processForException(logger, e);
-//        }
-//        return SystemConstants.PAGE_ITBK_FORUM_002;
-//    }
-//
-//    /**
-//     * 管理员选择取消选择正确答案
-//     *
-//     * @return
-//     */
-//    public String moveAsAnswer() {
-//        try {
-//            if (checkuser(userInfo)) {
-//                Map<String, Object> param = new HashMap<String, Object>();
-//                param.put("systemChoose", null);
-//                param.put("questionId", forumModel.getQuestionId());
-//                if (Integer.parseInt(userInfo.getRole()) >= 90) {
-//                    forumService.updateSystemChoose(param);
-//                    forumModel.setSystemChoose(null);
-//                }
-//            }
-//        } catch (Exception e) {
-//            processForException(logger, e);
-//        }
-//        return SystemConstants.PAGE_ITBK_FORUM_002;
-//    }
-
 }

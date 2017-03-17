@@ -15,7 +15,7 @@ public class VbForumMyBean {
 
     private String nickName;
 
-    private String value;
+    private String statusName;
 
     private String context;
 
@@ -71,12 +71,12 @@ public class VbForumMyBean {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public String getValue() {
-        return value;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     public String getContext() {

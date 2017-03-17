@@ -5,7 +5,7 @@
 <mapper namespace="Forum">
 
 	<select id="selectForumForAll" resultType="zh.co.item.bank.model.entity.ForumModel">
-		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum a, (select @rowNO :=0) x
+		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_my a, (select @rowNO :=0) x
 	</select>
 
 	<select id="selectForumByAsker" parameterType="Integer"
@@ -15,15 +15,13 @@
 
 	<select id="selectQuestionByQuestionId" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select context, a, b, c, d, answer, analysis, exam_type_name, source from vb_question_detail
-		where question_id = #{questionId}
+		select no, context, a, b, c, d, answer, analysis, exam_type_name, source from vb_question_detail
+		where no = #{questionId}
 	</select>
 
 	<select id="selectResponseByQuestionId" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ForumResponseModel">
-		select t1.*, t2.nick_name from tb_forum_response t1, tu_user t2
-		where t1.question_id = #{questionId} and t1.responser = t2.id
-		order by id
+		select * from vb_forum where question_id = #{questionId}
 	</select>
 
 	<select id="selectForumForOne" parameterType="Integer"
