@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import zh.co.item.bank.db.entity.VbForumMyBean;
+import zh.co.item.bank.db.entity.VbForumAskerBean;
 
-public class ForumModel extends VbForumMyBean {
+public class ForumModel extends VbForumAskerBean {
 
     private Map<Integer, String> userName = new HashMap<Integer, String>();
 
@@ -20,7 +20,6 @@ public class ForumModel extends VbForumMyBean {
 
     /** 行号 */
     private int rowNo;
-
 
     public ExamModel getQuestion() {
         return question;

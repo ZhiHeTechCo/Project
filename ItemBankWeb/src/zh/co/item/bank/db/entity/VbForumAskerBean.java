@@ -2,7 +2,7 @@ package zh.co.item.bank.db.entity;
 
 import java.util.Date;
 
-public class VbForumMyBean {
+public class VbForumAskerBean {
     private Integer id;
 
     private Integer questionId;
@@ -76,7 +76,7 @@ public class VbForumMyBean {
     }
 
     public void setStatusName(String statusName) {
-        this.statusName = statusName;
+        this.statusName = statusName == null ? null : statusName.trim();
     }
 
     public String getContext() {

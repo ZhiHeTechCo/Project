@@ -90,15 +90,17 @@ public class ForumResponseController extends BaseController {
     public String responseQuestion() {
         try {
             TbForumResponseBean newResponse = new TbForumResponseBean();
+            // 回答·评论
             newResponse.setResponse(myResponse);
             // 用户信息不存在则使用游客身份
+            userInfo = WebUtils.getLoginUserInfo();
             int id = userInfo != null ? userInfo.getId() : 0;
             newResponse.setResponser(id);
-            newResponse.setQuestionId(forumModel.getQuestion().getNo());
+            // 试题ID
+            newResponse.setQuestionId(currentQuestionId);
             forumService.insertResponse(newResponse);
 
-            // 重置页面信息
-            forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
+            refreshPage();
             myResponse = null;
             setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0019), MESSAGE_LEVEL_INFO);
 
@@ -119,17 +121,29 @@ public class ForumResponseController extends BaseController {
             String id = WebUtils.getRequestParam("id");
             if (StringUtils.isNotEmpty(id)) {
                 forumService.doUp(Integer.parseInt(id));
-                // 重置页面信息
-                forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
+                refreshPage();
             }
         } catch (Exception e) {
             processForException(logger, e);
         }
     }
 
+    /**
+     * 返回论坛一览
+     * 
+     * @return
+     */
     public String goBackToForum() {
         return SystemConstants.PAGE_ITBK_FORUM_001;
     }
+
+    /**
+     * 重置页面信息
+     */
+    private void refreshPage() {
+        forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
+    }
+
     // /**
     // * 管理员选择正确答案
     // *
