@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ForumResponse">
+
+	<select id="selectQuestionByQuestionId" parameterType="Integer"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select no, context, a, b, c, d, answer, analysis, exam_type_name, source from vb_question_detail
+		where no = #{questionId}
+	</select>
+
+	<select id="selectResponseByQuestionId" parameterType="Integer"
+		resultType="zh.co.item.bank.model.entity.ForumResponseModel">
+		select * from vb_forum_response where question_id = #{questionId}
+	</select>
+
+    <update id="updateSystemChoose" parameterType="java.util.Map">
+        update tb_forum_response set system_choose = #{systemChoose} where question_id = #{questionId}
+    </update>
+
+    <update id="updateUserId" parameterType="java.util.Map">
+        update tb_forum_response set responser = #{oldUserId} where responser = #{newUserId}
+    </update>
+
+	<update id="doUp" parameterType="INTEGER">
+		update tb_forum_response
+		set count = count + 1
+		where id = #{id}
+	</update>
+
+</mapper>

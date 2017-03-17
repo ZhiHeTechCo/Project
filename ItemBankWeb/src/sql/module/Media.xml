@@ -121,7 +121,7 @@
 	</insert>
 
     <update id="updateUserId" parameterType="java.util.Map">
-        update tb_media_collection set asker = #{oldUserId} where asker = #{newUserId}
+        update tb_media_collection set user_id = #{oldUserId} where user_id = #{newUserId}
     </update>
 
 	<delete id="deleteMediaCollectionBySource" parameterType="java.util.Map" >
@@ -131,7 +131,9 @@
 	</delete>
 
 	<delete id="deleteMediaCollectionOld" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean" >
-	  delete from tb_media_collection where
-	  media_id = #{mediaId} and user_id = #{userId,jdbcType=INTEGER}
+	  delete from tb_media_collection where (media_id, user_id) in
+	  <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+          (#{item.mediaId,jdbcType=CHAR}, #{item.userId,jdbcType=INTEGER})
+      </foreach>
 	</delete>
 </mapper>

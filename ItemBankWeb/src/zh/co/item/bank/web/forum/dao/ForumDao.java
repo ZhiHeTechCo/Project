@@ -27,20 +27,13 @@ public class ForumDao extends BaseDao {
     }
 
     /**
-     * 登录论坛回答
-     */
-    public void insertForumResponse(Integer questionId) {
-        getIbatisTemplate().insert("Forum.insertForumResponse", questionId);
-    }
-
-    /**
      * 显示所有尚未解答提问
      * 
      * @return
      */
     @SuppressWarnings("unchecked")
     public List<ForumModel> selectForumForAll() {
-        return getIbatisTemplate().selectList("Forum.selectForumForAll");
+        return getIbatisTemplate().selectList("ForumAsker.selectForumForAll");
     }
 
     /**
@@ -50,7 +43,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     public int selectForumForOne(Integer questionId) {
-        return (int) getIbatisTemplate().selectOne("Forum.selectForumForOne", questionId);
+        return (int) getIbatisTemplate().selectOne("ForumAsker.selectForumForOne", questionId);
     }
 
     /**
@@ -59,7 +52,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     public ExamModel selectQuestionByQuestionId(Integer questionId) {
-        return (ExamModel) getIbatisTemplate().selectOne("Forum.selectQuestionByQuestionId", questionId);
+        return (ExamModel) getIbatisTemplate().selectOne("ForumResponse.selectQuestionByQuestionId", questionId);
     }
 
     /**
@@ -70,7 +63,7 @@ public class ForumDao extends BaseDao {
      */
     @SuppressWarnings("unchecked")
     public List<ForumModel> selectForumByAsker(Integer id) {
-        return getIbatisTemplate().selectList("Forum.selectForumByAsker", id);
+        return getIbatisTemplate().selectList("ForumAsker.selectForumByAsker", id);
     }
 
     /**
@@ -79,7 +72,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     public int doUp(Integer id) {
-        return getIbatisTemplate().update("Forum.doUp", id);
+        return getIbatisTemplate().update("ForumResponse.doUp", id);
     }
 
     /**
@@ -99,7 +92,7 @@ public class ForumDao extends BaseDao {
      */
     @SuppressWarnings("unchecked")
     public List<TuUserBean> selectAllAsker(Integer questionId) {
-        return getIbatisTemplate().selectList("Forum.selectAllAsker", questionId);
+        return getIbatisTemplate().selectList("ForumAsker.selectAllAsker", questionId);
     }
 
     /**
@@ -108,7 +101,7 @@ public class ForumDao extends BaseDao {
      * @param item
      */
     public void updateSystemChoose(Map<String, Object> param) {
-        getIbatisTemplate().update("Forum.updateSystemChoose", param);
+        getIbatisTemplate().update("ForumResponse.updateSystemChoose", param);
     }
 
     /**
@@ -116,8 +109,17 @@ public class ForumDao extends BaseDao {
      * 
      * @param map
      */
-    public void updateUserId(Map<String, Object> map) {
-        getIbatisTemplate().update("Forum.updateUserId", map);
+    public void updateAskerId(Map<String, Object> map) {
+        getIbatisTemplate().update("ForumAsker.updateUserId", map);
+    }
+    
+    /**
+     * 账号合并-更新responser
+     * 
+     * @param map
+     */
+    public void updateResponserId(Map<String, Object> map) {
+        getIbatisTemplate().update("ForumResponse.updateUserId", map);
     }
 
     /**
@@ -128,6 +130,6 @@ public class ForumDao extends BaseDao {
      */
     @SuppressWarnings("unchecked")
     public List<ForumResponseModel> selectResponseByQuestionId(Integer id) {
-        return getIbatisTemplate().selectList("Forum.selectResponseByQuestionId", id);
+        return getIbatisTemplate().selectList("ForumResponse.selectResponseByQuestionId", id);
     }
 }

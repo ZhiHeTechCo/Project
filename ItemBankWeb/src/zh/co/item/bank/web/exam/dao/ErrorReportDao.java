@@ -21,6 +21,6 @@ public class ErrorReportDao extends BaseDao {
      * @param map
      */
     public void updateUserId(Map<String, Object> map) {
-        getIbatisTemplate().update("Exam.updateUserId", map);
+        getIbatisTemplate().update("ErrorReport.updateUserId", map);
     }
 }

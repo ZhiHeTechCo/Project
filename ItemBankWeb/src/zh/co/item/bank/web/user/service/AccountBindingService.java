@@ -104,8 +104,8 @@ public class AccountBindingService {
         keepUser.setName(getItemValue(olderUser.getName(), newUser.getName()));
         // nick_name
         keepUser.setNickName(getItemValue(olderUser.getNickName(), newUser.getNickName()));
-        // password
-        keepUser.setPassword(getItemValue(olderUser.getPassword(), newUser.getPassword()));
+        // password TODO
+//        keepUser.setPassword(getItemValue(olderUser.getPassword(), newUser.getPassword()));
         // role 取较高级别
         String tmpRole = Integer.valueOf(olderUser.getRole()) > Integer.valueOf(newUser.getRole()) ? olderUser.getRole()
                 : newUser.getRole();
@@ -122,8 +122,8 @@ public class AccountBindingService {
         keepUser.setJtestLevel(getItemValue(olderUser.getJtestLevel(), newUser.getJtestLevel()));
 
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("newUserId", olderUser.getId());
-        param.put("oldUserId", newUser.getId());
+        param.put("newUserId", newUser.getId());
+        param.put("oldUserId", olderUser.getId());
         logger.debug(
                 String.format("[uuid][%s]:[userId](%s, %s)", newUser.getUuid(), newUser.getId(), olderUser.getId()));
         // 1.更新tb_exam_collection
@@ -244,9 +244,9 @@ public class AccountBindingService {
      * 更新tb_forum
      */
     private void updateForum(Map<String, Object> map) {
-        logger.debug("5.更新tc_forum_asker");
-        forumDao.updateUserId(map);
-        // tb_forum_response（结构不对）TODO
+        logger.debug("5.更新tb_forum_asker,tb_forum_response");
+        forumDao.updateAskerId(map);
+        forumDao.updateResponserId(map);
     }
 
     /**
@@ -277,8 +277,8 @@ public class AccountBindingService {
      */
     private void updateUser(TuUserBean keepUser, UserModel newUser) {
         logger.debug("8.更新tu_user");
-        userDao.updateUserByPrimaryKeySelective(keepUser);
         userDao.deleteUserdeleteByPrimaryKey(newUser.getId());
+        userDao.updateUserByPrimaryKeySelective(keepUser);
     }
 
     /**

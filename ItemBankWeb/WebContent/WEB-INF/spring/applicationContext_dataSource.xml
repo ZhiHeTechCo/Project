@@ -43,11 +43,12 @@
                 <value>classpath:sql/common/TuPoint.xml</value>
                 <value>classpath:sql/common/TuUser.xml</value>
                 <value>classpath:sql/common/TbFileInfo.xml</value>
-                
+
                 <value>classpath:sql/module/CodeManage.xml</value>
                 <value>classpath:sql/module/ExamList.xml</value>
                 <value>classpath:sql/module/UserManage.xml</value>
-                <value>classpath:sql/module/Forum.xml</value>
+                <value>classpath:sql/module/ForumAsker.xml</value>
+                <value>classpath:sql/module/ForumResponse.xml</value>
                 <value>classpath:sql/module/Media.xml</value>
                 <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
