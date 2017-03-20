@@ -110,6 +110,7 @@
 	<resultMap id="questionsResult" type="zh.co.item.bank.model.entity.QuestionStructure">  
       <result property="title" column="title"/>
       <collection property="firstLevels" ofType="zh.co.item.bank.model.entity.FirstLevelModel" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
 	    <result column="subject" property="subject" jdbcType="VARCHAR" />
 	    <result column="img" property="img" jdbcType="LONGVARBINARY" />
 	      <collection property="questions" ofType="zh.co.item.bank.model.entity.ExamModel" >
@@ -138,7 +139,7 @@
     <select id="selectReportStructure" parameterType="java.util.Map" resultMap="questionsResult">
 		select b1.title, b2.* from tb_question_structure b1 right join
 			(select (@rowNO := @rowNO+1) as rowNo, a1.my_answer, a2.*, a3.exam_type from tb_exam_collection a1,
-				(select t1.*, t2.subject, t2.img from tb_question t1 left join tb_first_level_directory t2 on t1.father_id=t2.id) a2,
+				(select t1.*, IFNULL(t2.id,0) as id, t2.subject, t2.img from tb_question t1 left join tb_first_level_directory t2 on t1.father_id=t2.id) a2,
 				tb_question_classify a3, (select @rowNO :=0) a4
 			where a1.question_id = a2.no
 			and a1.user_id = #{userId}

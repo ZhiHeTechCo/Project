@@ -18,7 +18,6 @@ import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.MediaQuestionStructure;
 
@@ -824,17 +823,18 @@ public final class CmnStringUtils {
 
         File file = new File(mp3Path);
         if (!file.exists()) {
-        	String srcPath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH) + System.getProperty("file.separator") + path;
-        	File srcFile = new File(srcPath);
-        	if(srcFile.exists()) {
-        		FileUtils.copyFile(srcPath, mp3Path);
-        	} else {
-        		return SystemConstants.EMPTY;
-        	}
-        } 
+            String srcPath = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_PATH)
+                    + System.getProperty("file.separator") + path;
+            File srcFile = new File(srcPath);
+            if (srcFile.exists()) {
+                FileUtils.copyFile(srcPath, mp3Path);
+            } else {
+                return SystemConstants.EMPTY;
+            }
+        }
         String fileUrl = PropertiesUtils.getInstance().getSgValue(SystemConstants.MEDIA_FILE_URL) + path;
         return fileUrl;
-/*        File file = new File(filePath);
+        /*        File file = new File(filePath);
         if (!file.exists()) {
             return SystemConstants.EMPTY;
         }
@@ -873,7 +873,9 @@ public final class CmnStringUtils {
 
         if (questions != null && questions.size() > 0) {
             for (int i = 0; i < questions.size(); i++) {
-                questions.get(i).setRowNo(i + 1);
+                if (questions.get(i).getRowNo() == 0) {
+                    questions.get(i).setRowNo(i + 1);
+                }
                 if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                         .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
                     questions.get(i).setLayoutStyle("pageDirection");
@@ -915,17 +917,13 @@ public final class CmnStringUtils {
             if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                     .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
                 examModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(examModel.getA())
-                    && examModel.getA().length() > CmnContants.FOLDING_LINE) {
+            } else if (!StringUtils.isEmpty(examModel.getA()) && examModel.getA().length() > CmnContants.FOLDING_LINE) {
                 examModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(examModel.getB())
-                    && examModel.getB().length() > CmnContants.FOLDING_LINE) {
+            } else if (!StringUtils.isEmpty(examModel.getB()) && examModel.getB().length() > CmnContants.FOLDING_LINE) {
                 examModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(examModel.getC())
-                    && examModel.getC().length() > CmnContants.FOLDING_LINE) {
+            } else if (!StringUtils.isEmpty(examModel.getC()) && examModel.getC().length() > CmnContants.FOLDING_LINE) {
                 examModel.setLayoutStyle("pageDirection");
-            } else if (!StringUtils.isEmpty(examModel.getD())
-                    && examModel.getD().length() > CmnContants.FOLDING_LINE) {
+            } else if (!StringUtils.isEmpty(examModel.getD()) && examModel.getD().length() > CmnContants.FOLDING_LINE) {
                 examModel.setLayoutStyle("pageDirection");
             } else {
                 examModel.setLayoutStyle("lineDirection");

@@ -33,7 +33,9 @@
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
       <h:form id="examPaperForm">
         <div class="typrography">
-          <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h3 style="text-align: center; padding-bottom: 20px; color: #3382C9;">#{examPaperController.source}</h3>
+          </c:if>
           <div class="container">
             <div class="bs-example">
               <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
@@ -63,8 +65,9 @@
                               <td align="center">
                                 <div class="gallery-bottom">
                                   <div class="col-md-3 gallery-grid">
-                                    <a class="example-image-link" href="#{second.graphicImage}" data-lightbox="example-set"><img
-                                      class="example-image" src="#{second.graphicImage}" alt="" /></a>
+                                    <a class="example-image-link" href="#{second.graphicImage}"
+                                      data-lightbox="example-set"><img class="example-image"
+                                      src="#{second.graphicImage}" alt="" /></a>
                                   </div>
                                 </div>
                               </td>
@@ -78,16 +81,10 @@
                             <h:outputText value="#{item.rowNo}"></h:outputText>
                           </h4>
                           <h:inputHidden value="#{item.answer}" id="questionAnswer" />
-                          <td class="list-group list-group-alternate"><h:commandLink
-                              action="#{examPaperController.showDetail}"
-                              style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
-                              class="list-group-item">
-                              <f:param name="questionId" value="#{item.no}"></f:param>
-                              <ui:repeat value="#{item.contextList}" var="stringItem">
-                                <h:outputText value="#{stringItem}" />
-                              </ui:repeat>
-                              <ins>#{item.contextKey}</ins>#{item.contextAfter}
-									</h:commandLink></td>
+                          <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
+                              var="stringItem">
+                              <h:outputText value="#{stringItem}" />
+                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}</td>
                           <tr>
                             <td style="width: 10%;"><h4>选项</h4></td>
                             <td>

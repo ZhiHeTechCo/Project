@@ -14,7 +14,7 @@ import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
 
 /**
- * 结果一览画面
+ * 试卷画面
  * 
  * @author gaoya
  *
@@ -26,6 +26,8 @@ public class ExamPaperController extends BaseController {
 
     /** 画面初始化变量 */
     private List<QuestionStructure> examPaper;
+
+    private String source;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_012;
@@ -44,6 +46,7 @@ public class ExamPaperController extends BaseController {
                 for (QuestionStructure questionStructure : examPaper) {
                     List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
                     for (FirstLevelModel firstLevelModle : firstLevelModles) {
+                        source = firstLevelModle.getQuestions().get(0).getSource();
                         List<String> subjectList = CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
                         firstLevelModle.setSubjectList(subjectList);
                         String graphicImage = CmnStringUtils.getGraphicImage(firstLevelModle.getImg());
@@ -74,6 +77,14 @@ public class ExamPaperController extends BaseController {
 
     public void setExamPaper(List<QuestionStructure> examPaper) {
         this.examPaper = examPaper;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
 }
