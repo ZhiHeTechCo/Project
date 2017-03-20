@@ -125,7 +125,7 @@ public class AccountBindingService {
         param.put("newUserId", newUser.getId());
         param.put("oldUserId", olderUser.getId());
         logger.debug(
-                String.format("[uuid][%s]:[userId](%s, %s)", newUser.getUuid(), newUser.getId(), olderUser.getId()));
+                String.format("[uuid][%s]:[userId](%s, %s)", newUser.getUuid(), olderUser.getId(), newUser.getId()));
         // 1.更新tb_exam_collection
         updateExamCollection(param);
         // 2.更新tb_collection, tb_collection_detail
@@ -174,14 +174,14 @@ public class AccountBindingService {
         logger.debug("1.更新tb_exam_collection");
         // 根据Source检索重复数据[时间降顺]
         List<TbExamCollectionBean> tbExamCollectionBeans = examCollectionDao.selectExamCollectionByUsers(param);
-        List<String> sources = new ArrayList<String>();
+        List<Integer> question = new ArrayList<Integer>();
         List<TbExamCollectionBean> deleteList = new ArrayList<TbExamCollectionBean>();
         for (TbExamCollectionBean bean : tbExamCollectionBeans) {
-            if (sources.contains(bean.getSource())) {
+            if (question.contains(bean.getQuestionId())) {
                 deleteList.add(bean);
             } else {
                 // 最新的一件保留
-                sources.add(bean.getSource());
+                question.add(bean.getQuestionId());
             }
         }
 

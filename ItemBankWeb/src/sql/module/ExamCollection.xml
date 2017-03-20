@@ -12,8 +12,13 @@
 
     <select id="selectExamCollectionByUsers" parameterType="java.util.Map"
         resultType="zh.co.item.bank.db.entity.TbExamCollectionBean">
-        select user_id, source, create_time from tb_exam_collection where user_id in (#{newUserId}, #{oldUserId})
-        group by source, user_id order by create_time desc
+        select user_id, question_id, create_time from tb_exam_collection
+        where user_id in (#{newUserId}, #{oldUserId})
+        and question_id in
+          (select t1.question_id from
+            (select question_id,count(question_id) as num from tb_exam_collection where user_id in(#{newUserId}, #{oldUserId}) group by question_id) t1
+          where t1.num>=2) 
+        order by create_time desc
     </select>
 
 	<select id="getExamTypes" parameterType="java.lang.String"
@@ -158,9 +163,9 @@
 	</delete>
 
 	<delete id="deleteExamCollectionOld" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean">
-		  delete from tb_exam_collection where (source, user_id) in
+		  delete from tb_exam_collection where (question_id, user_id) in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
-            (#{item.source,jdbcType=CHAR}, #{item.userId,jdbcType=INTEGER})
+            (#{item.questionId,jdbcType=CHAR}, #{item.userId,jdbcType=INTEGER})
         </foreach>
 	</delete>
 
