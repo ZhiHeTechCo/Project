@@ -23,8 +23,8 @@
               <h5 style="color: #6682C9;">
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumResponseController.forumModel.askers}标记了这道题。
               </h5>
-              <h:dataTable class="table table-bordered" rendered="true" value="#{forumResponseController.forumModel.question}"
-                var="item">
+              <h:dataTable class="table table-bordered" rendered="true"
+                value="#{forumResponseController.forumModel.question}" var="item">
                 <h:column>
                   <h4>题干</h4>
                   <td>#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
@@ -98,7 +98,8 @@
                       </tr>
                       <tr>
                         <td><h5>
-                            <h:outputText id="count" value="#{response.count}" />人赞&nbsp;&nbsp;
+                            <h:outputText id="count" value="#{response.count}" />
+                            人赞&nbsp;&nbsp;
                             <h:commandLink value="" action="#{forumResponseController.doUp}">
                               <f:param name='id' value="#{response.id}"></f:param>
                               <f:ajax render="count"></f:ajax>
@@ -124,8 +125,9 @@
               <div class="form-button1" style="margin-top: 30px;">
                 <input type="button" id="checkinputbutton" value="提交" style="margin-right: 5px;"
                   onclick="if(document.getElementById('forumResponseForm\:myResponse').value == '') { alert('请输后再提交!'); return false;} else {document.getElementById('forumResponseForm\:responseQuestion').click();} " />
-                <h:commandButton value="提交" id="responseQuestion" style="display: none;"
-                  action="#{forumResponseController.responseQuestion}">
+                <h:commandButton value="提交" id="responseQuestion" style="display: none;">
+                  <f:ajax event="click" execute="@form" render="responseWrapper myResponse"
+                    listener="#{forumResponseController.responseQuestion}" />
                 </h:commandButton>
               </div>
             </c:if>

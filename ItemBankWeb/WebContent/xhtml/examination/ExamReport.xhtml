@@ -2,14 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
-	<ui:define name="content">
-		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<script type="text/javascript">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <script type="text/javascript">
 			function disp_confirm()
 			  {
 				  if(true == confirm("重做听力将会清空上一次的听力成绩，确定要重做听力部分吗？")){
@@ -19,267 +17,285 @@
 			      }
 			  }
 		</script>
-		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examReportForm">
-				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-						<h2
-							style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
-					</c:if>
-					<div class="container">
-						<div class="bs-example">
-							<h:panelGroup id="ngossfw_error_display"
-								class="#{request.getAttribute('request-message-level')}"
-								layout="block">
-								<h:outputText
-									value="${request.getAttribute('request-message-content')}"
-									escape="false" />
-							</h:panelGroup>
-							<h5 style="color: #3382C9;">说明：背景色为红色表示做错。</h5>
-							<h5>
-								<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。（听力不支持查看详细，请在做完后直接确认。）
-							</h5>
-							<h4 style="text-align: center;">
-								<span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp;
-								<span class="glyphicon glyphicon-screenshot" />
-							</h4>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '1'}">
-									<h4>
-										文字：（正确率#{type.percentage}）
-									</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '1'}">
-										<div style="float: left;">
-											<h:commandLink action="#{examReportController.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '2'}">
-									<h4>词汇：（正确率#{type.percentage}）</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '2'}">
-										<div style="float: left;">
-											<h:commandLink action="#{examReportController.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '3'}">
-									<h4>
-										文法：（正确率#{type.percentage}）
-									</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '3'}">
-										<div style="float: left;">
-											<h:commandLink action="#{examReportController.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '4'}">
-									<h4>记述：（正确率#{type.percentage}）</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '4'}">
-										<div style="float: left;">
-											<h:commandLink action="#{examReportController.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '5'}">
-									<h4>
-										阅读：（正确率#{type.percentage}）
-									</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '5'}">
-										<div style="float: left;">
-											<h:commandLink action="#{examReportController.showDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.no}"></f:param>
-												<f:param name="examFlag" value="true"></f:param>
-												<div class="report" style="background: #DDDDDD;">
-													<b>#{item.rowNo}</b>
-												</div>
-											</h:commandLink>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<c:forEach var="type"
-								items="#{examReportController.reportModels}">
-								<h:panelGroup rendered="#{type.examType eq '6'}">
-									<h4>听力：（正确率#{type.percentage}）</h4>
-								</h:panelGroup>
-							</c:forEach>
-							<c:forEach var="item" items="#{examReportController.questions}">
-								<h:column>
-									<h:panelGroup rendered="#{item.examType eq '6'}">
-										<div style="float: left;">
-											<div class="report" style="background: #DDDDDD;">
-												<b>#{item.rowNo}</b>
-											</div>
-											<h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-												<div class="report" style="background: #FF6666;">×</div>
-											</h:panelGroup>
-											<h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-												<div class="report">○</div>
-											</h:panelGroup>
-										</div>
-									</h:panelGroup>
-								</h:column>
-							</c:forEach>
-							<div class="clearfix"></div>
-							<br />
-							<c:if
-								test="#{session.getAttribute('session-user-info').getRole() >= '1'}">
-								<c:if test="#{examReportController.mediaFlag ne '0'}">
-									<c:if test="#{examReportController.mediaFlag eq '1'}">
-										<h4>
-											-- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
-										</h4>
-									</c:if>
-									<c:if test="#{examReportController.mediaFlag eq '2'}">
-										<h4>
-											-- 点击<span class="glyphicon glyphicon-headphones"></span>，可重做本套听力--
-										</h4>
-									</c:if>
-									<h5>
-										<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
-									</h5>
-									<h5>
-										<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;建议在Wifi环境下使用。
-									</h5>
-									<h3>
-										<c:if test="#{examReportController.mediaFlag eq '1'}">
-											<h:commandLink action="#{examReportController.toMediaExam}">
-												<span class="glyphicon glyphicon-headphones"></span>
-											</h:commandLink>
-										</c:if>
-										<c:if test="#{examReportController.mediaFlag eq '2'}">
-											<h:commandLink onclick="disp_confirm();return false;">
-												<span class="glyphicon glyphicon-headphones"></span>
-											</h:commandLink>
-											<h:commandButton id="toMedia" style="display: none;" value=""
-												action="#{examReportController.toMediaExam}">
-											</h:commandButton>
-										</c:if>
-									</h3>
-								</c:if>
-							</c:if>
-						</div>
-						<hr />
-						<div class="form-submit1">
-							<h:commandButton value="返回题型选择" class="button1"
-								action="#{examReportController.goBackToClassify}"
-								style="margin-right: 5px;" id="goBackToExamBtn">
-							</h:commandButton>
-						</div>
-						<c:if test="#{examReportController.jtestFlag eq 'true'}">
-							<div class="form-submit1">
-								<h:commandButton value="查看成绩单" class="button1"
-									action="#{examReportController.toShowScore}"
-									id="toShowScoreBtn">
-								</h:commandButton>
-							</div>
-						</c:if>
-					</div>
-				</div>
-			</h:form>
-		</div>
-	</ui:define>
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="examReportForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h5 style="color: #3382C9;">说明：背景色为红色表示做错。</h5>
+              <h5>
+                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。（听力不支持查看详细，请在做完后直接确认。）
+              </h5>
+              <h4 style="text-align: center;">
+                <span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-screenshot" />
+              </h4>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '1'}">
+                  <h4>
+                    <h:outputText value="文字：（正确率#{type.percentage}）" />
+                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                      <h:commandLink action="#{examReportController.showPaperDetail('1')}" title="点击浏览试卷">
+                        <span class="glyphicon glyphicon-file"></span>
+                      </h:commandLink>
+                    </c:if>
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '1'}">
+                    <div style="float: left;">
+                      <h:commandLink action="#{examReportController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.no}"></f:param>
+                        <f:param name="examFlag" value="true"></f:param>
+                        <div class="report" style="background: #DDDDDD;">
+                          <b>#{item.rowNo}</b>
+                        </div>
+                      </h:commandLink>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '2'}">
+                  <h4>
+                    <h:outputText value="词汇：（正确率#{type.percentage}）" />
+                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                      <h:commandLink action="#{examReportController.showPaperDetail('2')}" title="点击浏览试卷">
+                        <span class="glyphicon glyphicon-file"></span>
+                      </h:commandLink>
+                    </c:if>
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '2'}">
+                    <div style="float: left;">
+                      <h:commandLink action="#{examReportController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.no}"></f:param>
+                        <f:param name="examFlag" value="true"></f:param>
+                        <div class="report" style="background: #DDDDDD;">
+                          <b>#{item.rowNo}</b>
+                        </div>
+                      </h:commandLink>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '3'}">
+                  <h4>
+                    <h:outputText value="文法：（正确率#{type.percentage}）" />
+                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                      <h:commandLink action="#{examReportController.showPaperDetail('3')}" title="点击浏览试卷">
+                        <span class="glyphicon glyphicon-file"></span>
+                      </h:commandLink>
+                    </c:if>
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '3'}">
+                    <div style="float: left;">
+                      <h:commandLink action="#{examReportController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.no}"></f:param>
+                        <f:param name="examFlag" value="true"></f:param>
+                        <div class="report" style="background: #DDDDDD;">
+                          <b>#{item.rowNo}</b>
+                        </div>
+                      </h:commandLink>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '4'}">
+                  <h4>
+                    <h:outputText value="记叙：（正确率#{type.percentage}）" />
+                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                      <h:commandLink action="#{examReportController.showPaperDetail('4')}" title="点击浏览试卷">
+                        <span class="glyphicon glyphicon-file"></span>
+                      </h:commandLink>
+                    </c:if>
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '4'}">
+                    <div style="float: left;">
+                      <h:commandLink action="#{examReportController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.no}"></f:param>
+                        <f:param name="examFlag" value="true"></f:param>
+                        <div class="report" style="background: #DDDDDD;">
+                          <b>#{item.rowNo}</b>
+                        </div>
+                      </h:commandLink>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '5'}">
+                  <h4>
+                    <h:outputText value="阅读：（正确率#{type.percentage}）" />
+                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                      <h:commandLink action="#{examReportController.showPaperDetail('5')}" title="点击浏览试卷">
+                        <span class="glyphicon glyphicon-file"></span>
+                      </h:commandLink>
+                    </c:if>
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '5'}">
+                    <div style="float: left;">
+                      <h:commandLink action="#{examReportController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; border-left: 0px;border-top: 0px;border-right: 0px;border-bottom: 1px;padding:0 0 0 0;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.no}"></f:param>
+                        <f:param name="examFlag" value="true"></f:param>
+                        <div class="report" style="background: #DDDDDD;">
+                          <b>#{item.rowNo}</b>
+                        </div>
+                      </h:commandLink>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <c:forEach var="type" items="#{examReportController.reportModels}">
+                <h:panelGroup rendered="#{type.examType eq '6'}">
+                  <h4>
+                    <h:outputText value="听力：（正确率#{type.percentage}）" />
+                  </h4>
+                </h:panelGroup>
+              </c:forEach>
+              <c:forEach var="item" items="#{examReportController.questions}">
+                <h:column>
+                  <h:panelGroup rendered="#{item.examType eq '6'}">
+                    <div style="float: left;">
+                      <div class="report" style="background: #DDDDDD;">
+                        <b>#{item.rowNo}</b>
+                      </div>
+                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                        <div class="report" style="background: #FF6666;">×</div>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                        <div class="report">○</div>
+                      </h:panelGroup>
+                    </div>
+                  </h:panelGroup>
+                </h:column>
+              </c:forEach>
+              <div class="clearfix"></div>
+              <br />
+              <c:if test="#{session.getAttribute('session-user-info').getRole() >= '1'}">
+                <c:if test="#{examReportController.mediaFlag ne '0'}">
+                  <c:if test="#{examReportController.mediaFlag eq '1'}">
+                    <h4>
+                      -- 点击<span class="glyphicon glyphicon-headphones"></span>将进入听力考试--
+                    </h4>
+                  </c:if>
+                  <c:if test="#{examReportController.mediaFlag eq '2'}">
+                    <h4>
+                      -- 点击<span class="glyphicon glyphicon-headphones"></span>，可重做本套听力--
+                    </h4>
+                  </c:if>
+                  <h5>
+                    <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;听力考试开始后，中途退出不会保存听力做题记录，因此请确认您有约1个小时的时间。
+                  </h5>
+                  <h5>
+                    <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;建议在Wifi环境下使用。
+                  </h5>
+                  <h3>
+                    <c:if test="#{examReportController.mediaFlag eq '1'}">
+                      <h:commandLink action="#{examReportController.toMediaExam}">
+                        <span class="glyphicon glyphicon-headphones"></span>
+                      </h:commandLink>
+                    </c:if>
+                    <c:if test="#{examReportController.mediaFlag eq '2'}">
+                      <h:commandLink onclick="disp_confirm();return false;">
+                        <span class="glyphicon glyphicon-headphones"></span>
+                      </h:commandLink>
+                      <h:commandButton id="toMedia" style="display: none;" value=""
+                        action="#{examReportController.toMediaExam}">
+                      </h:commandButton>
+                    </c:if>
+                  </h3>
+                </c:if>
+              </c:if>
+            </div>
+            <hr />
+            <div class="form-submit1">
+              <h:commandButton value="返回题型选择" class="button1" action="#{examReportController.goBackToClassify}"
+                style="margin-right: 5px;" id="goBackToExamBtn">
+              </h:commandButton>
+            </div>
+            <c:if test="#{examReportController.jtestFlag eq 'true'}">
+              <div class="form-submit1">
+                <h:commandButton value="查看成绩单" class="button1" action="#{examReportController.toShowScore}"
+                  id="toShowScoreBtn">
+                </h:commandButton>
+              </div>
+            </c:if>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
 </ui:composition>
 </html>
