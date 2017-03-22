@@ -2,6 +2,7 @@ package zh.co.item.bank.web.exam.controller;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
@@ -10,8 +11,11 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
+import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
+import zh.co.item.bank.model.entity.UserModel;
+import zh.co.item.bank.web.exam.service.ExamCollectionService;
 
 /**
  * 试卷画面
@@ -24,17 +28,24 @@ import zh.co.item.bank.model.entity.QuestionStructure;
 public class ExamPaperController extends BaseController {
     private final CmnLogger logger = CmnLogger.getLogger(getClass());
 
+    @Inject
+    private ExamCollectionService examCollectionService;
+
     /** 画面初始化变量 */
     private List<QuestionStructure> examPaper;
 
+    private UserModel userInfo;
+    
     private String source;
+
+    private String examType;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_012;
     }
 
     /**
-     * 1.浏览试卷
+     * 1.浏览试卷（非听力）
      * 
      * @return
      */
@@ -42,6 +53,10 @@ public class ExamPaperController extends BaseController {
         try {
 
             pushPathHistory("examPaperController");
+            userInfo = (UserModel) WebUtils.getLoginUserInfo();
+
+            examPaper = examCollectionService.selectReportStructure(userInfo.getId(), source, examType);
+
             if (examPaper != null && examPaper.size() > 0) {
                 for (QuestionStructure questionStructure : examPaper) {
                     List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
@@ -85,6 +100,14 @@ public class ExamPaperController extends BaseController {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getExamType() {
+        return examType;
+    }
+
+    public void setExamType(String examType) {
+        this.examType = examType;
     }
 
 }

@@ -254,7 +254,13 @@ public class ExamCollectionService {
      * @param param
      * @return
      */
-    public List<QuestionStructure> selectReportStructure(Map<String, Object> param) {
+    public List<QuestionStructure> selectReportStructure(Integer id, String source, String examType) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", id);
+        param.put("source", source);
+        param.put("examType", examType);
+
         return examCollectionDao.selectReportStructure(param);
     }
 

@@ -219,16 +219,11 @@ public class ExamReportController extends BaseController {
     public String showPaperDetail(String examType) {
         try {
 
-            Map<String, Object> param = new HashMap<String, Object>();
-            param.put("userId", userInfo.getId());
-            param.put("source", questions.get(0).getSource());
-            param.put("examType", examType);
-            currentQuestions = examCollectionService.selectReportStructure(param);
-
-            // 跳转至[结果一览]画面
+            // 跳转至[试卷一览]画面
             ExamPaperController examPaperController = (ExamPaperController) SpringAppContextManager
                     .getBean("examPaperController");
-            examPaperController.setExamPaper(currentQuestions);
+            examPaperController.setSource(questions.get(0).getSource());
+            examPaperController.setExamType(examType);
             return examPaperController.init();
 
         } catch (Exception e) {
