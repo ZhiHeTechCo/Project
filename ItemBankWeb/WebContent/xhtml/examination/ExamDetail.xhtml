@@ -2,15 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
-	<ui:define name="content">
-		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<h:outputScript library="js" name="lightbox.js" />
-		<script type="text/javascript">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:outputScript library="js" name="lightbox.js" />
+    <script type="text/javascript">
           function checkSelection() {
         	  var tmp = $('input:checkbox[id^="examDetailForm\:reasons"]:checked').length;
         	  if (tmp==0 &amp; document.getElementById('examDetailForm\:comment').value == '') { 
@@ -20,214 +18,187 @@
               }
           }
         </script>
-		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="examDetailForm">
-				<div class="typrography">
-					<h2
-						style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题详细</h2>
-					<div class="container">
-						<div class="bs-example">
-							<h:panelGroup id="ngossfw_error_display"
-								class="#{request.getAttribute('request-message-level')}"
-								layout="block">
-								<h:outputText
-									value="${request.getAttribute('request-message-content')}"
-									escape="false" />
-							</h:panelGroup>
-							<h4>
-								<b><h:outputText value="#{questionDetail.title}"></h:outputText></b>
-							</h4>
-							<c:if test="#{questionDetail.subject !=''}">
-								<table class="table table-bordered">
-									<tr>
-										<td align="center"><h4>问题</h4></td>
-									</tr>
-									<tr>
-										<td><ui:repeat value="#{questionDetail.subjectList}"
-												var="stringItem">
-												<h:outputText value="#{stringItem}" />
-												<br />
-											</ui:repeat></td>
-									</tr>
-									<c:if test="#{questionDetail.graphicImage !=''}">
-										<tr>
-											<td align="center">
-												<div class="gallery-bottom">
-													<div class="col-md-3 gallery-grid">
-														<a class="example-image-link"
-															href="#{questionDetail.graphicImage}"
-															data-lightbox="example-set"><img
-															class="example-image"
-															src="#{questionDetail.graphicImage}" alt="" /></a>
-													</div>
-												</div>
-											</td>
-										</tr>
-									</c:if>
-								</table>
-							</c:if>
-							<table class="table table-bordered">
-								<tr>
-									<td width="20%">
-										<h4>题干</h4>
-									</td>
-									<td><ui:repeat
-											value="#{questionDetail.question.contextList}"
-											var="stringItem">
-											<h:outputText value="#{stringItem}" />
-										</ui:repeat> <ins>
-											<h:outputText value="#{questionDetail.question.contextKey}" />
-										</ins> <h:outputText value="#{questionDetail.question.contextAfter}" />
-									</td>
-								</tr>
-								<c:if test="#{questionDetail.question.a ne ''}">
-									<tr>
-										<td width="20%"><h4>选项</h4></td>
-										<td width="80%"><h:selectOneRadio
-												value="#{questionDetail.question.answer}"
-												layout="#{questionDetail.question.layoutStyle}"
-												class="#{questionDetail.question.radioClass}"
-												readonly="true" disabled="true">
-												<f:selectItem itemValue="1"
-													itemLabel="  A：#{questionDetail.question.a}" />
-												<f:selectItem itemValue="2"
-													itemLabel="  B：#{questionDetail.question.b}" />
-												<f:selectItem itemValue="3"
-													itemLabel="  C：#{questionDetail.question.c}" />
-												<f:selectItem itemValue="4"
-													itemLabel="  D：#{questionDetail.question.d}" />
-											</h:selectOneRadio></td>
-									</tr>
-									<c:if test="#{questionDetail.examFlag eq 'true'}">
-										<tr>
-											<td width="20%"><h4>您的选择</h4></td>
-											<c:if test="#{questionDetail.question.myAnswer eq '1'}">
-												<td>A</td>
-											</c:if>
-											<c:if test="#{questionDetail.question.myAnswer eq '2'}">
-												<td>B</td>
-											</c:if>
-											<c:if test="#{questionDetail.question.myAnswer eq '3'}">
-												<td>C</td>
-											</c:if>
-											<c:if test="#{questionDetail.question.myAnswer eq '4'}">
-												<td>D</td>
-											</c:if>
-											<c:if
-												test="#{questionDetail.question.myAnswer eq null || questionDetail.question.myAnswer eq ''}">
-												<td>未选择</td>
-											</c:if>
-										</tr>
-									</c:if>
-								</c:if>
-								<c:if
-									test="#{questionDetail.examFlag eq 'true' and questionDetail.question.a eq '' and questionDetail.question.myAnswer ne ''}">
-									<tr>
-										<td width="20%"><h4>您的答案</h4></td>
-										<td>#{questionDetail.question.myAnswer}</td>
-									</tr>
-								</c:if>
-								<c:if test="#{questionDetail.question.a eq ''}">
-									<tr>
-										<td width="20%"><h4>正解</h4></td>
-										<td>#{questionDetail.question.answer}</td>
-									</tr>
-								</c:if>
-								<c:if test="#{questionDetail.question.a ne ''}">
-									<tr>
-										<td width="20%"><h4>解析</h4></td>
-										<td><c:if
-												test="#{questionDetail.question.analysis eq null}">暂无</c:if>
-											<h:outputText value="#{questionDetail.question.analysis}" /></td>
-									</tr>
-								</c:if>
-								<tr>
-									<td><h4>试题种别</h4></td>
-									<td><h:outputText
-											value="#{questionDetail.question.examTypeName}" /></td>
-								</tr>
-								<tr>
-									<td><h4>试题出处</h4></td>
-									<td><h:outputText
-											value="#{questionDetail.question.source}" /></td>
-								</tr>
-							</table>
-							<div class="form-submit1">
-								<h:commandButton value="返回前页" class="button1"
-									action="#{questionDetail.goBackToResult}"
-									id="goBackToResultBtn" style="margin-right: 5px;">
-								</h:commandButton>
-							</div>
-							<c:if test="#{questionDetail.examFlag ne 'true'}">
-								<div class="form-submit1">
-									<h:commandButton value="继续做题" class="button1"
-										action="#{questionDetail.goBackToExam}" id="goBackToExamBtn"
-										style="margin-right: 5px;" />
-								</div>
-							</c:if>
-							<div class="form-submit1">
-								<h:commandButton value="询问解析" class="button1"
-									action="#{questionDetail.askQuestion}" id="askQuestionBtn" />
-							</div>
-							<div class="clearfix"></div>
-							<c:if test="#{questionDetail.reasons ne null}">
-								<hr />
-								<h5 id="down" style="display: ''">
-									<a href="#"
-										onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
-										<span class="glyphicon glyphicon-hand-down"></span>发现错误，点我报错
-									</a>
-								</h5>
-								<h5 id="up" style="display: none">
-									<a href="#"
-										onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
-										<span class="glyphicon glyphicon-hand-up"></span>收起
-									</a>
-								</h5>
-								<div id="detail" style="display: none">
-									<table class="toTable" style="width: 100%;">
-										<tr>
-											<td style="width: 15%;"><h4>错误原因：</h4></td>
-											<td>
-												<div style="width: 100%;">
-													<h:selectManyCheckbox value="#{questionDetail.reasonList}"
-														style="width: 100%" id="reasons">
-														<f:selectItems value="#{questionDetail.reasons}"
-															var="entry" itemValue="#{entry.key}"
-															itemLabel="#{entry.value}">
-														</f:selectItems>
-													</h:selectManyCheckbox>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><h4>其他：</h4></td>
-											<td>
-												<div style="width: 100%;">
-													<h:inputText value="#{questionDetail.comment}" id="comment" />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="form-button1">
-													<input type="button" id="checkinputbutton" value="试题报错"
-														onclick="checkSelection();" />
-													<h:commandButton value="试题报错" id="reportErrorBtn"
-														style="display: none;"
-														action="#{questionDetail.reportError}">
-													</h:commandButton>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</c:if>
-						</div>
-					</div>
-				</div>
-			</h:form>
-		</div>
-	</ui:define>
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="examDetailForm">
+        <div class="typrography">
+          <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题详细</h2>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h4>
+                <b><h:outputText value="#{questionDetail.title}"></h:outputText></b>
+              </h4>
+              <c:if test="#{questionDetail.subject !=''}">
+                <table class="table table-bordered">
+                  <tr>
+                    <td align="center"><h4>问题</h4></td>
+                  </tr>
+                  <tr>
+                    <td><ui:repeat value="#{questionDetail.subjectList}" var="stringItem">
+                        <h:outputText value="#{stringItem}" />
+                        <br />
+                      </ui:repeat></td>
+                  </tr>
+                  <c:if test="#{questionDetail.graphicImage !=''}">
+                    <tr>
+                      <td align="center">
+                        <div class="gallery-bottom">
+                          <div class="col-md-3 gallery-grid">
+                            <a class="example-image-link" href="#{questionDetail.graphicImage}"
+                              data-lightbox="example-set"><img class="example-image"
+                              src="#{questionDetail.graphicImage}" alt="" /></a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:if>
+                </table>
+              </c:if>
+              <table class="table table-bordered">
+                <tr>
+                  <td width="20%">
+                    <h4>题干</h4>
+                  </td>
+                  <td><ui:repeat value="#{questionDetail.question.contextList}" var="stringItem">
+                      <h:outputText value="#{stringItem}" />
+                    </ui:repeat> <ins>
+                      <h:outputText value="#{questionDetail.question.contextKey}" />
+                    </ins> <h:outputText value="#{questionDetail.question.contextAfter}" /></td>
+                </tr>
+                <c:if test="#{questionDetail.question.a ne ''}">
+                  <tr>
+                    <td width="20%"><h4>选项</h4></td>
+                    <td width="80%"><h:selectOneRadio value="#{questionDetail.question.answer}"
+                        layout="#{questionDetail.question.layoutStyle}" class="#{questionDetail.question.radioClass}"
+                        readonly="true" disabled="true">
+                        <f:selectItem itemValue="1" itemLabel="  A：#{questionDetail.question.a}" />
+                        <f:selectItem itemValue="2" itemLabel="  B：#{questionDetail.question.b}" />
+                        <f:selectItem itemValue="3" itemLabel="  C：#{questionDetail.question.c}" />
+                        <f:selectItem itemValue="4" itemLabel="  D：#{questionDetail.question.d}" />
+                      </h:selectOneRadio></td>
+                  </tr>
+                  <c:if test="#{questionDetail.examFlag eq 'true'}">
+                    <tr>
+                      <td width="20%"><h4>您的选择</h4></td>
+                      <c:if test="#{questionDetail.question.myAnswer eq '1'}">
+                        <td>A</td>
+                      </c:if>
+                      <c:if test="#{questionDetail.question.myAnswer eq '2'}">
+                        <td>B</td>
+                      </c:if>
+                      <c:if test="#{questionDetail.question.myAnswer eq '3'}">
+                        <td>C</td>
+                      </c:if>
+                      <c:if test="#{questionDetail.question.myAnswer eq '4'}">
+                        <td>D</td>
+                      </c:if>
+                      <c:if test="#{questionDetail.question.myAnswer eq null || questionDetail.question.myAnswer eq ''}">
+                        <td>未选择</td>
+                      </c:if>
+                    </tr>
+                  </c:if>
+                </c:if>
+                <c:if
+                  test="#{questionDetail.examFlag eq 'true' and questionDetail.question.a eq '' and questionDetail.question.myAnswer ne ''}">
+                  <tr>
+                    <td width="20%"><h4>您的答案</h4></td>
+                    <td>#{questionDetail.question.myAnswer}</td>
+                  </tr>
+                </c:if>
+                <c:if test="#{questionDetail.question.a eq ''}">
+                  <tr>
+                    <td width="20%"><h4>正解</h4></td>
+                    <td>#{questionDetail.question.answer}</td>
+                  </tr>
+                </c:if>
+                <c:if test="#{questionDetail.question.a ne ''}">
+                  <tr>
+                    <td width="20%"><h4>解析</h4></td>
+                    <td><c:if test="#{questionDetail.question.analysis eq null}">暂无</c:if> <h:outputText
+                        value="#{questionDetail.question.analysis}" /></td>
+                  </tr>
+                </c:if>
+                <tr>
+                  <td><h4>试题种别</h4></td>
+                  <td><h:outputText value="#{questionDetail.question.examTypeName}" /></td>
+                </tr>
+                <tr>
+                  <td><h4>试题出处</h4></td>
+                  <td><h:outputText value="#{questionDetail.question.source}" /></td>
+                </tr>
+              </table>
+              <div class="form-submit1">
+                <h:commandButton value="返回前页" class="button1" action="#{questionDetail.goBackToResult}"
+                  id="goBackToResultBtn" style="margin-right: 5px;">
+                </h:commandButton>
+              </div>
+              <c:if test="#{questionDetail.examFlag ne 'true'}">
+                <div class="form-submit1">
+                  <h:commandButton value="继续做题" class="button1" action="#{questionDetail.goBackToExam}"
+                    id="goBackToExamBtn" style="margin-right: 5px;" />
+                </div>
+              </c:if>
+              <div class="form-submit1">
+                <h:commandButton value="询问解析" class="button1" action="#{questionDetail.askQuestion}" id="askQuestionBtn" />
+              </div>
+              <div class="clearfix"></div>
+              <c:if test="#{questionDetail.reasons ne null}">
+                <hr />
+                <h5 id="down" style="display: ''">
+                  <a href="#"
+                    onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
+                    <span class="glyphicon glyphicon-hand-down"></span>发现错误，点我报错
+                  </a>
+                </h5>
+                <h5 id="up" style="display: none">
+                  <a href="#"
+                    onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
+                    <span class="glyphicon glyphicon-hand-up"></span>收起
+                  </a>
+                </h5>
+                <div id="detail" style="display: none">
+                  <table class="toTable" style="width: 100%;">
+                    <tr>
+                      <td style="width: 15%;"><h4>错误原因：</h4></td>
+                      <td>
+                        <div style="width: 100%;">
+                          <h:selectManyCheckbox value="#{questionDetail.reasonList}" style="width: 100%" id="reasons">
+                            <f:selectItems value="#{questionDetail.reasons}" var="entry" itemValue="#{entry.key}"
+                              itemLabel="#{entry.value}">
+                            </f:selectItems>
+                          </h:selectManyCheckbox>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><h4>其他：</h4></td>
+                      <td>
+                        <div style="width: 100%;">
+                          <h:inputText value="#{questionDetail.comment}" id="comment" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-button1">
+                          <input type="button" id="checkinputbutton" value="试题报错" onclick="checkSelection();" />
+                          <h:commandButton value="试题报错" id="reportErrorBtn" style="display: none;"
+                            action="#{questionDetail.reportError}">
+                          </h:commandButton>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </c:if>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
 </ui:composition>
 </html>
