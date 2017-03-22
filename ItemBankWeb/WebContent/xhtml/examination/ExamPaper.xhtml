@@ -84,11 +84,16 @@
                           <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
                               var="stringItem">
                               <h:outputText value="#{stringItem}" />
-                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}</td>
+                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}
+                            <!-- 
+                            <div style="float: right;">
+                              <h:commandLink onclick="$('#noteBut').click();return false;">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                              </h:commandLink>
+                            </div>--></td>
                           <tr>
                             <td style="width: 10%;"><h4>选项</h4></td>
-                            <td>
-                              <!-- 选择题时 --> <h:panelGroup rendered="#{item.a ne ''}">
+                            <td><h:panelGroup rendered="#{item.a ne ''}">
                                 <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
                                   class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
                                   <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
@@ -96,7 +101,7 @@
                                   <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
                                   <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
                                 </h:selectOneRadio>
-                              </h:panelGroup> <!-- 非选择题 --> <h:panelGroup rendered="#{item.a eq ''}">
+                              </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
                                 <div style="width: 5%; float: left;">
                                   <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
                                     <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
@@ -110,8 +115,7 @@
                                 <div style="float: left; width: 95%;">
                                   <h:inputText value="#{item.myAnswer}" readonly="true" />
                                 </div>
-                              </h:panelGroup>
-                            </td>
+                              </h:panelGroup></td>
                           </tr>
                           <tr>
                             <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
@@ -135,6 +139,35 @@
                 <h:commandButton value="返回" class="button1" action="#{examPaperController.goBackToReport}"
                   id="goBackToReportBtn">
                 </h:commandButton>
+              </div>
+              <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
+                onclick="$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title" id="myModalLabel">Note</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <h:inputTextarea name="txt_note" class="form-control" id="txt_departmentname" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                      </button>
+                      <button type="button" onclick="document.getElementById('examPaperForm\:submit').click();"
+                        id="btn_submit" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
+                      </button>
+                      <h:commandButton style="display: none;" id="submit" value="" action="#{examPaperController.note}" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

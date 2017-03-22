@@ -35,7 +35,7 @@ public class ExamPaperController extends BaseController {
     private List<QuestionStructure> examPaper;
 
     private UserModel userInfo;
-    
+
     private String source;
 
     private String examType;
@@ -78,7 +78,17 @@ public class ExamPaperController extends BaseController {
     }
 
     /**
-     * 2.返回考试结果一览画面
+     * 记笔记
+     * 
+     * @return
+     */
+    public String note() {
+        System.out.println("note");
+        return getPageId();
+    }
+
+    /**
+     * 3.返回考试结果一览画面
      * 
      * @return
      */
