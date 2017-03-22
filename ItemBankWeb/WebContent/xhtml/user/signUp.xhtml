@@ -6,6 +6,22 @@
 <ui:composition template="../../xhtml/common/template.xhtml">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script type="text/javascript">
+    $(document)
+    .ready(
+            function() {
+                var obj = new WxLogin({
+                    id:"login_container", 
+                    appid: "wx1e2b360eac9f3475", 
+                    scope: "snsapi_login", 
+                    redirect_uri: "http%3a%2f%2fwww.itembank.cn%2fservlet%2fWebOAuthServlet",
+                    state: "state",
+                    style: "",
+                    href: ".impowerBox .title {font-family: 'FZYaoti', 'Arial', 'Dorsa-Regular', 'sans-serif';}"
+                  });
+            });
+    </script>
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
       <h:form id="sguform">
         <!-- //requried-jsfiles-for owl -->
@@ -13,73 +29,12 @@
           <div class="contact_grid">
             <div class="container">
               <div class="col-md-8 contact-top">
-                <h3>用户注册</h3>
-                <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                  layout="block">
-                  <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
-                </h:panelGroup>
-                <h4>请输入您的信息：</h4>
-                <table class="to toTable">
-                  <tr>
-                    <td colspan="2">
-                       <span class="msg" style="margin-left: 15px">手机号/邮箱/字母、数字或下划线组成</span>
-                        <div class="col-md-6" style="width: 80%;">
-                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            <h:inputText id="name" value="#{signUpBean.userInfo.name}" style="width:100%;" maxlength="30" 
-                              onfocus="if (this.value == '用户名') {this.value = '';}"
-                              onblur="if (this.value == '') {this.value = '用户名';}" />  
-                        </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                       <span class="msg" style="margin-left: 15px">6位以上字母、数字或下划线组成</span>
-                       <div class="col-md-6" style="width: 80%;">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                            <h:inputText redisplay="true" id="password" value="#{signUpBean.userInfo.password}" style="width:100%;" maxlength="10" placeholder="密碼" 
-                              onfocus="this.value = '';this.type = 'password';"
-                        onblur="if (this.value == '') {this.value = '密码';this.type = 'text';} else {this.type = 'password';}" />
-                        </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2"><h4>考试级别：</h4></td>
-                  </tr>
-                  <tr>
-                    <td style="width: 60px;"><h5>JLPT</h5></td>
-                    <td>
-                      <div class="col-md-6" style="width: 100%;">
-                        <h:selectOneMenu value="#{signUpBean.userInfo.jlptLevel}" style="width:40%;">
-                          <f:selectItem itemValue="" itemLabel="" />
-                          <f:selectItems value="#{signUpBean.jlptLevels}" var="entry" itemValue="#{entry.key}"
-                            itemLabel="#{entry.value}" />
-                        </h:selectOneMenu>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 60px;"><h5>J.TEST</h5></td>
-                    <td>
-                      <div class="col-md-6" style="width: 100%;">
-                        <h:selectOneMenu value="#{signUpBean.userInfo.jtestLevel}" style="width:40%;">
-                          <f:selectItem itemValue="" itemLabel="" />
-                          <f:selectItems value="#{signUpBean.jtestLevels}" var="entry" itemValue="#{entry.key}"
-                            itemLabel="#{entry.value}" />
-                        </h:selectOneMenu>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-                <div class="form-submit1">
-                  <h:commandButton value="注册" class="button1" action="#{signUpBean.insertUserInfo}" id="insertBtn" />
-                  <br />
-                </div>
-                <div class="clearfix"></div>
+                <div id="login_container"></div>
               </div>
               <div class="col-md-4 contact-top_right">
-                <h3>帮助</h3>
-                <p><span class="glyphicon glyphicon-info-sign"></span> 注册时遇到任何问题，可以扫描底部二维码，在微信中直接给我们留言。</p>
-                <p><span class="glyphicon glyphicon-info-sign"></span> 您也可以点击上方菜单【留言板】反馈您的问题。</p>
+                <h3>说明</h3>
+                <p><span class="glyphicon glyphicon-info-sign"></span> 无须注册，请直接扫描左侧二维码登录。</p>
+                <p><span class="glyphicon glyphicon-info-sign"></span> 遇到任何问题，可以扫描底部公众号二维码，在微信中直接给我们留言。</p>
               </div>
             </div>
           </div>

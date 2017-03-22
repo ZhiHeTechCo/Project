@@ -78,9 +78,11 @@
 								</table>
 								<div class="clearfix"></div>
 							</div>
-							<div class="col-md-4 contact-top_right">
-								<div id="login_container"></div>
-							</div>
+                            <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+    							<div class="col-md-4 contact-top_right">
+    								<div id="login_container"></div>
+    							</div>
+                            </c:if>
 						</div>
 					</div>
 				</div>
