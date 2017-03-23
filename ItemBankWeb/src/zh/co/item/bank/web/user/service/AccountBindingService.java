@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import zh.co.common.log.CmnLogger;
 import zh.co.item.bank.db.entity.TbCollectionBean;
-import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
@@ -105,7 +104,8 @@ public class AccountBindingService {
         // nick_name
         keepUser.setNickName(getItemValue(olderUser.getNickName(), newUser.getNickName()));
         // password TODO
-//        keepUser.setPassword(getItemValue(olderUser.getPassword(), newUser.getPassword()));
+        // keepUser.setPassword(getItemValue(olderUser.getPassword(),
+        // newUser.getPassword()));
         // role 取较高级别
         String tmpRole = Integer.valueOf(olderUser.getRole()) > Integer.valueOf(newUser.getRole()) ? olderUser.getRole()
                 : newUser.getRole();
@@ -172,26 +172,10 @@ public class AccountBindingService {
      */
     private void updateExamCollection(Map<String, Object> param) {
         logger.debug("1.更新tb_exam_collection");
-        // 根据Source检索重复数据[时间降顺]
-        List<TbExamCollectionBean> tbExamCollectionBeans = examCollectionDao.selectExamCollectionByUsers(param);
-        List<Integer> question = new ArrayList<Integer>();
-        List<TbExamCollectionBean> deleteList = new ArrayList<TbExamCollectionBean>();
-        for (TbExamCollectionBean bean : tbExamCollectionBeans) {
-            if (question.contains(bean.getQuestionId())) {
-                deleteList.add(bean);
-            } else {
-                // 最新的一件保留
-                question.add(bean.getQuestionId());
-            }
-        }
-
-        // 数据删除
-        if (deleteList.size() > 0) {
-            logger.debug(String.format("tb_exam_collection删除执行...([source]%s组删除)", deleteList.size()));
-            examCollectionDao.deleteExamCollectionOld(deleteList);
-        }
-        //更新userId
+        // 更新userId
         examCollectionDao.updateUserId(param);
+        // 数据删除（id小的删除）
+        examCollectionDao.deleteExamCollectionOld(Integer.parseInt(param.get("oldUserId").toString()));
     }
 
     /**
@@ -208,7 +192,7 @@ public class AccountBindingService {
             logger.debug(String.format("tb_collection删除执行...(%s件删除)", deleteList.size()));
             collectionDao.deleteCollectionOld(deleteList);
         }
-        // 更新NewUser的ID为OldUser的Id
+        // 更新NewUser的ID为OldUser的Id并保持update_time不变
         collectionDao.updateCollectionUserId(param);
         collectionDetailDao.updateDetailUserId(param);
     }

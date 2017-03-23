@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
-import zh.co.item.bank.db.entity.TbExamCollectionBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
@@ -126,26 +125,6 @@ public class ExamCollectionDao extends BaseDao {
     }
 
     /**
-     * 帐号合并-检索冲突数据
-     * 
-     * @param param
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public List<TbExamCollectionBean> selectExamCollectionByUsers(Map<String, Object> param) {
-        return getIbatisTemplate().selectList("ExamCollection.selectExamCollectionByUsers", param);
-    }
-
-    /**
-     * 帐号合并-删除用户旧数据
-     * 
-     * @param deleteList
-     */
-    public void deleteExamCollectionOld(List<TbExamCollectionBean> deleteList) {
-        getIbatisTemplate().delete("ExamCollection.deleteExamCollectionOld", deleteList);
-    }
-
-    /**
      * 根据试题结构取指定试题
      * 
      * @param param
@@ -163,5 +142,14 @@ public class ExamCollectionDao extends BaseDao {
      */
     public void updateUserId(Map<String, Object> param) {
         getIbatisTemplate().update("ExamCollection.updateUserId", param);
+    }
+
+    /**
+     * 帐号合并-删除用户旧数据
+     * 
+     * @param userId
+     */
+    public void deleteExamCollectionOld(Integer userId) {
+        getIbatisTemplate().delete("ExamCollection.deleteExamCollectionOld", userId);
     }
 }
