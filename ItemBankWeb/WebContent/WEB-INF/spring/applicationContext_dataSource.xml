@@ -43,6 +43,7 @@
                 <value>classpath:sql/common/TuPoint.xml</value>
                 <value>classpath:sql/common/TuUser.xml</value>
                 <value>classpath:sql/common/TbFileInfo.xml</value>
+                <value>classpath:sql/common/TbNote.xml</value>
 
                 <value>classpath:sql/module/CodeManage.xml</value>
                 <value>classpath:sql/module/ExamList.xml</value>
