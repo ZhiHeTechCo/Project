@@ -55,8 +55,8 @@
                 </h:panelGroup>
                 <h5 style="color: #3382C9;">
                   <span class="glyphicon glyphicon-info-sign"></span>
-                  <c:if test="#{examClassifyController.mode eq '1'}">请选择试题类型。</c:if>
-                  <c:if test="#{examClassifyController.mode eq '2'}">请选择考题。</c:if>
+                  <c:if test="#{examClassifyController.mode eq '1'}">请选择“考试种别” → “考试级别” → “考卷”。</c:if>
+                  <c:if test="#{examClassifyController.mode eq '2'}">请选择试题类型。</c:if>
                 </h5>
                 <table class="toTable" style="width: 70%">
                   <tr>
@@ -65,9 +65,16 @@
                         onchange="return cancelToken(this, 1)">
                         <f:selectItems value="#{examClassifyController.exams}" var="entry" itemValue="#{entry.key}"
                           itemLabel="#{entry.value}" />
-                        <f:ajax event="change" execute="@this"
-                          render="levelLableWrapper levelWrapper yearLableWrapperMsg yearLableWrapper"
-                          listener="#{examClassifyController.changExamType}" onevent="changExamTypeChangeCallBack" />
+                        <c:if test="#{examClassifyController.mode eq '1'}">
+                          <f:ajax event="change" execute="@this"
+                            render="levelLableWrapper levelWrapper yearLableWrapperMsg yearLableWrapper"
+                            listener="#{examClassifyController.changeLevel}" onevent="changExamTypeChangeCallBack" />
+                        </c:if>
+                        <c:if test="#{examClassifyController.mode eq '2'}">
+                          <f:ajax event="change" execute="@this"
+                            render="levelLableWrapper levelWrapper examTypeWrapper mediaWrapperMsg mediaWrapper"
+                            listener="#{examClassifyController.changeLevel}" onevent="changExamTypeChangeCallBack" />
+                        </c:if>
                       </h:selectOneRadio></td>
                   </tr>
                   <tr>
@@ -85,9 +92,18 @@
                               <f:selectItem itemValue="" itemLabel="" />
                               <f:selectItems value="#{examClassifyController.jlptLevels}" var="entry"
                                 itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                              <f:ajax event="change" execute="@this"
-                                render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
-                                listener="#{examClassifyController.changeSource}" onevent="changExamTypeChangeCallBack" />
+                              <c:if test="#{examClassifyController.mode eq '1'}">
+                                <f:ajax event="change" execute="@this"
+                                  render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
+                                  listener="#{examClassifyController.changeSource}"
+                                  onevent="changExamTypeChangeCallBack" />
+                              </c:if>
+                              <c:if test="#{examClassifyController.mode eq '2'}">
+                                <f:ajax event="change" execute="@this"
+                                  render="examTypeWrapper mediaWrapperMsg mediaWrapper ngossfw_error_display"
+                                  listener="#{examClassifyController.changeMediaSource}"
+                                  onevent="changExamTypeChangeCallBack" />
+                              </c:if>
                             </h:selectOneMenu>
                           </c:when>
                           <c:when test="#{examClassifyController.classifyBean.exam eq '2'}">
@@ -96,9 +112,18 @@
                               <f:selectItem itemValue="" itemLabel="" />
                               <f:selectItems value="#{examClassifyController.jtestLevels}" var="entry"
                                 itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                              <f:ajax event="change" execute="@this"
-                                render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
-                                listener="#{examClassifyController.changeSource}" onevent="changExamTypeChangeCallBack" />
+                              <c:if test="#{examClassifyController.mode eq '1'}">
+                                <f:ajax event="change" execute="@this"
+                                  render="yearLableWrapperMsg yearLableWrapper ngossfw_error_display"
+                                  listener="#{examClassifyController.changeSource}"
+                                  onevent="changExamTypeChangeCallBack" />
+                              </c:if>
+                              <c:if test="#{examClassifyController.mode eq '2'}">
+                                <f:ajax event="change" execute="@this"
+                                  render="examTypeWrapper mediaWrapperMsg mediaWrapper ngossfw_error_display"
+                                  listener="#{examClassifyController.changeMediaSource}"
+                                  onevent="changExamTypeChangeCallBack" />
+                              </c:if>
                             </h:selectOneMenu>
                           </c:when>
                         </c:choose>
@@ -107,11 +132,44 @@
                   <c:if test="#{examClassifyController.mode eq '2'}">
                     <tr>
                       <td><h4>考试类别：</h4></td>
-                      <td><h:selectOneRadio value="#{examClassifyController.classifyBean.examType}"
-                          style="width: 150px">
-                          <f:selectItems value="#{examClassifyController.examTypes}" var="entry"
-                            itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                        </h:selectOneRadio></td>
+                      <td><h:panelGroup id="examTypeWrapper">
+                          <h:selectOneRadio value="#{examClassifyController.classifyBean.examType}" style="width: 150px">
+                            <f:selectItems value="#{examClassifyController.examTypes}" var="entry"
+                              itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+                            <f:ajax event="change" execute="@this"
+                              render="mediaWrapperMsg mediaWrapper ngossfw_error_display"
+                              listener="#{examClassifyController.changeMediaSource}"
+                              onevent="changExamTypeChangeCallBack" />
+                          </h:selectOneRadio>
+                        </h:panelGroup></td>
+                    </tr>
+                    <tr>
+                      <td><h:panelGroup id="mediaWrapperMsg">
+                          <c:if test="#{examClassifyController.mediaList.size() != 0}">
+                            <h4>听力试题：</h4>
+                          </c:if>
+                        </h:panelGroup></td>
+                      <td class="to"><h:panelGroup id="mediaWrapper">
+                          <c:if test="#{examClassifyController.mediaList.size() != 0}">
+                            <table style="width: 100%;">
+                              <tr>
+                                <td style="width: 50%;">
+                                  <table style="width: 100%;">
+                                    <tr>
+                                      <td><h:selectOneMenu value="#{examClassifyController.chooseMediaSource}"
+                                          style="width: 100%;">
+                                          <f:selectItem itemValue="" itemLabel="" />
+                                          <f:selectItems value="#{examClassifyController.mediaList}" var="entry"
+                                            itemValue="#{entry.source}"
+                                            itemLabel=" #{entry.source} (#{entry.mRate})" />
+                                        </h:selectOneMenu></td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </c:if>
+                        </h:panelGroup></td>
                     </tr>
                   </c:if>
                   <tr>
@@ -189,10 +247,10 @@
                 <p>
                   <b><span class="glyphicon glyphicon-info-sign"></span>点击[开始做题]：</b>系统会根据您的选择推送试题，并记录错题，随时可退出。
                 </p>
+                <p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
                 <p>
                   <b><span class="glyphicon glyphicon-info-sign"></span>点击[开始考试]：</b>进入考试模式，中途退出则考试作废，但您仍然可以查看成绩。
                 </p>
-                <p>（需选择考题种别，然后再在弹出的考试级别中选择对应等级。）</p>
                 <c:if test="#{examClassifyController.showExamFlag ne ''}">
                   <p>
                     <b><span class="glyphicon glyphicon-info-sign"></span>点击[智能推题]：</b>系统会根据您的语言级别智能推送试题。

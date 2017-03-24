@@ -7,6 +7,7 @@ import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
+import zh.co.item.bank.model.entity.MediaQuestionStructure;
 import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.ScoreModel;
 
@@ -151,5 +152,16 @@ public class ExamCollectionDao extends BaseDao {
      */
     public void deleteExamCollectionOld(Integer userId) {
         getIbatisTemplate().delete("ExamCollection.deleteExamCollectionOld", userId);
+    }
+
+    /**
+     * 检索听力做题结果
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<MediaQuestionStructure> selectMediaResult(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("Media.selectMediaResult", param);
     }
 }

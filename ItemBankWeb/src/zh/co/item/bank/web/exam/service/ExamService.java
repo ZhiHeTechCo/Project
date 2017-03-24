@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
+
 import zh.co.common.dao.CodeDao;
 import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
@@ -17,6 +19,7 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
 import zh.co.item.bank.web.exam.dao.ExamDao;
 
@@ -266,5 +269,30 @@ public class ExamService {
      */
     public List<TbExamListBean> getQuickSourceForAll() {
         return examDao.getQuickSourceForAll();
+    }
+
+    /**
+     * 获取听力列表
+     * 
+     * @param classifyBean
+     * @param id
+     * @return
+     */
+    public List<MediaModel> getMediaList(TbQuestionClassifyBean classifyBean, Integer id) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", id);
+        if (StringUtils.isNotEmpty(classifyBean.getExam())) {
+            param.put("exam", classifyBean.getExam());
+        }
+        if (StringUtils.isNotEmpty(classifyBean.getJlptLevel())) {
+            param.put("jlptLevel", classifyBean.getJlptLevel());
+        }
+        if (StringUtils.isNotEmpty(classifyBean.getJtestLevel())) {
+            param.put("jtestLevel", classifyBean.getJtestLevel());
+        }
+        if (StringUtils.isNotEmpty(classifyBean.getExamType())) {
+            param.put("examType", classifyBean.getExamType());
+        }
+        return examDao.getMediaList(param);
     }
 }

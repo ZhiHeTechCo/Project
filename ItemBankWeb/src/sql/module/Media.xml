@@ -84,6 +84,16 @@
         order by t3.no
     </select>
 
+    <select id="selectMediaResult" parameterType="java.util.Map" resultMap="mediaQuestionsResult">
+       SELECT t1.title, t1.classify_id, t3.*, t5.my_answer, (@rowNO := @rowNO+1) as rowNo
+          FROM tb_question_structure t1,tb_question_classify t2,
+           tb_media_question t3, (select @rowNO :=0) t4, tb_media_collection t5
+          WHERE t1.classify_id = t2.id AND t1.id = t3.structure_id and t3.delete_flag = '0'
+          and t1.classify_id = #{classifyId,jdbcType=INTEGER} AND t3.media_id = #{mediaId,jdbcType=INTEGER}
+          and t5.user_id = #{userId} and t5.question_id = t3.no
+        order by t3.no
+    </select>
+
     <!-- 查成绩用 -->
     <select id="selectMediaStructure" parameterType="java.util.Map" resultMap="mediaQuestionsResult">
        SELECT (@rowNO := @rowNO+1) as rowNo, t1.title, t1.classify_id, t5.source, t3.*
@@ -102,6 +112,28 @@
        group by media_id
     </select>
 
+    <select id="selectMediaListByUsers" parameterType="java.util.Map"
+        resultType="zh.co.item.bank.model.entity.MediaModel">
+        select t4.*, IFNULL(t3.m_rate,'0%') as m_rate, t3.user_id from 
+            (select t1.* from tb_media t1,tb_question_classify t2
+            where t1.delete_flag=0 and t1.classify_id=t2.id
+            <if test="exam !=null &amp; exam !=''">
+            and exam = #{exam,jdbcType=CHAR}
+            </if>
+            <if test="jlptLevel !=null &amp; jlptLevel !=''">
+            and jlpt_level = #{jlptLevel,jdbcType=CHAR}
+            </if>
+            <if test="jtestLevel !=null &amp; jtestLevel !=''">
+            and jtest_level = #{jtestLevel,jdbcType=CHAR}
+            </if>
+            <if test="examType !=null &amp; examType !=''">
+            and exam_type = #{examType,jdbcType=CHAR}
+            </if>
+            ) t4
+        left join (select * from vb_exam_rate where user_id=#{userId,jdbcType=INTEGER}) t3
+        on t4.source=t3.source
+        order by t4.source
+    </select>
 
     <insert id="insertMediaCollection" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
 		insert into tb_media_collection (

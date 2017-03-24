@@ -21,7 +21,7 @@ public class MediaModel extends TbMediaQuestionBean {
 
     // 听力音频路径
     private String mediaPath;
-    
+
     // 听力音频base64
     private String media;
 
@@ -54,6 +54,12 @@ public class MediaModel extends TbMediaQuestionBean {
 
     /** radio样式 */
     private String radioClass;
+
+    // 听力完成度
+    private String mRate;
+
+    // ClassifyId
+    private Integer classifyId;
 
     public int getUserId() {
         return userId;
@@ -179,12 +185,28 @@ public class MediaModel extends TbMediaQuestionBean {
         return CmnStringUtils.getSubjectList(this.getContext());
     }
 
-	public String getMedia() {
-		return media;
-	}
+    public String getMedia() {
+        return media;
+    }
 
-	public void setMedia(String media) {
-		this.media = media;
-	}
+    public void setMedia(String media) {
+        this.media = media;
+    }
+
+    public String getmRate() {
+        return mRate;
+    }
+
+    public void setmRate(String mRate) {
+        this.mRate = mRate;
+    }
+
+    public Integer getClassifyId() {
+        return classifyId;
+    }
+
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
+    }
 
 }

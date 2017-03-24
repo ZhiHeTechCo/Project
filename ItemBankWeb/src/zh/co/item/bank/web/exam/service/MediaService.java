@@ -102,8 +102,8 @@ public class MediaService {
      * @param mediaQuestions
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void doInsertCollections(List<MediaQuestionStructure> mediaQuestions, UserModel userInfo,
-            String source, String status) {
+    public void doInsertCollections(List<MediaQuestionStructure> mediaQuestions, UserModel userInfo, String source,
+            String status) {
         // a.更新听力记录表
         List<TbMediaCollectionBean> list = new ArrayList<TbMediaCollectionBean>();
         // 考试模式需登录考试表
@@ -145,5 +145,15 @@ public class MediaService {
         if (StringUtils.isNotEmpty(status) && examCollections.size() != 0) {
             examCollectionDao.insertExamCollections(examCollections);
         }
+    }
+
+    /**
+     * 检索听力做题结果
+     * 
+     * @param param
+     * @return
+     */
+    public List<MediaQuestionStructure> selectMediaResult(Map<String, Object> param) {
+        return examCollectionDao.selectMediaResult(param);
     }
 }

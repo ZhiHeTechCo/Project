@@ -23,6 +23,7 @@ import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.user.controller.SignInBean;
@@ -69,8 +70,13 @@ public class ExamClassifyController extends BaseController {
 
     private String chooseSource;
 
+    private String chooseMediaSource;
+
     // 试卷（包含完成度）
     private List<ExamListModel> examListBeans;
+
+    // 听力试卷（包含完成度）
+    private List<MediaModel> mediaList;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_001;
@@ -93,6 +99,7 @@ public class ExamClassifyController extends BaseController {
                 return signInBean.init();
             }
             showList = new ArrayList<ExamListModel>();
+            mediaList = new ArrayList<MediaModel>();
 
             // 跳转至
             if (StringUtils.isEmpty(mode)) {
@@ -106,7 +113,6 @@ public class ExamClassifyController extends BaseController {
             examTypes = examService.getExamTypes();
             // b-3:考试模式时获取试卷和完成度
             if ("1".equals(mode)) {
-                // 非听力部分完成度
                 examListBeans = examService.getExamListForUser(userInfo.getId());
 
             }
@@ -166,7 +172,14 @@ public class ExamClassifyController extends BaseController {
                 // 跳转至听力画面
                 MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
                         .getBean("mediaExamController");
-                mediaExamController.setClassifyBean(classifyBean);
+                MediaModel mediaModel = new MediaModel();
+                for (MediaModel model : mediaList) {
+                    if (model.getSource().equals(chooseMediaSource)) {
+                        mediaModel = model;
+                        break;
+                    }
+                }
+                mediaExamController.setMediaModel(mediaModel);
                 return mediaExamController.init();
 
             } else {
@@ -214,7 +227,7 @@ public class ExamClassifyController extends BaseController {
      * @return
      */
     public String examSearch() {
-        
+
         try {
             // 手机模式
             String source = WebUtils.getRequestParam("currentSource");
@@ -298,24 +311,26 @@ public class ExamClassifyController extends BaseController {
     }
 
     /**
-     * [Ajax]考题种别变更,试卷年变更
+     * [Ajax]考题种别变更
      */
-    public void changExamType() {
+    public void changeLevel() {
         logger.debug("题种别变更，刷新考试级别");
 
-        if ("1".equals(mode)) {
-            showList.clear();
+        showList.clear();
+        mediaList.clear();
 
-            chooseSource = "";
-            // JLPT的场合
-            if (SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
-                classifyBean.setJtestLevel(null);
-            }
-            // J.TEST的场合
-            if (SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
-                classifyBean.setJlptLevel(null);
-            }
+        chooseSource = "";
+        chooseMediaSource = "";
+        // JLPT的场合
+        if (SystemConstants.EXAM_1.equals(classifyBean.getExam())) {
+            classifyBean.setJtestLevel(null);
         }
+        // J.TEST的场合
+        if (SystemConstants.EXAM_2.equals(classifyBean.getExam())) {
+            classifyBean.setJlptLevel(null);
+        }
+        changeMediaSource();
+
     }
 
     /**
@@ -349,6 +364,49 @@ public class ExamClassifyController extends BaseController {
         } catch (Exception e) {
             processForException(logger, e);
         }
+    }
+
+    /**
+     * [Ajax]听力试卷变更
+     */
+    public void changeMediaSource() {
+        try {
+            // 1.考试模式不处理
+            if ("1".equals(mode)) {
+                return;
+            }
+            logger.debug("选择听力，提取试题。");
+            chooseMediaSource = "";
+            mediaList.clear();
+            // 2.听力时
+            if ("6".equals(classifyBean.getExamType())) {
+                // 取听力部分试题及完成度
+                mediaList = examService.getMediaList(classifyBean, userInfo.getId());
+                if (mediaList.size() == 0) {
+                    logger.log(MessageId.ITBK_I_0020);
+                    CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0020);
+                    throw ex;
+                }
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+    }
+
+    public String getChooseMediaSource() {
+        return chooseMediaSource;
+    }
+
+    public void setChooseMediaSource(String chooseMediaSource) {
+        this.chooseMediaSource = chooseMediaSource;
+    }
+
+    public List<MediaModel> getMediaList() {
+        return mediaList;
+    }
+
+    public void setMediaList(List<MediaModel> mediaList) {
+        this.mediaList = mediaList;
     }
 
     public List<TsCodeBean> getExams() {

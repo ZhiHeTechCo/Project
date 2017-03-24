@@ -11,6 +11,7 @@ import zh.co.item.bank.db.entity.TbExamListBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.model.entity.ExamListModel;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.MediaModel;
 
 /**
  * 考试模块
@@ -156,5 +157,16 @@ public class ExamDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<TbExamListBean> getQuickSourceForAll() {
         return getIbatisTemplate().selectList("ExamList.getQuickSourceForAll");
+    }
+
+    /**
+     * 听力列表
+     * 
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<MediaModel> getMediaList(Map<String, Object> param) {
+        return getIbatisTemplate().selectList("Media.selectMediaListByUsers", param);
     }
 }

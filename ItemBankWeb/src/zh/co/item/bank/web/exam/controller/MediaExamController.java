@@ -81,61 +81,42 @@ public class MediaExamController extends BaseController {
             // a.对象初始化
             userInfo = WebUtils.getLoginUserInfo();
             examFlag = null;
-            mediaModel = null;
             mediaQuestions = new ArrayList<MediaQuestionStructure>();
             this.mediaReady = "none";
 
-            // b.检索听力试题
-            selectForMediaQuestions();
+            if (mediaModel != null) {
+                Map<String, Object> param = new HashMap<String, Object>();
+                param.put("classifyId", mediaModel.getClassifyId());
+                param.put("mediaId", mediaModel.getId());
+                if ("100%".equals(mediaModel.getmRate())) {
+                    param.put("userId", userInfo.getId());
+                    // b-1.成绩一览
+                    mediaQuestions = mediaService.selectMediaResult(param);
+                } else {
+                    // b-2.检索听力试题
+                    mediaQuestions = mediaService.selectMediaQuestions(param);
+                }
+            }
+
             if (mediaQuestions == null || mediaQuestions.size() == 0) {
                 // 题库已空
                 logger.log(MessageId.ITBK_I_0010);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0010);
                 throw ex;
             }
-            // 画面序号和显示设置
+            // c.画面序号和显示设置
             CmnStringUtils.selectionLayoutSet(mediaQuestions);
 
         } catch (Exception e) {
             processForException(logger, e);
         }
 
-        return getPageId();
-
-    }
-
-    /**
-     * b.检索听力试题
-     * 
-     * @return
-     * @throws IOException
-     */
-    private void selectForMediaQuestions() throws IOException {
-
-        // b-1.获取ClassifyId
-        List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
-        if (classifyIds == null || classifyIds.size() == 0) {
-            return;
+        if ("100%".equals(mediaModel.getmRate())) {
+            return SystemConstants.PAGE_ITBK_EXAM_008;
+        } else {
+            return getPageId();
         }
 
-        // b-2.获取音频
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("userId", userInfo.getId());
-        for (Integer classifyId : classifyIds) {
-            map.put("classifyId", classifyId);
-            mediaModel = mediaService.getMedia(map);
-            if (mediaModel == null) {
-                continue;
-            } else {
-                break;
-            }
-        }
-        if (mediaModel == null) {
-            return;
-        }
-        // b-3.获取大题目
-        map.put("mediaId", mediaModel.getId());
-        mediaQuestions = mediaService.selectMediaQuestions(map);
     }
 
     /**
@@ -143,11 +124,11 @@ public class MediaExamController extends BaseController {
      */
     public void getMedia() {
         try {
-            
+
             if (StringUtils.isEmpty(mediaModel.getMediaPath())) {
                 this.mediaReady = "none";
             } else {
-            	mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
+                mediaModel.setMedia(CmnStringUtils.getMedia(mediaModel.getMediaPath()));
                 this.mediaReady = "block";
             }
         } catch (IOException e) {
@@ -233,7 +214,8 @@ public class MediaExamController extends BaseController {
      */
     public String goBackToClassify() {
         // 返回试题选择
-        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager.getBean("examClassifyController");
+        ExamClassifyController examClassifyController = (ExamClassifyController) SpringAppContextManager
+                .getBean("examClassifyController");
         return examClassifyController.init();
     }
 
