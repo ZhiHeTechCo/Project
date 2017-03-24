@@ -197,7 +197,7 @@ public class MediaExamController extends BaseController {
             mediaModel.setMedia(SystemConstants.EMPTY);
 
             // b.登录听力做题记录表和考试做题记录表
-            mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel.getSource(), examFlag);
+            mediaService.doInsertCollections(mediaQuestions, userInfo, mediaModel.getSource(), SystemConstants.TRUE);
 
         } catch (Exception e) {
             processForException(logger, e);
