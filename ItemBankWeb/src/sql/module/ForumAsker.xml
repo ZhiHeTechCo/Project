@@ -28,4 +28,8 @@
         update tb_forum_asker set asker = #{oldUserId} where asker = #{newUserId}
     </update>
 
+    <update id="updateStatus" parameterType="java.util.Map">
+        update tb_forum_asker set status = #{status} where question_id = #{questionId}
+    </update>
+
 </mapper>
