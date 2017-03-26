@@ -6,7 +6,7 @@
 
 	<select id="selectQuestionByQuestionId" parameterType="Integer"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
-		select t1.no, t1.context, t1.a, t1.b, t1.c, t1.d, t1.answer, t1.analysis, t1.exam_type_name, t1.source, t1.father_id, t2.subject, t2.img 
+		select t1.no, t1.context, t1.context_key, t1.context_after, t1.a, t1.b, t1.c, t1.d, t1.answer, t1.analysis, t1.exam_type_name, t1.source, t1.father_id, t2.subject, t2.img 
 		from vb_question_detail t1 left join tb_first_level_directory t2
 		on t1.father_id=t2.id
 		where t1.no = #{questionId}
