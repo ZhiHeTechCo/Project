@@ -13,6 +13,11 @@ public class ForumModel extends VbForumAskerBean {
     /** 试题详细 */
     ExamModel question;
 
+    private List<String> subjectList;
+
+    private String graphicImage;
+
+    /** 问题回答 */
     List<ForumResponseModel> responses;
 
     /** 提问者昵称 */
@@ -59,6 +64,22 @@ public class ForumModel extends VbForumAskerBean {
 
     public void setUserName(Map<Integer, String> userName) {
         this.userName = userName;
+    }
+
+    public List<String> getSubjectList() {
+        return subjectList;
+    }
+
+    public void setSubjectList(List<String> subjectList) {
+        this.subjectList = subjectList;
+    }
+
+    public String getGraphicImage() {
+        return graphicImage;
+    }
+
+    public void setGraphicImage(String graphicImage) {
+        this.graphicImage = graphicImage;
     }
 
 }

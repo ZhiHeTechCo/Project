@@ -66,6 +66,9 @@ public class ForumResponseController extends BaseController {
                 forumModel.setQuestion(question);
                 // 选项格式设置
                 question = CmnStringUtils.selectionLayoutSet(question);
+                // 大题目和图片
+                forumModel.setSubjectList(CmnStringUtils.getSubjectList((question.getSubject())));
+                forumModel.setGraphicImage(CmnStringUtils.getGraphicImage(question.getImg()));
                 // b.获取提问用户
                 forumModel.setAskers(forumService.selectAllAsker(currentQuestionId));
 

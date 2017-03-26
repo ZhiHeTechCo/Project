@@ -23,6 +23,31 @@
               <h5 style="color: #6682C9;">
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumResponseController.forumModel.askers}标记了这道题。
               </h5>
+              <h:panelGroup rendered="#{forumResponseController.forumModel.question.subject !=null or forumResponseController.forumModel.graphicImage !=''}">
+                <table class="table table-bordered">
+                  <h:panelGroup rendered="#{forumResponseController.forumModel.question.subject !='' and forumResponseController.forumModel.question.subject !=null}">
+                    <tr>
+                      <td><ui:repeat value="#{forumResponseController.forumModel.subjectList}" var="stringItem">
+                          <h:outputText value="#{stringItem}" />
+                          <br />
+                        </ui:repeat></td>
+                    </tr>
+                  </h:panelGroup>
+                  <h:panelGroup rendered="#{forumResponseController.forumModel.graphicImage ne ''}">
+                    <tr>
+                      <td align="center">
+                        <div class="gallery-bottom">
+                          <div class="col-md-3 gallery-grid">
+                            <a class="example-image-link" href="#{forumResponseController.forumModel.graphicImage}"
+                              data-lightbox="example-set"><img class="example-image"
+                              src="#{forumResponseController.forumModel.graphicImage}" alt="" /></a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </h:panelGroup>
+                </table>
+              </h:panelGroup>
               <h:dataTable class="table table-bordered" rendered="true"
                 value="#{forumResponseController.forumModel.question}" var="item">
                 <h:column>
@@ -42,7 +67,7 @@
                     </h:panelGroup>
                     <h:panelGroup rendered="#{item.a eq ''}">
                       <td width="20%"><h4>答案</h4></td>
-                      <h:inputText value="#{item.myAnswer}" maxlength="6" />
+                      <td><h:outputText value="#{item.answer}" maxlength="6" /></td>
                     </h:panelGroup>
                   </tr>
                 </h:column>
