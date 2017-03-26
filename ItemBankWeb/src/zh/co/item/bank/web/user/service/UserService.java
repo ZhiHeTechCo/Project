@@ -226,8 +226,28 @@ public class UserService {
 	                //取新的信息
 	                user = userDao.getUserCountByUuid(userInfo).get(0);
 	            } else {
-	            	//件数等于1的场合,直接使用取到的信息
-	            	user = userList.get(0);
+	            	//件数等于1的场合
+	            	UserModel userDB = userDao.getUserInfo(userInfo);
+	            	if(userDB != null && CmnStringUtils.isEmptyStr(userDB.getUuid())) {
+	            		TuUserBean newUser = new TuUserBean();
+		                newUser.setId(userDB.getId());
+		                // UnionID
+		                newUser.setUuid(userInfo.getUuid());
+		                // 更新时间
+		                newUser.setUpdateTime(new Date());
+		                //更新uuid
+		                userDao.updateUserInfo(newUser);
+		                
+		                userList = userDao.getUserCountByUuid(userInfo);
+		                //合并
+		            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
+		            	//取新的信息
+		            	user = userDao.getUserCountByUuid(userInfo).get(0);
+	            	} else {
+	            	
+		            	//直接使用取到的信息
+		            	user = userList.get(0);
+	            	}
 	            }
             } else {
             	user = userDao.getUserInfo(userInfo);
