@@ -69,13 +69,8 @@ public class WebOAuthServlet extends HttpServlet {
 		            // 用户标识
 		            String openId = weixinOauth2Token.getOpenId();
 		            // 获取用户信息
-		            SNSUserInfo snsUserInfo = WebUtils.getSNSUserInfo(accessToken, openId);
+		            TuUserBean userInfo = WebUtils.getSNSUserInfo(accessToken, openId);
 		            
-		            TuUserBean userInfo = new TuUserBean();
-		            userInfo.setUuid(snsUserInfo.getUnionId());
-		            userInfo.setOpenId(snsUserInfo.getOpenId());
-		            userInfo.setNickName(snsUserInfo.getNickname());
-		            userInfo.setWechat(SystemConstants.WECHAT_FLAG);
 		            ServletContext servletContext = this.getServletContext();  
 		            WebApplicationContext context =   
 		                    WebApplicationContextUtils.getWebApplicationContext(servletContext);  

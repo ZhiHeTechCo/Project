@@ -36,6 +36,7 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.exception.CmnSysException;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.prop.PropertiesUtils;
+import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.SNSUserInfo;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.model.entity.WeixinOauth2Token;
@@ -600,8 +601,8 @@ public class WebUtils {
      * @return SNSUserInfo
      */
     @SuppressWarnings( { "deprecation", "unchecked" })
-    public static SNSUserInfo getSNSUserInfo(String accessToken, String openId) {
-        SNSUserInfo snsUserInfo = null;
+    public static TuUserBean getSNSUserInfo(String accessToken, String openId) {
+    	TuUserBean snsUserInfo = null;
         // 拼接请求地址
         String requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
         requestUrl = requestUrl.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
@@ -610,11 +611,11 @@ public class WebUtils {
 
         if (null != jsonObject) {
             try {
-                snsUserInfo = new SNSUserInfo();
+                snsUserInfo = new TuUserBean();
                 // 用户的标识
                 snsUserInfo.setOpenId(jsonObject.getString("openid"));
                 // 昵称
-                snsUserInfo.setNickname(jsonObject.getString("nickname"));
+                snsUserInfo.setNickName(jsonObject.getString("nickname"));
                 // 性别（1是男性，2是女性，0是未知）
                 snsUserInfo.setSex(jsonObject.getInt("sex"));
                 // 用户所在国家
@@ -624,12 +625,16 @@ public class WebUtils {
                 // 用户所在城市
                 snsUserInfo.setCity(jsonObject.getString("city"));
                 // 用户头像
-                snsUserInfo.setHeadImgUrl(jsonObject.getString("headimgurl"));
+                snsUserInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
                 // 用户特权信息
-                snsUserInfo.setPrivilegeList(JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class));
+                //snsUserInfo.setPrivilegeList(JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class));
+                List<String> privilegeList = JSONArray.toList(jsonObject.getJSONArray("privilege"), List.class);
+                if(privilegeList != null && privilegeList.size() > 0) {
+                	snsUserInfo.setPrivilege(privilegeList.toString());
+                }
                 // UnionID
                 try {
-                	snsUserInfo.setUnionId(jsonObject.getString("unionid"));
+                	snsUserInfo.setUuid(jsonObject.getString("unionid"));
                 } catch (Exception e) {
                 	logger.debug("获取用户信息失败 unionid:{null}");
                 }

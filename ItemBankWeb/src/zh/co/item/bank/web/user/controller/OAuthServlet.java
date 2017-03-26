@@ -20,7 +20,6 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TuUserBean;
-import zh.co.item.bank.model.entity.SNSUserInfo;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.model.entity.WeixinOauth2Token;
 import zh.co.item.bank.web.user.service.UserService;
@@ -71,12 +70,8 @@ public class OAuthServlet extends HttpServlet {
 		            // 用户标识
 		            String openId = weixinOauth2Token.getOpenId();
 		            // 获取用户信息
-		            SNSUserInfo snsUserInfo = WebUtils.getSNSUserInfo(accessToken, openId);
+		            TuUserBean userInfo = WebUtils.getSNSUserInfo(accessToken, openId);
 		            
-		            TuUserBean userInfo = new TuUserBean();
-		            userInfo.setUuid(snsUserInfo.getUnionId());
-		            userInfo.setOpenId(snsUserInfo.getOpenId());
-		            userInfo.setNickName(snsUserInfo.getNickname());
 		            userInfo.setWechat(SystemConstants.WECHAT_FLAG);
 		            ServletContext servletContext = this.getServletContext();  
 		            WebApplicationContext context =   
