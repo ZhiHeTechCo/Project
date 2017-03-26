@@ -42,9 +42,12 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
-              <h5 style="color: #3382C9;">
-                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。
-              </h5>
+              <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+                <h5 style="color: #3382C9;">
+                  <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;
+                  <h:outputText value="图片太小看不清？做阅读的时候，可使用'Win + ←'将浏览器居左显示。"></h:outputText>
+                </h5>
+              </c:if>
               <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.examPaper}" var="first">
                 <h:column>
                   <h4>
@@ -52,14 +55,16 @@
                   </h4>
                   <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
                     <h:column>
-                      <h:panelGroup rendered="#{second.subject ne '' and second.subject ne null}">
+                      <h:panelGroup rendered="#{second.subject !=null or second.graphicImage !=''}">
                         <table class="table table-bordered">
-                          <tr>
-                            <td><ui:repeat value="#{second.subjectList}" var="stringItem">
-                                <h:outputText value="#{stringItem}" />
-                                <br />
-                              </ui:repeat></td>
-                          </tr>
+                          <h:panelGroup rendered="#{second.subject !='' and second.subject !=null}">
+                            <tr>
+                              <td><ui:repeat value="#{second.subjectList}" var="stringItem">
+                                  <h:outputText value="#{stringItem}" />
+                                  <br />
+                                </ui:repeat></td>
+                            </tr>
+                          </h:panelGroup>
                           <h:panelGroup rendered="#{second.graphicImage ne ''}">
                             <tr>
                               <td align="center">
@@ -85,12 +90,7 @@
                               var="stringItem">
                               <h:outputText value="#{stringItem}" />
                             </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}
-                            <!-- 
-                            <div style="float: right;">
-                              <h:commandLink onclick="$('#noteBut').click();return false;">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                              </h:commandLink>
-                            </div>--></td>
+                          </td>
                           <tr>
                             <td style="width: 10%;"><h4>选项</h4></td>
                             <td><h:panelGroup rendered="#{item.a ne ''}">
