@@ -156,9 +156,9 @@ public class AccountBindingService {
     }
 
     private Date getItemValue(Date wechatValue, Date pcValue) {
-        if (wechatValue == null) {
+        if (wechatValue != null) {
             return wechatValue;
-        } else if (pcValue == null) {
+        } else if (pcValue != null) {
             return pcValue;
         } else {
             return null;
