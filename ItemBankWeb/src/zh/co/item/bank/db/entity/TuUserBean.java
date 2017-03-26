@@ -31,6 +31,18 @@ public class TuUserBean extends TuUserBeanKey {
 
     private Date updateTime;
 
+    private String country;
+
+    private String province;
+
+    private String city;
+
+    private String headimgurl;
+
+    private String privilege;
+
+    private Integer sex;
+
     public String getOpenId() {
         return openId;
     }
@@ -141,5 +153,53 @@ public class TuUserBean extends TuUserBeanKey {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country == null ? null : country.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
+    }
+
+    public String getHeadimgurl() {
+        return headimgurl;
+    }
+
+    public void setHeadimgurl(String headimgurl) {
+        this.headimgurl = headimgurl == null ? null : headimgurl.trim();
+    }
+
+    public String getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege == null ? null : privilege.trim();
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 }
