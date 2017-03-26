@@ -132,4 +132,12 @@ public class ForumDao extends BaseDao {
     public List<ForumResponseModel> selectResponseByQuestionId(Integer id) {
         return getIbatisTemplate().selectList("ForumResponse.selectResponseByQuestionId", id);
     }
+
+    /**
+     * 问题状态更新
+     * @param param
+     */
+    public void updateStatus(Map<String, Object> param) {
+        getIbatisTemplate().update("ForumAsker.updateStatus", param);
+    }
 }

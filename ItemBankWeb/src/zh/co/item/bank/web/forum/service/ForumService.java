@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.forum.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +86,14 @@ public class ForumService {
      * @return
      */
     public void insertResponse(TbForumResponseBean newResponse) {
+        // 登录tb_forum_response
         forumDao.insertResponse(newResponse);
+        // 更新tb_forum_asker
+        Map<String, Object> param=new HashMap<String,Object>();
+        // 已回答
+        param.put("status", "1");
+        param.put("questionId", newResponse.getQuestionId());
+        forumDao.updateStatus(param);
     }
 
     /**
