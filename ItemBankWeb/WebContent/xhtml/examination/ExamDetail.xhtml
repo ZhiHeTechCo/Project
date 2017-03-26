@@ -10,9 +10,9 @@
     <h:outputScript library="js" name="lightbox.js" />
     <script type="text/javascript">
           function checkSelection() {
-        	  var tmp = $('input:checkbox[id^="examDetailForm\:reasons"]:checked').length;
-        	  if (tmp==0 &amp; document.getElementById('examDetailForm\:comment').value == '') { 
-            	  alert('请输入您的回答再提交!'); return false;
+              var tmp = $('input:checkbox[id^="examDetailForm\:reasons"]:checked').length;
+              if (tmp==0 &amp; document.getElementById('examDetailForm\:comment').value == '') { 
+                  alert('请输入您的回答再提交!'); return false;
               } else {
                   document.getElementById('examDetailForm\:reportErrorBtn').click();
               }
