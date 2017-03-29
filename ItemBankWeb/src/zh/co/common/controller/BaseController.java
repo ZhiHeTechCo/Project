@@ -241,11 +241,11 @@ public abstract class BaseController {
         }
         WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_CONTENT, message);
         if(MESSAGE_LEVEL_INFO.equals(messageLevel)){
-            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "infoMessage");
+            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "alert alert-info");
         } else if(MESSAGE_LEVEL_WARN.equals(messageLevel)){
-            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "warnMessage");
+            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "alert alert-warning");
         } else if (MESSAGE_LEVEL_ERROR.equals(messageLevel)) {
-            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "errorMessage");
+            WebUtils.setRequestAttribute(WebUtils.REQUEST_MESSAGE_LEVEL, "alert alert-danger");
         }
     }
 

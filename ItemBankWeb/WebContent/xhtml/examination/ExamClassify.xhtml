@@ -47,12 +47,12 @@
             <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">试题类别选择</h2>
           </c:if>
           <div class="container">
+            <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+              layout="block">
+              <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+            </h:panelGroup>
             <c:if test="#{session.getAttribute('session-user-agent') ne 'true' || examClassifyController.mode eq '2'}">
               <div class="col-md-8 contact-top">
-                <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                  layout="block">
-                  <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
-                </h:panelGroup>
                 <h5 style="color: #3382C9;">
                   <span class="glyphicon glyphicon-info-sign"></span>
                   <c:if test="#{examClassifyController.mode eq '1'}">请选择“考试种别” → “考试级别” → “考卷”。</c:if>
@@ -260,10 +260,6 @@
             </c:if>
             <!-- 手机时显示 -->
             <c:if test="#{session.getAttribute('session-user-agent') eq 'true' and examClassifyController.mode eq '1'}">
-              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                layout="block">
-                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
-              </h:panelGroup>
               <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#jlpt" id="jlpt-tab" role="tab" data-toggle="tab"
                   aria-controls="jlpt" aria-expanded="true">JLPT</a></li>
