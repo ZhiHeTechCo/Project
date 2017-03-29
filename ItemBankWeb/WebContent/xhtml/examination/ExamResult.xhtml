@@ -92,7 +92,7 @@
                   <tr>
                     <td><h4>选项</h4></td>
                     <td>
-                      <!-- 选择题时 --> <h:panelGroup rendered="#{item.a ne ''}">
+                      <h:panelGroup rendered="#{item.a ne ''}">
                         <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
                           class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
                           <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
@@ -100,7 +100,8 @@
                           <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
                           <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
                         </h:selectOneRadio>
-                      </h:panelGroup> <!-- 非选择题 --> <h:panelGroup rendered="#{item.a eq ''}">
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.a eq ''}">
                         <div style="width: 5%; float: left;">
                           <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
                             <h:panelGroup rendered="#{item.myAnswer eq item.answer}">

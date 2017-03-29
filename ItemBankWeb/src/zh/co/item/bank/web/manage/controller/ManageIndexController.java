@@ -18,6 +18,7 @@ import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.controller.QuestionInsertController;
+import zh.co.item.bank.web.file.controller.FileManageBean;
 import zh.co.item.bank.web.user.service.AccountBindingService;
 
 @Named("manageIndexController")
@@ -109,14 +110,47 @@ public class ManageIndexController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * 去考题列表
+     * 
+     * @return
+     */
+    public String toExamListShow() {
+        try {
+            ExamListController examListController = (ExamListController) SpringAppContextManager
+                    .getBean("examListController");
+            return examListController.init();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * 去考题列表
+     * 
+     * @return
+     */
+    public String toFileManageBean() {
+        try {
+            FileManageBean fileManageBean = (FileManageBean) SpringAppContextManager.getBean("fileManageBean");
+            return fileManageBean.init();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
     public String changePassword() {
         try {
 //            TuUserBean user = new TuUserBean();
-//            user.setId(105);
+//            user.setId(57);
 //            user.setPassword("1");
 //            accountBindingService.changePassword(user);
         } catch (Exception e) {
-           processForException(logger, e);
+            processForException(logger, e);
         }
         return getPageId();
     }
