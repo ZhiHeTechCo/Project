@@ -223,6 +223,7 @@ public class ExamReportController extends BaseController {
             ExamPaperController examPaperController = (ExamPaperController) SpringAppContextManager
                     .getBean("examPaperController");
             examPaperController.setSource(questions.get(0).getSource());
+            examPaperController.setBeforePage(SystemConstants.PAGE_ITBK_EXAM_006);
             examPaperController.setExamType(examType);
             return examPaperController.init();
 

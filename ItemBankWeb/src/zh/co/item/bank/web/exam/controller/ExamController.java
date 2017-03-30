@@ -445,7 +445,6 @@ public class ExamController extends BaseController {
      * 画面序号,折行
      * 
      * @param subject
-     *            题干
      */
     private void prepareData(String subject) {
         // 画面序号和显示设置

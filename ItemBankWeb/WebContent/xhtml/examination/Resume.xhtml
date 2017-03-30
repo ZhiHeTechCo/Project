@@ -2,115 +2,101 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
-	<ui:define name="content">
-		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<h:outputScript library="js" name="lightbox.js" />
-		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="resumeForm">
-				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-						<h2
-							style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
-					</c:if>
-					<div class="container">
-						<div class="bs-example">
-							<h:panelGroup id="ngossfw_error_display"
-								class="#{request.getAttribute('request-message-level')}"
-								layout="block">
-								<h:outputText
-									value="${request.getAttribute('request-message-content')}"
-									escape="false" />
-							</h:panelGroup>
-							<c:if test="#{resumeBean.tableShow ne null}">
-								<h4>#{resumeBean.tableShow}</h4>
-								<c:if test="#{resumeBean.title != ''}">
-									<h4>
-										<b><h:outputText value="#{resumeBean.title}"></h:outputText></b>
-									</h4>
-								</c:if>
-								<c:if test="#{resumeBean.subject != ''}">
-									<table class="table table-bordered">
-										<tr>
-											<td align="center"><h4>问题</h4></td>
-										</tr>
-										<tr>
-											<td><ui:repeat value="#{resumeBean.subjectList}"
-													var="stringItem">
-													<h:outputText value="#{stringItem}" />
-													<br />
-												</ui:repeat></td>
-										</tr>
-										<c:if test="#{resumeBean.graphicImage !=''}">
-											<tr>
-												<td align="center">
-													<div class="gallery-bottom">
-														<div class="col-md-3 gallery-grid">
-															<a class="example-image-link"
-																href="#{resumeBean.graphicImage}"
-																data-lightbox="example-set"><img
-																class="example-image" src="#{resumeBean.graphicImage}"
-																alt="" /></a>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</c:if>
-									</table>
-								</c:if>
-								<h:dataTable id="qt" class="table table-bordered"
-									rendered="true" value="#{resumeBean.questions}" var="item">
-									<h:column>
-										<h4>
-											<h:outputText value="#{item.rowNo}"></h:outputText>
-										</h4>
-									</h:column>
-									<h:column>
-										<ui:repeat value="#{item.contextList}" var="stringItem">
-											<h:outputText value="#{stringItem}" />
-										</ui:repeat>
-										<ins>#{item.contextKey}</ins>#{item.contextAfter}
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:outputScript library="js" name="lightbox.js" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="resumeForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">开始做题</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <c:if test="#{resumeBean.tableShow ne null}">
+                <h4>#{resumeBean.tableShow}</h4>
+                <c:if test="#{resumeBean.title != ''}">
+                  <h4>
+                    <b><h:outputText value="#{resumeBean.title}"></h:outputText></b>
+                  </h4>
+                </c:if>
+                <c:if test="#{resumeBean.subject != ''}">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td align="center"><h4>问题</h4></td>
+                    </tr>
+                    <tr>
+                      <td><ui:repeat value="#{resumeBean.subjectList}" var="stringItem">
+                          <h:outputText value="#{stringItem}" />
+                          <br />
+                        </ui:repeat></td>
+                    </tr>
+                    <c:if test="#{resumeBean.graphicImage !=''}">
+                      <tr>
+                        <td align="center">
+                          <div class="gallery-bottom">
+                            <div class="col-md-3 gallery-grid">
+                              <a class="example-image-link" href="#{resumeBean.graphicImage}"
+                                data-lightbox="example-set"><img class="example-image"
+                                src="#{resumeBean.graphicImage}" alt="" /></a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:if>
+                  </table>
+                </c:if>
+                <h:dataTable id="qt" class="table table-bordered" rendered="true" value="#{resumeBean.questions}"
+                  var="item">
+                  <h:column>
+                    <h4>
+                      <h:outputText value="#{item.rowNo}"></h:outputText>
+                    </h4>
+                  </h:column>
+                  <h:column>
+                    <ui:repeat value="#{item.contextList}" var="stringItem">
+                      <h:outputText value="#{stringItem}" />
+                    </ui:repeat>
+                    <ins>#{item.contextKey}</ins>#{item.contextAfter}
                                           <hr />
-										<h:inputHidden id="myAnswer" name="#{item.myAnswer}"
-											value="#{item.myAnswer}" />
-										<h:selectOneRadio value="#{item.myAnswer}"
-											layout="#{item.layoutStyle}" class="#{item.radioClass}">
-											<f:selectItem itemValue="1" itemLabel="#{item.a}" />
-											<f:selectItem itemValue="2" itemLabel="#{item.b}" />
-											<f:selectItem itemValue="3" itemLabel="#{item.c}" />
-											<f:selectItem itemValue="4" itemLabel="#{item.d}" />
-										</h:selectOneRadio>
-									</h:column>
-								</h:dataTable>
-								<div class="form-submit1">
-									<h:commandButton value="确认" class="button1"
-										style="margin-right: 5px;"
-										action="#{resumeBean.doResumeSubmit}" id="doResumeSubmitBtn" />
-								</div>
-								<div class="form-submit1">
-									<h:commandButton value="退出" class="button1"
-										action="#{resumeBean.goBackToIndex}" id="doExistBtn" />
-								</div>
-							</c:if>
-							<c:if test="#{resumeBean.tableShow eq null}">
-								<h5 style="color: red;">
-									<span class="glyphicon glyphicon-exclamation-sign"></span>
-									错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。
-								</h5>
-								<div class="form-submit1" style="margin-top: 50px;">
-									<h:commandButton value="去做题" class="button1"
-										action="#{resumeBean.toClassify}" id="toClassifyBtn" />
-								</div>
-							</c:if>
-						</div>
-					</div>
-				</div>
-			</h:form>
-		</div>
-	</ui:define>
+                    <h:inputHidden id="myAnswer" name="#{item.myAnswer}" value="#{item.myAnswer}" />
+                    <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}" class="#{item.radioClass}">
+                      <f:selectItem itemValue="1" itemLabel="#{item.a}" />
+                      <f:selectItem itemValue="2" itemLabel="#{item.b}" />
+                      <f:selectItem itemValue="3" itemLabel="#{item.c}" />
+                      <f:selectItem itemValue="4" itemLabel="#{item.d}" />
+                    </h:selectOneRadio>
+                  </h:column>
+                </h:dataTable>
+                <div class="form-submit1">
+                  <h:commandButton value="确认" class="button1" style="margin-right: 5px;"
+                    action="#{resumeBean.doResumeSubmit}" id="doResumeSubmitBtn" />
+                </div>
+                <div class="form-submit1">
+                  <h:commandButton value="退出" class="button1" style="margin-right: 5px;"
+                    action="#{resumeBean.goBackToIndex}" id="doExistBtn" />
+                </div>
+              </c:if>
+              <c:if test="#{resumeBean.tableShow eq null}">
+                <h5 style="color: red;">
+                  <span class="glyphicon glyphicon-exclamation-sign"></span> 错题太少啦，点击页面右上角[用户名]→[试题库]开始做题吧。
+                </h5>
+                <div class="form-submit1" style="margin-top: 50px;">
+                  <h:commandButton value="去做题" class="button1" action="#{resumeBean.toClassify}" id="toClassifyBtn" />
+                </div>
+              </c:if>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
 </ui:composition>
 </html>

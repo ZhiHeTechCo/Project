@@ -11,6 +11,7 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
@@ -40,6 +41,8 @@ public class ExamPaperController extends BaseController {
 
     private String examType;
 
+    private String beforePage;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_012;
     }
@@ -55,13 +58,17 @@ public class ExamPaperController extends BaseController {
             pushPathHistory("examPaperController");
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
 
-            examPaper = examCollectionService.selectReportStructure(userInfo.getId(), source, examType);
+            // a.前画面为考试结果一览
+            if (source != null) {
+                examPaper = examCollectionService.selectReportStructure(userInfo.getId(), source, examType);
+            }
 
             if (examPaper != null && examPaper.size() > 0) {
                 for (QuestionStructure questionStructure : examPaper) {
                     List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
                     for (FirstLevelModel firstLevelModle : firstLevelModles) {
-                        source = firstLevelModle.getQuestions().get(0).getSource();
+                        // source =
+                        // firstLevelModle.getQuestions().get(0).getSource();
                         List<String> subjectList = CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
                         firstLevelModle.setSubjectList(subjectList);
                         String graphicImage = CmnStringUtils.getGraphicImage(firstLevelModle.getImg());
@@ -88,12 +95,17 @@ public class ExamPaperController extends BaseController {
     }
 
     /**
-     * 3.返回考试结果一览画面
+     * 3.返回前画面
      * 
      * @return
      */
-    public String goBackToReport() {
-        return SystemConstants.PAGE_ITBK_EXAM_006;
+    public String goBack() {
+        if (SystemConstants.PAGE_ITBK_EXAM_013.equals(beforePage)) {
+            ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
+            return resumeBean.init();
+        } else {
+            return beforePage;
+        }
     }
 
     public List<QuestionStructure> getExamPaper() {
@@ -118,6 +130,14 @@ public class ExamPaperController extends BaseController {
 
     public void setExamType(String examType) {
         this.examType = examType;
+    }
+
+    public String getBeforePage() {
+        return beforePage;
+    }
+
+    public void setBeforePage(String beforePage) {
+        this.beforePage = beforePage;
     }
 
 }

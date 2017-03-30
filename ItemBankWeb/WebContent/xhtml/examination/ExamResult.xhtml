@@ -33,7 +33,9 @@
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
       <h:form id="examDetailForm">
         <div class="typrography">
-          <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">结果一览</h2>
+          </c:if>
           <div class="container">
             <div class="bs-example">
               <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
@@ -91,8 +93,7 @@
 									</h:commandLink></td>
                   <tr>
                     <td><h4>选项</h4></td>
-                    <td>
-                      <h:panelGroup rendered="#{item.a ne ''}">
+                    <td><h:panelGroup rendered="#{item.a ne ''}">
                         <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
                           class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
                           <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
@@ -100,8 +101,7 @@
                           <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
                           <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
                         </h:selectOneRadio>
-                      </h:panelGroup>
-                      <h:panelGroup rendered="#{item.a eq ''}">
+                      </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
                         <div style="width: 5%; float: left;">
                           <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
                             <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
@@ -115,8 +115,7 @@
                         <div style="float: left; width: 95%;">
                           <h:inputText value="#{item.myAnswer}" readonly="true" />
                         </div>
-                      </h:panelGroup>
-                    </td>
+                      </h:panelGroup></td>
                   </tr>
                   <tr>
                     <h:panelGroup rendered="#{item.a ne ''}">
@@ -134,10 +133,16 @@
                 </h:column>
               </h:dataTable>
               <div class="form-submit1">
-                <h:commandButton value="继续做题" class="button1" action="#{examResultController.goBackToExam}"
-                  id="goBackToExamBtn">
+                <h:commandButton value="继续做题" class="button1" style="margin-right: 5px;"
+                  action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
                 </h:commandButton>
               </div>
+              <c:if test="#{session.getAttribute('session-user-info').getRole() >= '3'}">
+                <div class="form-submit1">
+                  <h:commandButton value="关联试题" class="button1" action="#{examResultController.searchCorrelation}"
+                    id="searchCorrelationBtn" />
+                </div>
+              </c:if>
             </div>
           </div>
         </div>

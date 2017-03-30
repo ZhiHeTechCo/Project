@@ -104,4 +104,16 @@ public class QuestionDao extends BaseDao {
     public List<QuestionStructure> selectQuestionsStructure(Map<String, Object> map) {
         return getIbatisTemplate().selectList("Question.selectQuestionsStructure", map);
     }
+    
+
+    /**
+     * 关联试题查询
+     * 
+     * @param map[key,questionId]
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<QuestionStructure> searchCorrelationQuestions(Map<String, Object> map) {
+        return getIbatisTemplate().selectList("Question.searchCorrelationQuestions", map);
+    }
 }

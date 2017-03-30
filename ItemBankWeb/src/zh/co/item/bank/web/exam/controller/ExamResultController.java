@@ -2,16 +2,20 @@ package zh.co.item.bank.web.exam.controller;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
+import zh.co.common.exception.CmnBizException;
 import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
+import zh.co.item.bank.web.exam.service.QuestionService;
 
 /**
  * 结果一览画面
@@ -23,6 +27,9 @@ import zh.co.item.bank.model.entity.ExamModel;
 @Scope("session")
 public class ExamResultController extends BaseController {
     private final CmnLogger logger = CmnLogger.getLogger(getClass());
+
+    @Inject
+    private QuestionService questionService;
 
     /** 画面初始化变量 */
     private List<ExamModel> questions;
@@ -101,6 +108,30 @@ public class ExamResultController extends BaseController {
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             return examController.init();
         }
+    }
+
+    /**
+     * 5.查询关联试题
+     * 
+     * @return
+     */
+    public String searchCorrelation() {
+        try {
+            List<QuestionStructure> correlationList = questionService.searchCorrelationQuestions(questions.get(0));
+            if (correlationList == null || correlationList.size() == 0) {
+                logger.log(MessageId.ITBK_I_0016);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_I_0016);
+                throw ex;
+            }
+            // 关联试题画面
+            CorrelationQuestionsController correlationQuestionsController = (CorrelationQuestionsController) SpringAppContextManager
+                    .getBean("correlationQuestionsController");
+            correlationQuestionsController.setQuestions(correlationList);
+            return correlationQuestionsController.init();
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
     }
 
     public List<ExamModel> getQuestions() {

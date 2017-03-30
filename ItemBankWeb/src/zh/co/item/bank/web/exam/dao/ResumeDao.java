@@ -41,6 +41,7 @@ public class ResumeDao extends BaseDao {
      */
     @SuppressWarnings("unchecked")
     public List<ExamModel> selectErrorByFatherId(Map<String, Object> map) {
-        return (List<ExamModel>) getIbatisTemplate().selectList("Question.selectErrorByFatherId", map);
+        return getIbatisTemplate().selectList("Question.selectErrorByFatherId", map);
     }
+
 }
