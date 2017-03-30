@@ -223,20 +223,8 @@ public class UserService {
 	            	userDao.updateUserInfo(newUser);
 	            	//合并
 	            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
-	            	//取新的信息
-	            	user = userDao.getUserCountByUuid(userInfo).get(0);
-	            } else if(userList == null || userList.size() < 1){
-	            	//件数小于1的场合，更新uuid字段
-	                newUser.setId(user.getId());
-	                // UnionID
-	                newUser.setUuid(userInfo.getUuid());
-	                // 更新时间
-	                newUser.setUpdateTime(new Date());
-	                //更新uuid
-	                userDao.updateUserInfo(newUser);
-	                //取新的信息
-	                user = userDao.getUserCountByUuid(userInfo).get(0);
-	            } else {
+
+	            } else if(userList != null && userList.size() == 1){
 	            	//件数等于1的场合
 	            	UserModel userDB = userDao.getUserInfo(userInfo);
 	            	if(userDB != null && CmnStringUtils.isEmptyStr(userDB.getUuid())) {
@@ -249,20 +237,32 @@ public class UserService {
 		                userDao.updateUserInfo(newUser);
 		                
 		                userList = userDao.getUserCountByUuid(userInfo);
-		                //合并
-		            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
-		            	//取新的信息
-		            	user = userDao.getUserCountByUuid(userInfo).get(0);
+		                
+		                if(userList != null && userList.size() > 1) {
+			                //合并
+			            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
+		                }
+
 	            	} else {
-	            	
 	            		//更新信息
 	            		newUser.setId(userList.get(0).getId());
 	            		userDao.updateUserInfo(newUser);
-	            		
-		            	//直接使用取到的信息
-		            	user = userDao.getUserCountByUuid(userInfo).get(0);
 	            	}
+
+	            } else {
+
+	            	//件数小于1的场合，更新uuid字段
+	                newUser.setId(user.getId());
+	                // UnionID
+	                newUser.setUuid(userInfo.getUuid());
+	                // 更新时间
+	                newUser.setUpdateTime(new Date());
+	                //更新uuid
+	                userDao.updateUserInfo(newUser);
 	            }
+            	//取得用户信息
+            	user = userDao.getUserCountByUuid(userInfo).get(0);
+            	
             } else {
             	user = userDao.getUserInfo(userInfo);
             	//更新信息
@@ -285,7 +285,6 @@ public class UserService {
                 return null;
             }
         }
-
         return user;
     }
 
