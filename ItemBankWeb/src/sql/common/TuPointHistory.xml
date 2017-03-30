@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TuPointHistory" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TuPointHistoryBean" >
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="event" property="event" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TuPointHistoryBean" >
+    insert into tu_point_history (user_id, point, event, 
+      create_time)
+    values (#{userId,jdbcType=INTEGER}, #{point,jdbcType=INTEGER}, #{event,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TuPointHistoryBean" >
+    insert into tu_point_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="event != null" >
+        event,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="event != null" >
+        #{event,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,5 +1,6 @@
 package zh.co.item.bank.db.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class VuUserModelBean {
@@ -33,11 +34,7 @@ public class VuUserModelBean {
 
     private String wechat;
 
-    private Integer point;
-
-    private Integer contribution;
-
-    private Date expireTime;
+    private BigDecimal point;
 
     private Long questionNum;
 
@@ -175,28 +172,12 @@ public class VuUserModelBean {
         this.wechat = wechat == null ? null : wechat.trim();
     }
 
-    public Integer getPoint() {
+    public BigDecimal getPoint() {
         return point;
     }
 
-    public void setPoint(Integer point) {
+    public void setPoint(BigDecimal point) {
         this.point = point;
-    }
-
-    public Integer getContribution() {
-        return contribution;
-    }
-
-    public void setContribution(Integer contribution) {
-        this.contribution = contribution;
-    }
-
-    public Date getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(Date expireTime) {
-        this.expireTime = expireTime;
     }
 
     public Long getQuestionNum() {
