@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="correlationQuestionsForm">
+        <div class="typrography">
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h:dataTable class="searchTable" rendered="true" value="#{correlationQuestionsController.questions}"
+                var="first">
+                <h:column>
+                  <h4>
+                    <b><h:outputText value="#{first.title}"></h:outputText></b>
+                  </h4>
+                  <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
+                    <h:column>
+                      <h:panelGroup rendered="#{second.subject !=null or second.graphicImage !=''}">
+                        <table class="table table-bordered">
+                          <h:panelGroup rendered="#{second.subject !='' and second.subject !=null}">
+                            <tr>
+                              <td><ui:repeat value="#{second.subjectList}" var="stringItem">
+                                  <h:outputText value="#{stringItem}" />
+                                  <br />
+                                </ui:repeat></td>
+                            </tr>
+                          </h:panelGroup>
+                          <h:panelGroup rendered="#{second.graphicImage ne ''}">
+                            <tr>
+                              <td align="center">
+                                <div class="gallery-bottom">
+                                  <div class="col-md-3 gallery-grid">
+                                    <a class="example-image-link" href="#{second.graphicImage}"
+                                      data-lightbox="example-set"><img class="example-image"
+                                      src="#{second.graphicImage}" alt="" /></a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </h:panelGroup>
+                        </table>
+                      </h:panelGroup>
+                      <h:dataTable class="table table-bordered" rendered="true" value="#{second.questions}" var="item">
+                        <h:column>
+                          <h4>
+                            <h:outputText value="#{item.rowNo}"></h:outputText>
+                          </h4>
+                          <h:inputHidden value="#{item.answer}" id="questionAnswer" />
+                          <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
+                              var="stringItem">
+                              <h:outputText value="#{stringItem}" />
+                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}</td>
+                          <tr>
+                            <td style="width: 10%;"><h4>选项</h4></td>
+                            <td><h:panelGroup rendered="#{item.a ne ''}">
+                                <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
+                                  class="#{item.radioClass}" id="questionItem">
+                                  <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+                                  <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+                                  <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+                                  <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+                                </h:selectOneRadio>
+                              </h:panelGroup>
+                              <h:panelGroup rendered="#{item.a eq ''}">
+                                <div style="float: left; width: 100%;">
+                                  <h:inputText value="#{item.myAnswer}" />
+                                </div>
+                              </h:panelGroup></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <h4>出处</h4>
+                            </td>
+                            <td><h:outputText value="【真】#{item.source}" /></td>
+                          </tr>
+                        </h:column>
+                      </h:dataTable>
+                    </h:column>
+                  </h:dataTable>
+                </h:column>
+              </h:dataTable>
+              <div class="form-submit1">
+                <h:commandButton value="确定" class="button1" style="margin-right: 5px;"
+                  action="#{correlationQuestionsController.doSubmit}" id="doSubmitBtn">
+                </h:commandButton>
+              </div>
+              <div class="form-submit1">
+                <h:commandButton value="返回" class="button1" action="#{correlationQuestionsController.goBackToResume}"
+                  id="goBackToResumeBtn">
+                </h:commandButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>
