@@ -129,6 +129,8 @@ public class SystemConstants {
     
     /** 管理控制台 */
     public static final String PAGE_ITBK_MANAGE_001 = "ITBK_MANAGE_001";
+    /** 考卷列表 */
+    public static final String PAGE_ITBK_MANAGE_002 = "ITBK_MANAGE_002";
 
     /** 选择模式 */
     public static final String PAGE_ITBK_EXAM_000 = "ITBK_EXAM_000";

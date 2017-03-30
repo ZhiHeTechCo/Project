@@ -125,6 +125,10 @@
       <from-outcome>ITBK_MANAGE_001</from-outcome>
       <to-view-id>/xhtml/manage/ManageHome.xhtml</to-view-id>
    </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_MANAGE_002</from-outcome>
+      <to-view-id>/xhtml/manage/ExamList.xhtml</to-view-id>
+   </navigation-case>
    
    
    <navigation-case>

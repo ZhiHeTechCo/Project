@@ -18,4 +18,8 @@
 		select source from tb_exam_list where delete_flag = 9
 	</select>
 
+	<select id="selectAll" resultType="zh.co.item.bank.db.entity.TbExamListBean">
+		select * from tb_exam_list
+	</select>
+
 </mapper>

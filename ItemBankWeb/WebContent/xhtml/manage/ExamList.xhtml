@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="examListForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9; margin-bottom: 50px;">考卷列表</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-docs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <h:dataTable class="table table-bordered" value="#{examListController.examListBeans}" var="item">
+                <h:column>id
+                  <td>language</td>
+                  <td>exam</td>
+                  <td>level</td>
+                  <td>year</td>
+                  <td>count</td>
+                  <td>source</td>
+                  <td>delete_flag</td>
+                  <tr>
+                    <td><h:inputText value="#{item.id}"></h:inputText></td>
+                    <td><h:inputText value="#{item.language}"></h:inputText></td>
+                    <td><h:inputText value="#{item.exam}"></h:inputText></td>
+                    <td><h:inputText value="#{item.level}"></h:inputText></td>
+                    <td><h:inputText value="#{item.year}"></h:inputText></td>
+                    <td><h:inputText value="#{item.count}"></h:inputText></td>
+                    <td><h:inputText value="#{item.source}"></h:inputText></td>
+                    <td><h:inputText value="#{item.deleteFlag}"></h:inputText></td>
+                  </tr>
+                </h:column>
+              </h:dataTable>
+              <div class="form-submit1">
+                <h:commandButton value="返回" class="button1" style="margin-right: 5px;"
+                  action="#{examListController.goBack}" id="goBackBtn" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>
