@@ -15,7 +15,6 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.controller.QuestionInsertController;
 import zh.co.item.bank.web.file.controller.FileManageBean;

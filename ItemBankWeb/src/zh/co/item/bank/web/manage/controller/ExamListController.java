@@ -7,8 +7,6 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
