@@ -9,6 +9,7 @@
 		select * from `tb_collection`
 		where id = #{userId} and
 		question_id = #{no}
+		limit 1
 	</select>
 
 <!-- 
