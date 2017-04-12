@@ -9,6 +9,8 @@ public class QuestionStructure extends TbQuestionStructureBean {
     private List<ExamModel> questions;
 
     private List<FirstLevelModel> firstLevels;
+    
+    private String examType;
 
     public List<ExamModel> getQuestions() {
         return questions;
@@ -24,6 +26,14 @@ public class QuestionStructure extends TbQuestionStructureBean {
 
     public void setFirstLevels(List<FirstLevelModel> firstLevels) {
         this.firstLevels = firstLevels;
+    }
+
+    public String getExamType() {
+        return examType;
+    }
+
+    public void setExamType(String examType) {
+        this.examType = examType;
     }
 
 }

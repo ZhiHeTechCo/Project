@@ -316,6 +316,7 @@
 
     <resultMap id="questionsStructureResult" type="zh.co.item.bank.model.entity.QuestionStructure">  
       <result property="title" column="title"/>
+      <result column="exam_type" property="examType" jdbcType="VARCHAR" />
       <collection property="firstLevels" ofType="zh.co.item.bank.model.entity.FirstLevelModel" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="subject" property="subject" jdbcType="VARCHAR" />
@@ -335,7 +336,6 @@
             <result column="my_answer" property="myAnswer" jdbcType="CHAR" />
             <result column="analysis" property="analysis" jdbcType="VARCHAR" />
             <result column="source" property="source" jdbcType="VARCHAR" />
-            <result column="exam_type" property="examType" jdbcType="VARCHAR" />
             <result column="father_id" property="fatherId" jdbcType="INTEGER" />
             <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
             <result column="structure_id" property="structureId" jdbcType="INTEGER" />
@@ -354,6 +354,20 @@
           and (t3.a=#{key} or t3.b=#{key} or t3.c=#{key} or t3.d=#{key})
           and t3.no !=#{questionId}
           limit 8
+    </select>
+
+    <select id="searchCorrelationErrorQuestions" parameterType="java.util.Map" resultMap="questionsStructureResult">
+        select (@rowNO := @rowNO+1) as rowNo, b1.title, b2.* from tb_question_structure b1 right join
+            (select a1.my_answer, a2.*, a3.exam_type from tb_collection_detail a1,
+                (select t1.*, IFNULL(t2.id,0) as id, t2.subject, t2.img from tb_question t1 left join tb_first_level_directory t2 on t1.father_id=t2.id) a2,
+                tb_question_classify a3, (select @rowNO :=0) a4
+            where a1.question_id = a2.no
+            and a1.user_id = #{userId}
+            and a1.my_answer != a2.answer
+            and a3.id = a2.classify_id
+            and a3.exam_type = #{examType}
+            group by a1.question_id) b2
+        on b2.structure_id=b1.id
     </select>
 
 	<update id="updateQuestion" parameterType="zh.co.item.bank.model.entity.ExamModel">

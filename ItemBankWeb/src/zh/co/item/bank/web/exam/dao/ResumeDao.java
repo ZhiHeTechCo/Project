@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.QuestionStructure;
 
 @Named
 public class ResumeDao extends BaseDao {
@@ -44,4 +45,14 @@ public class ResumeDao extends BaseDao {
         return getIbatisTemplate().selectList("Question.selectErrorByFatherId", map);
     }
 
+    /**
+     * 用户错题集
+     * 
+     * @param map
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<QuestionStructure> searchCorrelationErrorQuestions(Map<String, Object> map) {
+        return getIbatisTemplate().selectList("Question.searchCorrelationErrorQuestions", map);
+    }
 }

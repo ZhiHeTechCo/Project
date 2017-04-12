@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml"
+  xmlns:component="http://java.sun.com/jsf/composite/component">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <script type="text/javascript">
+        //<![CDATA[ 
+            function callBack() {
+                $("table[id$='questionItem']").each(function() {
+                    var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
+                    var answer = document.getElementById(questionAnswer).value;
+                    var name = 'input:radio[name="'+ this.id +'"]';
+                    var item = $('input:radio[name="'+ this.id +'"]:checked');
+                    if(item != null) {
+                        if(item.val() == answer){
+                            item.before('<span class="glyphicon glyphicon-ok"/>'); 
+                        } else {
+                            item.before('<span class="glyphicon glyphicon-remove"/>');  
+                        }
+                    } 
+                    $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
+                    $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
+
+                });
+            }
+          //]]>
+    </script>
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="resumeListForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">我的错题集</h2>
+          </c:if>
+          <div id="container" class="container">
+            <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+              layout="block">
+              <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+            </h:panelGroup>
+            <div style="text-align: center;">
+              <c:forEach items="#{resumeListController.examTypes}" var="entry">
+                <h:commandButton style="margin-right: 5px;margin-top: 5px;" class="btn btn-info" value="#{entry.value}"
+                  action="#{resumeListController.searchQuestionByExamType}">
+                  <f:param name='examType' value="#{entry.key}"></f:param>
+                  <f:ajax render="search_result_data ngossfw_error_display" onevent="callBack" />
+                </h:commandButton>
+              </c:forEach>
+            </div>
+            <br />
+            <h:panelGroup id="search_result_data">
+              <div style="text-align: center; float: center; width: 100%;">
+                <h:panelGroup id="search_result_paginator" layout="block">
+                  <component:paginator form="resumeListForm" paginator="#{resumeListController.paginator}" />
+                </h:panelGroup>
+                <span class="tcdPageCode"></span>
+              </div>
+              <h:dataTable class="searchTable" rendered="true" value="#{resumeListController.paginator.model}"
+                var="first">
+                <h:column>
+                  <h4>
+                    <b><h:outputText value="#{first.title}"></h:outputText></b>
+                  </h4>
+                  <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
+                    <h:column>
+                      <h:panelGroup rendered="#{second.subject !=null or second.graphicImage !=''}">
+                        <table class="table table-bordered">
+                          <h:panelGroup rendered="#{second.subject !='' and second.subject !=null}">
+                            <tr>
+                              <td><ui:repeat value="#{second.subjectList}" var="stringItem">
+                                  <h:outputText value="#{stringItem}" />
+                                  <br />
+                                </ui:repeat></td>
+                            </tr>
+                          </h:panelGroup>
+                          <h:panelGroup rendered="#{second.graphicImage ne ''}">
+                            <tr>
+                              <td align="center">
+                                <div class="gallery-bottom">
+                                  <div class="col-md-3 gallery-grid">
+                                    <a class="example-image-link" href="#{second.graphicImage}"
+                                      data-lightbox="example-set"><img class="example-image"
+                                      src="#{second.graphicImage}" alt="" /></a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </h:panelGroup>
+                        </table>
+                      </h:panelGroup>
+                      <h:dataTable class="table table-bordered" rendered="true" value="#{second.questions}" var="item">
+                        <h:column>
+                          <h4>
+                            <h:outputText value="#{item.rowNo}"></h:outputText>
+                          </h4>
+                          <h:inputHidden value="#{item.answer}" id="questionAnswer" />
+                          <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
+                              var="stringItem">
+                              <h:outputText value="#{stringItem}" />
+                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter} <h:panelGroup
+                              rendered="#{item.noteInfo eq null || item.noteInfo.size() == 0}">
+                              <h:commandLink title="记笔记"
+                                onclick="document.getElementById('resumeListForm\:currentQuestionId').value=#{item.no};document.getElementById('resumeListForm\:txt_departmentname').value='';$('#noteBut').click();return false;">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                              </h:commandLink>
+                            </h:panelGroup></td>
+                          <tr>
+                            <td style="width: 10%;"><h4>选项</h4></td>
+                            <td><h:panelGroup rendered="#{item.a ne ''}">
+                                <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
+                                  class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
+                                  <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+                                  <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+                                  <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+                                  <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+                                </h:selectOneRadio>
+                              </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
+                                <div style="width: 5%; float: left;">
+                                  <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
+                                    <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
+                                    </h:panelGroup>
+                                  </div>
+                                </div>
+                                <div style="float: left; width: 95%;">
+                                  <h:inputText value="#{item.myAnswer}" readonly="true" />
+                                </div>
+                              </h:panelGroup></td>
+                          </tr>
+                          <tr>
+                            <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
+                              <td>
+                                <h4>解析</h4>
+                              </td>
+                              <td><h:outputText value="#{item.analysis}" /></td>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{item.a eq '' and item.answer ne item.myAnswer}">
+                              <td><h4>正解</h4></td>
+                              <td><h:outputText value="#{item.answer}" /></td>
+                            </h:panelGroup>
+                          </tr>
+                          <h:panelGroup rendered="#{item.noteInfo ne null and item.noteInfo.size()>0}">
+                            <tr>
+                              <td><h4>笔记</h4></td>
+                              <td><h:dataTable class="to" rendered="true" value="#{item.noteInfo}" var="list">
+                                  <h:column>
+                                    <h:outputText style="color: red;" value="#{list.note}" />
+                                    <h:commandLink title="修改笔记"
+                                      onclick="document.getElementById('resumeListForm\:currentQuestionId').value=#{item.no};document.getElementById('resumeListForm\:txt_departmentname').value='#{list.note}';$('#noteChgBut').click();return false;">
+                                      <span class="glyphicon glyphicon-pencil"></span>
+                                    </h:commandLink>
+                                  </h:column>
+                                </h:dataTable></td>
+                            </tr>
+                          </h:panelGroup>
+                        </h:column>
+                      </h:dataTable>
+                    </h:column>
+                  </h:dataTable>
+                </h:column>
+              </h:dataTable>
+              <div class="go-top col-md-2">
+                <a href="#header" class="scroll"><span class="glyphicon glyphicon-chevron-up"></span></a>
+              </div>
+            </h:panelGroup>
+            <!-- 记笔记Model -->
+            <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
+              onclick="$('#btn_change').hide();$('#btn_submit').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
+            <button style="display: none;" id="noteChgBut" class="ui-button-primary" type="button"
+              onclick="$('#btn_submit').hide();$('#btn_change').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Note</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <h:inputTextarea name="txt_note" value="#{resumeListController.noteBean.note}"
+                        class="form-control" id="txt_departmentname" />
+                    </div>
+                    <div>
+                      <h:inputHidden id="currentQuestionId" value="#{resumeListController.noteBean.questionId}" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                    </button>
+                    <button type="button"
+                      onclick="if(document.getElementById('resumeListForm\:txt_departmentname').value == '') { alert('未输入笔记!');return false;} else {document.getElementById('resumeListForm\:submit').click();}"
+                      id="btn_submit" class="btn btn-default" data-dismiss="modal">
+                      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
+                    </button>
+                    <button type="button" onclick="document.getElementById('resumeListForm\:change').click();"
+                      id="btn_change" class="btn btn-default" data-dismiss="modal">
+                      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>更新
+                    </button>
+                    <h:commandButton style="display: none;" id="submit" value="">
+                      <f:ajax event="click" execute="@form" render="search_result_data"
+                        listener="#{resumeListController.doNote}" onevent="callBack" />
+                    </h:commandButton>
+                    <h:commandButton style="display: none;" id="change" value="">
+                      <f:ajax event="click" execute="@form" render="search_result_data"
+                        listener="#{resumeListController.updateNote}" onevent="callBack" />
+                    </h:commandButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

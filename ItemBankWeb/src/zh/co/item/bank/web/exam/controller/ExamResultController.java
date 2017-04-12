@@ -22,6 +22,7 @@ import zh.co.item.bank.model.entity.NoteModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamResultService;
+import zh.co.item.bank.web.exam.service.NoteService;
 
 /**
  * 结果一览画面
@@ -36,6 +37,9 @@ public class ExamResultController extends BaseController {
 
     @Inject
     private ExamResultService examResultService;
+    
+    @Inject
+    private NoteService noteService;
 
     /** 画面初始化变量 */
     private List<ExamModel> questions;
@@ -77,7 +81,7 @@ public class ExamResultController extends BaseController {
             noteBean = new TbNoteBean();
 
             // b.检索笔记（不区分用户）
-            notes = examResultService.selectNotesByQuestionId(questions, null);
+            notes = noteService.selectNotesByQuestionId(questions, null);
 
             // c.关联并显示当前用户的笔记
             connectWithQuestions(userInfo.getId());
@@ -186,7 +190,7 @@ public class ExamResultController extends BaseController {
             // a.登录笔记（画面check笔记不为空）
             if (StringUtils.isNotEmpty(noteBean.getNote())) {
                 noteBean.setUserId(userInfo.getId());
-                examResultService.doNote(noteBean);
+                noteService.doNote(noteBean);
             }
             // b.画面显示
             refresh(questions);
@@ -205,7 +209,7 @@ public class ExamResultController extends BaseController {
         try {
             // a.更新笔记
             noteBean.setUserId(userInfo.getId());
-            examResultService.updateNote(noteBean);
+            noteService.updateNote(noteBean);
             // b.画面显示
             refresh(questions);
 
@@ -223,7 +227,7 @@ public class ExamResultController extends BaseController {
             if (question.getNo() == noteBean.getQuestionId()) {
                 List<ExamModel> list = new ArrayList<ExamModel>();
                 list.add(question);
-                List<NoteModel> noteModel = examResultService.selectNotesByQuestionId(list, userInfo.getId());
+                List<NoteModel> noteModel = noteService.selectNotesByQuestionId(list, userInfo.getId());
                 question.setNoteInfo(noteModel);
 //                // 新增笔记信息
 //                NoteModel noteModel = (NoteModel) noteBean;

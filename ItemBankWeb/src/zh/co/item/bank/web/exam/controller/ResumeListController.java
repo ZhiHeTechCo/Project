@@ -13,9 +13,9 @@ import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
-import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbNoteBean;
+import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.NoteModel;
@@ -23,8 +23,9 @@ import zh.co.item.bank.model.entity.PaginatorLogger;
 import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.RepeatPaginator;
 import zh.co.item.bank.model.entity.UserModel;
-import zh.co.item.bank.web.exam.service.ExamCollectionService;
+import zh.co.item.bank.web.exam.service.ExamService;
 import zh.co.item.bank.web.exam.service.NoteService;
+import zh.co.item.bank.web.exam.service.ResumeService;
 
 /**
  * 试卷画面
@@ -32,13 +33,16 @@ import zh.co.item.bank.web.exam.service.NoteService;
  * @author gaoya
  *
  */
-@Named("examPaperController")
+@Named("resumeListController")
 @Scope("session")
-public class ExamPaperController extends BaseController {
+public class ResumeListController extends BaseController {
     private final CmnLogger logger = CmnLogger.getLogger(getClass());
 
     @Inject
-    private ExamCollectionService examCollectionService;
+    private ExamService examService;
+
+    @Inject
+    private ResumeService resumeService;
 
     @Inject
     private NoteService noteService;
@@ -48,11 +52,10 @@ public class ExamPaperController extends BaseController {
 
     private UserModel userInfo;
 
-    private String source;
+    // 所有考题种别
+    private List<TsCodeBean> examTypes;
 
     private String examType;
-
-    private String beforePage;
 
     private TbNoteBean noteBean;
 
@@ -66,7 +69,7 @@ public class ExamPaperController extends BaseController {
             "向后翻页", "指定页");
 
     public String getPageId() {
-        return SystemConstants.PAGE_ITBK_EXAM_012;
+        return SystemConstants.PAGE_ITBK_EXAM_014;
     }
 
     /**
@@ -77,15 +80,35 @@ public class ExamPaperController extends BaseController {
     public String init() {
         try {
 
-            pushPathHistory("examPaperController");
+            // a.画面初始化
+            pushPathHistory("resumeListController");
             userInfo = (UserModel) WebUtils.getLoginUserInfo();
             noteBean = new TbNoteBean();
+            examPaper = new ArrayList<QuestionStructure>();
+            paginator = null;
 
-            // a.前画面为考试结果一览
-            if (source != null) {
-                examPaper = examCollectionService.selectReportStructure(userInfo.getId(), source, examType);
+            // 试题种别
+            examTypes = examService.getExamTypes();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * 2.根据考题种别检索试题
+     */
+    public void searchQuestionByExamType() {
+        try {
+
+            String currentExamType = WebUtils.getRequestParam("examType");
+            examPaper.clear();
+            if (StringUtils.isEmpty(currentExamType)) {
+                return;
             }
-
+            // 取错题
+            examPaper = resumeService.searchCorrelationErrorQuestions(currentExamType, userInfo.getId());
             if (examPaper != null && examPaper.size() > 0) {
                 for (QuestionStructure questionStructure : examPaper) {
                     List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
@@ -111,17 +134,6 @@ public class ExamPaperController extends BaseController {
         } catch (Exception e) {
             processForException(logger, e);
         }
-        return getPageId();
-    }
-
-    /**
-     * 记笔记
-     * 
-     * @return
-     */
-    public String note() {
-        System.out.println("note");
-        return getPageId();
     }
 
     /**
@@ -130,12 +142,7 @@ public class ExamPaperController extends BaseController {
      * @return
      */
     public String goBack() {
-        if (SystemConstants.PAGE_ITBK_EXAM_013.equals(beforePage)) {
-            ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
-            return resumeBean.init();
-        } else {
-            return beforePage;
-        }
+        return SystemConstants.PAGE_ITBK_EXAM_000;
     }
 
     /**
@@ -215,6 +222,14 @@ public class ExamPaperController extends BaseController {
         }
     }
 
+    public List<TsCodeBean> getExamTypes() {
+        return examTypes;
+    }
+
+    public void setExamTypes(List<TsCodeBean> examTypes) {
+        this.examTypes = examTypes;
+    }
+
     public List<QuestionStructure> getExamPaper() {
         return examPaper;
     }
@@ -223,28 +238,12 @@ public class ExamPaperController extends BaseController {
         this.examPaper = examPaper;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
     public String getExamType() {
         return examType;
     }
 
     public void setExamType(String examType) {
         this.examType = examType;
-    }
-
-    public String getBeforePage() {
-        return beforePage;
-    }
-
-    public void setBeforePage(String beforePage) {
-        this.beforePage = beforePage;
     }
 
     public TbNoteBean getNoteBean() {
