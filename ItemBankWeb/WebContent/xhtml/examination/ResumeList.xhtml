@@ -166,10 +166,16 @@
                   </h:dataTable>
                 </h:column>
               </h:dataTable>
-              <div class="go-top col-md-2">
-                <a href="#header" class="scroll"><span class="glyphicon glyphicon-chevron-up"></span></a>
-              </div>
+              <c:if test="#{resumeListController.paginator ne null}">
+                <div class="go-top col-md-2">
+                  <a href="#header" class="scroll"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                </div>
+              </c:if>
             </h:panelGroup>
+            <div class="form-submit1">
+              <h:commandButton value="返回" class="button1" style="margin-right: 5px;"
+                action="#{resumeListController.goBack}" id="goBackBtn" />
+            </div>
             <!-- 记笔记Model -->
             <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
               onclick="$('#btn_change').hide();$('#btn_submit').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
