@@ -197,7 +197,7 @@ public class ExamResultController extends BaseController {
     }
 
     /**
-     * 6.更新笔记
+     * 7.更新笔记
      * 
      * @return
      */

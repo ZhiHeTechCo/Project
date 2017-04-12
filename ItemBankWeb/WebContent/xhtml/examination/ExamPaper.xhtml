@@ -28,6 +28,24 @@
 
                 }); 
             });
+            function callBack() {
+                $("table[id$='questionItem']").each(function() {
+                    var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
+                    var answer = document.getElementById(questionAnswer).value;
+                    var name = 'input:radio[name="'+ this.id +'"]';
+                    var item = $('input:radio[name="'+ this.id +'"]:checked');
+                    if(item != null) {
+                        if(item.val() == answer){
+                            item.before('<span class="glyphicon glyphicon-ok"/>'); 
+                        } else {
+                            item.before('<span class="glyphicon glyphicon-remove"/>');  
+                        }
+                    } 
+                    $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
+                    $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
+
+                });
+            }
           //]]>
         </script>
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
@@ -48,100 +66,118 @@
                   <h:outputText value="图片太小看不清？做阅读的时候，可使用'Win + ←'将浏览器居左显示。"></h:outputText>
                 </h5>
               </c:if>
-              <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.examPaper}" var="first">
-                <h:column>
-                  <h4>
-                    <b><h:outputText value="#{first.title}"></h:outputText></b>
-                  </h4>
-                  <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
-                    <h:column>
-                      <h:panelGroup rendered="#{second.subject !=null or second.graphicImage !=''}">
-                        <table class="table table-bordered">
-                          <h:panelGroup rendered="#{second.subject !='' and second.subject !=null}">
-                            <tr>
-                              <td><ui:repeat value="#{second.subjectList}" var="stringItem">
-                                  <h:outputText value="#{stringItem}" />
-                                  <br />
-                                </ui:repeat></td>
-                            </tr>
-                          </h:panelGroup>
-                          <h:panelGroup rendered="#{second.graphicImage ne ''}">
-                            <tr>
-                              <td align="center">
-                                <div class="gallery-bottom">
-                                  <div class="col-md-3 gallery-grid">
-                                    <a class="example-image-link" href="#{second.graphicImage}"
-                                      data-lightbox="example-set"><img class="example-image"
-                                      src="#{second.graphicImage}" alt="" /></a>
+              <h:panelGroup id="noteWrapper">
+                <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.examPaper}" var="first">
+                  <h:column>
+                    <h4>
+                      <b><h:outputText value="#{first.title}"></h:outputText></b>
+                    </h4>
+                    <h:dataTable class="searchTable" rendered="true" value="#{first.firstLevels}" var="second">
+                      <h:column>
+                        <h:panelGroup rendered="#{second.subject !=null or second.graphicImage !=''}">
+                          <table class="table table-bordered">
+                            <h:panelGroup rendered="#{second.subject !='' and second.subject !=null}">
+                              <tr>
+                                <td><ui:repeat value="#{second.subjectList}" var="stringItem">
+                                    <h:outputText value="#{stringItem}" />
+                                    <br />
+                                  </ui:repeat></td>
+                              </tr>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{second.graphicImage ne ''}">
+                              <tr>
+                                <td align="center">
+                                  <div class="gallery-bottom">
+                                    <div class="col-md-3 gallery-grid">
+                                      <a class="example-image-link" href="#{second.graphicImage}"
+                                        data-lightbox="example-set"><img class="example-image"
+                                        src="#{second.graphicImage}" alt="" /></a>
+                                    </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </h:panelGroup>
-                        </table>
-                      </h:panelGroup>
-                      <h:dataTable class="table table-bordered" rendered="true" value="#{second.questions}" var="item">
-                        <h:column>
-                          <h4>
-                            <h:outputText value="#{item.rowNo}"></h:outputText>
-                          </h4>
-                          <h:inputHidden value="#{item.answer}" id="questionAnswer" />
-                          <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
-                              var="stringItem">
-                              <h:outputText value="#{stringItem}" />
-                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter}
-                          </td>
-                          <tr>
-                            <td style="width: 10%;"><h4>选项</h4></td>
-                            <td><h:panelGroup rendered="#{item.a ne ''}">
-                                <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
-                                  class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
-                                  <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
-                                  <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
-                                  <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
-                                  <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-                                </h:selectOneRadio>
-                              </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
-                                <div style="width: 5%; float: left;">
-                                  <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
-                                    <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
-                                    </h:panelGroup>
-                                    <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
-                                    </h:panelGroup>
-                                  </div>
-                                </div>
-                                <div style="float: left; width: 95%;">
-                                  <h:inputText value="#{item.myAnswer}" readonly="true" />
-                                </div>
+                                </td>
+                              </tr>
+                            </h:panelGroup>
+                          </table>
+                        </h:panelGroup>
+                        <h:dataTable class="table table-bordered" rendered="true" value="#{second.questions}" var="item">
+                          <h:column>
+                            <h4>
+                              <h:outputText value="#{item.rowNo}"></h:outputText>
+                            </h4>
+                            <h:inputHidden value="#{item.answer}" id="questionAnswer" />
+                            <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
+                                var="stringItem">
+                                <h:outputText value="#{stringItem}" />
+                              </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter} <h:panelGroup
+                                rendered="#{item.noteInfo eq null || item.noteInfo.size() == 0}">
+                                <h:commandLink title="记笔记"
+                                  onclick="document.getElementById('examPaperForm\:currentQuestionId').value=#{item.no};document.getElementById('examPaperForm\:txt_departmentname').value='';$('#noteBut').click();return false;">
+                                  <span class="glyphicon glyphicon-pencil"></span>
+                                </h:commandLink>
                               </h:panelGroup></td>
-                          </tr>
-                          <tr>
-                            <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
-                              <td>
-                                <h4>解析</h4>
-                              </td>
-                              <td><h:outputText value="#{item.analysis}" /></td>
+                            <tr>
+                              <td style="width: 10%;"><h4>选项</h4></td>
+                              <td><h:panelGroup rendered="#{item.a ne ''}">
+                                  <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
+                                    class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
+                                    <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
+                                    <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
+                                    <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
+                                    <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
+                                  </h:selectOneRadio>
+                                </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
+                                  <div style="width: 5%; float: left;">
+                                    <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
+                                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                                        <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
+                                      </h:panelGroup>
+                                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                                        <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
+                                      </h:panelGroup>
+                                    </div>
+                                  </div>
+                                  <div style="float: left; width: 95%;">
+                                    <h:inputText value="#{item.myAnswer}" readonly="true" />
+                                  </div>
+                                </h:panelGroup></td>
+                            </tr>
+                            <tr>
+                              <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
+                                <td>
+                                  <h4>解析</h4>
+                                </td>
+                                <td><h:outputText value="#{item.analysis}" /></td>
+                              </h:panelGroup>
+                              <h:panelGroup rendered="#{item.a eq '' and item.answer ne item.myAnswer}">
+                                <td><h4>正解</h4></td>
+                                <td><h:outputText value="#{item.answer}" /></td>
+                              </h:panelGroup>
+                            </tr>
+                            <h:panelGroup rendered="#{item.noteInfo ne null and item.noteInfo.size()>0}">
+                              <tr>
+                                <td><h4>笔记</h4></td>
+                                <td><h:dataTable class="to" rendered="true" value="#{item.noteInfo}" var="list">
+                                    <h:column>
+                                      <h:outputText style="color: red;" value="#{list.note}" />
+                                      <h:commandLink title="修改笔记"
+                                        onclick="document.getElementById('examPaperForm\:currentQuestionId').value=#{item.no};document.getElementById('examPaperForm\:txt_departmentname').value='#{list.note}';$('#noteChgBut').click();return false;">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                      </h:commandLink>
+                                    </h:column>
+                                  </h:dataTable></td>
+                              </tr>
                             </h:panelGroup>
-                            <h:panelGroup rendered="#{item.a eq '' and item.answer ne item.myAnswer}">
-                              <td><h4>正解</h4></td>
-                              <td><h:outputText value="#{item.answer}" /></td>
-                            </h:panelGroup>
-                          </tr>
-                        </h:column>
-                      </h:dataTable>
-                    </h:column>
-                  </h:dataTable>
-                </h:column>
-              </h:dataTable>
-              <div class="form-submit1">
-                <h:commandButton value="返回" class="button1" action="#{examPaperController.goBack}"
-                  id="goBackBtn">
-                </h:commandButton>
-              </div>
+                          </h:column>
+                        </h:dataTable>
+                      </h:column>
+                    </h:dataTable>
+                  </h:column>
+                </h:dataTable>
+              </h:panelGroup>
               <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
-                onclick="$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
+                onclick="$('#btn_change').hide();$('#btn_submit').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
+              <button style="display: none;" id="noteChgBut" class="ui-button-primary" type="button"
+                onclick="$('#btn_submit').hide();$('#btn_change').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -153,18 +189,34 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <h:inputTextarea name="txt_note" class="form-control" id="txt_departmentname" />
+                        <h:inputTextarea name="txt_note" value="#{examPaperController.noteBean.note}"
+                          class="form-control" id="txt_departmentname" />
+                      </div>
+                      <div>
+                        <h:inputHidden id="currentQuestionId" value="#{examPaperController.noteBean.questionId}" />
                       </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
                       </button>
-                      <button type="button" onclick="document.getElementById('examPaperForm\:submit').click();"
+                      <button type="button"
+                        onclick="if(document.getElementById('examPaperForm\:txt_departmentname').value == '') { alert('未输入笔记!');return false;} else {document.getElementById('examPaperForm\:submit').click();}"
                         id="btn_submit" class="btn btn-default" data-dismiss="modal">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
                       </button>
-                      <h:commandButton style="display: none;" id="submit" value="" action="#{examPaperController.note}" />
+                      <button type="button" onclick="document.getElementById('examPaperForm\:change').click();"
+                        id="btn_change" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>更新
+                      </button>
+                      <h:commandButton style="display: none;" id="submit" value="">
+                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                          listener="#{examPaperController.doNote}" onevent="callBack" />
+                      </h:commandButton>
+                      <h:commandButton style="display: none;" id="change" value="">
+                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                          listener="#{examPaperController.updateNote}" onevent="callBack" />
+                      </h:commandButton>
                     </div>
                   </div>
                 </div>
