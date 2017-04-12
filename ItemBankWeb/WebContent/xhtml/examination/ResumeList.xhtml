@@ -42,11 +42,13 @@
             </h:panelGroup>
             <div style="text-align: center;">
               <c:forEach items="#{resumeListController.examTypes}" var="entry">
-                <h:commandButton style="margin-right: 5px;margin-top: 5px;" class="btn btn-info" value="#{entry.value}"
-                  action="#{resumeListController.searchQuestionByExamType}">
-                  <f:param name='examType' value="#{entry.key}"></f:param>
-                  <f:ajax render="search_result_data ngossfw_error_display" onevent="callBack" />
-                </h:commandButton>
+                <h:panelGroup rendered="#{entry.key ne '4' and entry.key ne '6'}">
+                  <h:commandButton style="margin-right: 5px;margin-top: 5px;" class="btn btn-info"
+                    value="#{entry.value}" action="#{resumeListController.searchQuestionByExamType}">
+                    <f:param name='examType' value="#{entry.key}"></f:param>
+                    <f:ajax render="search_result_data ngossfw_error_display" onevent="callBack" />
+                  </h:commandButton>
+                </h:panelGroup>
               </c:forEach>
             </div>
             <br />
