@@ -39,71 +39,74 @@ import zh.co.item.bank.web.user.service.UserService;
 @Scope("session")
 public class FileSearchBean extends BaseController {
 
-	private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
-    
-	@Inject
+    private final CmnLogger logger = CmnLogger.getLogger(this.getClass());
+
+    @Inject
     private UserService userService;
-	
-	private TbFileInfoBean fileBean;
-	
-	private List<TbFileInfoBean> fileList;
-    
+
+    private TbFileInfoBean fileBean;
+
+    private List<TbFileInfoBean> fileList;
+
     private List<TsCodeBean> reviewFlagList;
-    
-    private RepeatPaginator paginator; 
 
-    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页","向后翻页", "指定页"); 
+    private RepeatPaginator paginator;
 
+    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页",
+            "向后翻页", "指定页");
 
-	public String getPageId() {
+    public String getPageId() {
         return SystemConstants.PAGE_ITBK_USER_007;
     }
-    
+
     /**
      * 初期化
+     * 
      * @return
      */
     public String init() {
-    	pushPathHistory("fileManageBean");
-		fileBean = new TbFileInfoBean();
-		try {
-	    	Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("modelId", CmnContants.MODELID_BQD0005);
-	        map.put("name", "review");
-	        reviewFlagList = userService.getCodelist(map);
-	        
-	        fileBean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
-	        doSearch();
-		} catch (Exception e) {
+        pushPathHistory("fileManageBean");
+        fileBean = new TbFileInfoBean();
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("modelId", CmnContants.MODELID_BQD0005);
+            map.put("name", "review");
+            reviewFlagList = userService.getCodelist(map);
+
+            fileBean.setReviewFlag(SystemConstants.REVIEW_FLAG_0);
+            doSearch();
+        } catch (Exception e) {
             processForException(logger, e);
         }
         return SystemConstants.PAGE_ITBK_USER_007;
     }
 
-	/**
-	 * 检索
-	 * @return
-	 */
-	public String doSearch() {
-		//检索
+    /**
+     * 检索
+     * 
+     * @return
+     */
+    public String doSearch() {
+        // 检索
         try {
-        	fileList = null;
+            fileList = null;
             paginator = null;
             fileList = userService.getFileInfoList(fileBean);
-    		paginator = new RepeatPaginator(fileList, paginatorLogger);
-    		
-    		Map<String, Object> logMap = new LinkedHashMap<String, Object>();
-    		logMap.put("审核状态", fileBean.getReviewFlag());
-    		paginatorLogger.setParams(logMap);
+            paginator = new RepeatPaginator(fileList, paginatorLogger, null);
+
+            Map<String, Object> logMap = new LinkedHashMap<String, Object>();
+            logMap.put("审核状态", fileBean.getReviewFlag());
+            paginatorLogger.setParams(logMap);
         } catch (Throwable e) {
             processForException(logger, e);
         }
 
         return SystemConstants.PAGE_ITBK_USER_007;
-	}
-    
+    }
+
     /**
      * 文件下载
+     * 
      * @return
      */
     public void doDownLoad(Integer userId, String fileName) {
@@ -128,63 +131,64 @@ public class FileSearchBean extends BaseController {
             processForException(logger, e);
         }
     }
-    
+
     /**
      * 更新审核结果
+     * 
      * @return
      */
     public void doReview(TbFileInfoBean bean) {
         try {
 
-        	TbFileInfoBean updateBean = new TbFileInfoBean();
-        	updateBean.setId(bean.getId());
-        	updateBean.setComment(bean.getComment());
-        	updateBean.setReviewFlag(bean.getReviewFlag());
-        	
-        	int count = userService.updateFileInfo(updateBean);
-        	
-        	//更新成功
-        	if(count == 1) {
-        		setMessage(MessageUtils.getMessage(MessageId.COMMON_I_0003, new Object[] { "审核" }), "I");
-        	} else {
-        		throw new CmnBizException(MessageId.COMMON_I_0003, new Object[] { "审核" });
-        	}
+            TbFileInfoBean updateBean = new TbFileInfoBean();
+            updateBean.setId(bean.getId());
+            updateBean.setComment(bean.getComment());
+            updateBean.setReviewFlag(bean.getReviewFlag());
+
+            int count = userService.updateFileInfo(updateBean);
+
+            // 更新成功
+            if (count == 1) {
+                setMessage(MessageUtils.getMessage(MessageId.COMMON_I_0003, new Object[] { "审核" }), "I");
+            } else {
+                throw new CmnBizException(MessageId.COMMON_I_0003, new Object[] { "审核" });
+            }
 
         } catch (Throwable e) {
             processForException(logger, e);
         }
     }
 
-	public RepeatPaginator getPaginator() {
-		return paginator;
-	}
+    public RepeatPaginator getPaginator() {
+        return paginator;
+    }
 
-	public void setPaginator(RepeatPaginator paginator) {
-		this.paginator = paginator;
-	}
+    public void setPaginator(RepeatPaginator paginator) {
+        this.paginator = paginator;
+    }
 
-	public TbFileInfoBean getFileBean() {
-		return fileBean;
-	}
+    public TbFileInfoBean getFileBean() {
+        return fileBean;
+    }
 
-	public void setFileBean(TbFileInfoBean fileBean) {
-		this.fileBean = fileBean;
-	}
+    public void setFileBean(TbFileInfoBean fileBean) {
+        this.fileBean = fileBean;
+    }
 
-	public List<TbFileInfoBean> getFileList() {
-		return fileList;
-	}
+    public List<TbFileInfoBean> getFileList() {
+        return fileList;
+    }
 
-	public void setFileList(List<TbFileInfoBean> fileList) {
-		this.fileList = fileList;
-	}
+    public void setFileList(List<TbFileInfoBean> fileList) {
+        this.fileList = fileList;
+    }
 
-	public List<TsCodeBean> getReviewFlagList() {
-		return reviewFlagList;
-	}
+    public List<TsCodeBean> getReviewFlagList() {
+        return reviewFlagList;
+    }
 
-	public void setReviewFlagList(List<TsCodeBean> reviewFlagList) {
-		this.reviewFlagList = reviewFlagList;
-	}
+    public void setReviewFlagList(List<TsCodeBean> reviewFlagList) {
+        this.reviewFlagList = reviewFlagList;
+    }
 
 }

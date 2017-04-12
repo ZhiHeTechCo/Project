@@ -5,12 +5,14 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang.StringUtils;
+
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
 
 public class RepeatPaginator {
-	
-	private static final int DEFAULT_RECORDS_NUMBER = 20;
+
+    private static final int DEFAULT_RECORDS_NUMBER = 20;
     private static final int DEFAULT_PAGE_INDEX = 1;
     private static final int DEFAULT_PAGE_RANGE = 7;
 
@@ -28,12 +30,13 @@ public class RepeatPaginator {
     private List<?> model;
     PaginatorLogger logger;
 
-    public RepeatPaginator(List<?> model, PaginatorLogger logger) {
+    public RepeatPaginator(List<?> model, PaginatorLogger logger, String perPage) {
         origModel = model;
         this.logger = logger;
-		String recordsPerPage = PropertiesUtils.getInstance().getSgValue(
-				SystemConstants.PAGE_CONTROL_RECORDS_PER_PAGE);
-		records = recordsPerPage == null ? DEFAULT_RECORDS_NUMBER : Integer.valueOf(recordsPerPage);
+        String recordsPerPage = StringUtils.isEmpty(perPage)
+                ? PropertiesUtils.getInstance().getSgValue(SystemConstants.PAGE_CONTROL_RECORDS_PER_PAGE)
+                : perPage;
+        records = recordsPerPage == null ? DEFAULT_RECORDS_NUMBER : Integer.valueOf(recordsPerPage);
         pageIndex = DEFAULT_PAGE_INDEX;
         pageRange = DEFAULT_PAGE_RANGE;
         recordsTotal = model.size();
@@ -60,53 +63,52 @@ public class RepeatPaginator {
         fromIndex = (pageIndex * records) - records;
         toIndex = pageIndex * records;
 
-        if(toIndex > recordsTotal) {
+        if (toIndex > recordsTotal) {
             toIndex = recordsTotal;
         }
-        
-        
-        int firstLink = Math.max(pageIndex-(pageRange-1)/2, 2);
-        int lastLink = Math.min(pageIndex+((pageRange-1)-(pageRange-1)/2), pagesTotal-1);
-        int pageLength = Math.max(lastLink-firstLink+1, 0);
+
+        int firstLink = Math.max(pageIndex - (pageRange - 1) / 2, 2);
+        int lastLink = Math.min(pageIndex + ((pageRange - 1) - (pageRange - 1) / 2), pagesTotal - 1);
+        int pageLength = Math.max(lastLink - firstLink + 1, 0);
         pageLinks = new Integer[pageLength];
         if (pageLength > 0) {
-        	for (int i=0; i<pageLinks.length; i++) {
-        		pageLinks[i] = firstLink + i;
-        	}
-        	
-        	ellipsisNeededBefore = (pageLinks[0] > 2);
-            ellipsisNeededAfter = (pageLinks[pageLength-1] < pagesTotal-1);
+            for (int i = 0; i < pageLinks.length; i++) {
+                pageLinks[i] = firstLink + i;
+            }
+
+            ellipsisNeededBefore = (pageLinks[0] > 2);
+            ellipsisNeededAfter = (pageLinks[pageLength - 1] < pagesTotal - 1);
         }
 
         model = origModel.subList(fromIndex, toIndex);
     }
 
     public void next() {
-    	logger.logNext();
-        if(pageIndex < pagesTotal) {
+        logger.logNext();
+        if (pageIndex < pagesTotal) {
             pageIndex++;
         }
 
         updateModel();
     }
-    
+
     public void goPage() {
-    	logger.logGoto();
-		FacesContext fc = FacesContext.getCurrentInstance();
-	    Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-	    pageIndex = Integer.valueOf(params.get("pageId")); 
+        logger.logGoto();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        pageIndex = Integer.valueOf(params.get("pageId"));
 
         updateModel();
     }
 
     public void prev() {
-    	logger.logPrev();
-        if(pageIndex > 1) {
+        logger.logPrev();
+        if (pageIndex > 1) {
             pageIndex--;
         }
 
         updateModel();
-    }   
+    }
 
     public int getRecords() {
         return records;
@@ -115,7 +117,7 @@ public class RepeatPaginator {
     public int getRecordsTotal() {
         return recordsTotal;
     }
-    
+
     public int getFirstPage() {
         return 1;
     }
@@ -127,25 +129,25 @@ public class RepeatPaginator {
     public int getPagesTotal() {
         return pagesTotal;
     }
-    
+
     public int getFromIndex() {
         return fromIndex;
     }
-    
+
     public int getToIndex() {
         return toIndex;
     }
-    
+
     public Integer[] getPageLinks() {
         return pageLinks;
     }
-    
+
     public boolean getEllipsisNeededBefore() {
-    	return ellipsisNeededBefore;
+        return ellipsisNeededBefore;
     }
-    
+
     public boolean getEllipsisNeededAfter() {
-    	return ellipsisNeededAfter;
+        return ellipsisNeededAfter;
     }
 
     public List<?> getModel() {

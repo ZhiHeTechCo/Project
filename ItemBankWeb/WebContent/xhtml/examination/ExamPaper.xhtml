@@ -4,7 +4,8 @@
 
 <html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
-<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml"
+    xmlns:component="http://java.sun.com/jsf/composite/component">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
     <script type="text/javascript">
@@ -60,14 +61,21 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
+              <div style="text-align: center; float: center; width: 100%;">
+                <h:panelGroup id="search_result_paginator" layout="block">
+                  <component:paginator form="examPaperForm" paginator="#{examPaperController.paginator}" />
+                </h:panelGroup>
+                <span class="tcdPageCode"></span>
+              </div>
+              <br/>
               <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
                 <h5 style="color: #3382C9;">
                   <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;
                   <h:outputText value="图片太小看不清？做阅读的时候，可使用'Win + ←'将浏览器居左显示。"></h:outputText>
                 </h5>
               </c:if>
-              <h:panelGroup id="noteWrapper">
-                <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.examPaper}" var="first">
+              <h:panelGroup id="search_result_data">
+                <h:dataTable class="searchTable" rendered="true" value="#{examPaperController.paginator.model}" var="first">
                   <h:column>
                     <h4>
                       <b><h:outputText value="#{first.title}"></h:outputText></b>
@@ -210,11 +218,11 @@
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>更新
                       </button>
                       <h:commandButton style="display: none;" id="submit" value="">
-                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                        <f:ajax event="click" execute="@form" render="search_result_data"
                           listener="#{examPaperController.doNote}" onevent="callBack" />
                       </h:commandButton>
                       <h:commandButton style="display: none;" id="change" value="">
-                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                        <f:ajax event="click" execute="@form" render="search_result_data"
                           listener="#{examPaperController.updateNote}" onevent="callBack" />
                       </h:commandButton>
                     </div>

@@ -19,7 +19,9 @@ import zh.co.item.bank.db.entity.TbNoteBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.FirstLevelModel;
 import zh.co.item.bank.model.entity.NoteModel;
+import zh.co.item.bank.model.entity.PaginatorLogger;
 import zh.co.item.bank.model.entity.QuestionStructure;
+import zh.co.item.bank.model.entity.RepeatPaginator;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.service.ExamCollectionService;
 import zh.co.item.bank.web.exam.service.ExamResultService;
@@ -56,6 +58,12 @@ public class ExamPaperController extends BaseController {
 
     // DB中取到的全部笔记
     private List<NoteModel> notes;
+
+    // 分页
+    private RepeatPaginator paginator;
+
+    private PaginatorLogger paginatorLogger = new PaginatorLogger(logger, SystemConstants.PAGE_ITBK_USER_007, "向前翻页",
+            "向后翻页", "指定页");
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_012;
@@ -96,6 +104,9 @@ public class ExamPaperController extends BaseController {
                     }
                 }
             }
+
+            // 分页
+            paginator = new RepeatPaginator(examPaper, paginatorLogger, "1");
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -242,5 +253,13 @@ public class ExamPaperController extends BaseController {
 
     public void setNoteBean(TbNoteBean noteBean) {
         this.noteBean = noteBean;
+    }
+
+    public RepeatPaginator getPaginator() {
+        return paginator;
+    }
+
+    public void setPaginator(RepeatPaginator paginator) {
+        this.paginator = paginator;
     }
 }

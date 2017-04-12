@@ -74,7 +74,7 @@ public class ForumController extends BaseController {
             }
 
             forumModels = forumService.selectForumForAll();
-            paginator = new RepeatPaginator(forumModels, paginatorLogger);
+            paginator = new RepeatPaginator(forumModels, paginatorLogger, null);
             justShowMine = "false";
 
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class ForumController extends BaseController {
 
             justShowMine = "true";
             forumModels = forumService.selectForumByAsker(userInfo.getId());
-            paginator = new RepeatPaginator(forumModels, paginatorLogger);
+            paginator = new RepeatPaginator(forumModels, paginatorLogger, null);
 
         } catch (Exception e) {
             processForException(logger, e);
