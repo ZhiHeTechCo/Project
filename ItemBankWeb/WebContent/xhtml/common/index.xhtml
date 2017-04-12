@@ -13,11 +13,10 @@
   <meta name="keywords" content="日语 在线测试 题库,JTEST,Jtest,JLPT,日本语能力测试" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- <ui:insert name="title"></ui:insert> -->
+  <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
   <title>
   </title>
-    
 
-    
     <h:outputStylesheet library="css" name="bootstrap.css" />
     <h:outputStylesheet library="css" name="owl.carousel.css" />
     <h:outputStylesheet library="css" name="style.css" />
@@ -41,10 +40,17 @@
     <h:outputScript library="js" name="owl.carousel.js" />
     <h:outputScript library="js" name="newsbox.min.js" />
 
+  <script type="text/javascript">
+  jQuery(document).ready(function($) {
+          $(".scroll").click(function(event){     
+              event.preventDefault();
+              $('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+          });
+      });
+  </script>
 </h:head>  
   
 <h:body>  
-
 <script type="text/javascript">
         var contextPath = "${request.contextPath}";
         pageToken = "${session.getAttribute('session-page-token')}";
@@ -88,9 +94,6 @@
         function topMenu() {
             window.top.location.href= "${request.contextPath}/xhtml/common/home.xhtml";
         }
-        
-        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
     </script>
 
   
