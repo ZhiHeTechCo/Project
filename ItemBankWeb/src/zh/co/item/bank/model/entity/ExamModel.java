@@ -51,8 +51,11 @@ public class ExamModel extends QuestionBean {
 
     /** radio样式 */
     private String radioClass;
-    
+
     private List<String> contextList;
+
+    // 笔记
+    private List<NoteModel> noteInfo;
 
     public int getUserId() {
         return userId;
@@ -174,12 +177,20 @@ public class ExamModel extends QuestionBean {
         this.radioClass = radioClass;
     }
 
-	public List<String> getContextList() {
-		return CmnStringUtils.getSubjectList(this.getContext());
-	}
+    public List<String> getContextList() {
+        return CmnStringUtils.getSubjectList(this.getContext());
+    }
 
-	public void setContextList(List<String> contextList) {
-		this.contextList = contextList;
-	}
+    public void setContextList(List<String> contextList) {
+        this.contextList = contextList;
+    }
+
+    public List<NoteModel> getNoteInfo() {
+        return noteInfo;
+    }
+
+    public void setNoteInfo(List<NoteModel> noteInfo) {
+        this.noteInfo = noteInfo;
+    }
 
 }

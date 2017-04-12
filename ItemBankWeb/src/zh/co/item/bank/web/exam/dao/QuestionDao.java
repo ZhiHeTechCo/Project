@@ -93,7 +93,7 @@ public class QuestionDao extends BaseDao {
     public List<TbQuestionStructureBean> getStructuresByClassifyId(Integer classifyId) {
         return getIbatisTemplate().selectList("Media.selectStructuresByClassifyId", classifyId);
     }
-    
+
     /**
      * 非听力题检索
      * 
@@ -104,7 +104,6 @@ public class QuestionDao extends BaseDao {
     public List<QuestionStructure> selectQuestionsStructure(Map<String, Object> map) {
         return getIbatisTemplate().selectList("Question.selectQuestionsStructure", map);
     }
-    
 
     /**
      * 关联试题查询
@@ -116,4 +115,5 @@ public class QuestionDao extends BaseDao {
     public List<QuestionStructure> searchCorrelationQuestions(Map<String, Object> map) {
         return getIbatisTemplate().selectList("Question.searchCorrelationQuestions", map);
     }
+
 }

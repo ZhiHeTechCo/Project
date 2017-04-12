@@ -12,7 +12,6 @@ import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.db.entity.TsCodeBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.web.exam.dao.QuestionDao;
 
 /**
@@ -176,35 +175,5 @@ public class QuestionService {
      */
     public List<TbQuestionStructureBean> getStructuresByClassifyId(Integer classifyId) {
         return questionDao.getStructuresByClassifyId(classifyId);
-    }
-
-    /**
-     * 关联试题查询
-     * 
-     * @param examModel
-     * @return
-     */
-    public List<QuestionStructure> searchCorrelationQuestions(ExamModel examModel) {
-        String key = null;
-        switch (examModel.getAnswer()) {
-        case "1":
-            key = examModel.getA();
-            break;
-        case "2":
-            key = examModel.getB();
-            break;
-        case "3":
-            key = examModel.getC();
-            break;
-        case "4":
-            key = examModel.getD();
-            break;
-        default:
-            break;
-        }
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("key", key);
-        map.put("questionId", examModel.getNo());
-        return questionDao.searchCorrelationQuestions(map);
     }
 }

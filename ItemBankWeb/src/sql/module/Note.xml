@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Note">
+
+	<select id="selectNotesByQuestionId" parameterType="java.util.Map"
+		resultType="zh.co.item.bank.model.entity.NoteModel">
+		select t1.user_id, t1.question_id, t1.note, t2.nick_name, t2.headimgurl
+		from tb_note t1, vu_user_model t2
+		where t1.delete_flag = 0
+		<if test="userId != null">
+			and t1.user_id = #{userId}
+		</if>
+		and t2.id = t1.user_id
+		and t1.question_id in
+		<foreach collection="questions" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item.no,jdbcType=INTEGER}
+		</foreach>
+		order by t1.create_time
+	</select>
+
+	<update id="updateNote" parameterType="zh.co.item.bank.db.entity.TbNoteBean">
+		update tb_note
+		set note = #{note,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=INTEGER} and question_id = #{questionId,jdbcType=INTEGER}
+	</update>
+</mapper>
