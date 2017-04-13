@@ -366,7 +366,7 @@
             and a1.my_answer != a2.answer
             and a3.id = a2.classify_id
             and a3.exam_type = #{examType}
-            group by a1.question_id) b2
+            group by a1.question_id order by a1.create_time) b2
         on b2.structure_id=b1.id
     </select>
 
