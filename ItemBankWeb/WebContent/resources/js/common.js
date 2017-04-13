@@ -111,6 +111,27 @@ function resetButtonDisabled(){
 }
 
 /**
+ * 答题正误判断
+ */
+function judgeAnswer() {
+    $("table[id$='questionItem']").each(function() {
+        var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
+        var answer = document.getElementById(questionAnswer).value;
+        var name = 'input:radio[name="'+ this.id +'"]';
+        var item = $('input:radio[name="'+ this.id +'"]:checked');
+        if(item != null) {
+            if(item.val() == answer){
+                item.before('<span class="glyphicon glyphicon-ok"/>'); 
+            } else {
+                item.before('<span class="glyphicon glyphicon-remove"/>');  
+            }
+        } 
+        $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
+        $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
+    });
+}
+
+/**
  * 日期控件的样式
  */
 function datepickerBeforeShow(input){
@@ -258,6 +279,7 @@ function callbackAjaxForPaginator(data){
 	switch (data.status) {
 		case "success":
 			resetButtonDisabled();
+			judgeAnswer();
 		    break;
 	}
 }
