@@ -5,8 +5,6 @@ import java.util.Date;
 public class TuPointHistoryBean {
     private Integer userId;
 
-    private Integer point;
-
     private String event;
 
     private Date createTime;
@@ -17,14 +15,6 @@ public class TuPointHistoryBean {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getPoint() {
-        return point;
-    }
-
-    public void setPoint(Integer point) {
-        this.point = point;
     }
 
     public String getEvent() {

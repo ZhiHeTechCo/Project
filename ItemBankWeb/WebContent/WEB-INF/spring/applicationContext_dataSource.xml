@@ -59,7 +59,6 @@
                 <value>classpath:sql/module/ExamDropout.xml</value>
                 <value>classpath:sql/module/Message.xml</value>
                 <value>classpath:sql/module/Note.xml</value>
-                <value>classpath:sql/module/Point.xml</value>
             </list>
         </property>
     </bean>

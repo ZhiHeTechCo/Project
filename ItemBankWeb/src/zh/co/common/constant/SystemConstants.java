@@ -167,4 +167,7 @@ public class SystemConstants {
     /** 试题更新 */
     public static final String PAGE_ITBK_QUE_002 = "ITBK_QUE_002";
 
+    /** 记笔记 */
+    public static final String EVENT_001 = "EVENT_001";
+
 }
