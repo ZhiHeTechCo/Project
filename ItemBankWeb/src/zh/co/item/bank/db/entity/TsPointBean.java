@@ -1,11 +1,21 @@
 package zh.co.item.bank.db.entity;
 
-public class TsPointBean extends TsPointBeanKey {
+public class TsPointBean {
+    private String id;
+
     private Short point;
 
     private String description;
 
     private String deleteFlag;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
 
     public Short getPoint() {
         return point;

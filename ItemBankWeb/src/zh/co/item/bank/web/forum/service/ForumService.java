@@ -10,11 +10,13 @@ import javax.inject.Named;
 import zh.co.common.constant.SystemConstants;
 import zh.co.item.bank.db.entity.TbForumAskerBean;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
+import zh.co.item.bank.db.entity.TuPointHistoryBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumModel;
 import zh.co.item.bank.model.entity.ForumResponseModel;
 import zh.co.item.bank.web.forum.dao.ForumDao;
+import zh.co.item.bank.web.user.dao.PointHistoryDao;
 
 /**
  * 听力模块
@@ -27,6 +29,9 @@ public class ForumService {
 
     @Inject
     private ForumDao forumDao;
+
+    @Inject
+    private PointHistoryDao pointHistoryDao;
 
     /**
      * 用户提问登录
@@ -89,11 +94,19 @@ public class ForumService {
         // 登录tb_forum_response
         forumDao.insertResponse(newResponse);
         // 更新tb_forum_asker
-        Map<String, Object> param=new HashMap<String,Object>();
+        Map<String, Object> param = new HashMap<String, Object>();
         // 已回答
         param.put("status", "1");
         param.put("questionId", newResponse.getQuestionId());
         forumDao.updateStatus(param);
+
+        // 积分
+        if (newResponse.getResponser() != 0) {
+            TuPointHistoryBean bean = new TuPointHistoryBean();
+            bean.setUserId(newResponse.getResponser());
+            bean.setEvent(SystemConstants.EVENT_002);
+            pointHistoryDao.insertPointHistory(bean);
+        }
     }
 
     /**

@@ -169,5 +169,7 @@ public class SystemConstants {
 
     /** 记笔记 */
     public static final String EVENT_001 = "EVENT_001";
+    /** 论坛评论 */
+    public static final String EVENT_002 = "EVENT_002";
 
 }

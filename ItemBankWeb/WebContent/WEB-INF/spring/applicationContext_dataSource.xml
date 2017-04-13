@@ -40,6 +40,7 @@
                 <value>classpath:sql/common/TcMessage.xml</value>
                 <value>classpath:sql/common/TsAuthority.xml</value>
                 <value>classpath:sql/common/TsCode.xml</value>
+                <value>classpath:sql/common/TsPoint.xml</value>
                 <value>classpath:sql/common/TuPointHistory.xml</value>
                 <value>classpath:sql/common/TuUser.xml</value>
                 <value>classpath:sql/common/TbFileInfo.xml</value>
