@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
+<mapper namespace="TsPoint" >
+  <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TsPointBean" >
+    <result column="id" property="id" jdbcType="CHAR" />
+    <result column="point" property="point" jdbcType="SMALLINT" />
+    <result column="description" property="description" jdbcType="CHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="zh.co.item.bank.db.entity.TsPointBean" >
+    insert into ts_point (id, point, description, 
+      delete_flag)
+    values (#{id,jdbcType=CHAR}, #{point,jdbcType=SMALLINT}, #{description,jdbcType=CHAR}, 
+      #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TsPointBean" >
+    insert into ts_point
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
