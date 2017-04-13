@@ -9,7 +9,24 @@
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
     <script type="text/javascript">
         //<![CDATA[ 
-            function callBack() {
+            $(document).ready(function() {
+                judgeAnswer();
+            });
+            function callBack(data) {
+                var ajaxStatus = data.status;
+                // status
+                switch (ajaxStatus) {
+                case "begin":
+                    break;
+                case "complete":
+                    break;
+                case "success":
+                    judgeAnswer();
+                    break;
+                }
+                
+            }
+            function judgeAnswer() {
                 $("table[id$='questionItem']").each(function() {
                     var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
                     var answer = document.getElementById(questionAnswer).value;
@@ -24,7 +41,6 @@
                     } 
                     $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
                     $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
-
                 });
             }
           //]]>

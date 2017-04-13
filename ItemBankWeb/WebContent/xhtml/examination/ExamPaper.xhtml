@@ -11,25 +11,23 @@
     <script type="text/javascript">
         //<![CDATA[ 
             $(document).ready(function() {
-
-                $("table[id$='questionItem']").each(function() {
-                    var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
-                    var answer = document.getElementById(questionAnswer).value;
-                    var name = 'input:radio[name="'+ this.id +'"]';
-                    var item = $('input:radio[name="'+ this.id +'"]:checked');
-                    if(item != null) {
-                        if(item.val() == answer){
-                            item.before('<span class="glyphicon glyphicon-ok"/>'); 
-                        } else {
-                            item.before('<span class="glyphicon glyphicon-remove"/>');  
-                        }
-                    } 
-                    $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
-                    $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
-
-                }); 
+                judgeAnswer();
             });
-            function callBack() {
+            function callBack(data) {
+                var ajaxStatus = data.status;
+                // status
+                switch (ajaxStatus) {
+                case "begin":
+                    break;
+                case "complete":
+                    break;
+                case "success":
+                    judgeAnswer();
+                    break;
+                }
+                
+            }
+            function judgeAnswer() {
                 $("table[id$='questionItem']").each(function() {
                     var questionAnswer = this.id.replace('questionItem', 'questionAnswer')
                     var answer = document.getElementById(questionAnswer).value;
@@ -44,7 +42,6 @@
                     } 
                     $('input:radio[name="'+ this.id +'"][value!="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok-white"/>')
                     $('input:radio[name="'+ this.id +'"][value="'+ answer + '"]').not('input:checked').before('<span class="glyphicon glyphicon-ok"/>');
-
                 });
             }
           //]]>
