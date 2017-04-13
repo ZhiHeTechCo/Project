@@ -54,7 +54,8 @@ public class ForumService {
      */
     public List<ForumModel> selectForumForAll() {
         return forumDao.selectForumForAll();
-    }
+    } 
+    
 
     /**
      * 取当前问题
