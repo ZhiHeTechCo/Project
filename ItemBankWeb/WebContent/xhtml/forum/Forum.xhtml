@@ -2,85 +2,76 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml"
-	xmlns:component="http://java.sun.com/jsf/composite/component">
-	<ui:define name="content">
-		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
-		<div style="width: 100%; overflow: auto; overflow-x: hidden;">
-			<h:form id="forumForm">
-				<div class="typrography">
-					<c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-						<h2
-							style="text-align: center; padding-bottom: 20px; color: #3382C9;">问题一览</h2>
-					</c:if>
-					<div class="container">
-						<div class="bs-example">
-							<h:panelGroup id="ngossfw_error_display"
-								class="#{request.getAttribute('request-message-level')}"
-								layout="block">
-								<h:outputText
-									value="${request.getAttribute('request-message-content')}"
-									escape="false" />
-							</h:panelGroup>
-							<div style="float: left;">
-								<h5 style="color: #3382C9;">
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干查看。
-								</h5>
-							</div>
-							<div style="float: right;">
-								<c:if test="#{session.getAttribute('session-user-id') != null}">
-									<h5 style="color: orange;">
-										<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;
-										<c:if test="#{forumController.justShowMine eq 'true'}">
-											<h:commandLink value="查看全部提问"
-												action="#{forumController.showAllQuestion}"
-												onclick="return buttonDisable();"></h:commandLink>
-										</c:if>
-										<c:if test="#{forumController.justShowMine ne 'true'}">
-											<h:commandLink value="只看我的提问"
-												action="#{forumController.showAllMyQuestion}"
-												onclick="return buttonDisable();"></h:commandLink>
-										</c:if>
-									</h5>
-								</c:if>
-							</div>
-							<div style="clear: both"></div>
-							<!-- 分页 -->
-							<div style="text-align: center; float: center; width: 100%;">
-								<h:panelGroup id="search_result_paginator" layout="block">
-									<component:paginator form="forumForm"
-										paginator="#{forumController.paginator}" />
-								</h:panelGroup>
-								<span class="tcdPageCode"></span>
-							</div>
-							<br />
-							<h:panelGroup id="search_result_data" layout="block">
-								<h:dataTable class="searchTable table-striped" rendered="true"
-									value="#{forumController.paginator.model}" var="item">
-									<h:column>
-										<td><h4>
-												<h:outputText value="#{item.rowNo}"></h:outputText>
-											</h4></td>
-										<td colspan="4" class="list-group list-group-alternate"><h:commandLink
-												action="#{forumController.showQuestionDetail}"
-												style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
-												class="list-group-item">
-												<f:param name="questionId" value="#{item.questionId}"></f:param>
+  xmlns:component="http://java.sun.com/jsf/composite/component">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="forumForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">问题一览</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <div style="float: left;">
+                <h5 style="color: #3382C9;">
+                  <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干查看。
+                </h5>
+              </div>
+              <div style="float: right;">
+                <c:if test="#{session.getAttribute('session-user-id') != null}">
+                  <h5 style="color: orange;">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;
+                    <c:if test="#{forumController.justShowMine eq 'true'}">
+                      <h:commandLink value="查看全部提问" action="#{forumController.showAllQuestion}"
+                        onclick="return buttonDisable();"></h:commandLink>
+                    </c:if>
+                    <c:if test="#{forumController.justShowMine ne 'true'}">
+                      <h:commandLink value="只看我的提问" action="#{forumController.showAllMyQuestion}"
+                        onclick="return buttonDisable();"></h:commandLink>
+                    </c:if>
+                  </h5>
+                </c:if>
+              </div>
+              <div style="clear: both"></div>
+              <!-- 分页 -->
+              <div style="text-align: center; float: center; width: 100%;">
+                <h:panelGroup id="search_result_paginator" layout="block">
+                  <component:paginator form="forumForm" paginator="#{forumController.paginator}" />
+                </h:panelGroup>
+                <span class="tcdPageCode"></span>
+              </div>
+              <br />
+              <h:panelGroup id="search_result_data" layout="block">
+                <h:dataTable class="searchTable table-striped" rendered="true"
+                  value="#{forumController.paginator.model}" var="item">
+                  <h:column>
+                    <h4>
+                      <h:outputText value="#{item.rowNo}"></h:outputText>
+                    </h4>
+                    <td class="list-group list-group-alternate"><h:commandLink
+                        action="#{forumController.showQuestionDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
+                        class="list-group-item">
+                        <f:param name="questionId" value="#{item.questionId}" />
 											#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
-										<td><h:outputText value="#{item.statusName}" /></td>
-									</h:column>
-								</h:dataTable>
-							</h:panelGroup>
-						</div>
-					</div>
-				</div>
-			</h:form>
-		</div>
-	</ui:define>
+                    <td><h:outputText value="#{item.statusName}" /></td>
+                  </h:column>
+                </h:dataTable>
+              </h:panelGroup>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
 </ui:composition>
 </html>
