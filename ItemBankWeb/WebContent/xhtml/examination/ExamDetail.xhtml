@@ -33,15 +33,14 @@
               </h4>
               <c:if test="#{questionDetail.subject !=''}">
                 <table class="table table-bordered">
-                  <tr>
-                    <td align="center"><h4>问题</h4></td>
-                  </tr>
-                  <tr>
-                    <td><ui:repeat value="#{questionDetail.subjectList}" var="stringItem">
-                        <h:outputText value="#{stringItem}" />
-                        <br />
-                      </ui:repeat></td>
-                  </tr>
+                  <c:if test="#{questionDetail.subject !='' and questionDetail.subject !=null}">
+                    <tr>
+                      <td><ui:repeat value="#{questionDetail.subjectList}" var="stringItem">
+                          <h:outputText value="#{stringItem}" />
+                          <br />
+                        </ui:repeat></td>
+                    </tr>
+                  </c:if>
                   <c:if test="#{questionDetail.graphicImage !=''}">
                     <tr>
                       <td align="center">

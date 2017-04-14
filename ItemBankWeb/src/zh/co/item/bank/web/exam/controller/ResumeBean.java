@@ -126,13 +126,14 @@ public class ResumeBean extends BaseController {
             param.put("userId", userInfo.getId());
             questions = resumeService.selectErrorByFatherId(param);
             question = questions.get(0);
+
+            // 大题干
+            subject = question.getSubject();
         }
         // 画面序号
         questions = CmnStringUtils.answerLayoutSet(questions);
         // 题目
         title = examService.getTitle(question.getStructureId());
-        // 大题干
-        subject = question.getSubject();
         subjectList = CmnStringUtils.getSubjectList(subject);
         graphicImage = CmnStringUtils.getGraphicImage(question.getImg());
     }

@@ -49,15 +49,14 @@
               </h4>
               <c:if test="#{examResultController.subject !=''}">
                 <table class="table table-bordered">
-                  <tr>
-                    <td align="center"><h4>问题</h4></td>
-                  </tr>
-                  <tr>
-                    <td><ui:repeat value="#{examResultController.subjectList}" var="stringItem">
-                        <h:outputText value="#{stringItem}" />
-                        <br />
-                      </ui:repeat></td>
-                  </tr>
+                  <c:if test="#{examResultController.subject !='' and examResultController.subject !=null}">
+                    <tr>
+                      <td><ui:repeat value="#{examResultController.subjectList}" var="stringItem">
+                          <h:outputText value="#{stringItem}" />
+                          <br />
+                        </ui:repeat></td>
+                    </tr>
+                  </c:if>
                   <c:if test="#{examResultController.graphicImage !=''}">
                     <tr>
                       <td align="center">
