@@ -132,7 +132,7 @@ public class ResumeBean extends BaseController {
         // 题目
         title = examService.getTitle(question.getStructureId());
         // 大题干
-        subject = StringUtils.isEmpty(question.getSubject()) ? "" : question.getSubject();
+        subject = question.getSubject();
         subjectList = CmnStringUtils.getSubjectList(subject);
         graphicImage = CmnStringUtils.getGraphicImage(question.getImg());
     }
