@@ -259,8 +259,9 @@ public class UserService {
 
 	            } else {
 	            	logger.debug("件数=0");
+	            	UserModel userDB = userDao.getUserInfo(userInfo);
 	            	//件数小于1的场合，更新uuid字段
-	                newUser.setId(user.getId());
+	                newUser.setId(userDB.getId());
 	                logger.debug("id:" + newUser.getId());
 	                // UnionID
 	                newUser.setUuid(userInfo.getUuid());
