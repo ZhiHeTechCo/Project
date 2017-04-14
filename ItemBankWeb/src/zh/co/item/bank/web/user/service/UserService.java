@@ -239,8 +239,8 @@ public class UserService {
 		                // 更新时间
 		                newUser.setUpdateTime(new Date());
 		                //更新uuid
-		                userDao.updateUserInfo(newUser);
-		                logger.debug("该当数据的uuid更新成功");
+		                int count = userDao.updateUserInfo(newUser);
+		                logger.debug("该当数据的uuid更新件数：" + count);
 		                logger.debug("第二次取得uuid：" + userInfo.getUuid() + " 的数据");
 		                userList = userDao.getUserCountByUuid(userInfo);
 		                
@@ -261,13 +261,14 @@ public class UserService {
 	            	logger.debug("件数=0");
 	            	//件数小于1的场合，更新uuid字段
 	                newUser.setId(user.getId());
+	                logger.debug("id:" + newUser.getId());
 	                // UnionID
 	                newUser.setUuid(userInfo.getUuid());
 	                // 更新时间
 	                newUser.setUpdateTime(new Date());
 	                //更新uuid
-	                userDao.updateUserInfo(newUser);
-	                logger.debug("该当数据的uuid更新成功");
+	                int count = userDao.updateUserInfo(newUser);
+	                logger.debug("该当数据的uuid更新件数：" + count);
 	            }
 	            logger.debug("第三次取得uuid：" + userInfo.getUuid() + " 的数据");
             	//取得用户信息
