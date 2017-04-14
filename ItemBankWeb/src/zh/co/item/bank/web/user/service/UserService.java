@@ -215,9 +215,11 @@ public class UserService {
         	
             //首先用uuid取数据
             if(!CmnStringUtils.isEmptyStr(userInfo.getUuid())) {
+            	logger.debug("开始取得uuid：" + userInfo.getUuid() + " 的数据");
             	List<UserModel> userList = userDao.getUserCountByUuid(userInfo);
             	//取到的数据件数是 大于 1的场合，进行合并
 	            if(userList != null && userList.size() > 1) {
+	            	logger.debug("件数>1  ：" + userList.size() + " 开始合并");
 	            	//更新基本信息
 	            	newUser.setId(userList.get(0).getId());
 	            	userDao.updateUserInfo(newUser);
@@ -225,9 +227,12 @@ public class UserService {
 	            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
 
 	            } else if(userList != null && userList.size() == 1){
+	            	logger.debug("件数=1");
+	            	logger.debug("开始取得openid：" + userInfo.getOpenId() + " 的数据");
 	            	//件数等于1的场合
 	            	UserModel userDB = userDao.getUserInfo(userInfo);
 	            	if(userDB != null && CmnStringUtils.isEmptyStr(userDB.getUuid())) {
+	            		logger.debug("该当数据的uuid为空");
 		                newUser.setId(userDB.getId());
 		                // UnionID
 		                newUser.setUuid(userInfo.getUuid());
@@ -235,22 +240,25 @@ public class UserService {
 		                newUser.setUpdateTime(new Date());
 		                //更新uuid
 		                userDao.updateUserInfo(newUser);
-		                
+		                logger.debug("该当数据的uuid更新成功");
+		                logger.debug("第二次取得uuid：" + userInfo.getUuid() + " 的数据");
 		                userList = userDao.getUserCountByUuid(userInfo);
 		                
 		                if(userList != null && userList.size() > 1) {
+		                	logger.debug("第二次取得uuid：" + userInfo.getUuid() + " 的数据件数：" + userList.size() + " 开始合并");
 			                //合并
 			            	accountBindingService.accountBinging(userList.get(0), userList.get(1));
 		                }
 
 	            	} else {
+	            		logger.debug("该当数据的uuid不为空");
 	            		//更新信息
 	            		newUser.setId(userList.get(0).getId());
 	            		userDao.updateUserInfo(newUser);
 	            	}
 
 	            } else {
-
+	            	logger.debug("件数=0");
 	            	//件数小于1的场合，更新uuid字段
 	                newUser.setId(user.getId());
 	                // UnionID
@@ -259,7 +267,9 @@ public class UserService {
 	                newUser.setUpdateTime(new Date());
 	                //更新uuid
 	                userDao.updateUserInfo(newUser);
+	                logger.debug("该当数据的uuid更新成功");
 	            }
+	            logger.debug("第三次取得uuid：" + userInfo.getUuid() + " 的数据");
             	//取得用户信息
             	user = userDao.getUserCountByUuid(userInfo).get(0);
             	
