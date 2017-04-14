@@ -40,11 +40,9 @@
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '1'}">
                   <h4>
-                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-                      <h:commandLink action="#{examReportController.showPaperDetail('1')}" title="点击浏览试卷">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                      </h:commandLink>
-                    </c:if>
+                    <h:commandLink action="#{examReportController.showPaperDetail('1')}" title="点击浏览试卷">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    </h:commandLink>
                     <h:outputText value="文字：（正确率#{type.percentage}）" />
                   </h4>
                 </h:panelGroup>
@@ -76,11 +74,9 @@
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '2'}">
                   <h4>
-                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-                      <h:commandLink action="#{examReportController.showPaperDetail('2')}" title="点击浏览试卷">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                      </h:commandLink>
-                    </c:if>
+                    <h:commandLink action="#{examReportController.showPaperDetail('2')}" title="点击浏览试卷">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    </h:commandLink>
                     <h:outputText value="词汇：（正确率#{type.percentage}）" />
                   </h4>
                 </h:panelGroup>
@@ -112,11 +108,9 @@
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '3'}">
                   <h4>
-                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-                      <h:commandLink action="#{examReportController.showPaperDetail('3')}" title="点击浏览试卷">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                      </h:commandLink>
-                    </c:if>
+                    <h:commandLink action="#{examReportController.showPaperDetail('3')}" title="点击浏览试卷">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    </h:commandLink>
                     <h:outputText value="文法：（正确率#{type.percentage}）" />
                   </h4>
                 </h:panelGroup>
@@ -148,11 +142,9 @@
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '4'}">
                   <h4>
-                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-                      <h:commandLink action="#{examReportController.showPaperDetail('4')}" title="点击浏览试卷">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                      </h:commandLink>
-                    </c:if>
+                    <h:commandLink action="#{examReportController.showPaperDetail('4')}" title="点击浏览试卷">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    </h:commandLink>
                     <h:outputText value="记叙：（正确率#{type.percentage}）" />
                   </h4>
                 </h:panelGroup>
@@ -184,11 +176,9 @@
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '5'}">
                   <h4>
-                    <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
-                      <h:commandLink action="#{examReportController.showPaperDetail('5')}" title="点击浏览试卷">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                      </h:commandLink>
-                    </c:if>
+                    <h:commandLink action="#{examReportController.showPaperDetail('5')}" title="点击浏览试卷">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    </h:commandLink>
                     <h:outputText value="阅读：（正确率#{type.percentage}）" />
                   </h4>
                 </h:panelGroup>
