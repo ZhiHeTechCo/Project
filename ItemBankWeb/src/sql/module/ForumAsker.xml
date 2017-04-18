@@ -4,6 +4,28 @@
 
 <mapper namespace="ForumAsker">
 
+    <select id="selectForumForAll" resultType="zh.co.item.bank.model.entity.ForumListModel">
+		select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode from (
+		    select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status from vb_forum_asker t1
+		union
+		    select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status from tb_topic_list t2
+		) t3
+		order by status, t3.create_time desc
+    </select>
+
+    <select id="selectForumByAsker" parameterType="Integer"
+        resultType="zh.co.item.bank.model.entity.ForumListModel">
+		select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode from (
+		    select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status from vb_forum_asker t1
+		union
+		    select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status from tb_topic_list t2
+		) t3
+		where
+		owner = #{owner}
+		order by status, t3.create_time desc
+    </select>
+
+<!-- 
 	<select id="selectForumForAll" resultType="zh.co.item.bank.model.entity.ForumModel">
 		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_asker a, (select @rowNO :=0) x
 	</select>
@@ -12,6 +34,7 @@
 		resultType="zh.co.item.bank.model.entity.ForumModel">
 		select (@rowNO := @rowNO+1) as rowNo, a.* from vb_forum_asker a, (select @rowNO :=0) x where asker = #{id}
 	</select>
+ -->
 
 	<select id="selectForumForOne" parameterType="Integer"
 		resultType="Integer">

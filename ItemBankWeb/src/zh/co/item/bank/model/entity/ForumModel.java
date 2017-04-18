@@ -11,7 +11,7 @@ public class ForumModel extends VbForumAskerBean {
     private Map<Integer, String> userName = new HashMap<Integer, String>();
 
     /** 试题详细 */
-    ExamModel question;
+    private ExamModel question;
 
     private List<String> subjectList;
 

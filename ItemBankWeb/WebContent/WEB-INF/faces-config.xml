@@ -122,6 +122,10 @@
       <to-view-id>/xhtml/forum/ForumResponse.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
+      <from-outcome>ITBK_FORUM_003</from-outcome>
+      <to-view-id>/xhtml/forum/TopicComment.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_QUE_001</from-outcome>
       <to-view-id>/xhtml/examination/QuestionInsert.xhtml</to-view-id>
    </navigation-case>

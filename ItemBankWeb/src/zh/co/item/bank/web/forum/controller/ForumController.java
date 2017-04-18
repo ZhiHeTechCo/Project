@@ -14,7 +14,8 @@ import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.MessageUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
-import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.db.entity.TbTopicListBean;
+import zh.co.item.bank.model.entity.ForumListModel;
 import zh.co.item.bank.model.entity.PaginatorLogger;
 import zh.co.item.bank.model.entity.RepeatPaginator;
 import zh.co.item.bank.model.entity.UserModel;
@@ -46,9 +47,12 @@ public class ForumController extends BaseController {
     private UserModel userInfo;
 
     /** 一览画面显示用 */
-    private List<ForumModel> forumModels;
+    private List<ForumListModel> forumModels;
 
     private String justShowMine;
+
+    /** 发表话题用 */
+    private TbTopicListBean tbTopicListBean;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_FORUM_001;
@@ -76,6 +80,7 @@ public class ForumController extends BaseController {
             forumModels = forumService.selectForumForAll();
             paginator = new RepeatPaginator(forumModels, paginatorLogger, null);
             justShowMine = "false";
+            tbTopicListBean = new TbTopicListBean();
 
         } catch (Exception e) {
             processForException(logger, e);
@@ -118,14 +123,55 @@ public class ForumController extends BaseController {
     }
 
     /**
-     * 显示问题详细
+     * 4.显示问题详细
      * 
      * @return
      */
-    public String showQuestionDetail() {
-        ForumResponseController forumResponseController = (ForumResponseController) SpringAppContextManager
-                .getBean("forumResponseController");
-        return forumResponseController.init();
+    public String showDetail() {
+        try {
+
+            String mode = WebUtils.getRequestParam("mode");
+            // mode=1,考题类
+            if ("1".equals(mode)) {
+                ForumResponseController forumResponseController = (ForumResponseController) SpringAppContextManager
+                        .getBean("forumResponseController");
+                return forumResponseController.init();
+            } else if ("2".equals(mode)) {
+                TopicCommentController topicCommentController = (TopicCommentController) SpringAppContextManager
+                        .getBean("topicCommentController");
+                topicCommentController.setTopicId(Integer.parseInt(WebUtils.getRequestParam("id")));
+                return topicCommentController.init();
+            }
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * 5.发表一条话题
+     * 
+     * @return
+     */
+    public String sendTopic() {
+        try {
+
+            // a.登录话题并获取ID
+            Integer topicId = forumService.insertTopic(tbTopicListBean, userInfo);
+
+            // b.初期化model
+            tbTopicListBean = new TbTopicListBean();
+
+            // c.跳转至话题评论页
+            TopicCommentController topicCommentController = (TopicCommentController) SpringAppContextManager
+                    .getBean("topicCommentController");
+            topicCommentController.setTopicId(topicId);
+            return topicCommentController.init();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
     }
 
     public RepeatPaginator getPaginator() {
@@ -136,11 +182,11 @@ public class ForumController extends BaseController {
         this.paginator = paginator;
     }
 
-    public List<ForumModel> getForumModels() {
+    public List<ForumListModel> getForumModels() {
         return forumModels;
     }
 
-    public void setForumModels(List<ForumModel> forumModels) {
+    public void setForumModels(List<ForumListModel> forumModels) {
         this.forumModels = forumModels;
     }
 
@@ -150,6 +196,14 @@ public class ForumController extends BaseController {
 
     public void setJustShowMine(String justShowMine) {
         this.justShowMine = justShowMine;
+    }
+
+    public TbTopicListBean getTbTopicListBean() {
+        return tbTopicListBean;
+    }
+
+    public void setTbTopicListBean(TbTopicListBean tbTopicListBean) {
+        this.tbTopicListBean = tbTopicListBean;
     }
 
 }

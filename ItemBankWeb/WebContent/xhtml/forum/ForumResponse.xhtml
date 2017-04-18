@@ -23,9 +23,11 @@
               <h5 style="color: #6682C9;">
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumResponseController.forumModel.askers}标记了这道题。
               </h5>
-              <h:panelGroup rendered="#{forumResponseController.forumModel.question.subject !=null or forumResponseController.forumModel.graphicImage !=''}">
+              <h:panelGroup
+                rendered="#{forumResponseController.forumModel.question.subject !=null or forumResponseController.forumModel.graphicImage !=''}">
                 <table class="table table-bordered">
-                  <h:panelGroup rendered="#{forumResponseController.forumModel.question.subject !='' and forumResponseController.forumModel.question.subject !=null}">
+                  <h:panelGroup
+                    rendered="#{forumResponseController.forumModel.question.subject !='' and forumResponseController.forumModel.question.subject !=null}">
                     <tr>
                       <td><ui:repeat value="#{forumResponseController.forumModel.subjectList}" var="stringItem">
                           <h:outputText value="#{stringItem}" />
@@ -74,13 +76,13 @@
               </h:dataTable>
               <h5 id="down" style="display: ''">
                 <a href="#"
-                  onclick="document.getElementById('detail').style.display='';document.getElementById('up').style.display='';document.getElementById('down').style.display='none';">
+                  onmousedown="$('#detail').slideDown('slow');document.getElementById('down').style.display='none';document.getElementById('up').style.display='';">
                   <span class="glyphicon glyphicon-hand-down"></span>更多试题信息
                 </a>
               </h5>
               <h5 id="up" style="display: none">
                 <a href="#"
-                  onclick="document.getElementById('detail').style.display='none';document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
+                  onmousedown="$('#detail').slideUp('slow');document.getElementById('down').style.display='';document.getElementById('up').style.display='none';">
                   <span class="glyphicon glyphicon-hand-up"></span>收起
                 </a>
               </h5>
@@ -151,7 +153,7 @@
                 <input type="button" id="checkinputbutton" value="提交" style="margin-right: 5px;"
                   onclick="if(document.getElementById('forumResponseForm\:myResponse').value == '') { alert('请输后再提交!'); return false;} else {document.getElementById('forumResponseForm\:responseQuestion').click();} " />
                 <h:commandButton value="提交" id="responseQuestion" style="display: none;">
-                  <f:ajax event="click" execute="@form" render="responseWrapper myResponse"
+                  <f:ajax event="click" execute="@form" render="responseWrapper myResponse ngossfw_error_display"
                     listener="#{forumResponseController.responseQuestion}" />
                 </h:commandButton>
               </div>

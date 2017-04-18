@@ -7,15 +7,22 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import zh.co.common.constant.SystemConstants;
 import zh.co.item.bank.db.entity.TbForumAskerBean;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
+import zh.co.item.bank.db.entity.TbTopicListBean;
 import zh.co.item.bank.db.entity.TuPointHistoryBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.ForumListModel;
 import zh.co.item.bank.model.entity.ForumResponseModel;
+import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.forum.dao.ForumDao;
+import zh.co.item.bank.web.forum.dao.TopicListDao;
 import zh.co.item.bank.web.user.dao.PointHistoryDao;
 
 /**
@@ -32,6 +39,9 @@ public class ForumService {
 
     @Inject
     private PointHistoryDao pointHistoryDao;
+
+    @Inject
+    private TopicListDao topicListDao;
 
     /**
      * 用户提问登录
@@ -52,10 +62,9 @@ public class ForumService {
      * 
      * @return
      */
-    public List<ForumModel> selectForumForAll() {
+    public List<ForumListModel> selectForumForAll() {
         return forumDao.selectForumForAll();
-    } 
-    
+    }
 
     /**
      * 取当前问题
@@ -72,7 +81,7 @@ public class ForumService {
      * @param id
      * @return
      */
-    public List<ForumModel> selectForumByAsker(Integer id) {
+    public List<ForumListModel> selectForumByAsker(Integer id) {
         return forumDao.selectForumByAsker(id);
     }
 
@@ -145,4 +154,22 @@ public class ForumService {
     public List<ForumResponseModel> selectResponseByQuestionId(Integer id) {
         return forumDao.selectResponseByQuestionId(id);
     }
+
+    /**
+     * 登录一条话题并返回ID
+     * 
+     * @param tbTopicListBean
+     * @param userInfo
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Integer insertTopic(TbTopicListBean tbTopicListBean, UserModel userInfo) {
+        Integer owner = userInfo == null ? 0 : userInfo.getId();
+        tbTopicListBean.setOwner(owner);
+        if (StringUtils.isEmpty(tbTopicListBean.getTitle())) {
+            tbTopicListBean.setTitle(null);
+        }
+        topicListDao.insertSelective(tbTopicListBean);
+        return topicListDao.getLastInsertId();
+    }
+
 }

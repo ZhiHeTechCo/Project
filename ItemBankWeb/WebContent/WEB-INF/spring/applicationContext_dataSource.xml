@@ -34,10 +34,12 @@
                 <value>classpath:sql/common/TbGrammar.xml</value>
                 <value>classpath:sql/common/TbMedia.xml</value>
                 <value>classpath:sql/common/TbMediaQuestion.xml</value>
+                <value>classpath:sql/common/TcMessage.xml</value>
                 <value>classpath:sql/common/TbQuestion.xml</value>
                 <value>classpath:sql/common/TbQuestionClassify.xml</value>
                 <value>classpath:sql/common/TbQuestionStructure.xml</value>
-                <value>classpath:sql/common/TcMessage.xml</value>
+                <value>classpath:sql/common/TbTopicList.xml</value>
+                <value>classpath:sql/common/TbTopicComment.xml</value>
                 <value>classpath:sql/common/TsAuthority.xml</value>
                 <value>classpath:sql/common/TsCode.xml</value>
                 <value>classpath:sql/common/TsPoint.xml</value>
@@ -47,19 +49,21 @@
                 <value>classpath:sql/common/TbNote.xml</value>
 
                 <value>classpath:sql/module/CodeManage.xml</value>
-                <value>classpath:sql/module/ExamList.xml</value>
-                <value>classpath:sql/module/UserManage.xml</value>
-                <value>classpath:sql/module/ForumAsker.xml</value>
-                <value>classpath:sql/module/ForumResponse.xml</value>
-                <value>classpath:sql/module/Media.xml</value>
-                <value>classpath:sql/module/Question.xml</value>
                 <value>classpath:sql/module/Collection.xml</value>
                 <value>classpath:sql/module/CollectionDetail.xml</value>
                 <value>classpath:sql/module/ErrorReport.xml</value>
                 <value>classpath:sql/module/ExamCollection.xml</value>
                 <value>classpath:sql/module/ExamDropout.xml</value>
+                <value>classpath:sql/module/ExamList.xml</value>
+                <value>classpath:sql/module/ForumAsker.xml</value>
+                <value>classpath:sql/module/ForumResponse.xml</value>
+                <value>classpath:sql/module/Media.xml</value>
                 <value>classpath:sql/module/Message.xml</value>
                 <value>classpath:sql/module/Note.xml</value>
+                <value>classpath:sql/module/Question.xml</value>
+                <value>classpath:sql/module/TopicComment.xml</value>
+                <value>classpath:sql/module/TopicList.xml</value>
+                <value>classpath:sql/module/UserManage.xml</value>
             </list>
         </property>
     </bean>

@@ -10,7 +10,7 @@ import zh.co.item.bank.db.entity.TbForumAskerBean;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.db.entity.TuUserBean;
 import zh.co.item.bank.model.entity.ExamModel;
-import zh.co.item.bank.model.entity.ForumModel;
+import zh.co.item.bank.model.entity.ForumListModel;
 import zh.co.item.bank.model.entity.ForumResponseModel;
 
 @Named
@@ -32,7 +32,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ForumModel> selectForumForAll() {
+    public List<ForumListModel> selectForumForAll() {
         return getIbatisTemplate().selectList("ForumAsker.selectForumForAll");
     }
 
@@ -62,7 +62,7 @@ public class ForumDao extends BaseDao {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<ForumModel> selectForumByAsker(Integer id) {
+    public List<ForumListModel> selectForumByAsker(Integer id) {
         return getIbatisTemplate().selectList("ForumAsker.selectForumByAsker", id);
     }
 

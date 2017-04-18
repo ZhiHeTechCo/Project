@@ -57,7 +57,7 @@ public class ForumResponseController extends BaseController {
             forumModel = new ForumModel();
             myResponse = null;
             currentQuestionId = null;
-            String questionId = WebUtils.getRequestParam("questionId");
+            String questionId = WebUtils.getRequestParam("id");
 
             if (StringUtils.isNotEmpty(questionId)) {
                 // a.取当前试题内容

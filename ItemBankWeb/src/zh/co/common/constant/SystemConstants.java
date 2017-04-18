@@ -123,6 +123,8 @@ public class SystemConstants {
     public static final String PAGE_ITBK_FORUM_001 = "ITBK_FORUM_001";
     /** 回答一览 */
     public static final String PAGE_ITBK_FORUM_002 = "ITBK_FORUM_002";
+    /** 话题详细 */
+    public static final String PAGE_ITBK_FORUM_003 = "ITBK_FORUM_003";
 
     /** 邀请码确认 */
     public static final String PAGE_ITBK_INVITE_001 = "ITBK_INVITE_001";
@@ -171,5 +173,12 @@ public class SystemConstants {
     public static final String EVENT_001 = "EVENT_001";
     /** 论坛评论 */
     public static final String EVENT_002 = "EVENT_002";
+    /** 发表话题 */
+    public static final String EVENT_003 = "EVENT_003";
+
+    /** Forum.xhtml每行显示长度*/
+    public static final int FORUM_LIST_LENGTH = 100;
+    /** Forum.xhtml每行显示长度(手机)*/
+    public static final int FORUM_LIST_LENGTH_MOBILE = 10;
 
 }

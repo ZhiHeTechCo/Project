@@ -52,21 +52,62 @@
               <h:panelGroup id="search_result_data" layout="block">
                 <h:dataTable class="searchTable table-striped" rendered="true"
                   value="#{forumController.paginator.model}" var="item">
-                  <h:column>
-                    <h4>
-                      <h:outputText value="#{item.rowNo}"></h:outputText>
-                    </h4>
-                    <td class="list-group list-group-alternate"><h:commandLink
-                        action="#{forumController.showQuestionDetail}"
-                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
-                        class="list-group-item">
-                        <f:param name="questionId" value="#{item.questionId}" />
+                  <h:column class="list-group list-group-alternate">
+                    <h:commandLink action="#{forumController.showDetail}"
+                      style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
+                      class="list-group-item">
+                      <f:param name="id" value="#{item.id}" />
+                      <f:param name="mode" value="#{item.mode}" />
 											#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
-									</h:commandLink></td>
+									</h:commandLink>
                     <td><h:outputText value="#{item.statusName}" /></td>
                   </h:column>
                 </h:dataTable>
               </h:panelGroup>
+              <div style="text-align: center;">
+                <h3>
+                  <h:commandLink style="color: orange;" title="发话题" onclick="$('#topicBut').click();return false;">
+                    <span class="glyphicon glyphicon-edit" />
+                  </h:commandLink>
+                </h3>
+                <h5 style="color: #3382C9;">发表一个话题</h5>
+              </div>
+
+              <button style="display: none;" id="topicBut" class="ui-button-primary" type="button"
+                onclick="document.getElementById('forumForm\:title').placeholder='关键字/标题';document.getElementById('forumForm\:context').placeholder='我想说...';$('#topicModel').modal();"></button>
+              <div class="modal fade" id="topicModel" tabindex="-1" role="dialog" aria-labelledby="topicModelLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title" id="topicModelLabel">发表一个话题</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <h:inputText value="#{forumController.tbTopicListBean.title}" class="form-control" id="title"
+                          maxlength="30" />
+                      </div>
+                      <div>
+                        <h:inputTextarea id="context" value="#{forumController.tbTopicListBean.context}"
+                          class="form-control" rows="5" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                      </button>
+                      <button type="button"
+                        onclick="if(document.getElementById('forumForm\:context').value == '') { alert('不能发空消息哦!');} else {document.getElementById('forumForm\:submit').click();}"
+                        id="btn_submit" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>发布
+                      </button>
+                      <h:commandButton style="display: none;" id="submit" action="#{forumController.sendTopic}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
