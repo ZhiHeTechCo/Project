@@ -18,12 +18,14 @@
 	    <h:outputText value="0件 ＜前一页 | 1 | 下一页＞" />
 	    </h:panelGroup>
 		<h:panelGroup id="paginator" rendered="#{cc.attrs.paginator.recordsTotal gt 0}">
+    <!-- 
 		<h:outputText value="#{cc.attrs.paginator.recordsTotal}" />
 		<h:outputText value="件中" />
 		<h:outputText value="#{cc.attrs.paginator.fromIndex + 1}" />
 		<h:outputText value="件～" />
 		<h:outputText value="#{cc.attrs.paginator.toIndex}" />
 		<h:outputText value="件 " />
+     -->
 		
         <h:commandLink value="＜前一页" rendered="#{cc.attrs.paginator.pageIndex gt 1}" onclick="return cancelToken(this)" >
             <f:ajax onevent="callbackAjaxForPaginator"
