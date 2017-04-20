@@ -53,13 +53,13 @@
                   <c:otherwise>
                     <div>
 
-                      <h:commandLink value="登录" action="#{pageTopController.pageNavigator}"
+                      <h:commandLink value="登录" style="margin-left:2px;" action="#{pageTopController.pageNavigator}"
                         onclick="return buttonDisable();">
                         <f:param name='pageController' value="signInBean"></f:param>
                       </h:commandLink>
 
                       <h:commandLink value="注册" action="#{pageTopController.pageNavigator}"
-                        onclick="return buttonDisable();" style="margin-left:20px;">
+                        onclick="return buttonDisable();" style="margin-left:10px;">
                         <f:param name='pageController' value="signUpBean"></f:param>
                       </h:commandLink>
 
