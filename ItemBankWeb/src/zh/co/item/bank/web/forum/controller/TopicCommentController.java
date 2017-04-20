@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbTopicCommentBean;
 import zh.co.item.bank.model.entity.TopicModel;
@@ -97,7 +98,8 @@ public class TopicCommentController extends BaseController {
      * 4.[返回]按钮按下
      */
     public String goBack() {
-        return SystemConstants.PAGE_ITBK_FORUM_001;
+        ForumController forumController = (ForumController) SpringAppContextManager.getBean("forumController");
+        return forumController.init();
     }
 
     /**
