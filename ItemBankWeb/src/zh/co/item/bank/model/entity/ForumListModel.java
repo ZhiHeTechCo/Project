@@ -5,6 +5,12 @@ import java.util.Date;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.utils.WebUtils;
 
+/**
+ * Forum.xhtml列表显示
+ * 
+ * @author gaoya
+ *
+ */
 public class ForumListModel {
 
     private Integer id;
@@ -24,6 +30,9 @@ public class ForumListModel {
     private String contextAfter;
 
     private String mode;
+
+    // 回答评论数
+    private int num;
 
     public Integer getId() {
         return id;
@@ -104,4 +113,11 @@ public class ForumListModel {
         this.mode = mode;
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 }

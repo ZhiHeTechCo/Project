@@ -20,7 +20,7 @@
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
               <h5 style="color: #6682C9;">
-                ${topicCommentController.topicModel.currentTopic.ownerName}发表于${topicCommentController.topicModel.currentTopic.createTimeShow}。
+                ${topicCommentController.topicModel.currentTopic.ownerName}发表于${topicCommentController.topicModel.currentTopic.createTimeShow}
               </h5>
               <table class="searchTable">
                 <c:if test="#{topicCommentController.topicModel.currentTopic.title ne null}">
@@ -41,9 +41,11 @@
                 <table class="searchTable">
                   <tr>
                     <td style="width: 37%;"><hr /></td>
-                    <td>
-                      <h5 style="color: grey;">最新评论</h5>
-                    </td>
+                    <td><c:if test="#{topicCommentController.topicModel.topicComments.size()>0}">
+                        <h5 style="color: grey;">最新评论</h5>
+                      </c:if> <c:if test="#{topicCommentController.topicModel.topicComments.size() eq 0}">
+                        <h5 style="color: grey;">暂无评论</h5>
+                      </c:if></td>
                     <td style="width: 37%;"><hr /></td>
                   </tr>
                 </table>

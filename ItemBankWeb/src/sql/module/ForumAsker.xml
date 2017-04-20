@@ -5,21 +5,21 @@
 <mapper namespace="ForumAsker">
 
     <select id="selectForumForAll" resultType="zh.co.item.bank.model.entity.ForumListModel">
-		select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode from (
-		    select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status from vb_forum_asker t1
-		union
-		    select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status from tb_topic_list t2
-		) t3
-		order by status, t3.create_time desc
+        select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode,t3.num from (
+            select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status, IFNULL(a.num,0) as num from vb_forum_asker t1 left join (select question_id, count(id) as num from tb_forum_response group by question_id) a on t1.question_id=a.question_id
+        union
+            select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status,IFNULL(b.num,0) as num from tb_topic_list t2 left join (select topic_id, count(id) as num from tb_topic_comment group by topic_id) b on t2.id=b.topic_id
+        ) t3
+        order by status, t3.create_time desc
     </select>
 
     <select id="selectForumByAsker" parameterType="Integer"
         resultType="zh.co.item.bank.model.entity.ForumListModel">
-		select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode from (
-		    select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status from vb_forum_asker t1
-		union
-		    select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status from tb_topic_list t2
-		) t3
+        select t3.id,t3.context,t3.context_key,t3.context_after,t3.owner,t3.create_time,t3.status_name,t3.mode,t3.num from (
+            select t1.question_id as id,t1.context,t1.context_key,t1.context_after,t1.asker as owner,t1.create_time,t1.status_name,@flag:='1' as mode,t1.status, IFNULL(a.num,0) as num from vb_forum_asker t1 left join (select question_id, count(id) as num from tb_forum_response group by question_id) a on t1.question_id=a.question_id
+        union
+            select t2.id,IFNULL(t2.title, t2.context) as context,@flag:='' as context_key,@flag:='' as context_after,t2.owner,t2.create_time,@flag:='' as status_name,@flag:='2' as mode,@flag:='0' as status,IFNULL(b.num,0) as num from tb_topic_list t2 left join (select topic_id, count(id) as num from tb_topic_comment group by topic_id) b on t2.id=b.topic_id
+        ) t3
 		where
 		owner = #{owner}
 		order by status, t3.create_time desc
