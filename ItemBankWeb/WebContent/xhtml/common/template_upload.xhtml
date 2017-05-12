@@ -31,15 +31,6 @@
   <h:outputScript library="js" name="modernizr.custom.js" />
   <h:outputScript library="js" name="responsiveslides.min.js" />
   <h:outputScript library="js" name="owl.carousel.js" />
-
-  <script type="text/javascript">
-  jQuery(document).ready(function($) {
-          $(".scroll").click(function(event){     
-              event.preventDefault();
-              $('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
-          });
-      });
-  </script>
 </h:head>
 
 <body>
@@ -88,6 +79,10 @@
 									navigationText : false,
 									pagination : true,
 								});
+					          $(".scroll").click(function(event){     
+					              event.preventDefault();
+					              $('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+					          });
 							});
 
 			function topMenu() {
