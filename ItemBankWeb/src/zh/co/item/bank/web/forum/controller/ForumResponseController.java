@@ -14,6 +14,7 @@ import zh.co.common.exception.MessageId;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.MessageUtils;
+import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbForumResponseBean;
 import zh.co.item.bank.model.entity.ExamModel;
@@ -137,7 +138,8 @@ public class ForumResponseController extends BaseController {
      * @return
      */
     public String goBackToForum() {
-        return SystemConstants.PAGE_ITBK_FORUM_001;
+    	ForumController forumController = (ForumController) SpringAppContextManager.getBean("forumController");
+        return forumController.init();
     }
 
     /**
