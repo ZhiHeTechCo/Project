@@ -47,9 +47,6 @@ public class MediaExamController extends BaseController {
     // 用户信息
     private UserModel userInfo;
 
-    // 考试进行状态
-    private String status;
-
     // 考试
     private String examFlag;
 
@@ -144,7 +141,7 @@ public class MediaExamController extends BaseController {
     public String mediaOfExam(String source) {
         try {
             pushPathHistory("mediaExam");
-            if (source != null && classifyBean != null) {
+            if (source != null) {
                 // a.对象初始化
                 userInfo = WebUtils.getLoginUserInfo();
                 mediaModel = null;
@@ -152,31 +149,26 @@ public class MediaExamController extends BaseController {
                 mediaQuestions = new ArrayList<MediaQuestionStructure>();
 
                 Map<String, Object> map = new HashMap<String, Object>();
-                // 获取ClassifyId
-                List<Integer> classifyIds = mediaService.getClssifyId(classifyBean);
-                if (classifyIds.size() != 0) {
-                    // 此处只会检索到一件
-                    map.put("classifyId", classifyIds.get(0));
 
-                    // 获取音频
-                    mediaModel = mediaService.selectMediaBySource(source);
-                    if (mediaModel != null) {
-                        // 获取大题目
-                        map.put("mediaId", mediaModel.getId());
-                        mediaQuestions = mediaService.selectMediaQuestions(map);
-                    }
+                // b.获取音频
+                mediaModel = mediaService.selectMediaBySource(source);
+                if (mediaModel != null) {
+                    map.put("mediaId", mediaModel.getId());
+                    map.put("classifyId", mediaModel.getClassifyId());
+                    // 获取大题目
+                    mediaQuestions = mediaService.selectMediaQuestions(map);
                 }
-                if (mediaQuestions == null || mediaQuestions.size() == 0) {
-                    // 题库已空
-                    logger.log(MessageId.ITBK_E_0009);
-                    CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0009);
-                    throw ex;
-                }
-                // 画面序号和显示设置
-                CmnStringUtils.selectionLayoutSet(mediaQuestions);
-                // 转至听力
-                return getPageId();
             }
+            if (mediaQuestions == null || mediaQuestions.size() == 0) {
+                // 题库已空
+                logger.log(MessageId.ITBK_E_0009);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0009);
+                throw ex;
+            }
+            // 画面序号和显示设置
+            CmnStringUtils.selectionLayoutSet(mediaQuestions);
+            // 转至听力
+            return getPageId();
         } catch (Exception e) {
             processForException(logger, e);
         }
@@ -245,14 +237,6 @@ public class MediaExamController extends BaseController {
 
     public void setExamFlag(String examFlag) {
         this.examFlag = examFlag;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getSource() {

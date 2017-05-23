@@ -151,10 +151,6 @@ public class ExamReportController extends BaseController {
             }
             MediaExamController mediaExamController = (MediaExamController) SpringAppContextManager
                     .getBean("mediaExamController");
-            // 题型设置为听力
-            classifyBean.setExamType("6");
-            mediaExamController.setStatus("ing");
-            mediaExamController.setClassifyBean(classifyBean);
             return mediaExamController.mediaOfExam(source);
 
         } catch (Exception e) {
