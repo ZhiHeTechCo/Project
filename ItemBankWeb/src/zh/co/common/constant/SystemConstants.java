@@ -179,6 +179,6 @@ public class SystemConstants {
     /** Forum.xhtml每行显示长度*/
     public static final int FORUM_LIST_LENGTH = 100;
     /** Forum.xhtml每行显示长度(手机)*/
-    public static final int FORUM_LIST_LENGTH_MOBILE = 10;
+    public static final int FORUM_LIST_LENGTH_MOBILE = 50;
 
 }
