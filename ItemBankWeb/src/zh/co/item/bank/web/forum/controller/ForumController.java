@@ -78,6 +78,7 @@ public class ForumController extends BaseController {
             }
 
             forumModels = forumService.selectForumForAll();
+            // 分页
             paginator = new RepeatPaginator(forumModels, paginatorLogger, null);
             justShowMine = "false";
             tbTopicListBean = new TbTopicListBean();
