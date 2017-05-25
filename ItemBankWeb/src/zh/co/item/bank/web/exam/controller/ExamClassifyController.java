@@ -157,12 +157,18 @@ public class ExamClassifyController extends BaseController {
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userId", userInfo.getId());
-            // a.用户选择check
+            // a-1.用户选择check（听力外）
             if (StringUtils.isEmpty(classifyBean.getExam()) && StringUtils.isEmpty(classifyBean.getExamType())
                     && StringUtils.isEmpty(classifyBean.getJlptLevel())
                     && StringUtils.isEmpty(classifyBean.getJtestLevel())) {
                 logger.log(MessageId.ITBK_E_0005);
                 CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0005);
+                throw ex;
+            }
+            // a-2.用户选择check（听力）
+            if ("6".equals(classifyBean.getExamType()) && StringUtils.isEmpty(chooseMediaSource)) {
+                logger.log(MessageId.ITBK_E_0013);
+                CmnBizException ex = new CmnBizException(MessageId.ITBK_E_0013);
                 throw ex;
             }
 
