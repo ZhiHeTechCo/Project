@@ -167,4 +167,7 @@ public class MessageId {
 
     /** 抱歉！获取内容失败。  */
     public static final String ITBK_E_0012 = "ITBK_E_0012";
+
+    /** 请选择听力试题 ！ */
+    public static final String ITBK_E_0013 = "ITBK_E_0013";
 }
