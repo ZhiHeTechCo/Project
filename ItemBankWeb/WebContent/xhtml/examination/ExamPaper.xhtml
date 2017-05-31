@@ -161,6 +161,9 @@
                     </h:dataTable>
                   </h:column>
                 </h:dataTable>
+                <div class="form-submit1">
+                    <h:commandButton class="button" value="返回" action="${examPaperController.goBack()}" />
+                </div>
               </h:panelGroup>
               <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
                 onclick="$('#btn_change').hide();$('#btn_submit').show();$('#myModalLabel').text('Note');$('#myModal').modal();"></button>
