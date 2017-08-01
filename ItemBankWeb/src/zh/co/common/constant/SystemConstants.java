@@ -63,6 +63,12 @@ public class SystemConstants {
     /** 试题种类 J.TEST */
     public static final String EXAM_2 = "2";
 
+    /** 考试模式 */
+    public static final String MODE_EXAM = "1";
+
+    /** 考试模式 */
+    public static final String MODE_TRAINING = "2";
+
     /** false */
     public static final String FALSE = "false";
 

@@ -112,7 +112,7 @@ public class ExamClassifyController extends BaseController {
             // b-2.获取试题种别
             examTypes = examService.getExamTypes();
             // b-3:考试模式时获取试卷和完成度
-            if ("1".equals(mode)) {
+            if (SystemConstants.MODE_EXAM.equals(mode)) {
                 examListBeans = examService.getExamListForUser(userInfo.getId());
 
             }
@@ -244,13 +244,6 @@ public class ExamClassifyController extends BaseController {
                     if (model.getSource().equals(source)) {
                         // Exam
                         classifyBean.setExam(model.getExam());
-                        // JlptLevel JtestLevel
-                        if ("1".equals(model.getExam())) {
-                            classifyBean.setJlptLevel(model.getLevel());
-                        } else if ("1".equals(model.getExam())) {
-                            classifyBean.setJtestLevel(model.getLevel());
-                        }
-                        break;
                     }
                 }
             } else {
@@ -344,7 +337,7 @@ public class ExamClassifyController extends BaseController {
      */
     public void changeSource() {
         try {
-            if (!"1".equals(mode)) {
+            if (!SystemConstants.MODE_EXAM.equals(mode)) {
                 return;
             }
             logger.debug("题种别变更，刷新考卷。");
@@ -378,7 +371,7 @@ public class ExamClassifyController extends BaseController {
     public void changeMediaSource() {
         try {
             // 1.考试模式不处理
-            if ("1".equals(mode)) {
+            if (SystemConstants.MODE_EXAM.equals(mode)) {
                 return;
             }
             logger.debug("选择听力，提取试题。");
