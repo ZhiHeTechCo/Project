@@ -54,8 +54,9 @@
                 <c:if test="#{topicCommentController.topicModel.topicComments.size()>0}">
                   <h:dataTable class="searchTable" rendered="true"
                     value="#{topicCommentController.topicModel.topicComments}" var="comment">
-                    <h:column colspan="2">
-                      <h:outputText value="#{comment.comment}" />
+                    <h:column>
+                      <tr><td colspan="2">
+                        <h:outputText value="#{comment.comment}"/></td></tr>
                       <tr>
                         <td><h5>
                             <h:outputText id="count" value="#{comment.count}" />
