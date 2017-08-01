@@ -871,32 +871,53 @@ public final class CmnStringUtils {
 
         if (questions != null && questions.size() > 0) {
             for (int i = 0; i < questions.size(); i++) {
-                if (questions.get(i).getRowNo() == 0) {
-                    questions.get(i).setRowNo(i + 1);
+                ExamModel question = questions.get(i);
+                if (question.getRowNo() == 0) {
+                    question.setRowNo(i + 1);
                 }
                 if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null && SystemConstants.AGENT_FLAG
                         .equals((String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-                    questions.get(i).setLayoutStyle("pageDirection");
-                } else if (!StringUtils.isEmpty(questions.get(i).getA())
-                        && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-                    questions.get(i).setLayoutStyle("pageDirection");
-                } else if (!StringUtils.isEmpty(questions.get(i).getB())
-                        && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-                    questions.get(i).setLayoutStyle("pageDirection");
-                } else if (!StringUtils.isEmpty(questions.get(i).getC())
-                        && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-                    questions.get(i).setLayoutStyle("pageDirection");
-                } else if (!StringUtils.isEmpty(questions.get(i).getD())
-                        && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-                    questions.get(i).setLayoutStyle("pageDirection");
+                    question.setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(question.getA())
+                        && question.getA().length() > CmnContants.FOLDING_LINE) {
+                    question.setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(question.getB())
+                        && question.getB().length() > CmnContants.FOLDING_LINE) {
+                    question.setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(question.getC())
+                        && question.getC().length() > CmnContants.FOLDING_LINE) {
+                    question.setLayoutStyle("pageDirection");
+                } else if (!StringUtils.isEmpty(question.getD())
+                        && question.getD().length() > CmnContants.FOLDING_LINE) {
+                    question.setLayoutStyle("pageDirection");
                 } else {
-                    questions.get(i).setLayoutStyle("lineDirection");
+                    question.setLayoutStyle("lineDirection");
                 }
 
-                if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-                    questions.get(i).setRadioClass("radioTable1");
+                if ("lineDirection".equals(question.getLayoutStyle())) {
+                    question.setRadioClass("radioTable1");
                 } else {
-                    questions.get(i).setRadioClass("radioTable2");
+                    question.setRadioClass("radioTable2");
+                }
+
+                // 记叙题时（答案包含分号）
+                if (question.getAnswer().contains(";")) {
+                    String[] tmp = question.getAnswer().split(";");
+                    question.setAnswer1(tmp[0]);
+                    question.setMyAnswer1("");
+                    if (tmp.length > 1) {
+                        question.setAnswer2(tmp[1]);
+                        question.setMyAnswer2("");
+                    }
+                    question.setAnswer("");
+                }
+                if(!StringUtils.isEmpty(question.getMyAnswer()) && question.getMyAnswer().contains(";")){
+                    String[] tmp = question.getMyAnswer().split(";");
+                    question.setMyAnswer1(tmp[0]);
+                    if (tmp.length > 1) {
+                        question.setMyAnswer2(tmp[1]);
+                    }
+                    question.setMyAnswer("");
                 }
             }
         }
@@ -932,6 +953,26 @@ public final class CmnStringUtils {
             } else {
                 examModel.setRadioClass("radioTable2");
             }
+
+            // 记叙题时（答案包含分号）
+            if (examModel.getAnswer().contains(";")) {
+                String[] tmp = examModel.getAnswer().split(";");
+                examModel.setAnswer1(tmp[0]);
+                examModel.setAnswer("");
+                if (tmp.length > 1) {
+                    examModel.setAnswer2(tmp[1]);
+                    examModel.setMyAnswer2("");
+                }
+                examModel.setAnswer("");
+            }
+            if (!StringUtils.isEmpty(examModel.getMyAnswer()) && examModel.getMyAnswer().contains(";")) {
+                String[] tmp = examModel.getMyAnswer().split(";");
+                examModel.setMyAnswer1(tmp[0]);
+                if (tmp.length > 1) {
+                    examModel.setMyAnswer2(tmp[1]);
+                }
+                examModel.setMyAnswer("");
+            }
         }
         return examModel;
     }
@@ -950,30 +991,31 @@ public final class CmnStringUtils {
                     List<MediaModel> questions = item.getQuestion();
                     if (questions != null && questions.size() > 0) {
                         for (int i = 0; i < questions.size(); i++) {
+                            MediaModel question = questions.get(i);
                             if (WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT) != null
                                     && SystemConstants.AGENT_FLAG.equals(
                                             (String) WebUtils.getSessionAttribute(WebUtils.SESSION_USER_AGENT))) {
-                                questions.get(i).setLayoutStyle("pageDirection");
-                            } else if (!StringUtils.isEmpty(questions.get(i).getA())
-                                    && questions.get(i).getA().length() > CmnContants.FOLDING_LINE) {
-                                questions.get(i).setLayoutStyle("pageDirection");
-                            } else if (!StringUtils.isEmpty(questions.get(i).getB())
-                                    && questions.get(i).getB().length() > CmnContants.FOLDING_LINE) {
-                                questions.get(i).setLayoutStyle("pageDirection");
-                            } else if (!StringUtils.isEmpty(questions.get(i).getC())
-                                    && questions.get(i).getC().length() > CmnContants.FOLDING_LINE) {
-                                questions.get(i).setLayoutStyle("pageDirection");
-                            } else if (!StringUtils.isEmpty(questions.get(i).getD())
-                                    && questions.get(i).getD().length() > CmnContants.FOLDING_LINE) {
-                                questions.get(i).setLayoutStyle("pageDirection");
+                                question.setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(question.getA())
+                                    && question.getA().length() > CmnContants.FOLDING_LINE) {
+                                question.setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(question.getB())
+                                    && question.getB().length() > CmnContants.FOLDING_LINE) {
+                                question.setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(question.getC())
+                                    && question.getC().length() > CmnContants.FOLDING_LINE) {
+                                question.setLayoutStyle("pageDirection");
+                            } else if (!StringUtils.isEmpty(question.getD())
+                                    && question.getD().length() > CmnContants.FOLDING_LINE) {
+                                question.setLayoutStyle("pageDirection");
                             } else {
-                                questions.get(i).setLayoutStyle("lineDirection");
+                                question.setLayoutStyle("lineDirection");
                             }
 
-                            if ("lineDirection".equals(questions.get(i).getLayoutStyle())) {
-                                questions.get(i).setRadioClass("radioTable1");
+                            if ("lineDirection".equals(question.getLayoutStyle())) {
+                                question.setRadioClass("radioTable1");
                             } else {
-                                questions.get(i).setRadioClass("radioTable2");
+                                question.setRadioClass("radioTable2");
                             }
                         }
                     }

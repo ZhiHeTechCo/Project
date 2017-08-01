@@ -16,6 +16,18 @@ public class ExamModel extends QuestionBean {
     // 用户选择答案
     private String myAnswer;
 
+    // 用户选择答案（解析题用）
+    private String myAnswer1;
+
+    // 用户选择答案（解析题用）
+    private String myAnswer2;
+
+    // 用户答案（解析题用）
+    private String answer1;
+
+    // 用户答案（解析题用）
+    private String answer2;
+
     // 题干
     private String title;
 
@@ -79,6 +91,38 @@ public class ExamModel extends QuestionBean {
 
     public void setMyAnswer(String myAnswer) {
         this.myAnswer = myAnswer;
+    }
+
+    public String getMyAnswer1() {
+        return myAnswer1;
+    }
+
+    public void setMyAnswer1(String myAnswer1) {
+        this.myAnswer1 = myAnswer1;
+    }
+
+    public String getMyAnswer2() {
+        return myAnswer2;
+    }
+
+    public void setMyAnswer2(String myAnswer2) {
+        this.myAnswer2 = myAnswer2;
+    }
+
+    public String getAnswer1() {
+        return answer1;
+    }
+
+    public void setAnswer1(String answer1) {
+        this.answer1 = answer1;
+    }
+
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public void setAnswer2(String answer2) {
+        this.answer2 = answer2;
     }
 
     public String getTitle() {

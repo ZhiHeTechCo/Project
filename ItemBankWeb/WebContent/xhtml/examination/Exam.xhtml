@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
@@ -16,8 +15,7 @@
           </c:if>
           <div class="container">
             <div class="bs-example">
-              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                layout="block">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}" layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
               <c:if test="#{examController.title != ''}">
@@ -53,8 +51,7 @@
                         <td align="center">
                           <div class="gallery-bottom">
                             <div class="col-md-3 gallery-grid">
-                              <a class="example-image-link" href="#{examController.graphicImage}"
-                                data-lightbox="example-set"><img class="example-image"
+                              <a class="example-image-link" href="#{examController.graphicImage}" data-lightbox="example-set"><img class="example-image"
                                 src="#{examController.graphicImage}" alt="" /></a>
                             </div>
                           </div>
@@ -63,8 +60,7 @@
                     </c:if>
                   </table>
                 </c:if>
-                <h:dataTable id="qt" class="table table-bordered" rendered="true" value="#{examController.questions}"
-                  var="item" width="100%">
+                <h:dataTable id="qt" class="table table-bordered" rendered="true" value="#{examController.questions}" var="item" width="100%">
                   <h:column>
                     <h4>
                       <h:outputText value="#{item.rowNo}"></h:outputText>
@@ -85,35 +81,38 @@
                       </h:selectOneRadio>
                     </h:panelGroup>
                     <h:panelGroup rendered="#{item.a eq ''}">
-                      <h:inputText value="#{item.myAnswer}" maxlength="6" />
+                      <h:panelGroup rendered="#{item.answer ne ''}">
+                        <h:inputText value="#{item.myAnswer}" maxlength="6" />
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.answer1 ne null}">
+                        <h:inputText value="#{item.myAnswer1}" style="margin: 0 10 5 0;"/>
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.answer2 ne null}">
+                        <h:inputText value="#{item.myAnswer2}" />
+                      </h:panelGroup>
                     </h:panelGroup>
                   </h:column>
                 </h:dataTable>
                 <c:if test="#{examController.status == null}">
                   <div class="form-submit1">
-                    <h:commandButton value="确认" class="button1" style="margin-right: 5px;"
-                      action="#{examController.doSubmit}" id="doSubmitBtn" />
+                    <h:commandButton value="确认" class="button1" style="margin-right: 5px;" action="#{examController.doSubmit}" id="doSubmitBtn" />
                   </div>
                   <div class="form-submit1">
-                    <h:commandButton value="退出" class="button1" action="#{examController.goBackToClassify}"
-                      id="doExistBtn" />
+                    <h:commandButton value="退出" class="button1" action="#{examController.goBackToClassify}" id="doExistBtn" />
                   </div>
                 </c:if>
                 <c:if test="#{examController.status != null}">
                   <div class="form-submit1">
-                    <h:commandButton value="下一题" class="button1" style="margin-right: 5px;"
-                      action="#{examController.doNext}" id="doNextBtn">
+                    <h:commandButton value="下一题" class="button1" style="margin-right: 5px;" action="#{examController.doNext}" id="doNextBtn">
                       <f:param name="source" value="#{examController.questions.get(0).source}" />
                     </h:commandButton>
                   </div>
                   <div class="form-submit1">
-                    <h:commandButton value="保存退出" class="button1" style="margin-right: 5px;"
-                      action="#{examController.doSaveAndExist}" id="doSaveAndExistBtn">
+                    <h:commandButton value="保存退出" class="button1" style="margin-right: 5px;" action="#{examController.doSaveAndExist}" id="doSaveAndExistBtn">
                     </h:commandButton>
                   </div>
                   <div class="form-submit1">
-                    <h:commandButton value="直接退出" class="button1" style="margin-right: 5px;"
-                      action="#{examController.doExist}" id="doExistBtn">
+                    <h:commandButton value="直接退出" class="button1" style="margin-right: 5px;" action="#{examController.doExist}" id="doExistBtn">
                     </h:commandButton>
                   </div>
                   <div class="clearfix"></div>
@@ -124,12 +123,10 @@
               </c:if>
               <c:if test="#{examController.title == ''}">
                 <div class="form-submit1">
-                  <h:commandButton value="我的错题" class="button1" style="margin-right: 5px;"
-                    action="#{examController.doResume}" id="doResumeBtn" />
+                  <h:commandButton value="我的错题" class="button1" style="margin-right: 5px;" action="#{examController.doResume}" id="doResumeBtn" />
                 </div>
                 <div class="form-submit1">
-                  <h:commandButton value="其他题型" class="button1" action="#{examController.goBackToClassify}"
-                    id="goBackToClassifyBtn" />
+                  <h:commandButton value="其他题型" class="button1" action="#{examController.goBackToClassify}" id="goBackToClassifyBtn" />
                 </div>
               </c:if>
             </div>

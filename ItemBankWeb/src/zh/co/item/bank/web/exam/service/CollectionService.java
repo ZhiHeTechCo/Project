@@ -121,23 +121,42 @@ public class CollectionService {
             collectionDetail.setQuestionId(questionId);
 
             // 我的答案
+            if (StringUtils.isEmpty(examModel.getMyAnswer())) {
+                StringBuffer buffer = new StringBuffer();
+                buffer.append("");
+                if (StringUtils.isNotEmpty(examModel.getMyAnswer1())) {
+                    buffer.append(examModel.getMyAnswer1());
+                }
+                if (StringUtils.isNotEmpty(examModel.getMyAnswer1() + examModel.getMyAnswer2())) {
+                    buffer.append(";");
+                }
+                if (StringUtils.isNotEmpty(examModel.getMyAnswer2())) {
+                    buffer.append(examModel.getMyAnswer2());
+                }
+                examModel.setMyAnswer(buffer.toString());
+            }
             collectionDetail.setMyAnswer(examModel.getMyAnswer());
 
             // finish
             boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
             String finish = collection.getFinish();
-            // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
-            if (StringUtils.isEmpty(finish)) {
-//                finish = flag ? "1" : "0";
-                finish = flag ? "9" : "0";
-            } else if ("1".equals(finish)) {
-                finish = flag ? "9" : "0";
-            } else if ("0".equals(finish)) {
-                finish = flag ? "2" : "0";
-            } else if ("2".equals(finish)) {
-                finish = flag ? "3" : "0";
-            } else if ("3".equals(finish)) {
-                finish = flag ? "1" : "2";
+            if (StringUtils.isEmpty(examModel.getAnswer())) {
+                // 记叙题不判断对错
+                finish = "9";
+            } else {
+                // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
+                if (StringUtils.isEmpty(finish)) {
+                    // finish = flag ? "1" : "0";
+                    finish = flag ? "9" : "0";
+                } else if ("1".equals(finish)) {
+                    finish = flag ? "9" : "0";
+                } else if ("0".equals(finish)) {
+                    finish = flag ? "2" : "0";
+                } else if ("2".equals(finish)) {
+                    finish = flag ? "3" : "0";
+                } else if ("3".equals(finish)) {
+                    finish = flag ? "1" : "2";
+                }
             }
 
             // 是否完成

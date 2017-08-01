@@ -75,7 +75,7 @@
 											</h:panelGroup>
 											<h:panelGroup
 												rendered="#{item.examType eq '4' and item.structureId eq null}">
-												<tr>
+												<tr style="color:orange">
 													<td>記述</td>
 													<td>#{item.myTotalScore}</td>
 													<td>#{item.totalScore}</td>
@@ -152,9 +152,9 @@
 									</c:forEach>
 								</table>
 								<h5 style='color: red;'>
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;成绩不包含《记叙问题》。
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;《记叙问题》系统得分不作为参考，实际得分请结合自身情况计算。
 									<br/>
-									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;《読解計》和《合計》评价请结合自身情况计算。
+									<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;「評価」仅供参考，请结合自身情况计算。
 								</h5>
 							</div>
 							<br />
