@@ -911,9 +911,11 @@ public final class CmnStringUtils {
                     }
                     question.setAnswer("");
                 }
-                if(!StringUtils.isEmpty(question.getMyAnswer()) && question.getMyAnswer().contains(";")){
+                if (!StringUtils.isEmpty(question.getMyAnswer()) && question.getMyAnswer().contains(";")) {
                     String[] tmp = question.getMyAnswer().split(";");
-                    question.setMyAnswer1(tmp[0]);
+                    if (tmp.length > 0) {
+                        question.setMyAnswer1(tmp[0]);
+                    }
                     if (tmp.length > 1) {
                         question.setMyAnswer2(tmp[1]);
                     }
@@ -967,7 +969,9 @@ public final class CmnStringUtils {
             }
             if (!StringUtils.isEmpty(examModel.getMyAnswer()) && examModel.getMyAnswer().contains(";")) {
                 String[] tmp = examModel.getMyAnswer().split(";");
-                examModel.setMyAnswer1(tmp[0]);
+                if (tmp.length > 0) {
+                    examModel.setMyAnswer1(tmp[0]);
+                }
                 if (tmp.length > 1) {
                     examModel.setMyAnswer2(tmp[1]);
                 }
