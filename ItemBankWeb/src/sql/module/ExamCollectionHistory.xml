@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ExamCollectionHistory">
+
+	<insert id="insertExamCollectionHistory" parameterType="java.util.Map">
+		insert into tb_exam_collection_history
+			(user_id,question_id,answer,my_answer,source,structure_id,exam_type,create_time,frequency)
+		select a.user_id,a.question_id,a.answer,a.my_answer,a.source,a.structure_id,a.exam_type,a.create_time,b.frequency
+		from tb_exam_collection a,
+ 			(select IFNULL(Max(frequency)+1,0) as frequency from tb_exam_collection_history where user_id=#{userId,jdbcType=CHAR} and source=#{source,jdbcType=CHAR}) b
+		where a.user_id=#{userId,jdbcType=CHAR} and a.source=#{source,jdbcType=CHAR}
+	</insert>
+
+</mapper>

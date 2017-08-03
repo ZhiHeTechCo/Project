@@ -278,7 +278,12 @@
             <c:if test="#{examReportController.jtestFlag eq 'true'}">
               <div class="form-submit1">
                 <h:commandButton value="查看成绩单" class="button1" action="#{examReportController.toShowScore}"
-                  id="toShowScoreBtn">
+                  style="margin-right: 5px;" id="toShowScoreBtn">
+                </h:commandButton>
+              </div>
+              <div class="form-submit1">
+                <h:commandButton value="重做试题" class="button1" action="#{examReportController.reDoExam}"
+                  id="reDoExamBtn">
                 </h:commandButton>
               </div>
             </c:if>

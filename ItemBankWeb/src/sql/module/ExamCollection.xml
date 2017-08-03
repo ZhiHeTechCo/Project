@@ -152,6 +152,7 @@
 		</if>
 	</delete>
 
+	<!-- 帐号合并用 -->
 	<delete id="deleteExamCollectionOld" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean">
 		delete from tb_exam_collection where id not in
 		    (select t1.* from

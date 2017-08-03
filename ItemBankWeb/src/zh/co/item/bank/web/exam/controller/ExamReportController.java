@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,7 +50,7 @@ public class ExamReportController extends BaseController {
 
     /** 画面显示变量 */
     private List<ExamReportModel> reportModels;
-    
+
     List<QuestionStructure> currentQuestions;
 
     // 是否显示听力
@@ -245,6 +246,32 @@ public class ExamReportController extends BaseController {
                 }
             }
             examCollectionService.reDo(userInfo.getId(), structureIds);
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
+    /**
+     * 重做试题（听力除外）
+     * 
+     * @param source
+     * @return
+     */
+    public String reDoExam() {
+        try {
+            String source = questions.get(0).getSource();
+            // 1.删除当前记录并保存历史
+            examCollectionService.reDoExam(userInfo.getId(), source);
+
+            // 2.跳转至做题界面
+            ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
+            examController.setClassifyBean(classifyBean);
+            examController.setSource(source);
+            examController.setSafeList(new CopyOnWriteArrayList<ExamModel>());
+
+            return examController.examSearch();
 
         } catch (Exception e) {
             processForException(logger, e);

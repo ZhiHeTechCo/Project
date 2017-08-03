@@ -15,6 +15,7 @@ import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
 import zh.co.item.bank.model.entity.ScoreModel;
 import zh.co.item.bank.web.exam.dao.ExamCollectionDao;
+import zh.co.item.bank.web.exam.dao.ExamCollectionHistoryDao;
 import zh.co.item.bank.web.exam.dao.MediaDao;
 
 @Named
@@ -25,6 +26,9 @@ public class ExamCollectionService {
 
     @Inject
     private MediaDao mediaDao;
+
+    @Inject
+    private ExamCollectionHistoryDao examCollectionHistoryDao;
 
     /**
      * 获取试题的考试种别
@@ -262,6 +266,24 @@ public class ExamCollectionService {
         param.put("examType", examType);
 
         return examCollectionDao.selectReportStructure(param);
+    }
+
+    /**
+     * 清空指定试题并保留履历
+     * 
+     * @param userId 用户ID
+     * @param source 考卷
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void reDoExam(Integer userId, String source) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        param.put("source", source);
+        // 1.保存履历
+        examCollectionHistoryDao.insertExamCollectionHistory(param);
+        // 2.删除本套做题记录
+        examCollectionDao.deleteExamCollectionBySource(param);
+        mediaDao.deleteMediaCollectionBySource(param);
     }
 
 }
