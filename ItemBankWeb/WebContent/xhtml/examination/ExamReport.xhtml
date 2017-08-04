@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
@@ -12,6 +11,14 @@
 			  {
 				  if(true == confirm("重做听力将会清空上一次的听力成绩，确定要重做听力部分吗？")){
 					  document.getElementById('examReportForm\:toMedia').click();
+				  }else{
+					  return false;
+			      }
+			  }
+			function reDoExam_confirm()
+			  {
+				  if(true == confirm("确定要重做本套试题吗？")){
+					  document.getElementById('examReportForm\:reDoExamBtn').click();
 				  }else{
 					  return false;
 			      }
@@ -25,8 +32,7 @@
           </c:if>
           <div class="container">
             <div class="bs-example">
-              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
-                layout="block">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}" layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
               <h5 style="color: #3382C9;">说明：背景色为红色表示做错。</h5>
@@ -34,8 +40,7 @@
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干可查看试题详细。（听力不支持查看详细，请在做完后直接确认。）
               </h5>
               <h4 style="text-align: center;">
-                <span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-screenshot" />
+                <span class="glyphicon glyphicon-screenshot" />&nbsp;&nbsp;#{examReportController.questions.get(0).source}&nbsp;&nbsp; <span class="glyphicon glyphicon-screenshot" />
               </h4>
               <c:forEach var="type" items="#{examReportController.reportModels}">
                 <h:panelGroup rendered="#{type.examType eq '1'}">
@@ -261,8 +266,7 @@
                       <h:commandLink onclick="disp_confirm();return false;">
                         <span class="glyphicon glyphicon-headphones"></span>
                       </h:commandLink>
-                      <h:commandButton id="toMedia" style="display: none;" value=""
-                        action="#{examReportController.toMediaExam}">
+                      <h:commandButton id="toMedia" style="display: none;" value="" action="#{examReportController.toMediaExam}">
                       </h:commandButton>
                     </c:if>
                   </h3>
@@ -271,19 +275,18 @@
             </div>
             <hr />
             <div class="form-submit1">
-              <h:commandButton value="返回题型选择" class="button1" action="#{examReportController.goBackToClassify}"
-                style="margin-right: 5px;" id="goBackToExamBtn">
+              <h:commandButton value="返回题型选择" class="button1" action="#{examReportController.goBackToClassify}" style="margin-right: 5px;" id="goBackToExamBtn">
               </h:commandButton>
             </div>
             <c:if test="#{examReportController.jtestFlag eq 'true'}">
               <div class="form-submit1">
-                <h:commandButton value="查看成绩单" class="button1" action="#{examReportController.toShowScore}"
-                  style="margin-right: 5px;" id="toShowScoreBtn">
+                <h:commandButton value="查看成绩单" class="button1" action="#{examReportController.toShowScore}" style="margin-right: 5px;" id="toShowScoreBtn">
                 </h:commandButton>
               </div>
               <div class="form-submit1">
-                <h:commandButton value="重做试题" class="button1" action="#{examReportController.reDoExam}"
-                  id="reDoExamBtn">
+                <h:commandButton value="重做试题" class="button1" onclick="reDoExam_confirm();return false;">
+                </h:commandButton>
+                <h:commandButton style="display: none;" value="" action="#{examReportController.reDoExam}" id="reDoExamBtn">
                 </h:commandButton>
               </div>
             </c:if>
