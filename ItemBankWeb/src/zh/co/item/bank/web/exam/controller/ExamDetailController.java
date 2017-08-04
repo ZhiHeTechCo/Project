@@ -144,6 +144,11 @@ public class ExamDetailController extends BaseController {
                 }
                 prepareData(subject);
 
+                // 记叙题时显示答案控制
+                if (StringUtils.isNotEmpty(question.getAnswer()) && question.getAnswer().contains(";")) {
+                    question.setAnswer(question.getAnswer().replace(";", "  ").trim());
+                }
+
             }
 
             // 权限判断
