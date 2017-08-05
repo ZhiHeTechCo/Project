@@ -59,8 +59,8 @@
                   <tr>
                     <h:panelGroup rendered="#{item.a ne ''}">
                       <td width="20%"><h4>选项</h4></td>
-                      <td width="80%" colspan="4"><h:selectOneRadio value="#{item.answer}" readonly="true"
-                          disabled="true" layout="#{item.layoutStyle}" class="#{item.radioClass}">
+                      <td width="80%" colspan="4"><h:selectOneRadio value="#{item.answer}" readonly="true" disabled="true" layout="#{item.layoutStyle}"
+                          class="#{item.radioClass}">
                           <f:selectItem itemValue="1" itemLabel="#{item.a}" />
                           <f:selectItem itemValue="2" itemLabel="#{item.b}" />
                           <f:selectItem itemValue="3" itemLabel="#{item.c}" />
@@ -69,7 +69,13 @@
                     </h:panelGroup>
                     <h:panelGroup rendered="#{item.a eq ''}">
                       <td width="20%"><h4>答案</h4></td>
-                      <td><h:outputText value="#{item.answer}" maxlength="6" /></td>
+                      <td><h:panelGroup rendered="#{item.answer ne '' and item.answer1 eq null}">
+                          <h:outputText value="#{item.answer}" />
+                        </h:panelGroup> <h:panelGroup rendered="#{item.answer1 ne null}">
+                          <h:outputText value="#{item.answer1}" style="margin: 0px 15px 0px 0px;" />
+                        </h:panelGroup> <h:panelGroup rendered="#{item.answer2 ne null}">
+                          <h:outputText value="#{item.answer2}" />
+                        </h:panelGroup></td>
                     </h:panelGroup>
                   </tr>
                 </h:column>
