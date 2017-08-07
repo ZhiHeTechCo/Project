@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
+import zh.co.common.utils.CmnStringUtils;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
 import zh.co.item.bank.db.entity.TbTopicCommentBean;
@@ -51,6 +52,8 @@ public class TopicCommentController extends BaseController {
 
             // a.画面初期化
             topicModel = topicCommentService.selectTopicById(topicId);
+            // 回答问题折行
+            CmnStringUtils.setCommentList(topicModel.getTopicComments());
             commentBean = new TbTopicCommentBean();
 
         } catch (Exception e) {
@@ -70,6 +73,8 @@ public class TopicCommentController extends BaseController {
             topicCommentService.sendComment(commentBean, WebUtils.getLoginUserInfo(), topicId);
             // 初始化
             topicModel = topicCommentService.selectTopicById(topicId);
+            // 回答问题折行
+            CmnStringUtils.setCommentList(topicModel.getTopicComments());
             commentBean = new TbTopicCommentBean();
 
         } catch (Exception e) {

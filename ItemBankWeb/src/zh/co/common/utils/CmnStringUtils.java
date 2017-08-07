@@ -19,6 +19,7 @@ import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ForumResponseModel;
 import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.MediaQuestionStructure;
+import zh.co.item.bank.model.entity.TopicCommentModel;
 
 /**
  * <p>[概 要]string process utilities</p>
@@ -1030,9 +1031,9 @@ public final class CmnStringUtils {
     }
 
     /**
-     * 回答折行显示
+     * （试题）回答折行显示
      * 
-     * @param subject
+     * @param responses
      * @return
      */
     public static void setResponseList(List<ForumResponseModel> responses) {
@@ -1045,6 +1046,26 @@ public final class CmnStringUtils {
                     list = Arrays.asList(array);
                 }
                 response.setResponseList(list);
+            }
+        }
+    }
+
+    /**
+     * （话题）回答折行显示
+     * 
+     * @param topicComments
+     * @return
+     */
+    public static void setCommentList(List<TopicCommentModel> topicComments) {
+        if (topicComments != null) {
+            for (TopicCommentModel response : topicComments) {
+                List<String> list = new ArrayList<String>();
+                String tmp = response.getComment();
+                if (!StringUtils.isEmpty(tmp)) {
+                    String[] array = tmp.split("\n");
+                    list = Arrays.asList(array);
+                }
+                response.setCommentList(list);
             }
         }
     }

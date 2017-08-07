@@ -19,9 +19,7 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
-              <h5 style="color: #6682C9;">
-                ${topicCommentController.topicModel.currentTopic.ownerName}发表于${topicCommentController.topicModel.currentTopic.createTimeShow}
-              </h5>
+              <h5 style="color: #6682C9;">${topicCommentController.topicModel.currentTopic.ownerName}发表于${topicCommentController.topicModel.currentTopic.createTimeShow}</h5>
               <table class="searchTable">
                 <c:if test="#{topicCommentController.topicModel.currentTopic.title ne null}">
                   <tr>
@@ -55,8 +53,13 @@
                   <h:dataTable class="searchTable" rendered="true"
                     value="#{topicCommentController.topicModel.topicComments}" var="comment">
                     <h:column>
-                      <tr><td colspan="2">
-                        <h:outputText value="#{comment.comment}"/></td></tr>
+                      <tr>
+                        <td colspan="2" style="word-break: break-all;"><ui:repeat value="#{comment.commentList}"
+                            var="stringItem">
+                            <h:outputText value="#{stringItem}" />
+                            <br />
+                          </ui:repeat></td>
+                      </tr>
                       <tr>
                         <td><h5>
                             <h:outputText id="count" value="#{comment.count}" />
