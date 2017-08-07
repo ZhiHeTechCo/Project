@@ -74,9 +74,7 @@ public class ForumResponseController extends BaseController {
                 forumModel.setAskers(forumService.selectAllAsker(currentQuestionId));
 
                 // c.取回答
-                List<ForumResponseModel> responses = forumService.selectResponseByQuestionId(currentQuestionId);
-                forumModel.setResponses(responses);
-
+                refreshPage();
             }
 
         } catch (Exception e) {
@@ -146,7 +144,10 @@ public class ForumResponseController extends BaseController {
      * 重置页面信息
      */
     private void refreshPage() {
-        forumModel.setResponses(forumService.selectResponseByQuestionId(currentQuestionId));
+        List<ForumResponseModel> responses = forumService.selectResponseByQuestionId(currentQuestionId);
+        // 换行符显示
+        CmnStringUtils.setResponseList(responses);
+        forumModel.setResponses(responses);
     }
 
     // /**

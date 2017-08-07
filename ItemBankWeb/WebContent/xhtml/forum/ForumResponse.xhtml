@@ -19,7 +19,7 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
-              <h4 style="color: orange;">请解释为什么这题选项#{forumResponseController.forumModel.question.answer}是正确的，谢谢！</h4>
+              <h4 style="color: orange;">请解释为什么这题答案#{forumResponseController.forumModel.question.answer}是正确的，谢谢！</h4>
               <h5 style="color: #6682C9;">
                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;用户&nbsp;&nbsp;${forumResponseController.forumModel.askers}标记了这道题。
               </h5>
@@ -127,7 +127,10 @@
                         </tr>
                       </h:panelGroup>
                       <tr>
-                        <td colspan="2">#{response.response}</td>
+                        <td colspan="2"><ui:repeat value="#{response.responseList}" var="stringItem">
+                            <h:outputText value="#{stringItem}" />
+                            <br />
+                          </ui:repeat></td>
                       </tr>
                       <tr>
                         <td><h5>

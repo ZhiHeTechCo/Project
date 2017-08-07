@@ -16,6 +16,7 @@ import zh.co.common.constant.CmnContants;
 import zh.co.common.constant.SystemConstants;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.item.bank.model.entity.ExamModel;
+import zh.co.item.bank.model.entity.ForumResponseModel;
 import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.MediaQuestionStructure;
 
@@ -1024,6 +1025,26 @@ public final class CmnStringUtils {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * 回答折行显示
+     * 
+     * @param subject
+     * @return
+     */
+    public static void setResponseList(List<ForumResponseModel> responses) {
+        if (responses != null) {
+            for (ForumResponseModel response : responses) {
+                List<String> list = new ArrayList<String>();
+                String tmp = response.getResponse();
+                if (!StringUtils.isEmpty(tmp)) {
+                    String[] array = tmp.split("\n");
+                    list = Arrays.asList(array);
+                }
+                response.setResponseList(list);
             }
         }
     }
