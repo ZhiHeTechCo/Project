@@ -20,6 +20,7 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
+              <div style="clear: both"></div>
               <div style="float: left;">
                 <h5 style="color: #3382C9;">
                   <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;点击题干查看。
@@ -60,9 +61,9 @@
                       <f:param name="mode" value="#{item.mode}" />
 											#{item.context}<ins>#{item.contextKey}</ins>#{item.contextAfter}
                     </h:commandLink>
-                    <td style="white-space: nowrap;" width="10px;"><span style="vertical-align: middle;" class="glyphicon glyphicon-comment"></span> <span
-                      style="vertical-align: middle;">#{item.num}</span> <f:param name="id" value="#{item.id}" /> <f:param
-                        name="mode" value="#{item.mode}" /></td>
+                    <td style="white-space: nowrap;" width="10px;"><span style="vertical-align: middle;"
+                      class="glyphicon glyphicon-comment"></span> <span style="vertical-align: middle;">#{item.num}</span>
+                      <f:param name="id" value="#{item.id}" /> <f:param name="mode" value="#{item.mode}" /></td>
                   </h:column>
                 </h:dataTable>
               </h:panelGroup>
