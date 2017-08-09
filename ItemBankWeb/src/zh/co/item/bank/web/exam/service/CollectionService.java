@@ -138,25 +138,28 @@ public class CollectionService {
             collectionDetail.setMyAnswer(examModel.getMyAnswer());
 
             // finish
-            boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
             String finish = collection.getFinish();
-            if (StringUtils.isEmpty(examModel.getAnswer())) {
-                // 记叙题不判断对错
-                finish = "9";
-            } else {
-                // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
-                if (StringUtils.isEmpty(finish)) {
-                    // finish = flag ? "1" : "0";
-                    finish = flag ? "9" : "0";
-                } else if ("1".equals(finish)) {
-                    finish = flag ? "9" : "0";
-                } else if ("0".equals(finish)) {
-                    finish = flag ? "2" : "0";
-                } else if ("2".equals(finish)) {
-                    finish = flag ? "3" : "0";
-                } else if ("3".equals(finish)) {
-                    finish = flag ? "1" : "2";
-                }
+
+            // 本次是否做对 Flag
+            boolean flag = StringUtils.isNotEmpty(examModel.getAnswer())
+                    && examModel.getAnswer().equals(examModel.getMyAnswer());
+            if (isAnswerEquals(examModel.getAnswer1(), examModel.getMyAnswer1())
+                    && isAnswerEquals(examModel.getAnswer2(), examModel.getMyAnswer2())) {
+                flag = true;
+            }
+
+            // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
+            if (StringUtils.isEmpty(finish)) {
+                // finish = flag ? "1" : "0";
+                finish = flag ? "9" : "0";
+            } else if ("1".equals(finish)) {
+                finish = flag ? "9" : "0";
+            } else if ("0".equals(finish)) {
+                finish = flag ? "2" : "0";
+            } else if ("2".equals(finish)) {
+                finish = flag ? "3" : "0";
+            } else if ("3".equals(finish)) {
+                finish = flag ? "1" : "2";
             }
 
             // 是否完成
@@ -188,6 +191,17 @@ public class CollectionService {
         if (collectionDetails.size() != 0) {
             collectionDetailDao.insertCollectionDetails(collectionDetails);
         }
+    }
+
+    /**
+     * 记叙题正误判断
+     * 
+     * @param answer
+     * @param myAnswer
+     * @return
+     */
+    private boolean isAnswerEquals(String answer, String myAnswer) {
+        return StringUtils.isNotEmpty(answer) ? answer.equals(myAnswer) : true;
     }
 
 }
