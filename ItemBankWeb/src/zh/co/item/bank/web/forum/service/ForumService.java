@@ -1,5 +1,6 @@
 package zh.co.item.bank.web.forum.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,6 +171,20 @@ public class ForumService {
         }
         topicListDao.insertSelective(tbTopicListBean);
         return topicListDao.getLastInsertId();
+    }
+
+    /**
+     * 关键字检索
+     * 
+     * @param searchKey
+     * @return
+     */
+    public List<ForumListModel> selectForumBySearcyKey(String searchKey) {
+        List<ForumListModel> keys = forumDao.selectIdBySearchKey(searchKey);
+        if (keys.size() == 0) {
+            return new ArrayList<ForumListModel>();
+        }
+        return forumDao.selectForumBySearchKey(keys);
     }
 
 }

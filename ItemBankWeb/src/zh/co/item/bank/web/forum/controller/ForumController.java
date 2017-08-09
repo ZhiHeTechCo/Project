@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
@@ -54,6 +55,9 @@ public class ForumController extends BaseController {
     /** 发表话题用 */
     private TbTopicListBean tbTopicListBean;
 
+    /** 关键字 */
+    private String searchKey;
+
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_FORUM_001;
     }
@@ -67,6 +71,7 @@ public class ForumController extends BaseController {
         try {
 
             pushPathHistory("forumController");
+            searchKey = "";
 
             if ("true".equals(justShowMine)) {
                 return showAllMyQuestion();
@@ -175,6 +180,31 @@ public class ForumController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * 6.关键字检索
+     * 
+     * @return
+     */
+    public String search() {
+        try {
+            if (StringUtils.isNotEmpty(searchKey)) {
+                forumModels = forumService.selectForumBySearcyKey(searchKey);
+                // 检索结果0件
+                if(forumModels.size()==0){
+                    setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0016), MESSAGE_LEVEL_INFO);
+                }
+                // 分页
+                paginator = new RepeatPaginator(forumModels, paginatorLogger, null);
+                justShowMine = "false";
+                tbTopicListBean = new TbTopicListBean();
+            }
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+
     public RepeatPaginator getPaginator() {
         return paginator;
     }
@@ -205,6 +235,14 @@ public class ForumController extends BaseController {
 
     public void setTbTopicListBean(TbTopicListBean tbTopicListBean) {
         this.tbTopicListBean = tbTopicListBean;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
     }
 
 }

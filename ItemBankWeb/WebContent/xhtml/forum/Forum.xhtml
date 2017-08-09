@@ -20,6 +20,20 @@
                 layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
+              <div class="input-append" style="width: 100%;">
+                <h:inputText class="form-control" id="searchInput" value="#{forumController.searchKey}" type="text"
+                  style="float:left;width:80%"></h:inputText>
+                <h:commandLink class="btn btn-info" style="float:left;width:10%"
+                  onclick="if(document.getElementById('forumForm\:searchInput').value == '') { alert('请先输入关键字!');} else {document.getElementById('forumForm\:search').click();return false;}">
+                  <span class="glyphicon glyphicon-search"></span>
+                </h:commandLink>
+                <h:commandButton style="display: none;" id="search" action="#{forumController.search}">
+                </h:commandButton>
+                <h:commandLink class="btn btn-warning" style="float:right;width:10%" id="clear"
+                  action="#{forumController.init}">
+                  <span class="glyphicon glyphicon-remove-sign"></span>
+                </h:commandLink>
+              </div>
               <div style="clear: both"></div>
               <div style="float: left;">
                 <h5 style="color: #3382C9;">
@@ -116,6 +130,9 @@
         </div>
       </h:form>
     </div>
+    <script type="text/javascript">
+        document.getElementById('forumForm\:searchInput').placeholder='输入关键字可检索';
+    </script>
   </ui:define>
 </ui:composition>
 </html>

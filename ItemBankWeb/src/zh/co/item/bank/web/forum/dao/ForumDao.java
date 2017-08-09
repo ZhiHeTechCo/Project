@@ -140,4 +140,24 @@ public class ForumDao extends BaseDao {
     public void updateStatus(Map<String, Object> param) {
         getIbatisTemplate().update("ForumAsker.updateStatus", param);
     }
+
+    /**
+     * 根据用户输入关键字取id和mode
+     * @param searchKey
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<ForumListModel> selectIdBySearchKey(String searchKey) {
+        return getIbatisTemplate().selectList("ForumAsker.selectIdBySearchKey", searchKey);
+    }
+    
+    /**
+     * 根据id和mode检索Forum列表
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<ForumListModel> selectForumBySearchKey(List<ForumListModel> list) {
+        return getIbatisTemplate().selectList("ForumAsker.selectForumBySearchKey", list);
+    }
 }
