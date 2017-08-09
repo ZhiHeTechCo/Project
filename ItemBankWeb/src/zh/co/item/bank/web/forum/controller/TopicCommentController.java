@@ -104,7 +104,7 @@ public class TopicCommentController extends BaseController {
      */
     public String goBack() {
         ForumController forumController = (ForumController) SpringAppContextManager.getBean("forumController");
-        return forumController.init();
+        return StringUtils.isEmpty(forumController.getSearchKey()) ? forumController.init() : forumController.search();
     }
 
     /**

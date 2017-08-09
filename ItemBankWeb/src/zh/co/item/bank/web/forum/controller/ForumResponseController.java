@@ -136,8 +136,8 @@ public class ForumResponseController extends BaseController {
      * @return
      */
     public String goBackToForum() {
-    	ForumController forumController = (ForumController) SpringAppContextManager.getBean("forumController");
-        return forumController.init();
+        ForumController forumController = (ForumController) SpringAppContextManager.getBean("forumController");
+        return StringUtils.isEmpty(forumController.getSearchKey()) ? forumController.init() : forumController.search();
     }
 
     /**
