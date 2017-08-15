@@ -143,7 +143,8 @@ public class CollectionService {
             // 本次是否做对 Flag
             boolean flag = StringUtils.isNotEmpty(examModel.getAnswer())
                     && examModel.getAnswer().equals(examModel.getMyAnswer());
-            if (isAnswerEquals(examModel.getAnswer1(), examModel.getMyAnswer1())
+            if (StringUtils.isEmpty(examModel.getAnswer())
+                    && isAnswerEquals(examModel.getAnswer1(), examModel.getMyAnswer1())
                     && isAnswerEquals(examModel.getAnswer2(), examModel.getMyAnswer2())) {
                 flag = true;
             }
