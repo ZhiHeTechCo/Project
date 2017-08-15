@@ -358,13 +358,17 @@
 
     <select id="searchCorrelationErrorQuestions" parameterType="java.util.Map" resultMap="questionsStructureResult">
         select b1.title, b2.* from tb_question_structure b1 right join
-            (select a1.my_answer, a2.*, a3.exam_type from tb_collection_detail a1,
+            (select a1.my_answer, a2.*, a3.exam_type from
+                tb_collection_detail a1,
                 (select t1.*, IFNULL(t2.id,0) as id, t2.subject, t2.img from tb_question t1 left join tb_first_level_directory t2 on t1.father_id=t2.id) a2,
-                tb_question_classify a3
+                tb_question_classify a3,
+                tb_collection a4
             where a1.question_id = a2.no
-            and a1.user_id = #{userId}
-            and a1.my_answer != a2.answer
+            and a4.id = a1.user_id
+            and a4.question_id = a1.question_id
+            and a4.finish not in(1,9)
             and a3.id = a2.classify_id
+            and a1.user_id = #{userId}
             and a3.exam_type = #{examType}
             group by a1.question_id order by a1.create_time) b2
         on b2.structure_id=b1.id
