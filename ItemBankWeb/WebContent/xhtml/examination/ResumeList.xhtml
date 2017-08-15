@@ -26,6 +26,15 @@
                 }
             }
           //]]>
+			function del_confirm(questionId)
+			  {
+				  if(true == confirm("确定从错题集中删除这道题？")){
+                      document.getElementById('resumeListForm\:removeQuestionId').value = questionId;
+					  document.getElementById('resumeListForm\:delQuestion').click();
+				  }else{
+					  return false;
+			      }
+			  }
     </script>
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
       <h:form id="resumeListForm">
@@ -40,7 +49,7 @@
             </h:panelGroup>
             <div style="text-align: center;">
               <c:forEach items="#{resumeListController.examTypes}" var="entry">
-                <h:panelGroup rendered="#{entry.key ne '4' and entry.key ne '5' and entry.key ne '6'}">
+                <h:panelGroup rendered="#{entry.key ne '5' and entry.key ne '6'}">
                   <h:commandButton style="margin-right: 5px;margin-top: 5px;" class="btn btn-info"
                     value="#{entry.value}" action="#{resumeListController.searchQuestionByExamType}">
                     <f:param name='examType' value="#{entry.key}"></f:param>
@@ -105,32 +114,47 @@
                                 onclick="document.getElementById('resumeListForm\:currentQuestionId').value=#{item.no};document.getElementById('resumeListForm\:txt_departmentname').value='';$('#noteBut').click();return false;">
                                 <span class="glyphicon glyphicon-pencil"></span>
                               </h:commandLink>
-                            </h:panelGroup></td>
+                            </h:panelGroup> <h:commandLink id="removeLink" title="从错题集中删除本题"
+                              onclick="del_confirm(#{item.no});return false;">
+                              <span class="glyphicon glyphicon-trash"></span>
+                            </h:commandLink></td>
                           <tr>
-                            <td style="width: 10%;"><h4>选项</h4></td>
-                            <td><h:panelGroup rendered="#{item.a ne ''}">
-                                <h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
+                            <h:panelGroup rendered="#{item.a ne ''}">
+                              <td style="width: 10%;"><h4>选项</h4></td>
+                              <td><h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
                                   class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
                                   <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
                                   <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
                                   <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
                                   <f:selectItem itemValue="4" itemLabel="  D：#{item.d}" />
-                                </h:selectOneRadio>
-                              </h:panelGroup> <h:panelGroup rendered="#{item.a eq ''}">
-                                <div style="width: 5%; float: left;">
-                                  <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
-                                    <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
-                                    </h:panelGroup>
-                                    <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-                                      <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
-                                    </h:panelGroup>
+                                </h:selectOneRadio></td>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{item.a eq ''}">
+                              <td><h4>你的回答</h4></td>
+                              <td><h:panelGroup rendered="#{item.myAnswer1 eq null}">
+                                  <div style="width: 5%; float: left;">
+                                    <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
+                                      <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
+                                        <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
+                                      </h:panelGroup>
+                                      <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
+                                        <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
+                                      </h:panelGroup>
+                                    </div>
                                   </div>
-                                </div>
+                                </h:panelGroup>
                                 <div style="float: left; width: 95%;">
-                                  <h:inputText value="#{item.myAnswer}" readonly="true" />
-                                </div>
-                              </h:panelGroup></td>
+                                  <h:panelGroup rendered="#{item.myAnswer1 eq null}">
+                                    <h:inputText value="#{item.myAnswer}" readonly="true" />
+                                  </h:panelGroup>
+                                  <h:panelGroup rendered="#{item.myAnswer1 ne null}">
+                                    <h:inputText value="#{item.myAnswer1}" style="margin: 0px 15px 0px 0px;;" />
+                                  </h:panelGroup>
+                                  <h:panelGroup rendered="#{item.myAnswer2 ne null}">
+                                    <h:inputText value="#{item.myAnswer2}" />
+                                  </h:panelGroup>
+                                </div></td>
+                            </h:panelGroup>
                           </tr>
                           <tr>
                             <h:panelGroup rendered="#{item.a ne '' and item.analysis ne null}">
@@ -139,9 +163,16 @@
                               </td>
                               <td><h:outputText value="#{item.analysis}" /></td>
                             </h:panelGroup>
-                            <h:panelGroup rendered="#{item.a eq '' and item.answer ne item.myAnswer}">
+                            <h:panelGroup
+                              rendered="#{item.a eq ''and (item.answer ne item.myAnswer or item.myAnswer1 ne null)}">
                               <td><h4>正解</h4></td>
-                              <td><h:outputText value="#{item.answer}" /></td>
+                              <td><h:panelGroup rendered="#{item.answer ne '' and item.answer1 eq null}">
+                                  <h:outputText value="#{item.answer}" />
+                                </h:panelGroup> <h:panelGroup rendered="#{item.answer1 ne null}">
+                                  <h:outputText style="margin: 0px 15px 0px 0px;" value="#{item.answer1}" />
+                                </h:panelGroup> <h:panelGroup rendered="#{item.answer2 ne null}">
+                                  <h:outputText value="#{item.answer2}" />
+                                </h:panelGroup></td>
                             </h:panelGroup>
                           </tr>
                           <h:panelGroup rendered="#{item.noteInfo ne null and item.noteInfo.size()>0}">
@@ -223,6 +254,11 @@
                 </div>
               </div>
             </div>
+            <h:inputHidden id="removeQuestionId" value="#{resumeListController.removeQuestionId}"></h:inputHidden>
+            <h:commandButton id="delQuestion" style="display: none;">
+              <f:ajax event="click" execute="@form" render="search_result_data"
+                listener="#{resumeListController.removerErrorQuestion()}" onevent="callBack" />
+            </h:commandButton>
           </div>
         </div>
       </h:form>

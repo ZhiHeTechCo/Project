@@ -62,6 +62,12 @@ public class ResumeListController extends BaseController {
     // DB中取到的全部笔记
     private List<NoteModel> notes;
 
+    // 用户要移除的试题
+    private Integer removeQuestionId;
+
+    // 当前选择的类型
+    private String currentExamType;
+
     // 分页
     private RepeatPaginator paginator;
 
@@ -86,6 +92,8 @@ public class ResumeListController extends BaseController {
             noteBean = new TbNoteBean();
             examPaper = new ArrayList<QuestionStructure>();
             paginator = null;
+            removeQuestionId = null;
+            currentExamType = null;
 
             // 试题种别
             examTypes = examService.getExamTypes();
@@ -102,7 +110,8 @@ public class ResumeListController extends BaseController {
     public void searchQuestionByExamType() {
         try {
 
-            String currentExamType = WebUtils.getRequestParam("examType");
+            currentExamType = StringUtils.isEmpty(WebUtils.getRequestParam("examType")) ? currentExamType
+                    : WebUtils.getRequestParam("examType");
             examPaper.clear();
             if (StringUtils.isEmpty(currentExamType)) {
                 return;
@@ -113,8 +122,10 @@ public class ResumeListController extends BaseController {
                 for (QuestionStructure questionStructure : examPaper) {
                     List<FirstLevelModel> firstLevelModles = questionStructure.getFirstLevels();
                     for (FirstLevelModel firstLevelModle : firstLevelModles) {
+                        // subject显示格式设置
                         List<String> subjectList = CmnStringUtils.getSubjectList((firstLevelModle.getSubject()));
                         firstLevelModle.setSubjectList(subjectList);
+                        // 图片显示设置
                         String graphicImage = CmnStringUtils.getGraphicImage(firstLevelModle.getImg());
                         firstLevelModle.setGraphicImage(graphicImage);
                         CmnStringUtils.answerLayoutSet(firstLevelModle.getQuestions());
@@ -181,6 +192,26 @@ public class ResumeListController extends BaseController {
         } catch (Exception e) {
             processForException(logger, e);
         }
+    }
+
+    /**
+     * 6.从错题库中移除试题
+     * 
+     * @return
+     */
+    public void removerErrorQuestion() {
+        try {
+            // a.错题集中删除用户指定试题
+            // 解决方法：用户从错题库中删除试题时，视为用户做了一次该题且做对
+            resumeService.removeErrorQuestion(userInfo.getId(), removeQuestionId);
+
+            // b.刷新画面
+            searchQuestionByExamType();
+
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        removeQuestionId = null;
     }
 
     /**
@@ -261,4 +292,13 @@ public class ResumeListController extends BaseController {
     public void setPaginator(RepeatPaginator paginator) {
         this.paginator = paginator;
     }
+
+    public Integer getRemoveQuestionId() {
+        return removeQuestionId;
+    }
+
+    public void setRemoveQuestionId(Integer removeQuestionId) {
+        this.removeQuestionId = removeQuestionId;
+    }
+
 }

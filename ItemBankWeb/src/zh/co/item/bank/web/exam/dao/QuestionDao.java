@@ -7,6 +7,8 @@ import javax.inject.Named;
 
 import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbFirstLevelDirectoryBean;
+import zh.co.item.bank.db.entity.TbQuestionBean;
+import zh.co.item.bank.db.entity.TbQuestionBeanKey;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.QuestionStructure;
@@ -19,6 +21,18 @@ import zh.co.item.bank.model.entity.QuestionStructure;
  */
 @Named
 public class QuestionDao extends BaseDao {
+
+    /**
+     * 根据试题ID检索试题
+     * 
+     * @param no 试题ID
+     * @return
+     */
+    public TbQuestionBean selectByPrimaryKey(Integer no) {
+        TbQuestionBeanKey key = new TbQuestionBeanKey();
+        key.setNo(no);
+        return (TbQuestionBean) getIbatisTemplate().selectOne("TbQuestion.selectByPrimaryKey", key);
+    }
 
     /**
      * 登录问题表
