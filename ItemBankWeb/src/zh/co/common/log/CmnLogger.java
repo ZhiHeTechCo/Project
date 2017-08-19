@@ -17,6 +17,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import zh.co.common.constant.SystemConstants;
+import zh.co.common.exception.MessageId;
 import zh.co.common.prop.CmnPropertiesResourceBundle;
 import zh.co.common.prop.PropertiesUtils;
 import zh.co.common.utils.WebUtils;
@@ -210,8 +211,10 @@ public class CmnLogger {
             message.append(msgCode);
             message.append(" ");
         }
-        message.append(WebUtils.getCurrentPageId()).append(" ");
-        message.append(WebUtils.getLoginUserId()).append(" ");
+        if(!MessageId.COMMON_I_0004.equals(msgCode)) {
+            message.append(WebUtils.getCurrentPageId()).append(" ");
+            message.append(WebUtils.getLoginUserId()).append(" ");
+        }
         message.append(getRawMessageContent(msgCode, args));
         return message.toString();
     }

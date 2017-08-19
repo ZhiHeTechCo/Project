@@ -11,6 +11,9 @@ public class MessageId {
     
     /** {0}处理执行成功! */
     public static final String COMMON_I_0003 = "COMMON_I_0003";
+    
+    /** 当前在线人数:{0} */
+    public static final String COMMON_I_0004 = "COMMON_I_0004";
 
     // ------------------------Qestion------------------------
     /** 备用 */
