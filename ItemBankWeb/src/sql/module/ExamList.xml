@@ -6,12 +6,18 @@
 
 	<select id="getExamListForUser" parameterType="java.lang.Integer"
 		resultType="zh.co.item.bank.model.entity.ExamListModel">
-		select a.language, a.exam, a.level, a.year, a.count, a.source, ifnull(b.rate,'0%') as rate
-		from tb_exam_list a 
-		left join (select * from vb_exam_rate where user_id=#{userId}) b
-		on a.source=b.source
-		where a.delete_flag = 0 
-		order by year+0, count+0;
+		select t.language, t.exam, t.level, t.year, t.count, t.source, t.media_status,
+			   ifnull(b.rate,'0%') as rate,
+			   if(t.media_status = 0,'','（无听力）') as comment
+		from
+			(select a.*, m.delete_flag as media_status
+			from tb_exam_list a, tb_media m
+			where a.source=m.source) t
+		left join
+			(select * from vb_exam_rate where user_id = #{userId}) b
+		on t.source=b.source
+		where t.delete_flag = 0 
+		order by t.year+0, t.count+0;
 	</select>
 
 	<select id="getQuickSourceForAll" resultType="zh.co.item.bank.db.entity.TbExamListBean">

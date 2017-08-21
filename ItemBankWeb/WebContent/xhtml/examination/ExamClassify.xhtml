@@ -191,7 +191,7 @@
                                           <f:selectItem itemValue="" itemLabel="" />
                                           <f:selectItems value="#{examClassifyController.showList}" var="entry"
                                             itemValue="#{entry.source};#{entry.rate}"
-                                            itemLabel=" #{entry.source} (#{entry.rate})" />
+                                            itemLabel=" #{entry.source} (#{entry.rate}) #{entry.comment}" />
                                         </h:selectOneMenu></td>
                                     </tr>
                                   </table>
@@ -340,7 +340,7 @@
                                                 <td style="width: 80%; padding-left: 10px;"><span
                                                   style="margin-right: 5px; font-size: 0.9em;">#{item.source}</span></td>
                                                 <td style="text-align: right;"><span class="badge"
-                                                  style="margin-right: 5px;">#{item.rate}</span></td>
+                                                  style="margin-right: 5px;">#{item.rate} #{item.comment}</span></td>
                                               </tr>
                                             </table>
                                           </section>

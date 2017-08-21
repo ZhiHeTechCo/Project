@@ -111,10 +111,9 @@ public class ExamClassifyController extends BaseController {
             exams = examService.getExams();
             // b-2.获取试题种别
             examTypes = examService.getExamTypes();
-            // b-3:考试模式时获取试卷和完成度
+            // b-3:考试模式时获取试卷信息和完成度
             if (SystemConstants.MODE_EXAM.equals(mode)) {
                 examListBeans = examService.getExamListForUser(userInfo.getId());
-
             }
 
             if (SystemConstants.ROLE_NORMAL.equals(WebUtils.getLoginUserInfo().getRole())) {
