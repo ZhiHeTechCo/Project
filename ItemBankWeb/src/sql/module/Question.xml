@@ -364,6 +364,7 @@
                 tb_question_classify a3,
                 tb_collection a4
             where a1.question_id = a2.no
+            and a2.delete_flag = 0
             and a4.id = a1.user_id
             and a4.question_id = a1.question_id
             and a4.finish not in(1,9)
