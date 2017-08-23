@@ -33,6 +33,18 @@
 		where t1.question_id=t2.question_id and t1.update_time<![CDATA[ < ]]>t2.update_time
     </select>
 
+	<!-- 记叙题更新后的不具合数据 -->
+    <select id="selectCollection" resultType="zh.co.item.bank.db.entity.TbCollectionBean">
+		select c.* from tb_collection_detail a, tb_question b,tb_collection c
+		where a.question_id=b.`no`
+		and a.question_id=c.question_id
+		and a.user_id=c.id
+		and a.my_answer!=b.answer
+		and c.finish in(9)
+		and a.create_time>'2017-08-03 08:08:58'
+		group by a.question_id
+    </select>
+
 	<!-- 批量插入做题记录 -->
 	<insert id="insertCollections" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
 		insert into tb_collection (
@@ -56,8 +68,15 @@
 			update_time = SYSDATE()
 		</set>
 		where id = #{id,jdbcType=SMALLINT}
-		and question_id =
-		#{questionId,jdbcType=SMALLINT}
+		and question_id = #{questionId,jdbcType=SMALLINT}
+	</update>
+
+	<update id="updateCollections" parameterType="zh.co.item.bank.db.entity.TbCollectionBean">
+		update tb_collection set finish='0', update_time = SYSDATE()
+		where (id, question_id) in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            (#{item.id,jdbcType=SMALLINT}, #{item.questionId,jdbcType=SMALLINT})
+        </foreach>
 	</update>
 
     <!-- 帐号合并更新ID -->

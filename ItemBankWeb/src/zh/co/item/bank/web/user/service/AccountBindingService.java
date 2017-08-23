@@ -271,4 +271,13 @@ public class AccountBindingService {
     public void changePassword(TuUserBean user) {
         userDao.changePasswordForce(user);
     }
+
+    /**
+     * 数据整合
+     */
+    public void updateTbCollection() {
+        // 检索不具合数据
+        List<TbCollectionBean> collections = collectionDao.selectCollection();
+        collectionDao.updateCollections(collections);
+    }
 }

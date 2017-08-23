@@ -39,6 +39,15 @@ public class CollectionDao extends BaseDao {
     }
 
     /**
+     * 批量更新做题记录
+     * 
+     * @param collections
+     */
+    public void updateCollections(List<TbCollectionBean> collections) {
+        getIbatisTemplate().update("Collection.updateCollections", collections);
+    }
+
+    /**
      * 帐号合并-取不要的旧数据
      * 
      * @param param
@@ -65,6 +74,15 @@ public class CollectionDao extends BaseDao {
      */
     public void updateCollectionUserId(Map<String, Object> param) {
         getIbatisTemplate().update("Collection.updateCollectionUserId", param);
+    }
+
+    /**
+     * 记叙题更新后不具合数据
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbCollectionBean> selectCollection() {
+        return getIbatisTemplate().selectList("Collection.selectCollection");
     }
 
 }
