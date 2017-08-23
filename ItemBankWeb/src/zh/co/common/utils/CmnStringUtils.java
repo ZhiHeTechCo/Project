@@ -783,6 +783,22 @@ public final class CmnStringUtils {
         return list;
     }
 
+    /**
+     * 阅读折行显示
+     * 
+     * @param subject
+     * @return
+     */
+    public static List<String> getContextList(String context) {
+        List<String> list = new ArrayList<String>();
+        if (!StringUtils.isEmpty(context)) {
+            String[] array = context.split("\n");
+            list = Arrays.asList(array);
+        }
+
+        return list;
+    }
+
     public static String getFileSizeByteFromM() {
         String size = PropertiesUtils.getInstance().getSgValue(SystemConstants.FILEUPLOAD_SIZE_LIMIT);
         if (StringUtils.isEmpty(size)) {

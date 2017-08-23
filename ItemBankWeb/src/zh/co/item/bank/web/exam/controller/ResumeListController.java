@@ -50,6 +50,7 @@ public class ResumeListController extends BaseController {
     /** 画面初始化变量 */
     private List<QuestionStructure> examPaper;
 
+    /** 当前用户 */
     private UserModel userInfo;
 
     // 所有考题种别

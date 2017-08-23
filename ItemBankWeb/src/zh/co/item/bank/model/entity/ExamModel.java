@@ -222,7 +222,7 @@ public class ExamModel extends QuestionBean {
     }
 
     public List<String> getContextList() {
-        return CmnStringUtils.getSubjectList(this.getContext());
+        return CmnStringUtils.getContextList(this.getContext());
     }
 
     public void setContextList(List<String> contextList) {
