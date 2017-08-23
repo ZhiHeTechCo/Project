@@ -70,7 +70,7 @@ public class CollectionService {
         boolean flag = examModel.getAnswer().equals(examModel.getMyAnswer());
         String finish = collection.getFinish();
         // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
-        if ("1".equals(finish)) {
+        if ("1".equals(finish) || "9".equals(finish)) {
             finish = flag ? "9" : "0";
         } else if ("0".equals(finish)) {
             finish = flag ? "2" : "0";
@@ -151,9 +151,8 @@ public class CollectionService {
 
             // 0:错误;1:一次正确;2:错误->正确;二次正确->错误3:二次正确;9:永久正确;
             if (StringUtils.isEmpty(finish)) {
-                // finish = flag ? "1" : "0";
                 finish = flag ? "9" : "0";
-            } else if ("1".equals(finish)) {
+            } else if ("1".equals(finish) || "9".equals(finish)) {
                 finish = flag ? "9" : "0";
             } else if ("0".equals(finish)) {
                 finish = flag ? "2" : "0";
