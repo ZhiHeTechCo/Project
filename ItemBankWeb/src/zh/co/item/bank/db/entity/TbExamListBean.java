@@ -1,6 +1,6 @@
 package zh.co.item.bank.db.entity;
 
-public class TbExamListBean extends TbExamListBeanKey {
+public class TbExamListBean {
     private String language;
 
     private String exam;

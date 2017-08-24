@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd" >
 <mapper namespace="TbExamList" >
   <resultMap id="BaseResultMap" type="zh.co.item.bank.db.entity.TbExamListBean" >
-    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="language" property="language" jdbcType="CHAR" />
     <result column="exam" property="exam" jdbcType="CHAR" />
     <result column="level" property="level" jdbcType="CHAR" />
@@ -11,33 +10,17 @@
     <result column="source" property="source" jdbcType="CHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, language, exam, level, year, count, source, delete_flag
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="zh.co.item.bank.db.entity.TbExamListBeanKey" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_exam_list
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbExamListBeanKey" >
-    delete from tb_exam_list
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
-    insert into tb_exam_list (id, language, exam, 
-      level, year, count, source, 
-      delete_flag)
-    values (#{id,jdbcType=INTEGER}, #{language,jdbcType=CHAR}, #{exam,jdbcType=CHAR}, 
-      #{level,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{count,jdbcType=CHAR}, #{source,jdbcType=CHAR}, 
-      #{deleteFlag,jdbcType=CHAR})
+    insert into tb_exam_list (language, exam, level, 
+      year, count, source, delete_flag
+      )
+    values (#{language,jdbcType=CHAR}, #{exam,jdbcType=CHAR}, #{level,jdbcType=CHAR}, 
+      #{year,jdbcType=CHAR}, #{count,jdbcType=CHAR}, #{source,jdbcType=CHAR}, #{deleteFlag,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
     insert into tb_exam_list
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="language != null" >
         language,
       </if>
@@ -61,9 +44,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="language != null" >
         #{language,jdbcType=CHAR},
       </if>
@@ -87,42 +67,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
-    update tb_exam_list
-    <set >
-      <if test="language != null" >
-        language = #{language,jdbcType=CHAR},
-      </if>
-      <if test="exam != null" >
-        exam = #{exam,jdbcType=CHAR},
-      </if>
-      <if test="level != null" >
-        level = #{level,jdbcType=CHAR},
-      </if>
-      <if test="year != null" >
-        year = #{year,jdbcType=CHAR},
-      </if>
-      <if test="count != null" >
-        count = #{count,jdbcType=CHAR},
-      </if>
-      <if test="source != null" >
-        source = #{source,jdbcType=CHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag = #{deleteFlag,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbExamListBean" >
-    update tb_exam_list
-    set language = #{language,jdbcType=CHAR},
-      exam = #{exam,jdbcType=CHAR},
-      level = #{level,jdbcType=CHAR},
-      year = #{year,jdbcType=CHAR},
-      count = #{count,jdbcType=CHAR},
-      source = #{source,jdbcType=CHAR},
-      delete_flag = #{deleteFlag,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>
