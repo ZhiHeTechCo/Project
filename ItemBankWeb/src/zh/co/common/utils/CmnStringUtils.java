@@ -777,6 +777,9 @@ public final class CmnStringUtils {
         List<String> list = new ArrayList<String>();
         if (!StringUtils.isEmpty(subject)) {
             String[] array = subject.split("<br/>");
+            if (array.length <= 1) {
+                array = subject.split("\n");
+            }
             list = Arrays.asList(array);
         }
 
