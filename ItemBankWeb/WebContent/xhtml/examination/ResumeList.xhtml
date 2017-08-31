@@ -105,10 +105,15 @@
                             <h:outputText value="#{item.rowNo}"></h:outputText>
                           </h4>
                           <h:inputHidden value="#{item.answer}" id="questionAnswer" />
-                          <td class="list-group list-group-alternate"><ui:repeat value="#{item.contextList}"
-                              var="stringItem">
-                              <h:outputText value="#{stringItem}" />
-                            </ui:repeat> <ins>#{item.contextKey}</ins>#{item.contextAfter} <h:panelGroup
+                          <td class="list-group list-group-alternate"><h:panelGroup
+                              rendered="#{item.getContextListSize() == 1}">
+                              <h:outputText value="#{item.context}" />
+                            </h:panelGroup> <h:panelGroup rendered="#{item.getContextListSize() > 1}">
+                              <ui:repeat value="#{item.contextList}" var="stringItem">
+                                <h:outputText value="#{stringItem}" />
+                                <br />
+                              </ui:repeat>
+                            </h:panelGroup> <ins>#{item.contextKey}</ins> #{item.contextAfter} <h:panelGroup
                               rendered="#{item.noteInfo eq null || item.noteInfo.size() == 0}">
                               <h:commandLink title="记笔记"
                                 onclick="document.getElementById('resumeListForm\:currentQuestionId').value=#{item.no};document.getElementById('resumeListForm\:txt_departmentname').value='';$('#noteBut').click();return false;">

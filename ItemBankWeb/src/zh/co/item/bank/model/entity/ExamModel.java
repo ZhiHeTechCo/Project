@@ -64,6 +64,7 @@ public class ExamModel extends QuestionBean {
     /** radio样式 */
     private String radioClass;
 
+    // 题干
     private List<String> contextList;
 
     // 笔记
@@ -219,6 +220,10 @@ public class ExamModel extends QuestionBean {
 
     public void setRadioClass(String radioClass) {
         this.radioClass = radioClass;
+    }
+
+    public int getContextListSize() {
+        return getContextList().size();
     }
 
     public List<String> getContextList() {
