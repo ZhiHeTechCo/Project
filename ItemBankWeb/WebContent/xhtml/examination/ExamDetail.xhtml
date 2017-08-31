@@ -61,8 +61,11 @@
                   <td width="20%">
                     <h4>题干</h4>
                   </td>
-                  <td><ui:repeat value="#{questionDetail.question.contextList}" var="stringItem">
+                  <td><ui:repeat value="#{questionDetail.question.contextList}" var="stringItem" varStatus="status">
                       <h:outputText value="#{stringItem}" />
+                      <h:panelGroup rendered="#{questionDetail.question.getContextListSize() - 1 > status.index}">
+                        <br />
+                      </h:panelGroup>
                     </ui:repeat> <ins>
                       <h:outputText value="#{questionDetail.question.contextKey}" />
                     </ins> <h:outputText value="#{questionDetail.question.contextAfter}" /></td>

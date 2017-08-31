@@ -60,8 +60,11 @@
                     </h4>
                   </h:column>
                   <h:column>
-                    <ui:repeat value="#{item.contextList}" var="stringItem">
+                    <ui:repeat value="#{item.contextList}" var="stringItem" varStatus="status">
                       <h:outputText value="#{stringItem}" />
+                      <h:panelGroup rendered="#{item.getContextListSize() - 1 > status.index}">
+                        <br />
+                      </h:panelGroup>
                     </ui:repeat>
                     <ins>#{item.contextKey}</ins>#{item.contextAfter}
                                           <hr />

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../../xhtml/common/examtemplate.xhtml">
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
@@ -36,7 +37,8 @@
           </c:if>
           <div class="container">
             <div class="bs-example">
-              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}" layout="block">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
                 <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
               </h:panelGroup>
               <h5 style="color: #3382C9;">
@@ -60,7 +62,8 @@
                       <td align="center">
                         <div class="gallery-bottom">
                           <div class="col-md-3 gallery-grid">
-                            <a class="example-image-link" href="#{examResultController.graphicImage}" data-lightbox="example-set"><img class="example-image"
+                            <a class="example-image-link" href="#{examResultController.graphicImage}"
+                              data-lightbox="example-set"><img class="example-image"
                               src="#{examResultController.graphicImage}" alt="" /></a>
                           </div>
                         </div>
@@ -70,25 +73,31 @@
                 </table>
               </c:if>
               <h:panelGroup id="noteWrapper">
-                <h:dataTable class="table table-bordered" rendered="true" value="#{examResultController.questions}" var="item">
+                <h:dataTable class="table table-bordered" rendered="true" value="#{examResultController.questions}"
+                  var="item">
                   <h:column>
                     <h4>
                       <h:outputText value="#{item.rowNo}" />
                     </h4>
                     <h:inputHidden value="#{item.answer}" id="questionAnswer" />
-                    <td class="list-group list-group-alternate"><h:commandLink action="#{examResultController.showDetail}"
-                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;" class="list-group-item">
+                    <td class="list-group list-group-alternate"><h:commandLink
+                        action="#{examResultController.showDetail}"
+                        style="border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; padding-left: 0px; padding-right: 0px;"
+                        class="list-group-item">
                         <f:param name="questionId" value="#{item.no}"></f:param>
-                        <ui:repeat value="#{item.contextList}" var="stringItem">
+                        <ui:repeat value="#{item.contextList}" var="stringItem" varStatus="status">
                           <h:outputText value="#{stringItem}" />
+                          <h:panelGroup rendered="#{item.getContextListSize() - 1 > status.index}">
+                            <br />
+                          </h:panelGroup>
                         </ui:repeat>
                         <ins>#{item.contextKey}</ins>#{item.contextAfter}
 									</h:commandLink></td>
                     <tr>
                       <h:panelGroup rendered="#{item.a ne ''}">
                         <td style="width: 10%;"><h4>选项</h4></td>
-                        <td><h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}" class="#{item.radioClass}" readonly="true" disabled="true"
-                            id="questionItem">
+                        <td><h:selectOneRadio value="#{item.myAnswer}" layout="#{item.layoutStyle}"
+                            class="#{item.radioClass}" readonly="true" disabled="true" id="questionItem">
                             <f:selectItem itemValue="1" itemLabel="  A：#{item.a}" />
                             <f:selectItem itemValue="2" itemLabel="  B：#{item.b}" />
                             <f:selectItem itemValue="3" itemLabel="  C：#{item.c}" />
@@ -127,7 +136,8 @@
                         <td>
                           <h4>解析</h4>
                         </td>
-                        <td><h:panelGroup rendered="#{item.analysis eq null}">暂无</h:panelGroup> <h:outputText value="#{item.analysis}" /> <h:panelGroup
+                        <td><h:panelGroup rendered="#{item.analysis eq null}">暂无</h:panelGroup> <h:outputText
+                            value="#{item.analysis}" /> <h:panelGroup
                             rendered="#{item.noteInfo eq null || item.noteInfo.size() == 0}">
                             <h:commandLink title="记笔记"
                               onclick="document.getElementById('examResultForm\:currentQuestionId').value=#{item.no};document.getElementById('examResultForm\:txt_departmentname').value='';$('#noteBut').click();return false;">
@@ -164,12 +174,14 @@
                 </h:dataTable>
               </h:panelGroup>
               <div class="form-submit1">
-                <h:commandButton value="继续做题" class="button1" style="margin-right: 5px;" action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
+                <h:commandButton value="继续做题" class="button1" style="margin-right: 5px;"
+                  action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
                 </h:commandButton>
               </div>
               <c:if test="#{session.getAttribute('session-user-info').getRole() >= '90'}">
                 <div class="form-submit1">
-                  <h:commandButton value="关联试题" class="button1" action="#{examResultController.searchCorrelation}" id="searchCorrelationBtn" />
+                  <h:commandButton value="关联试题" class="button1" action="#{examResultController.searchCorrelation}"
+                    id="searchCorrelationBtn" />
                 </div>
               </c:if>
               <button style="display: none;" id="noteBut" class="ui-button-primary" type="button"
@@ -187,7 +199,8 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <h:inputTextarea name="txt_note" value="#{examResultController.noteBean.note}" class="form-control" id="txt_departmentname" />
+                        <h:inputTextarea name="txt_note" value="#{examResultController.noteBean.note}"
+                          class="form-control" id="txt_departmentname" />
                       </div>
                       <div>
                         <h:inputHidden id="currentQuestionId" value="#{examResultController.noteBean.questionId}" />
@@ -202,14 +215,17 @@
                         id="btn_submit" class="btn btn-default" data-dismiss="modal">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
                       </button>
-                      <button type="button" onclick="document.getElementById('examResultForm\:change').click();" id="btn_change" class="btn btn-default" data-dismiss="modal">
+                      <button type="button" onclick="document.getElementById('examResultForm\:change').click();"
+                        id="btn_change" class="btn btn-default" data-dismiss="modal">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>更新
                       </button>
                       <h:commandButton style="display: none;" id="submit" value="">
-                        <f:ajax event="click" execute="@form" render="noteWrapper" listener="#{examResultController.doNote}" onevent="callBack" />
+                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                          listener="#{examResultController.doNote}" onevent="callBack" />
                       </h:commandButton>
                       <h:commandButton style="display: none;" id="change" value="">
-                        <f:ajax event="click" execute="@form" render="noteWrapper" listener="#{examResultController.updateNote}" onevent="callBack" />
+                        <f:ajax event="click" execute="@form" render="noteWrapper"
+                          listener="#{examResultController.updateNote}" onevent="callBack" />
                       </h:commandButton>
                     </div>
                   </div>
