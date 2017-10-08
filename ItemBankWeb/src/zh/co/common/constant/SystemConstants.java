@@ -170,6 +170,10 @@ public class SystemConstants {
     public static final String PAGE_ITBK_EXAM_013 = "ITBK_EXAM_013";
     /** 我的错题 */
     public static final String PAGE_ITBK_EXAM_014 = "ITBK_EXAM_014";
+    /** 成绩折线图 */
+    public static final String PAGE_ITBK_EXAM_015 = "ITBK_EXAM_015";
+    /** 每日一题 */
+    public static final String PAGE_ITBK_EXAM_016 = "ITBK_EXAM_016";
     /** 试题登录 */
     public static final String PAGE_ITBK_QUE_001 = "ITBK_QUE_001";
     /** 试题更新 */

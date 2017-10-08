@@ -114,6 +114,26 @@
 		select id from tb_question_classify a where a.exam=#{exam,jdbcType=INTEGER} and a.exam_type='6' and a.jlpt_level=#{jlptLevel,jdbcType=INTEGER} limit 1
 	</select>
 
+	<!-- 每日一题 -->
+	<select id="selectOneQuestion" parameterType="INTEGER"
+		resultType="zh.co.item.bank.model.entity.ExamModel">
+		select t2.*, tcd.my_answer from (
+			select t1.*, tfld.subject, tfld.img from (
+			    select tq.*, tqs.title
+			    from tb_question tq, tb_question_structure tqs, tb_one_question toq
+			    where tq.`no` = toq.`no` 
+			      and toq.the_date = current_date 
+			      and tq.structure_id = tqs.id
+			) t1
+			left join tb_first_level_directory tfld
+			on t1.father_id = tfld.id
+		) t2
+		left join tb_collection_detail tcd
+		on t2.`no` = tcd.question_id and tcd.user_id = #{userId}
+		order by tcd.create_time desc
+		limit 1
+	</select>
+
 	<select id="selectSpecialForOne" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ExamModel">
 		select z.subject, c.no, c.context, c.context_key as contextKey,
