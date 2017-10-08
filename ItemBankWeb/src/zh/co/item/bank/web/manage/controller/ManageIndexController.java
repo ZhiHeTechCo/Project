@@ -154,4 +154,11 @@ public class ManageIndexController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * 成绩折线
+     * @return
+     */
+    public String showLineChart(){
+        return SystemConstants.PAGE_ITBK_EXAM_015;
+    }
 }

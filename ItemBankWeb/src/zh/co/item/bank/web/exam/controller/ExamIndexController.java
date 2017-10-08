@@ -58,21 +58,17 @@ public class ExamIndexController extends BaseController {
     }
 
     /**
-     * 3.复习错题
+     * 3.每日一题
      * 
      * @return
      */
-    public String resumeSearch() {
+    public String oneQuestion(){
         try {
-
-            ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
-            return resumeBean.init();
-
+            OneQuestionController oneQuestionController = (OneQuestionController)SpringAppContextManager.getBean("oneQuestionController");
+            return oneQuestionController.init();
         } catch (Exception e) {
             processForException(logger, e);
         }
-        // 留在当前画面
         return getPageId();
     }
-
 }

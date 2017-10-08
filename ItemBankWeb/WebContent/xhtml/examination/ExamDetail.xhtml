@@ -137,7 +137,7 @@
                   id="goBackToResultBtn" style="margin-right: 5px;">
                 </h:commandButton>
               </div>
-              <c:if test="#{questionDetail.examFlag ne 'true'}">
+              <c:if test="#{questionDetail.examFlag ne 'true' and questionDetail.beforePageId ne 'ITBK_EXAM_016'}">
                 <div class="form-submit1">
                   <h:commandButton value="继续做题" class="button1" action="#{questionDetail.goBackToExam}"
                     id="goBackToExamBtn" style="margin-right: 5px;" />

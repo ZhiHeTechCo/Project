@@ -169,4 +169,13 @@ public class ExamDao extends BaseDao {
     public List<MediaModel> getMediaList(Map<String, Object> param) {
         return getIbatisTemplate().selectList("Media.selectMediaListByUsers", param);
     }
+
+    /**
+     * 检索每日一题
+     * @param userId
+     * @return
+     */
+    public ExamModel selectOneQuestion(Integer userId) {
+        return (ExamModel) getIbatisTemplate().selectOne("Question.selectOneQuestion", userId);
+    }
 }

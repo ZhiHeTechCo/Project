@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="js" name="echarts-all.js" />
+    <h:outputScript library="js" name="jquery.js" />
+    <script type="text/javascript">
+$(document).ready(function(){
+var chart1=echarts.init(document.getElementById("con1")); //显示区域的id
+var titleShow = '未来一周气温变化';
+
+option = {
+    title : {
+        text: titleShow //标题
+    },
+    tooltip : {
+        trigger: 'axis',
+        padding: 10, 
+     	formatter:function(params,ticket,callback){
+		console.log(params[0].dataIndex);
+		var imgindex=params[0].dataIndex;
+		var txt=params[0].name+':'+params[0].value+'<br/>';
+	  return txt;
+    }
+
+    },
+  
+ //   legend: {
+//        data:['最高气温','最低气温']
+//    },
+    toolbox: {
+        show : false,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+//    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : ['周一','周二','周三','周四','周五','周六','周日'] //横坐标
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+			scale: true,
+            axisLabel : {
+                formatter: '{value} °C' //纵坐标单位
+            }
+        }
+    ],
+
+    series : [
+        {
+            name:'最高气温',
+            type:'line',
+            data: [34, 12,
+    {
+        value : 56,
+        tooltip:{
+		trigger:'axis',
+		formatter:function(params, ticket, callback){
+		
+                    var thistxt = '222';
+                    return thistxt;
+		}
+		}
+    },
+   22,55,32,10
+],
+			//itemStyle: {
+//            normal: {
+//            lineStyle :{
+//			 color:'#3b8eae',
+//			}
+//             }
+//           },
+
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        }//,
+//        {
+//            name:'最低气温',
+//            type:'line',
+//            data:[1, -2, 2, 5, 3, 2, 0],
+//            markPoint : {
+//                data : [
+//                    {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+//                ]
+//            },
+//            markLine : {
+//                data : [
+//                    {type : 'average', name : '平均值'}
+//                ]
+//            }
+//        }
+    ]
+};
+chart1.setOption(option);
+});
+</script>
+    <div style="text-align: center; clear: both;">
+    </div>
+    <center>
+      <div id="con1" style="width: 1000px; height: 800px; border: red solid 1px;"></div>
+    </center>
+
+    <div style="text-align: center; clear: both">
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

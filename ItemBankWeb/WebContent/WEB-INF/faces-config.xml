@@ -114,6 +114,14 @@
       <to-view-id>/xhtml/examination/ResumeList.xhtml</to-view-id>
    </navigation-case>
    <navigation-case>
+      <from-outcome>ITBK_EXAM_015</from-outcome>
+      <to-view-id>/xhtml/examination/LineChart.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
+      <from-outcome>ITBK_EXAM_016</from-outcome>
+      <to-view-id>/xhtml/examination/OneQuestion.xhtml</to-view-id>
+   </navigation-case>
+   <navigation-case>
       <from-outcome>ITBK_FORUM_001</from-outcome>
       <to-view-id>/xhtml/forum/Forum.xhtml</to-view-id>
    </navigation-case>

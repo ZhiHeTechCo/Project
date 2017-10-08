@@ -295,4 +295,14 @@ public class ExamService {
         }
         return examDao.getMediaList(param);
     }
+
+    /**
+     * 检索当日试题
+     * @param userId 用户ID
+     * 
+     * @return
+     */
+    public ExamModel selectOneQuestion(Integer userId) {
+        return examDao.selectOneQuestion(userId);
+    }
 }

@@ -173,11 +173,20 @@
                   </h:column>
                 </h:dataTable>
               </h:panelGroup>
-              <div class="form-submit1">
-                <h:commandButton value="继续做题" class="button1" style="margin-right: 5px;"
-                  action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
-                </h:commandButton>
-              </div>
+              <c:if test="#{examResultController.beforePageId ne 'ITBK_EXAM_016'}">
+                <div class="form-submit1">
+                  <h:commandButton value="继续做题" class="button1" style="margin-right: 5px;"
+                    action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
+                  </h:commandButton>
+                </div>
+              </c:if>
+              <c:if test="#{examResultController.beforePageId eq 'ITBK_EXAM_016'}">
+                <div class="form-submit1">
+                  <h:commandButton value="返回" class="button1" style="margin-right: 5px;"
+                    action="#{examResultController.goBackToExam}" id="goBackToExamBtn">
+                  </h:commandButton>
+                </div>
+              </c:if>
               <c:if test="#{session.getAttribute('session-user-info').getRole() >= '90'}">
                 <div class="form-submit1">
                   <h:commandButton value="关联试题" class="button1" action="#{examResultController.searchCorrelation}"

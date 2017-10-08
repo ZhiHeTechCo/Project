@@ -77,7 +77,7 @@ public class ExamDetailController extends BaseController {
     private String comment;
 
     /** 画面间传值变量 */
-    private boolean isResume;
+    private String beforePageId;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_004;
@@ -183,7 +183,7 @@ public class ExamDetailController extends BaseController {
                 TbForumAskerBean bean = new TbForumAskerBean();
                 bean.setAsker(userInfo.getId());
                 bean.setQuestionId(questionId);
-                
+
                 // 记录数据
                 forumService.insertForumAsker(bean);
                 setMessage(MessageUtils.getMessage(MessageId.ITBK_I_0017), BaseController.MESSAGE_LEVEL_INFO);
@@ -256,14 +256,20 @@ public class ExamDetailController extends BaseController {
      * @return
      */
     public String goBackToExam() {
-        if (isResume) {
+        if (SystemConstants.PAGE_ITBK_EXAM_005.equals(beforePageId)) {
             ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
             return resumeBean.init();
 
-        } else {
+        } else if (SystemConstants.PAGE_ITBK_EXAM_002.equals(beforePageId)) {
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             return examController.init();
+
+        } else if (SystemConstants.PAGE_ITBK_EXAM_016.equals(beforePageId)) {
+            OneQuestionController oneQuestionController = (OneQuestionController) SpringAppContextManager
+                    .getBean("oneQuestionController");
+            return oneQuestionController.init();
         }
+        return SystemConstants.PAGE_ITBK_EXAM_000;
     }
 
     /**
@@ -369,12 +375,12 @@ public class ExamDetailController extends BaseController {
         this.comment = comment;
     }
 
-    public boolean isResume() {
-        return isResume;
+    public String getBeforePageId() {
+        return beforePageId;
     }
 
-    public void setResume(boolean isResume) {
-        this.isResume = isResume;
+    public void setBeforePageId(String beforePageId) {
+        this.beforePageId = beforePageId;
     }
 
 }

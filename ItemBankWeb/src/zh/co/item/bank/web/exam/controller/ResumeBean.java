@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import zh.co.common.constant.SystemConstants;
@@ -163,7 +162,7 @@ public class ResumeBean extends BaseController {
             examResultController.setSubjectList(subjectList);
             examResultController.setTitle(title);
             examResultController.setGraphicImage(graphicImage);
-            examResultController.setResume(true);
+            examResultController.setBeforePageId(getPageId());
             return examResultController.init();
 
         } catch (Exception e) {

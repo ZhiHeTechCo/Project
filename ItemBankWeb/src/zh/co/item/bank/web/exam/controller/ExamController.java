@@ -312,7 +312,7 @@ public class ExamController extends BaseController {
             examResultController.setSubject(subject);
             examResultController.setSubjectList(subjectList);
             examResultController.setGraphicImage(graphicImage);
-            examResultController.setResume(false);
+            examResultController.setBeforePageId(getPageId());;
             return examResultController.init();
         } catch (Exception e) {
             processForException(logger, e);

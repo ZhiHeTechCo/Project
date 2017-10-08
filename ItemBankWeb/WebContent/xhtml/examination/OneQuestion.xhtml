@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="../../xhtml/common/examtemplate.xhtml">
+  <ui:define name="content">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:outputScript library="js" name="lightbox.js" />
+    <div style="width: 100%; overflow: auto; overflow-x: hidden;">
+      <h:form id="oneQuestionForm">
+        <div class="typrography">
+          <c:if test="#{session.getAttribute('session-user-agent') ne 'true'}">
+            <h2 style="text-align: center; padding-bottom: 20px; color: #3382C9;">每日一题</h2>
+          </c:if>
+          <div class="container">
+            <div class="bs-example">
+              <h:panelGroup id="ngossfw_error_display" class="#{request.getAttribute('request-message-level')}"
+                layout="block">
+                <h:outputText value="${request.getAttribute('request-message-content')}" escape="false" />
+              </h:panelGroup>
+              <c:if test="#{oneQuestionController.question ne null}">
+                <c:if test="#{oneQuestionController.question.title != ''}">
+                  <h4>
+                    <b><h:outputText value="#{oneQuestionController.question.title}"></h:outputText></b>
+                  </h4>
+                </c:if>
+                <c:if test="#{oneQuestionController.subjectList.size() > 0}">
+                  <table class="table table-bordered">
+                    <c:if
+                      test="#{oneQuestionController.question.subject !='' and oneQuestionController.question.subject !=null}">
+                      <tr>
+                        <td><ui:repeat value="#{oneQuestionController.subjectList}" var="stringItem">
+                            <h:outputText value="#{stringItem}" />
+                            <br />
+                          </ui:repeat></td>
+                      </tr>
+                    </c:if>
+                    <c:if test="#{oneQuestionController.graphicImage !=''}">
+                      <tr>
+                        <td align="center">
+                          <div class="gallery-bottom">
+                            <div class="col-md-3 gallery-grid">
+                              <a class="example-image-link" href="#{oneQuestionController.graphicImage}"
+                                data-lightbox="example-set"><img class="example-image"
+                                src="#{oneQuestionController.graphicImage}" alt="" /></a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:if>
+                  </table>
+                </c:if>
+                <table class="table table-bordered">
+                  <tr>
+                    <td>
+                      <h4>
+                        <h:outputText value="#{oneQuestionController.question.rowNo}"></h:outputText>
+                      </h4>
+                    </td>
+                    <td><ui:repeat value="#{oneQuestionController.question.contextList}" var="stringItem"
+                        varStatus="status">
+                        <h:outputText value="#{stringItem}" />
+                        <h:panelGroup
+                          rendered="#{oneQuestionController.question.getContextListSize() - 1 > status.index}">
+                          <br />
+                        </h:panelGroup>
+                      </ui:repeat> <ins>#{oneQuestionController.question.contextKey}</ins>
+                      #{oneQuestionController.question.contextAfter}
+                      <hr /> <h:inputHidden id="myAnswer" name="#{oneQuestionController.question.myAnswer}"
+                        value="#{oneQuestionController.question.myAnswer}" /> <h:selectOneRadio
+                        value="#{oneQuestionController.question.myAnswer}"
+                        layout="#{oneQuestionController.question.layoutStyle}"
+                        class="#{oneQuestionController.question.radioClass}">
+                        <f:selectItem itemValue="1" itemLabel="#{oneQuestionController.question.a}" />
+                        <f:selectItem itemValue="2" itemLabel="#{oneQuestionController.question.b}" />
+                        <f:selectItem itemValue="3" itemLabel="#{oneQuestionController.question.c}" />
+                        <f:selectItem itemValue="4" itemLabel="#{oneQuestionController.question.d}" />
+                      </h:selectOneRadio></td>
+                  </tr>
+                </table>
+                <div class="form-submit1">
+                  <h:commandButton value="确认" class="button1" style="margin-right: 5px;"
+                    action="#{oneQuestionController.doSubmit}" id="doResumeSubmitBtn" />
+                </div>
+                <div class="form-submit1">
+                  <h:commandButton value="退出" class="button1" style="margin-right: 5px;"
+                    action="#{oneQuestionController.goBackToIndex}" id="doExistBtn" />
+                </div>
+              </c:if>
+              <c:if test="#{oneQuestionController.question eq null}">
+                <h5 style="color: red;">
+                  <span class="glyphicon glyphicon-exclamation-sign"></span> 抱歉，今日试题尚未发布。
+                </h5>
+                <div class="form-submit1" style="margin-top: 50px;">
+                  <h:commandButton value="去做题" class="button1" action="#{oneQuestionController.toClassify}"
+                    id="toClassifyBtn" />
+                </div>
+              </c:if>
+            </div>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+</html>

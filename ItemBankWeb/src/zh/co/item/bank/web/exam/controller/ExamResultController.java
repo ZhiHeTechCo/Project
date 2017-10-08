@@ -37,7 +37,7 @@ public class ExamResultController extends BaseController {
 
     @Inject
     private ExamResultService examResultService;
-    
+
     @Inject
     private NoteService noteService;
 
@@ -53,7 +53,7 @@ public class ExamResultController extends BaseController {
     // 大题干List
     private List<String> subjectList;
 
-    private boolean isResume;
+    private String beforePageId;
 
     private UserModel userInfo;
 
@@ -119,7 +119,7 @@ public class ExamResultController extends BaseController {
         try {
             ExamDetailController examDetailController = (ExamDetailController) SpringAppContextManager
                     .getBean("questionDetail");
-            examDetailController.setResume(isResume);
+            examDetailController.setBeforePageId(beforePageId);
             return examDetailController.init();
 
         } catch (Exception e) {
@@ -146,14 +146,18 @@ public class ExamResultController extends BaseController {
      * @return
      */
     public String goBackToExam() {
-        if (isResume) {
+        if (SystemConstants.PAGE_ITBK_EXAM_005.equals(beforePageId)) {
             ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
             return resumeBean.init();
 
-        } else {
+        } else if (SystemConstants.PAGE_ITBK_COM_002.equals(beforePageId)) {
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             return examController.init();
+
+        } else if (SystemConstants.PAGE_ITBK_EXAM_016.equals(beforePageId)) {
+            return SystemConstants.PAGE_ITBK_EXAM_000;
         }
+        return SystemConstants.PAGE_ITBK_EXAM_000;
     }
 
     /**
@@ -220,6 +224,7 @@ public class ExamResultController extends BaseController {
 
     /**
      * 刷新画面
+     * 
      * @param questions
      */
     private void refresh(List<ExamModel> questions) {
@@ -229,12 +234,12 @@ public class ExamResultController extends BaseController {
                 list.add(question);
                 List<NoteModel> noteModel = noteService.selectNotesByQuestionId(list, userInfo.getId());
                 question.setNoteInfo(noteModel);
-//                // 新增笔记信息
-//                NoteModel noteModel = (NoteModel) noteBean;
-//                // 添加当前用户信息
-//                noteModel.setNickName(userInfo.getNickName());
-//                noteModel.setHeadimgurl(userInfo.getHeadimgurl());
-//                question.getNoteInfo().add(noteModel);
+                // // 新增笔记信息
+                // NoteModel noteModel = (NoteModel) noteBean;
+                // // 添加当前用户信息
+                // noteModel.setNickName(userInfo.getNickName());
+                // noteModel.setHeadimgurl(userInfo.getHeadimgurl());
+                // question.getNoteInfo().add(noteModel);
                 break;
             }
         }
@@ -280,12 +285,12 @@ public class ExamResultController extends BaseController {
         this.subjectList = subjectList;
     }
 
-    public boolean isResume() {
-        return isResume;
+    public String getBeforePageId() {
+        return beforePageId;
     }
 
-    public void setResume(boolean isResume) {
-        this.isResume = isResume;
+    public void setBeforePageId(String beforePageId) {
+        this.beforePageId = beforePageId;
     }
 
     public TbNoteBean getNoteBean() {
