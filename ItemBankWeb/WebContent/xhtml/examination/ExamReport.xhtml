@@ -283,6 +283,8 @@
                 <h:commandButton value="查看成绩单" class="button1" action="#{examReportController.toShowScore}" style="margin-right: 5px;" id="toShowScoreBtn">
                 </h:commandButton>
               </div>
+            </c:if>
+            <c:if test="#{examReportController.redoFlag eq 'true'}">
               <div class="form-submit1">
                 <h:commandButton value="重做试题" class="button1" onclick="reDoExam_confirm();return false;">
                 </h:commandButton>

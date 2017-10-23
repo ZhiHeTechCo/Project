@@ -58,6 +58,9 @@ public class ExamReportController extends BaseController {
 
     // 是否显示成绩单
     private String jtestFlag;
+    
+    // 是否显示重做按钮
+    private String redoFlag;
 
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_EXAM_006;
@@ -99,6 +102,8 @@ public class ExamReportController extends BaseController {
                 // 根据source和听力完成度判断
                 jtestFlag = source.contains("J.TEST") && "100%".equals(rate) ? SystemConstants.TRUE : null;
             }
+            // 初始化redoFlag
+            redoFlag = "100%".equals(rate) ? SystemConstants.TRUE : null;
 
             // b.显示本次考试结果
             // b-1.本次考试出现的试题种别
@@ -319,4 +324,11 @@ public class ExamReportController extends BaseController {
         this.jtestFlag = jtestFlag;
     }
 
+	public String getRedoFlag() {
+		return redoFlag;
+	}
+
+	public void setRedoFlag(String redoFlag) {
+		this.redoFlag = redoFlag;
+	}
 }
