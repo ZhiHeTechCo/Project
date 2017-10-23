@@ -26,7 +26,8 @@
                     <b><h:outputText value="#{oneQuestionController.question.title}"></h:outputText></b>
                   </h4>
                 </c:if>
-                <c:if test="#{oneQuestionController.subjectList.size() > 0}">
+                <c:if
+                  test="#{oneQuestionController.question.subject !='' and oneQuestionController.question.subject !=null or oneQuestionController.graphicImage !=''}">
                   <table class="table table-bordered">
                     <c:if
                       test="#{oneQuestionController.question.subject !='' and oneQuestionController.question.subject !=null}">
@@ -68,16 +69,29 @@
                         </h:panelGroup>
                       </ui:repeat> <ins>#{oneQuestionController.question.contextKey}</ins>
                       #{oneQuestionController.question.contextAfter}
-                      <hr /> <h:inputHidden id="myAnswer" name="#{oneQuestionController.question.myAnswer}"
-                        value="#{oneQuestionController.question.myAnswer}" /> <h:selectOneRadio
-                        value="#{oneQuestionController.question.myAnswer}"
-                        layout="#{oneQuestionController.question.layoutStyle}"
-                        class="#{oneQuestionController.question.radioClass}">
-                        <f:selectItem itemValue="1" itemLabel="#{oneQuestionController.question.a}" />
-                        <f:selectItem itemValue="2" itemLabel="#{oneQuestionController.question.b}" />
-                        <f:selectItem itemValue="3" itemLabel="#{oneQuestionController.question.c}" />
-                        <f:selectItem itemValue="4" itemLabel="#{oneQuestionController.question.d}" />
-                      </h:selectOneRadio></td>
+                      <hr /> <h:panelGroup rendered="#{oneQuestionController.question.a ne ''}">
+                        <h:inputHidden id="myAnswer" name="#{oneQuestionController.question.myAnswer}"
+                          value="#{oneQuestionController.question.myAnswer}" />
+                        <h:selectOneRadio value="#{oneQuestionController.question.myAnswer}"
+                          layout="#{oneQuestionController.question.layoutStyle}"
+                          class="#{oneQuestionController.question.radioClass}">
+                          <f:selectItem itemValue="1" itemLabel="#{oneQuestionController.question.a}" />
+                          <f:selectItem itemValue="2" itemLabel="#{oneQuestionController.question.b}" />
+                          <f:selectItem itemValue="3" itemLabel="#{oneQuestionController.question.c}" />
+                          <f:selectItem itemValue="4" itemLabel="#{oneQuestionController.question.d}" />
+                        </h:selectOneRadio>
+                      </h:panelGroup> <h:panelGroup rendered="#{oneQuestionController.question.a eq ''}">
+                        <h:panelGroup rendered="#{oneQuestionController.question.answer ne ''}">
+                          <h:inputText value="#{oneQuestionController.question.myAnswer}" maxlength="6" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{oneQuestionController.question.answer1 ne null}">
+                          <h:inputText value="#{oneQuestionController.question.myAswer1}" style="margin: 0px 10px 5px 0px;" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{oneQuestionController.question.answer2 ne null}">
+                          <h:inputText value="#{oneQuestionController.question.myAswer2}" />
+                        </h:panelGroup>
+                      </h:panelGroup>
+                    </td>
                   </tr>
                 </table>
                 <div class="form-submit1">
