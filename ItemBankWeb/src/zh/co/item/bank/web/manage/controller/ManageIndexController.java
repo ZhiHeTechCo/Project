@@ -15,10 +15,12 @@ import zh.co.common.controller.BaseController;
 import zh.co.common.log.CmnLogger;
 import zh.co.common.utils.SpringAppContextManager;
 import zh.co.common.utils.WebUtils;
+import zh.co.item.bank.db.entity.VbExamRateBean;
 import zh.co.item.bank.model.entity.UserModel;
 import zh.co.item.bank.web.exam.controller.QuestionInsertController;
 import zh.co.item.bank.web.file.controller.FileManageBean;
 import zh.co.item.bank.web.user.service.AccountBindingService;
+import zh.co.item.bank.web.user.service.MergeDataService;
 
 @Named("manageIndexController")
 @Scope("session")
@@ -28,7 +30,10 @@ public class ManageIndexController extends BaseController {
 
     @Inject
     private AccountBindingService accountBindingService;
-
+    
+    @Inject
+    private MergeDataService mergeDataService;
+    
     public String getPageId() {
         return SystemConstants.PAGE_ITBK_MANAGE_001;
     }
@@ -148,6 +153,21 @@ public class ManageIndexController extends BaseController {
 //            user.setId(57);
 //            user.setPassword("1");
 //            accountBindingService.changePassword(user);
+        } catch (Exception e) {
+            processForException(logger, e);
+        }
+        return getPageId();
+    }
+    
+    /**
+     * 整理考试重复数据(删除考生在tb_exam_collection中被重复记录的数据)
+     */
+    public String mergeData(){
+        try {
+            // a.获取包含重复试题的试卷
+            List<VbExamRateBean> examRateBeans = mergeDataService.getDuplicateSource();
+            // b.删除重复数据
+            mergeDataService.deleteDuplicateCollections(examRateBeans);
         } catch (Exception e) {
             processForException(logger, e);
         }

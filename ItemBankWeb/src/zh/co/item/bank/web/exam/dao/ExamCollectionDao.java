@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.inject.Named;
 import zh.co.common.dao.BaseDao;
+import zh.co.item.bank.db.entity.TbExamCollectionBean;
+import zh.co.item.bank.db.entity.VbExamRateBean;
 import zh.co.item.bank.model.entity.ExamModel;
 import zh.co.item.bank.model.entity.ExamReportModel;
 import zh.co.item.bank.model.entity.MediaQuestionStructure;
@@ -164,4 +166,35 @@ public class ExamCollectionDao extends BaseDao {
     public List<MediaQuestionStructure> selectMediaResult(Map<String, Object> param) {
         return getIbatisTemplate().selectList("Media.selectMediaResult", param);
     }
+
+    /**
+     * 取考试记录中存在重复数据的考卷
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<VbExamRateBean> getDuplicateSource() {
+        return getIbatisTemplate().selectList("ExamCollection.getDuplicateSource");
+    }
+
+    /**
+     * 取考卷记录中的重复数据
+     * 
+     * @param examRateList
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbExamCollectionBean> getDuplicateCollections(List<VbExamRateBean> qList) {
+        return getIbatisTemplate().selectList("ExamCollection.getDuplicateCollections", qList);
+    }
+
+    /**
+     * 删除重复数据
+     * @param examCollectionBeans
+     */
+    public void deleteDuplicateCollections(List<TbExamCollectionBean> examCollectionBeans) {
+        getIbatisTemplate().delete("ExamCollection.deleteByPrimaryKey", examCollectionBeans);
+    }
+
+
 }

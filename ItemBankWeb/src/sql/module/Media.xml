@@ -135,6 +135,23 @@
         order by t4.source
     </select>
 
+    <select id="getDuplicateCollections" parameterType="zh.co.item.bank.db.entity.VbExamRateBean"
+        resultType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
+        select main.media_id, main.question_id, main.user_id, main.my_answer, main.time, main.status from
+        ( 
+          select tmc.*, count(tmc.question_id) as num
+          from tb_media_collection tmc, tb_media tm
+          where tmc.media_id = tm.id
+          and (tmc.user_id,tm.source) in
+          <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            (#{item.userId,jdbcType=INTEGER}, #{item.source})
+          </foreach>
+          group by question_id, user_id
+          order by tmc.question_id
+        ) main
+        where main.num>1
+    </select>
+
     <insert id="insertMediaCollection" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
 		insert into tb_media_collection (
 		        media_id,
@@ -168,4 +185,11 @@
           (#{item.mediaId,jdbcType=CHAR}, #{item.userId,jdbcType=INTEGER})
       </foreach>
 	</delete>
+	
+    <delete id="deleteDuplicateCollections" parameterType="zh.co.item.bank.db.entity.TbMediaCollectionBean">
+      delete from tb_media_collection where (question_id, user_id) in
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+          (#{item.questionId,jdbcType=INTEGER}, #{item.userId,jdbcType=INTEGER})
+      </foreach>
+    </delete>
 </mapper>

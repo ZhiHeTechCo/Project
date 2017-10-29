@@ -84,6 +84,24 @@
 		select m_rate from vb_exam_rate where user_id=#{userId} and source=#{source}
 	</select>
 
+	<select id="getDuplicateSource" resultType="zh.co.item.bank.db.entity.VbExamRateBean">
+		select * from vb_exam_rate where current > total
+	</select>
+
+	<select id="getDuplicateCollections" parameterType="zh.co.item.bank.db.entity.VbExamRateBean"
+        resultType="zh.co.item.bank.db.entity.TbExamCollectionBean">
+		select t.id, t.question_id, t.user_id from
+		(
+          select id,  question_id, user_id, count(question_id) as num
+          from tb_exam_collection where (user_id, source) in
+          <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            (#{item.userId,jdbcType=INTEGER},#{item.source})
+          </foreach>
+          group by question_id
+        ) t
+        where t.num>1
+	</select>
+
 	<select id="getMyScoreByExamType" parameterType="java.util.Map"
 		resultType="zh.co.item.bank.model.entity.ScoreModel">
 		select sum(my_score) as my_total_score,sum(score) as total_score,a.source,a.exam_type from vb_score a
@@ -236,4 +254,10 @@
         update tb_exam_collection set user_id=#{oldUserId} where user_id=#{newUserId}
     </update>
 
+    <delete id="deleteByPrimaryKey" parameterType="zh.co.item.bank.db.entity.TbExamCollectionBean" >
+      delete from tb_exam_collection where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+          #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
 </mapper>

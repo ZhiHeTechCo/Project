@@ -9,6 +9,7 @@ import zh.co.common.dao.BaseDao;
 import zh.co.item.bank.db.entity.TbMediaCollectionBean;
 import zh.co.item.bank.db.entity.TbQuestionClassifyBean;
 import zh.co.item.bank.db.entity.TbQuestionStructureBean;
+import zh.co.item.bank.db.entity.VbExamRateBean;
 import zh.co.item.bank.model.entity.MediaModel;
 import zh.co.item.bank.model.entity.MediaQuestionStructure;
 
@@ -141,5 +142,25 @@ public class MediaDao extends BaseDao {
      */
     public void updateUserId(Map<String, Object> param) {
         getIbatisTemplate().update("Media.updateUserId", param);
+    }
+
+    /**
+     * 取考卷记录中的重复数据
+     * 
+     * @param examRateList
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<TbMediaCollectionBean> getDuplicateCollections(List<VbExamRateBean> mList) {
+        return getIbatisTemplate().selectList("Media.getDuplicateCollections", mList);
+    }
+
+    /**
+     * 删除重复考试记录
+     * @param params
+     */
+    public void deleteDuplicateCollections(List<TbMediaCollectionBean> params) {
+        getIbatisTemplate().delete("Media.deleteDuplicateCollections", params);
+        insertMediaCollections(params);
     }
 }
