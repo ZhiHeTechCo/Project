@@ -79,28 +79,14 @@
                     </h:panelGroup>
                     <h:panelGroup rendered="#{item.a eq ''}">
                       <h:panelGroup rendered="#{item.myAnswer1 eq null}">
-                        <div style="width: 5%; float: left;">
-                          <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
-                            <h:panelGroup rendered="#{item.myAnswer eq item.answer}">
-                              <span style="margin-top: 4px;" class="glyphicon glyphicon-ok"></span>
-                            </h:panelGroup>
-                            <h:panelGroup rendered="#{item.myAnswer ne item.answer}">
-                              <span style="margin-top: 4px;" class="glyphicon glyphicon-remove"></span>
-                            </h:panelGroup>
-                          </div>
-                        </div>
+                        <h:inputText value="#{item.myAnswer}" />
                       </h:panelGroup>
-                      <div style="float: left; width: 95%;">
-                        <h:panelGroup rendered="#{item.myAnswer1 eq null}">
-                          <h:inputText value="#{item.myAnswer}" readonly="true" />
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{item.myAnswer1 ne null}">
-                          <h:inputText value="#{item.myAnswer1}" style="margin: 0px 15px 0px 0px;;" />
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{item.myAnswer2 ne null}">
-                          <h:inputText value="#{item.myAnswer2}" />
-                        </h:panelGroup>
-                      </div>
+                      <h:panelGroup rendered="#{item.myAnswer1 ne null}">
+                        <h:inputText value="#{item.myAnswer1}" style="margin: 0px 15px 0px 0px;;" />
+                      </h:panelGroup>
+                      <h:panelGroup rendered="#{item.myAnswer2 ne null}">
+                        <h:inputText value="#{item.myAnswer2}" />
+                      </h:panelGroup>
                     </h:panelGroup>
                   </h:column>
                 </h:dataTable>
