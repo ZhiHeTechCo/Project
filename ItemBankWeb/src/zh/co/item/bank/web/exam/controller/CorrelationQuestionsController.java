@@ -76,7 +76,7 @@ public class CorrelationQuestionsController extends BaseController {
                     models.addAll(firstLevelModel.getQuestions());
                 }
             }
-            collectionService.insertCollections(models, WebUtils.getLoginUserInfo(), "exist");
+            collectionService.insertCollections(models, WebUtils.getLoginUserInfo(), null);
             ExamPaperController examPaperController = (ExamPaperController) SpringAppContextManager
                     .getBean("examPaperController");
             examPaperController.setBeforePage(SystemConstants.PAGE_ITBK_EXAM_013);
