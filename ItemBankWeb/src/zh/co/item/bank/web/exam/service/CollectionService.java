@@ -120,14 +120,15 @@ public class CollectionService {
             collection.setQuestionId(questionId);
             collectionDetail.setQuestionId(questionId);
 
-            // 我的答案
-            if (StringUtils.isEmpty(examModel.getMyAnswer())) {
+            //我的答案
+            if (StringUtils.isEmpty(examModel.getMyAnswer()) && StringUtils.isEmpty(examModel.getA())) {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append("");
                 if (StringUtils.isNotEmpty(examModel.getMyAnswer1())) {
                     buffer.append(examModel.getMyAnswer1());
                 }
-                if (StringUtils.isNotEmpty(examModel.getMyAnswer1() + examModel.getMyAnswer2())) {
+                if (StringUtils.isNotEmpty(examModel.getMyAnswer1())
+                        || StringUtils.isNotEmpty(examModel.getMyAnswer2())) {
                     buffer.append(";");
                 }
                 if (StringUtils.isNotEmpty(examModel.getMyAnswer2())) {
@@ -174,6 +175,10 @@ public class CollectionService {
             }
             // 考试记录表登录
             if ("ing".equals(status) || "exist".equals(status)) {
+                if (StringUtils.isEmpty(examModel.getAnswer())) {
+                    String answer2 = StringUtils.isEmpty(examModel.getAnswer2()) ? "" : examModel.getAnswer2();
+                    examModel.setAnswer(examModel.getAnswer1() + ";" + answer2);
+                }
                 examCollections.add(examModel);
             }
             // 做题记录详细登录
