@@ -132,7 +132,7 @@ public class ManageIndexController extends BaseController {
     }
 
     /**
-     * 去考题列表
+     * 文件管理
      * 
      * @return
      */
@@ -147,6 +147,10 @@ public class ManageIndexController extends BaseController {
         return getPageId();
     }
 
+    /**
+     * 修改密码
+     * @return
+     */
     public String changePassword() {
         try {
 //            TuUserBean user = new TuUserBean();
