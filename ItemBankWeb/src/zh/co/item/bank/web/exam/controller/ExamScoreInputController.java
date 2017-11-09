@@ -129,7 +129,7 @@ public class ExamScoreInputController extends BaseController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public String doSubmit() {
         try {
-            // 非听力部分录入报错
+            // 非听力部分录入保存
             collectionService.insertCollections(models, userInfo, "exist");
             // 听力部分录入保存
             mediaService.doInsertCollections(mediaQuestions, userInfo, source, SystemConstants.TRUE);
