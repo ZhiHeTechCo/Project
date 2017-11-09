@@ -147,6 +147,7 @@ public class ExamDetailController extends BaseController {
                 // 记叙题时显示答案控制
                 if (StringUtils.isNotEmpty(question.getAnswer()) && question.getAnswer().contains(";")) {
                     question.setAnswer(question.getAnswer().replace(";", "  ").trim());
+                    question.setMyAnswer(question.getMyAnswer().replace(";", "  ").trim());
                 }
 
             }
@@ -156,6 +157,7 @@ public class ExamDetailController extends BaseController {
                 // 试题管理
                 QuestionUpdateController questionUpdateController = (QuestionUpdateController) SpringAppContextManager
                         .getBean("questionUpdateController");
+                // question的answer和myAnswer可能已改变 TODO
                 questionUpdateController.setQuestion(question);
                 if (StringUtils.isNotEmpty(examFlag)) {
                     questionUpdateController.setExamFlag("true");
