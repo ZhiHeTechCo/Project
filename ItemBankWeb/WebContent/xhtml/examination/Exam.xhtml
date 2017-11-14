@@ -7,7 +7,16 @@
   <ui:define name="content">
     <h:outputScript library="javax.faces" name="jsf.js" target="head" />
     <h:outputScript library="js" name="lightbox.js" />
-
+    <script type="text/javascript">
+      function exist_confirm()
+        {
+          if(true == confirm("\"直接退出\"将清空本次的做题记录。确定要退出吗？")){
+            document.getElementById('examForm\:doExistBtn').click();
+          }else{
+            return false;
+            }
+        }
+    </script>
     <div style="width: 100%; overflow: auto; overflow-x: hidden;">
       <h:form id="examForm">
         <div class="typrography">
@@ -124,12 +133,14 @@
                   </div>
                   <div class="form-submit1">
                     <h:commandButton value="直接退出" class="button1" style="margin-right: 5px;"
-                      action="#{examController.doExist}" id="doExistBtn">
+                      onclick="exist_confirm();return false;">
+                    </h:commandButton>
+                    <h:commandButton id="doExistBtn" style="display: none;" value="" action="#{examController.doExist}">
                     </h:commandButton>
                   </div>
                   <div class="clearfix"></div>
                   <h5>
-                    <span class="glyphicon glyphicon-exclamation-sign"></span> 注意："直接退出"将清空本次的做题记录。
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> 注意："保存退出"也会保存本页的回答情况。
                   </h5>
                 </c:if>
               </c:if>
