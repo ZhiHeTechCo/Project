@@ -150,7 +150,7 @@ public class ExamResultController extends BaseController {
             ResumeBean resumeBean = (ResumeBean) SpringAppContextManager.getBean("resumeBean");
             return resumeBean.init();
 
-        } else if (SystemConstants.PAGE_ITBK_COM_002.equals(beforePageId)) {
+        } else if (SystemConstants.PAGE_ITBK_EXAM_002.equals(beforePageId)) {
             ExamController examController = (ExamController) SpringAppContextManager.getBean("examController");
             return examController.init();
 
