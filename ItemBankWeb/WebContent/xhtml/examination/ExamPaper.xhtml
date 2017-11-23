@@ -119,7 +119,7 @@
                                   </h:selectOneRadio></td>
                               </h:panelGroup>
                               <h:panelGroup rendered="#{item.a eq ''}">
-                                <td><h4>你的回答</h4></td>
+                                <td style="width: 15%;"><h4>你的回答</h4></td>
                                 <td><h:panelGroup rendered="#{item.myAnswer1 eq null}">
                                     <div style="width: 5%; float: left;">
                                       <div style="padding-bottom: 10px; width: 100%; margin-right: 5px;">
@@ -134,13 +134,13 @@
                                   </h:panelGroup>
                                   <div style="float: left; width: 95%;">
                                     <h:panelGroup rendered="#{item.myAnswer1 eq null}">
-                                      <h:inputText value="#{item.myAnswer}" readonly="true" />
+                                      <h:outputText value="#{item.myAnswer}" />
                                     </h:panelGroup>
                                     <h:panelGroup rendered="#{item.myAnswer1 ne null}">
-                                      <h:inputText value="#{item.myAnswer1}" style="margin: 0px 15px 0px 0px;;" />
+                                      <h:outputText value="#{item.myAnswer1}" />
                                     </h:panelGroup>
                                     <h:panelGroup rendered="#{item.myAnswer2 ne null}">
-                                      <h:inputText value="#{item.myAnswer2}" />
+                                      <h:outputText value=" #{item.myAnswer2}" />
                                     </h:panelGroup>
                                   </div></td>
 
