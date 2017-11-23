@@ -216,8 +216,8 @@
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
                       </button>
                       <button type="button"
-                        onclick="if(document.getElementById('examPaperForm\:txt_departmentname').value == '') { alert('未输入笔记!');return false;} else {document.getElementById('examPaperForm\:submit').click();}"
-                        id="btn_submit" class="btn btn-default" data-dismiss="modal">
+                        onclick="if(document.getElementById('examPaperForm\:txt_departmentname').value == '') { alert('未输入笔记!');document.getElementById('examPaperForm\:txt_departmentname').focus();return false;} else { $('#myModal').modal('hide');document.getElementById('examPaperForm\:submit').click();}"
+                        id="btn_submit" class="btn btn-default">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
                       </button>
                       <button type="button" onclick="document.getElementById('examPaperForm\:change').click();"
